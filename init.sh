@@ -39,6 +39,11 @@ else
     echo -e "  \033[0;90m[✓] PROMPTKIT.md already present\033[0m"
 fi
 
+DESIGN_PROFILE="$PROJECT_ROOT/DESIGN.md"
+if [[ -f "$DESIGN_PROFILE" ]]; then
+    echo -e "  \033[0;90m[✓] DESIGN.md detected (brand identity & anti-slop rules)\033[0m"
+fi
+
 # 3. Detect Agent Files or Default to AGENTS.md
 AGENT_FILES=(
     "AGENTS.md"
@@ -96,6 +101,7 @@ Activate workflows anytime with these namespaced triggers:
 - **Quality Gate (DoD)**: $KIT_DIR_REL/protocols/code-quality-gate.md
 - **Context Sync**: $KIT_DIR_REL/protocols/context-sync.md
 - **Project Profile & Rules**: ./PROMPTKIT.md (if present)
+- **Visual Identity & Brand**: ./DESIGN.md (if present)
 
 ### Project Artifact Output Paths
 All generated project documentation must be saved to the host project:

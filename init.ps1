@@ -60,6 +60,11 @@ if (-not (Test-Path $ProjectProfile)) {
     Write-Host "  [✓] PROMPTKIT.md already present" -ForegroundColor DarkGray
 }
 
+$DesignProfile = Join-Path $ProjectRoot "DESIGN.md"
+if (Test-Path $DesignProfile) {
+    Write-Host "  [✓] DESIGN.md detected (brand identity & anti-slop rules)" -ForegroundColor DarkGray
+}
+
 # 3. Detect Agent Files or Default to AGENTS.md
 $AgentFiles = @(
     "AGENTS.md",
@@ -119,6 +124,7 @@ Activate workflows anytime with these namespaced triggers:
 - **Quality Gate (DoD)**: $KitDirRel/protocols/code-quality-gate.md
 - **Context Sync**: $KitDirRel/protocols/context-sync.md
 - **Project Profile & Rules**: ./PROMPTKIT.md (if present)
+- **Visual Identity & Brand**: ./DESIGN.md (if present)
 
 ### Project Artifact Output Paths
 All generated project documentation must be saved to the host project:
