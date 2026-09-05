@@ -44,8 +44,9 @@ Ensure the host repository contains documentation directories so generated artif
 - `docs/specs/` — Technical RFC Specifications
 - `docs/rca/` — Root Cause Analysis Incident Post-Mortems
 - `docs/spikes/` — Technical Spikes & Benchmarks
+- `docs/design/` — Design Token Specs & UI Architecture
 
-If `PROMPTKIT.md` does not exist in the project root, copy `.promptkit/templates/project-profile-template.md` to `./PROMPTKIT.md` for project-specific rules and commands.
+If `PROMPTKIT.md` does not exist in the project root, copy `.promptkit/templates/project-profile-template.md` to `./PROMPTKIT.md` for project-specific rules and commands. If `DESIGN.md` is desired for custom visual identity, copy `.promptkit/templates/design-profile-template.md` to `./DESIGN.md`.
 
 ### 4. Inject PromptKit Core Directives
 Append or merge the following directive block into the detected configuration file(s):
@@ -77,6 +78,7 @@ Activate workflows anytime with these namespaced triggers:
 - **Quality Gate (DoD)**: `.promptkit/protocols/code-quality-gate.md`
 - **Context Sync**: `.promptkit/protocols/context-sync.md`
 - **Project Profile & Rules**: `./PROMPTKIT.md` (if present)
+- **Visual Identity & Brand**: `./DESIGN.md` (if present)
 
 ### Project Artifact Output Paths
 All generated project documentation must be saved to the host project:
@@ -84,6 +86,7 @@ All generated project documentation must be saved to the host project:
 - Technical Specs: `docs/specs/`
 - Post-Mortems: `docs/rca/`
 - Spikes: `docs/spikes/`
+- Design Specs: `docs/design/`
 <!-- PROMPTKIT_END -->
 ```
 

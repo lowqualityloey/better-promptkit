@@ -40,6 +40,7 @@ Define the non-negotiable definition-of-done (DoD) and engineering quality bar f
 - [ ] **Authentication & Authorization**: Explicit RBAC / ABAC checks on every server endpoint / mutation.
 - [ ] **Secrets & Sensitive Data**: Zero hardcoded API keys, tokens, or PII; environment variables validated at startup.
 - [ ] **Input Sanitization & Rate Limiting**: All public endpoints bounded by rate limiters and payload size limits.
+- [ ] **Zero Data Loss & Safe Migrations**: Database schema modifications follow the Expand-Contract pattern (no single-step destructive drops or truncates); all delete queries are strictly bounded.
 
 ### 4. Performance & Efficiency
 - [ ] **Frontend**: Zero unnecessary re-renders; proper memoization (`useMemo`, `useCallback`, atomic selectors); images optimized (modern formats, responsive sizes); Core Web Vitals (LCP, INP, CLS) respected.
@@ -64,6 +65,7 @@ Define the non-negotiable definition-of-done (DoD) and engineering quality bar f
 
 ### 8. Observability & Telemetry
 - [ ] Structured logging used (contextual JSON logs with correlation IDs, not raw `console.log`).
+- [ ] Clean instrumentation: All temporary debug probes (`[DEBUG-xxxx]`) verified removed (`git grep "DEBUG-"`).
 - [ ] Metrics or audit events dispatched for critical business actions (e.g., checkout, role change, data export).
 
 ---

@@ -24,14 +24,14 @@ It equips your AI coding assistant (Antigravity, Claude Code, Gemini CLI, Cursor
 │ - Context Sync           │ - Staff Drill (pk:grill)      │ - RFC Technical Specs        │
 │ - Quality Gate (DoD)     │ - Spec-Driven Plan (pk:plan)  │ - Blameless Post-Mortems     │
 │ - Project Profile        │ - Senior Review (pk:review)   │ - Senior PR Checklists       │
-│                          │ - Scientific Debug (pk:debug) │ - Design Tokens Specification│
+│ - Design Profile Sync    │ - Scientific Debug (pk:debug) │ - Design Tokens Specification│
 │                          │ - Tech Spikes (pk:spike)      │ - Project Profile Template   │
-│                          │ - Design System (pk:design)   │                              │
-│                          │ - Retro & Reflect (pk:retro)  │                              │
+│                          │ - Design System (pk:design)   │ - Design Profile Template    │
+│                          │ - Retro & Reflect (pk:retro)  │ - Technical Spike Template   │
 ├──────────────────────────┴───────────────────────────────┴──────────────────────────────┤
 │ 📂 HOST PROJECT INTEGRATION LAYER                                                       │
-│ - Engine: .promptkit/ (Workflows & Protocols) │ - Config: ./PROMPTKIT.md (Guardrails)   │
-│ - Documentation: ./docs/adrs/, ./docs/specs/, ./docs/rca/, ./docs/spikes/ (Tracked in Git)│
+│ - Engine: .promptkit/ (Workflows & Protocols) │ - Config: ./PROMPTKIT.md & ./DESIGN.md  │
+│ - Documentation: ./docs/adrs/, ./docs/specs/, ./docs/rca/, ./docs/spikes/, ./docs/design/│
 ├─────────────────────────────────────────────────────────────────────────────────────────┤
 │ 🧠 DEVELOPER KNOWLEDGE BASE & LABS                                                      │
 │ - Competency Matrix (Junior → Staff) │ - Progressive Retrospective Journal & OKRs       │
@@ -81,9 +81,9 @@ Simply tell your assistant:
 
 #### What Initialization Does Automatically:
 1. Detects your active AI editor/CLI (`CLAUDE.md`, `GEMINI.md`, `AGENTS.md`, `.cursorrules`, `.windsurfrules`, `.github/copilot-instructions.md`).
-2. Injects conflict-free `pk:` triggers and senior engineering protocols.
-3. Scaffolds a project profile (`PROMPTKIT.md`) where you can set tech stack overrides and non-negotiables.
-4. Creates host project documentation folders (`./docs/adrs/`, `./docs/specs/`, `./docs/rca/`, `./docs/spikes/`) so your architectural artifacts are tracked in your project's Git repository.
+2. Injects conflict-free `pk:` triggers and senior engineering protocols into your agent rules.
+3. Scaffolds a project profile (`PROMPTKIT.md`) for custom stack guardrails, and links `DESIGN.md` for visual brand identity and anti-slop rules.
+4. Creates host project documentation folders (`./docs/adrs/`, `./docs/specs/`, `./docs/rca/`, `./docs/spikes/`, `./docs/design/`) so your architectural artifacts are tracked in your project's Git repository.
 
 ---
 
@@ -97,11 +97,11 @@ All Better-PromptKit triggers use the `pk:` namespace prefix to ensure **zero co
 | `pk:tutor beginner` | Low-friction Socratic coaching with plain-English analogies and immediate error translation. | Personal second brain |
 | `pk:tutor architect` | Invariant stress-testing, failure mode analysis, and distributed system trade-offs. | `docs/adrs/` |
 | `pk:grill` | Intensive Staff Engineer interview & defense drill (devil's advocate probing). | Verbal defense / journal |
-| `pk:plan` | Spec-Driven Development (SDDD): defines domain boundaries, schema validation, and PR breakdown. | `docs/specs/` |
-| `pk:review` | Senior PR audit: categorized into `[BLOCKING]`, `[IMPORTANT]`, `[SUGGEST]`, `[PRAISE]`. | Review debrief / report |
-| `pk:debug` | Hypothesis-driven scientific debugging, reproduction isolation, and 5-Why RCA. | `docs/rca/` |
-| `pk:spike` | Technical research spikes, benchmarks, and multi-vector trade-off matrices. | `docs/spikes/` |
-| `pk:design` | Modern tokenized UI (Tailwind v4), headless primitives (Radix/Aria), and WCAG 2.2 AA. | `docs/design/` |
+| `pk:plan` | Spec-Driven Architecture: deep module seams, zero-downtime Expand-Contract DB migrations, FMEA resilience, and TDD milestones. | `docs/specs/` |
+| `pk:review` | Two-Axis Senior Review: Spec Fidelity vs. Standards & Fowler 12-Smell Baseline, plus zero accidental data loss audit. | Review debrief / report |
+| `pk:debug` | Empirical scientific debugging: 10-tier feedback loop hierarchy, "No red loop, no Phase 2" gate, tagged logging (`[DEBUG-xxxx]`), and 5-Whys. | `docs/rca/` |
+| `pk:spike` | Technical research spikes: testing the sharpest risk first, Boring Technology baseline, strict timeboxing, and direct ADR handoff. | `docs/spikes/` |
+| `pk:design` | Modern UI/UX: anti-slop guidelines, WCAG 2.2 Level AA contrast/keyboard standards, React runtime performance, and `DESIGN.md` brand tokens. | `docs/design/` |
 | `pk:retro` | Post-coding retrospective: captures trade-offs, scaffolds ADRs, and logs progress. | `docs/adrs/` & journal |
 
 ---
@@ -115,23 +115,25 @@ better-promptkit/
 ├── LICENSE                      # Open-source MIT License
 ├── protocols/
 │   ├── setup.md                 # Universal multi-agent configuration protocol
-│   ├── context-sync.md          # Tech stack, PROMPTKIT.md & git auto-detection
+│   ├── context-sync.md          # Tech stack, PROMPTKIT.md, DESIGN.md & git auto-detection
 │   └── code-quality-gate.md     # Non-negotiable definition-of-done & pre-commit gate
 ├── workflows/
 │   ├── tutor.md                 # Socratic mentorship & 3-tier progressive hints (pk:tutor, pk:grill)
-│   ├── plan.md                  # Spec-Driven Development (SDDD) & RFC design (pk:plan)
-│   ├── review.md                # Senior multi-dimensional PR & architecture review (pk:review)
-│   ├── debug.md                 # Hypothesis-driven debugging & root cause analysis (pk:debug)
-│   ├── research.md              # Technical spikes & trade-off evaluation matrix (pk:spike)
-│   ├── design-system.md         # UI/UX, Design Tokens, and WCAG 2.2 accessibility (pk:design)
+│   ├── plan.md                  # Spec-Driven Development (SDDD) & deep modular design (pk:plan)
+│   ├── review.md                # Two-axis PR & Fowler smell review with data safety audit (pk:review)
+│   ├── debug.md                 # Empirical feedback-loop debugging & root cause analysis (pk:debug)
+│   ├── research.md              # Technical spikes & sharpest-risk benchmark matrix (pk:spike)
+│   ├── design-system.md         # Anti-slop UI, Design Tokens, and WCAG 2.2 accessibility (pk:design)
 │   └── reflect.md               # Deep engineering retrospectives & ADR generation (pk:retro)
 ├── templates/
 │   ├── project-profile-template.md # Scaffolds PROMPTKIT.md for custom project guardrails
+│   ├── design-profile-template.md  # Scaffolds DESIGN.md for brand identity & visual tokens
 │   ├── adr-template.md          # MADR standard Architectural Decision Record
 │   ├── tech-spec-template.md    # Engineering RFC / Technical Specification
 │   ├── rca-postmortem-template.md # Blameless Post-Mortem & Incident RCA
 │   ├── code-review-checklist.md # Senior Developer PR Review Checklist
-│   └── design-tokens-spec.md    # Modern Design System & Token Specification
+│   ├── design-tokens-spec.md    # Modern Design System & Token Specification
+│   └── spike-template.md        # Technical Spike & Benchmark Evaluation Template
 ├── examples/
 │   ├── sample-progress-journal.md # Real-world retrospective entries (Shelf full-stack app)
 │   └── sample-learning-plan.md    # Real-world engineering OKRs & mental model notes
@@ -152,19 +154,25 @@ better-promptkit/
 
 ---
 
-## 🎯 The 3 Pedagogical Pillars of Better-PromptKit
+## 🎯 The 5 Core Engineering Pillars of Better-PromptKit
 
-### 1. 3-Tier Progressive Hinting
+### 1. 3-Tier Progressive Hinting (Socratic Mentorship)
 Better-PromptKit prevents the cognitive erosion caused by indiscriminate AI code-copying. It delivers guidance in 3 graduated tiers:
-- **Tier 1 (Mental Model)**: Concept diagrams, data flow, and Socratic questions.
+- **Tier 1 (Mental Model)**: Concept diagrams, data flow, and Socratic guiding questions.
 - **Tier 2 (Structural Blueprint)**: State machines, interface contracts, and pseudocode logic.
-- **Tier 3 (Targeted Micro-Snippet)**: Minimal 3-5 line syntax demonstration of edge cases; the engineer writes the actual implementation.
+- **Tier 3 (Targeted Micro-Snippet)**: Minimal 3-5 line syntax demonstration of edge cases; the engineer implements the solution.
 
-### 2. Spec-Driven Engineering
-Senior engineers design contracts and consider failure modes before writing implementations. The `pk:plan` workflow establishes domain boundaries, database schemas, and threat vectors upfront.
+### 2. Spec-Driven Architecture & Zero-Downtime Evolution
+Senior engineers design contracts, module depth, and failure recovery before writing implementations. The `pk:plan` workflow mandates deep modules (Ousterhout's deletion test), formal FMEA resilience matrices, and the **Expand-Contract (Parallel Run) pattern** for zero-downtime database evolution.
 
-### 3. Separation of Engine and Project History
-Workflows output project artifacts directly into your project's `./docs/` folder (`./docs/adrs/`, `./docs/specs/`, `./docs/rca/`), ensuring your team's architectural decisions are preserved in your project's Git repository while `.promptkit/` remains an independent engine.
+### 3. Empirical Feedback Loops & Scientific Debugging
+No more "shotgun debugging" or guessing by reading code. The `pk:debug` workflow enforces the **"No red loop, no Phase 2"** hard gate: developers and agents must construct a fast (<3s), deterministic, red-capable command before theorizing, isolate load-bearing repros, and tag debug probes (`[DEBUG-xxxx]`) for clean zero-leak removal.
+
+### 4. Two-Axis Review & Anti-Slop Visual Design
+PR reviews must evaluate **Spec Fidelity** (missing requirements, scope creep) separately from **Technical Standards** (Fowler's 12 code smells, OWASP, a11y, performance) so neither axis masks the other. Frontends pair with `pk:design` to enforce WCAG 2.2 AA contrast, keyboard navigability, and custom brand tokens defined in `DESIGN.md`.
+
+### 5. Zero Accidental Data Loss & Isolated Project History
+Critical operations require explicit **STOP AND VERIFY** guardrails: no silent database drops, untracked deletions, or destructive resets. Generated project documentation lives cleanly in your project's `./docs/` folder (`docs/adrs/`, `docs/specs/`, `docs/rca/`, `docs/spikes/`, `docs/design/`), keeping your team's architectural history committed to your repo while `.promptkit/` remains an upgradeable engine.
 
 ---
 
