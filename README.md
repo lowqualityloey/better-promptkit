@@ -1,74 +1,141 @@
-# Better PromptKit
+# Better-PromptKit
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![CI](https://github.com/lowqualityloey/better-promptkit/actions/workflows/ci.yml/badge.svg)](https://github.com/lowqualityloey/better-promptkit/actions)
 [![GitHub](https://img.shields.io/badge/GitHub-lowqualityloey%2Fbetter--promptkit-black.svg)](https://github.com/lowqualityloey/better-promptkit)
 
-Engineering workflows, mentorship protocols, and quality gates for developers pairing with AI coding assistants (Antigravity, Claude Code, Gemini CLI, Cursor, Windsurf, GitHub Copilot, and Aider).
+The open-source Engineering Operating System for AI coding assistants (Claude Code, Antigravity, Cursor, Windsurf, GitHub Copilot, Gemini CLI, and Aider).
 
-Better-PromptKit equips your coding assistant with structured development protocols: spec-driven architecture, hypothesis-led debugging, two-axis code reviews, and Socratic mentorship without polluting project commit history or colliding with IDE slash commands.
+Better-PromptKit equips your coding assistant with senior development discipline: spec-driven architecture, Expand-Contract database migrations, scientific root-cause debugging, empirical performance profiling, two-axis code reviews, and atomic Conventional Commits without polluting project commit history or colliding with IDE slash commands.
 
 ---
 
-## Quick Start
+## The 60-Second Overview
 
-Add Better-PromptKit to your repository as a git submodule or direct clone:
+| Question | Answer |
+| :--- | :--- |
+| **What is it?** | A modular, collision-free engineering operating system that lives in your project as `.promptkit/`. |
+| **Who is it for?** | Developers pairing with AI assistants who want senior-level discipline, clean git history, and zero downtime. |
+| **Why is it better?** | Replaces unguided "vibe coding" and token-wasting guess-and-patch loops with structured, deterministic development workflows. |
 
-### Option A: Git Submodule (Recommended)
+---
+
+## Start Here (3-Step Quick Start)
+
+Get up and running in under 60 seconds:
+
+### 1. Add Better-PromptKit to Your Project
 ```bash
+# Recommended: Git Submodule (upgradeable in one command)
 git submodule add https://github.com/lowqualityloey/better-promptkit .promptkit
-```
 
-### Option B: Direct Clone
-```bash
+# Alternative: Direct Clone
 git clone https://github.com/lowqualityloey/better-promptkit .promptkit
 ```
 
----
+### 2. Run Platform Initialization
+Execute the setup script for your environment:
+```bash
+# macOS / Linux (Bash):
+./.promptkit/init.sh
 
-### Run Initialization
-
-Run the setup script for your platform:
-
-**Windows (PowerShell):**
-```powershell
+# Windows (PowerShell):
 .\.promptkit\init.ps1
 ```
+*(Or tell your AI: "Read `.promptkit/protocols/setup.md` to initialize Better-PromptKit in this workspace.")*
 
-**macOS / Linux (Bash):**
-```bash
-./.promptkit/init.sh
-```
-
-**Or via Conversational AI:**
-Tell your assistant:
-> *"Read `.promptkit/protocols/setup.md` to initialize Better-PromptKit in this workspace."*
-
-#### What the initialization script does:
-1. Detects your active AI editor or CLI configuration (`CLAUDE.md`, `GEMINI.md`, `AGENTS.md`, `.cursorrules`, `.windsurfrules`, `.github/copilot-instructions.md`).
-2. Injects conflict-free `pk:` triggers into your agent briefing file.
-3. Scaffolds `PROMPTKIT.md` for project tech stack rules, and links `DESIGN.md` if present for visual brand identity.
-4. Creates documentation folders (`docs/adrs/`, `docs/specs/`, `docs/rca/`, `docs/spikes/`, `docs/design/`, `docs/data/`, `docs/auth/`, `docs/api/`, `docs/tests/`, `docs/perf/`, `docs/releases/`) so architectural decisions stay tracked in your project's repository.
+### 3. Prompt Naturally or Use Shorthand Triggers
+You do not need to memorize triggers. Ask naturally, or activate workflows directly:
+* **Ask naturally**: *"This checkout endpoint is throwing 500 errors under load"* (Auto-routes to `pk:debug`).
+* **Trigger directly**: Type `pk:plan`, `pk:debug`, `pk:perf`, `pk:review`, `pk:commit`, `pk:pr`, or `pk:route`.
 
 ---
 
-### Updating Better-PromptKit
+## The Mental Model: Protocols vs Workflows vs Templates
 
-When new workflows, quality gates, or presets are released, pull the latest changes and re-run initialization:
+To make the system immediately intuitive, Better-PromptKit separates responsibilities into four distinct layers:
 
-**If installed via Git Submodule:**
-```bash
-git submodule update --remote .promptkit
-./.promptkit/init.sh     # or .\.promptkit\init.ps1 on Windows
+| Layer | Plain-English Role | Examples | Where It Lives |
+| :--- | :--- | :--- | :--- |
+| **Protocols** | Non-negotiable rules and quality standards the AI must obey at all times. | Code Quality Gate (Definition of Done), Setup, Context Sync | [`protocols/`](./protocols) |
+| **Workflows** | Step-by-step engineering procedures for each phase of the dev lifecycle. | `pk:plan`, `pk:debug`, `pk:perf`, `pk:commit`, `pk:pr`, `pk:ship` | [`workflows/`](./workflows) |
+| **Templates** | Standardized markdown schemas the AI fills out inside your project repository. | RFC Specs, MADRs, PR descriptions, Test plans, RCA post-mortems | [`templates/`](./templates) $\rightarrow$ `docs/` |
+| **Labs & Notes** | Guided practice simulations, competency matrices, and progressive retrospectives. | System design katas, concurrency simulations, competency matrix | [`activities/`](./activities), [`notes/`](./notes) |
+
+---
+
+## Before vs. After: Why Better-PromptKit Matters
+
+### A Real-World Task: "Add Stripe subscription checkout to our app"
+
+#### Without Better-PromptKit (Ad-Hoc Prompting)
+* **Architecture**: The AI dumps 350 lines of mixed UI, database, and billing logic into a single client component.
+* **Database**: Proposes destructive column alterations that lock production tables and drop historical customer records.
+* **Security**: Hardcodes test keys in client-side code; misses webhook idempotency replay protection.
+* **Verification**: Zero tests written. When code fails, the assistant enters a multi-turn guess-and-patch loop wasting tokens.
+* **Git History**: Stages all files into a single commit with message: *"updated billing files"*.
+
+#### With Better-PromptKit (Engineered Pairing)
+* **Phase 1 (`pk:plan`)**: Generates an RFC spec in `docs/specs/` specifying failure modes and module boundaries before writing code.
+* **Phase 2 (`pk:data`)**: Models subscription schemas with UUIDv7 keys, RLS tenant isolation, and Expand-Contract non-breaking migrations.
+* **Phase 3 (`pk:api`)**: Implements the webhook contract with signature verification, unified error envelopes, and mutation idempotency.
+* **Phase 4 (`pk:test`)**: Allocates testing pyramid seams (Unit tests for pricing logic, Real DB test for webhook handler, Mocked Stripe API).
+* **Phase 5 (`pk:commit` & `pk:pr`)**: Scans for secret leaks (`.env`), formats atomic Conventional Commits, and creates a staff-level PR description with test evidence and rollback procedures.
+
+---
+
+## Lifecycle Workflow Router
+
+Trigger anytime with `pk:route`. Navigate across the entire engineering lifecycle without guessing:
+
+```text
+               [ Inception & Architecture ]
+                            │
+                         pk:plan
+                            │
+     ┌──────────────────────┼──────────────────────┐
+     ▼                      ▼                      ▼
+  pk:data                pk:auth                 pk:api
+(Relational Schema)    (Session & RBAC)    (Endpoints & Types)
+     │                      │                      │
+     └──────────────────────┼──────────────────────┘
+                            │
+                     [ Implementation ]
+                            │
+     ┌──────────────────────┼──────────────────────┐
+     ▼                      ▼                      ▼
+  pk:test               pk:design               pk:spike
+(Pyramid & Mocks)     (Tokens & A11y)      (Risk Spikes)
+     │                      │                      │
+     └──────────────────────┼──────────────────────┘
+                            │
+               [ Verification & Merge ]
+                            │
+     ┌──────────────────────┼──────────────────────┐
+     ▼                      ▼                      ▼
+  pk:debug               pk:perf               pk:review
+(Empirical Root Cause) (Latency & Profiling) (Two-Axis Code Audit)
+     │                      │                      │
+     └──────────────────────┼──────────────────────┘
+                            │
+                        pk:commit
+             (Atomic Conventional Commits)
+                            │
+                         pk:pr
+             (High-Signal PR Descriptions)
+                            │
+                     [ Release & Ops ]
+                            │
+                         pk:ship
+             (Zero-Downtime Deploy & Rollback)
+                            │
+             [ Knowledge Capture & Handover ]
+                            │
+     ┌──────────────────────┴──────────────────────┐
+     ▼                                             ▼
+  pk:retro                                   pk:checkpoint
+(MADR & Journals)                       (Zero-Loss Chat Handover)
 ```
-
-**If installed via Direct Clone:**
-```bash
-git -C .promptkit pull
-./.promptkit/init.sh     # or .\.promptkit\init.ps1 on Windows
-```
-
-The initialization script is idempotent: it refreshes your agent directives in place without duplicating blocks or touching existing project specs.
 
 ---
 
@@ -156,61 +223,6 @@ If you ever want an interactive overview of all workflows, simply run `pk:route`
 
 ---
 
-## Lifecycle Workflow Router
-
-Trigger anytime with `pk:route`. Navigate across the entire engineering lifecycle without guessing:
-
-```text
-               [ Inception & Architecture ]
-                            │
-                         pk:plan
-                            │
-     ┌──────────────────────┼──────────────────────┐
-     ▼                      ▼                      ▼
-  pk:data                pk:auth                 pk:api
-(Relational Schema)    (Session & RBAC)    (Endpoints & Types)
-     │                      │                      │
-     └──────────────────────┼──────────────────────┘
-                            │
-                     [ Implementation ]
-                            │
-     ┌──────────────────────┼──────────────────────┐
-     ▼                      ▼                      ▼
-  pk:test               pk:design               pk:spike
-(Pyramid & Mocks)     (Tokens & A11y)      (Risk Spikes)
-     │                      │                      │
-     └──────────────────────┼──────────────────────┘
-                            │
-               [ Verification & Merge ]
-                            │
-     ┌──────────────────────┼──────────────────────┐
-     ▼                      ▼                      ▼
-  pk:debug               pk:perf               pk:review
-(Empirical Root Cause) (Latency & Profiling) (Two-Axis Code Audit)
-     │                      │                      │
-     └──────────────────────┼──────────────────────┘
-                            │
-                        pk:commit
-             (Atomic Conventional Commits)
-                            │
-                         pk:pr
-             (High-Signal PR Descriptions)
-                            │
-                     [ Release & Ops ]
-                            │
-                         pk:ship
-             (Zero-Downtime Deploy & Rollback)
-                            │
-             [ Knowledge Capture & Handover ]
-                            │
-     ┌──────────────────────┴──────────────────────┐
-     ▼                                             ▼
-  pk:retro                                   pk:checkpoint
-(MADR & Journals)                       (Zero-Loss Chat Handover)
-```
-
----
-
 ## Repository Layout
 
 ```text
@@ -221,11 +233,11 @@ better-promptkit/
 ├── init.ps1                     # Setup script for Windows (PowerShell)
 ├── init.sh                      # Setup script for Linux/macOS (Bash)
 ├── LICENSE                      # Open-source MIT License
-├── protocols/
+├── protocols/                   # Non-negotiable AI rules & operating standards
 │   ├── setup.md                 # Universal multi-agent configuration protocol
 │   ├── context-sync.md          # Tech stack, PROMPTKIT.md, DESIGN.md & git auto-detection
 │   └── code-quality-gate.md     # Non-negotiable definition-of-done & pre-commit gate
-├── workflows/
+├── workflows/                   # Step-by-step engineering lifecycle procedures
 │   ├── route.md                 # Lifecycle decision matrix & workflow triage (pk:route)
 │   ├── tutor.md                 # Socratic mentorship & 3-tier progressive hints (pk:tutor, pk:grill)
 │   ├── plan.md                  # Spec-Driven Development & deep modular design (pk:plan)
@@ -243,7 +255,7 @@ better-promptkit/
 │   ├── design-system.md         # Anti-slop UI, Design Tokens, and WCAG 2.2 accessibility (pk:design)
 │   ├── reflect.md               # Engineering retrospectives & ADR generation (pk:retro)
 │   └── checkpoint.md            # Session state compaction & handover prompt (pk:checkpoint)
-├── templates/
+├── templates/                   # Structured artifact schemas saved to project docs/
 │   ├── project-profile-template.md # Scaffolds PROMPTKIT.md for custom project guardrails
 │   ├── design-profile-template.md  # Scaffolds DESIGN.md for brand identity & visual tokens
 │   ├── data-model-spec.md          # Relational schema & RLS specification
@@ -259,17 +271,17 @@ better-promptkit/
 │   ├── code-review-checklist.md    # Senior Developer PR Review Checklist
 │   ├── design-tokens-spec.md       # Design System & Token Specification
 │   └── spike-template.md           # Technical Spike & Benchmark Evaluation Template
-├── examples/
+├── examples/                    # Reference implementations from real production apps
 │   ├── sample-progress-journal.md  # Retrospective entries from the Shelf full-stack app
 │   └── sample-learning-plan.md     # Engineering OKRs & mental model notes
-├── notes/
+├── notes/                       # Engineering competency & growth templates
 │   ├── README.md                   # Knowledge base guide
 │   ├── learning-plan.md            # Template for engineering OKRs & practice katas
 │   ├── progress-journal.md         # Template for progressive retro logs
 │   ├── skill-matrix.md             # Software Engineering Competency Matrix (L1 → L4)
 │   ├── adrs/                       # Local ADR directory (for standalone vault mode)
 │   └── spikes/                     # Local Spikes directory (for standalone vault mode)
-└── activities/
+└── activities/                  # Interactive simulation katas & system design drills
     ├── README.md                   # Interactive simulation catalog
     ├── 01-system-design-spike.md         # High-throughput webhook engine design
     ├── 02-refactoring-clean-arch.md      # Refactoring monolith to Clean Architecture
@@ -283,9 +295,9 @@ better-promptkit/
 
 ### 1. Three-Tier Progressive Hints
 Instead of dumping complete solutions, the assistant guides developers through progressive hints:
-- **Tier 1 (Mental Model)**: Concept diagrams, data flow, and Socratic guiding questions.
-- **Tier 2 (Structural Blueprint)**: State machines, interface contracts, and pseudocode logic.
-- **Tier 3 (Targeted Micro-Snippet)**: Minimal syntax demonstration of the specific edge case. The engineer writes the implementation.
+* **Tier 1 (Mental Model)**: Concept diagrams, data flow, and Socratic guiding questions.
+* **Tier 2 (Structural Blueprint)**: State machines, interface contracts, and pseudocode logic.
+* **Tier 3 (Targeted Micro-Snippet)**: Minimal syntax demonstration of the specific edge case. The engineer writes the implementation.
 
 ### 2. Spec-Driven Architecture and Zero-Downtime Evolution
 Plans specify interface contracts, module depth (John Ousterhout's deletion test), and failure modes before writing code. Database modifications follow the **Expand-Contract (Parallel Run) pattern** so changes deploy without downtime or breaking active connections.
@@ -293,13 +305,16 @@ Plans specify interface contracts, module depth (John Ousterhout's deletion test
 ### 3. Empirical Feedback Loops and Scientific Debugging
 The `pk:debug` workflow requires establishing a fast (<3s), deterministic, red-capable command before generating hypotheses. Developers isolate load-bearing reproductions, tag debug logs with unique prefixes (`[DEBUG-xxxx]`), and remove all probes before merging.
 
-### 4. Two-Axis Review and Anti-Slop Design
+### 4. Empirical Performance Profiling
+The `pk:perf` workflow enforces the law: *"No baseline metric, no optimization code."* Captures pre-optimization baseline metrics (p50/p95/p99, throughput, memory, bundle size) under controlled load, isolates bottlenecks across Database (`EXPLAIN ANALYZE`), Runtime (CPU/event-loop), and Client (render churn/bundle bloat), and verifies measurable deltas.
+
+### 5. Two-Axis Review and Anti-Slop Design
 Reviews evaluate **Spec Fidelity** (missing requirements, scope creep) separately from **Technical Standards** (Fowler's 12 code smells, OWASP, a11y, performance) so neither axis masks the other. Frontends follow WCAG 2.2 AA contrast rules, keyboard navigability, and custom brand tokens from `DESIGN.md`.
 
-### 5. Accidental Data Loss Prevention and Isolated History
+### 6. Accidental Data Loss Prevention and Isolated History
 Destructive operations (dropping tables, broad deletions, hard git resets) trigger a mandatory halt-and-verify step. All generated project documentation is stored in your project's `./docs/` folder, keeping team history in your git repository while `.promptkit/` remains an upgradeable submodule.
 
-### 6. Atomic Conventional Commits and Secret Leak Prevention
+### 7. Atomic Conventional Commits and Secret Leak Prevention
 The `pk:commit` workflow enforces single-concern atomic commits instead of bundling unrelated changes. Before staging, it scans for secret leaks (`.env`, credentials) and temporary debug probes (`[DEBUG-xxxx]`), formatting high-signal messages strictly according to the Conventional Commits v1.0.0 standard.
 
 ---
@@ -310,21 +325,23 @@ Better-PromptKit operates on two complementary levels:
 
 ### 1. Universal Engineering Protocols (Language-Agnostic)
 The core architectural principles apply across any tech stack (TypeScript, Python, Go, Rust, Java):
-- Spec-Driven Development and deep module boundaries (`pk:plan`)
-- Relational schema design, composite index ordering, and transaction boundaries (`pk:data`)
-- Cookie security flags, OAuth PKCE flows, and capability-based RBAC (`pk:auth`)
-- Unified error envelopes, pagination conventions, and idempotency (`pk:api`)
-- Testing pyramid seam allocations and mock boundaries (`pk:test`)
-- Empirical reproduction loops and scientific debugging (`pk:debug`)
-- Atomic Conventional Commits and pre-flight staging (`pk:commit`)
-- Zero-loss session checkpoints and context compaction (`pk:checkpoint`)
-- Zero-downtime Expand-Contract migration sequencing (`pk:ship`)
+* Spec-Driven Development and deep module boundaries (`pk:plan`)
+* Relational schema design, composite index ordering, and transaction boundaries (`pk:data`)
+* Cookie security flags, OAuth PKCE flows, and capability-based RBAC (`pk:auth`)
+* Unified error envelopes, pagination conventions, and idempotency (`pk:api`)
+* Testing pyramid seam allocations and mock boundaries (`pk:test`)
+* Empirical reproduction loops and scientific debugging (`pk:debug`)
+* Performance profiling, latency SLAs, and EXPLAIN ANALYZE (`pk:perf`)
+* Atomic Conventional Commits and pre-flight staging (`pk:commit`)
+* High-signal Pull Request authoring and verification evidence (`pk:pr`)
+* Zero-loss session checkpoints and context compaction (`pk:checkpoint`)
+* Zero-downtime Expand-Contract migration sequencing (`pk:ship`)
 
 ### 2. First-Class Battle-Tested Presets
 While protocols remain universal, workflows and scaffolding provide tailored templates and detection presets for the modern fullstack web ecosystem:
-- **Frontend**: React 19, Next.js (App Router), Tailwind CSS (v3 / v4), Radix UI, Headless UI.
-- **Database & Auth**: PostgreSQL, Supabase (Auth + Row-Level Security), Prisma, Drizzle ORM, Kysely.
-- **API & Handshake**: tRPC, Next.js Server Actions, Zod, OpenAPI.
+* **Frontend**: React 19, Next.js (App Router), Tailwind CSS (v3 / v4), Radix UI, Headless UI.
+* **Database & Auth**: PostgreSQL, Supabase (Auth + Row-Level Security), Prisma, Drizzle ORM, Kysely.
+* **API & Handshake**: tRPC, Next.js Server Actions, Zod, OpenAPI.
 
 ---
 
@@ -334,18 +351,18 @@ Better-PromptKit separates universal workflow protocols from project-specific ru
 
 ### 1. `PROMPTKIT.md` (Engineering Guardrails & Stack Constraints)
 Scaffolded automatically during initialization from `templates/project-profile-template.md`. This file tells the assistant your project's non-negotiable boundaries:
-- **Project Domain & Users**: Contextual overview so the assistant grasps business context.
-- **Active Commands**: Explicit test runner (`pnpm test:e2e`), typecheck (`pnpm tsc --noEmit`), and linter commands.
-- **Non-Negotiable Guardrails**: Hard architectural invariants (e.g., zero `any` in TypeScript, no business logic in React components, mandatory database check constraints).
-- **Artifact Storage**: Destination paths for all generated specs (`docs/specs/`, `docs/data/`, `docs/auth/`, etc.).
+* **Project Domain & Users**: Contextual overview so the assistant grasps business context.
+* **Active Commands**: Explicit test runner (`pnpm test:e2e`), typecheck (`pnpm tsc --noEmit`), and linter commands.
+* **Non-Negotiable Guardrails**: Hard architectural invariants (e.g., zero `any` in TypeScript, no business logic in React components, mandatory database check constraints).
+* **Artifact Storage**: Destination paths for all generated specs (`docs/specs/`, `docs/data/`, `docs/auth/`, `docs/perf/`, etc.).
 
 ### 2. `DESIGN.md` (Visual Brand & Anti-Slop Authority)
 Optional brand identity file created from `templates/design-profile-template.md`. Serves as the supreme visual authority for all UI generation (`pk:design`, `pk:review`):
-- **Color Tokens**: Neutral base, primary brand tone, and deliberate focal accents.
-- **Anti-Slop Directives**: Explicit bans on generic AI aesthetics (no purple-to-cyan gradients, no glowing backdrops, no uniform pill badges).
-- **Typography & Numerics**: Heading fonts, widow prevention (`text-wrap: balance`), and mandatory `tabular-nums` for financial tables and timers.
-- **Surfaces & Radii**: Hierarchy rules (`rounded-md` controls, `rounded-lg` containers) and elevation dose caps.
-- **Mobile Ergonomics**: Minimum $44 \times 44\text{px}$ touch targets and single-column mobile reflow.
+* **Color Tokens**: Neutral base, primary brand tone, and deliberate focal accents.
+* **Anti-Slop Directives**: Explicit bans on generic AI aesthetics (no purple-to-cyan gradients, no glowing backdrops, no uniform pill badges).
+* **Typography & Numerics**: Heading fonts, widow prevention (`text-wrap: balance`), and mandatory `tabular-nums` for financial tables and timers.
+* **Surfaces & Radii**: Hierarchy rules (`rounded-md` controls, `rounded-lg` containers) and elevation dose caps.
+* **Mobile Ergonomics**: Minimum $44 \times 44\text{px}$ touch targets and single-column mobile reflow.
 
 ---
 
@@ -359,6 +376,26 @@ Optional brand identity file created from `templates/design-profile-template.md`
 | **Windsurf IDE** | `.windsurfrules` | Cascade auto-detects rules |
 | **GitHub Copilot** | `.github/copilot-instructions.md` | Copilot Chat references instructions |
 | **Aider** | `CONVENTIONS.md` | `aider --read .promptkit/workflows/tutor.md` |
+
+---
+
+## Updating Better-PromptKit
+
+When new workflows, quality gates, or presets are released, pull the latest changes and re-run initialization:
+
+**If installed via Git Submodule:**
+```bash
+git submodule update --remote .promptkit
+./.promptkit/init.sh     # or .\.promptkit\init.ps1 on Windows
+```
+
+**If installed via Direct Clone:**
+```bash
+git -C .promptkit pull
+./.promptkit/init.sh     # or .\.promptkit\init.ps1 on Windows
+```
+
+The initialization script is idempotent: it refreshes your agent directives in place without duplicating blocks or touching existing project specs.
 
 ---
 
