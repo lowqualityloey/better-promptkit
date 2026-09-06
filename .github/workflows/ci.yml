@@ -72,6 +72,7 @@ jobs:
             "workflows/research.md"
             "workflows/design-system.md"
             "workflows/reflect.md"
+            "workflows/checkpoint.md"
             "protocols/setup.md"
             "protocols/code-quality-gate.md"
             "protocols/context-sync.md"
@@ -95,7 +96,7 @@ jobs:
               exit 1
             fi
           done
-          echo "All 30 referenced files exist on disk."
+          echo "All 31 referenced files exist on disk."
 
   validate-windows:
     name: Lint & Validate (Windows)

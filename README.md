@@ -95,6 +95,7 @@ All triggers use the `pk:` prefix to avoid collisions with native slash commands
 | `pk:spike` | Technical research spikes: tests the sharpest risk first, compares against the boring baseline, with direct ADR export. | `docs/spikes/` |
 | `pk:design` | UI design: anti-slop guidelines, WCAG 2.2 AA contrast/keyboard compliance, React runtime performance, and `DESIGN.md` brand tokens. | `docs/design/` |
 | `pk:retro` | Post-implementation retrospective: extracts architectural decisions into MADRs and logs progress. | `docs/adrs/` & journal |
+| `pk:checkpoint` | Session checkpoint & handover: state compaction, invariant locking, and fresh chat handover prompt. | Conversation / Notes |
 
 ---
 
@@ -118,6 +119,7 @@ For non-trivial changes (features, crashes, schema changes, auth flows, releases
 * **Testing strategy & seams**: Auto-routes to `pk:test` (seam allocation before code).
 * **Code review & PR audits**: Auto-routes to `pk:review` (two-axis quality check).
 * **Git commits & staging**: Auto-routes to `pk:commit` (atomic staging, secret scan, Conventional Commits).
+* **Context bloat & handovers**: Auto-routes to `pk:checkpoint` (session compaction, zero-loss chat handover).
 * **Production deployment & env vars**: Auto-routes to `pk:ship` (validates runtime env and rollback steps).
 
 If you ever want an interactive overview of all workflows, simply run `pk:route` or ask the assistant to route your task.
@@ -192,10 +194,12 @@ Trigger anytime with `pk:route`. Navigate across the entire engineering lifecycl
                          pk:ship
              (Zero-Downtime Deploy & Rollback)
                             │
-                   [ Knowledge Capture ]
+             [ Knowledge Capture & Handover ]
                             │
-                         pk:retro
-             (MADR Records & Progress Journal)
+     ┌──────────────────────┴──────────────────────┐
+     ▼                                             ▼
+  pk:retro                                   pk:checkpoint
+(MADR & Journals)                       (Zero-Loss Chat Handover)
 ```
 
 ---
@@ -228,7 +232,8 @@ better-promptkit/
 │   ├── ship.md                  # Release engineering, runtime env checks & rollbacks (pk:ship)
 │   ├── research.md              # Technical spikes & sharpest-risk benchmark matrix (pk:spike)
 │   ├── design-system.md         # Anti-slop UI, Design Tokens, and WCAG 2.2 accessibility (pk:design)
-│   └── reflect.md               # Engineering retrospectives & ADR generation (pk:retro)
+│   ├── reflect.md               # Engineering retrospectives & ADR generation (pk:retro)
+│   └── checkpoint.md            # Session state compaction & handover prompt (pk:checkpoint)
 ├── templates/
 │   ├── project-profile-template.md # Scaffolds PROMPTKIT.md for custom project guardrails
 │   ├── design-profile-template.md  # Scaffolds DESIGN.md for brand identity & visual tokens
@@ -301,6 +306,7 @@ The core architectural principles apply across any tech stack (TypeScript, Pytho
 - Testing pyramid seam allocations and mock boundaries (`pk:test`)
 - Empirical reproduction loops and scientific debugging (`pk:debug`)
 - Atomic Conventional Commits and pre-flight staging (`pk:commit`)
+- Zero-loss session checkpoints and context compaction (`pk:checkpoint`)
 - Zero-downtime Expand-Contract migration sequencing (`pk:ship`)
 
 ### 2. First-Class Battle-Tested Presets

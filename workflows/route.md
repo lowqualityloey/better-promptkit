@@ -32,10 +32,11 @@ Find your current engineering context below and activate the corresponding workf
 | **Defect, Bug or Regression** | `pk:debug` | `docs/rca/` | Red loop first, tagged probes, 5-Whys post-mortem |
 | **Pre-Merge Pull Request Audit**| `pk:review` | Review report | Two-axis review: Spec Fidelity vs Technical Standards |
 | **Atomic Git Staging & Commit** | `pk:commit` | Git History | Conventional Commits, single-concern staging, secret leak check |
-| **Zero-Downtime Deployment** | `pk:ship` | `docs/releases/` | Runtime env validation, Expand-Contract migrations |
-| **Post-Implementation Retro** | `pk:retro` | `docs/adrs/` & journal| MADR records, progress journal, skill matrix updates |
-| **Learning & Socratic Coaching**| `pk:tutor` | Conversation / Notes | 3-tier progressive hints, conceptual mental models |
-| **Architecture Defense Drill** | `pk:grill` | Conversation / Notes | Staff Engineer Devil's Advocate stress-testing |
+| **Context Bloat & Handover**    | `pk:checkpoint`| Conversation / Notes | Session state compaction, invariant locking, fresh chat prompt |
+| **Zero-Downtime Deployment**    | `pk:ship`   | `docs/releases/` | Runtime env validation, Expand-Contract migrations |
+| **Post-Implementation Retro**   | `pk:retro`  | `docs/adrs/` & journal| MADR records, progress journal, skill matrix updates |
+| **Learning & Socratic Coaching**| `pk:tutor`  | Conversation / Notes | 3-tier progressive hints, conceptual mental models |
+| **Architecture Defense Drill**  | `pk:grill`  | Conversation / Notes | Staff Engineer Devil's Advocate stress-testing |
 
 ---
 
@@ -79,10 +80,12 @@ Find your current engineering context below and activate the corresponding workf
                          pk:ship
              (Zero-Downtime Deploy & Rollback)
                             │
-                   [ Knowledge Capture ]
+             [ Knowledge Capture & Handover ]
                             │
-                         pk:retro
-             (MADR Records & Progress Journal)
+     ┌──────────────────────┴──────────────────────┐
+     ▼                                             ▼
+  pk:retro                                   pk:checkpoint
+(MADR & Journals)                       (Zero-Loss Chat Handover)
 ```
 
 ---
@@ -95,6 +98,7 @@ When a developer asks for help without specifying a command, the assistant shoul
    - *Pre-code*: Are we clarifying requirements (`pk:plan`), evaluating an unknown library (`pk:spike`), or designing schemas (`pk:data` / `pk:auth` / `pk:api`)?
    - *Active coding*: Are we building tests (`pk:test`), styling components (`pk:design`), or investigating broken behavior (`pk:debug`)?
    - *Post-code*: Are we auditing code quality (`pk:review`), staging atomic commits (`pk:commit`), shipping to production (`pk:ship`), or capturing decisions (`pk:retro`)?
+   - *Session pause / Handover*: Are we experiencing context window bloat or switching to a fresh chat window (`pk:checkpoint`)?
 
 2. **Is there an active broken state?**
    - If yes: Immediately recommend `pk:debug`. Stop writing speculative code until a deterministic reproduction loop (<3 seconds) is established.
@@ -131,6 +135,8 @@ If the request involves non-trivial engineering changes (new features, crashes, 
    - **Test suites, unit/integration splits, mock boundaries**: Auto-route to `pk:test`. Allocate pyramid seams before code.
    - **PR review, diff audit, refactoring assessment**: Auto-route to `pk:review`. Audit against spec fidelity and Fowler smells.
    - **Git commits, staging changes, commit message generation**: Auto-route to `pk:commit`. Scan for secret leaks and format Conventional Commit.
+   - **Context bloat, chat lag, session handover, or pausing**: Auto-route to `pk:checkpoint`. Compress working state and generate handover prompt.
    - **Production deployment, env vars, rollback prep**: Auto-route to `pk:ship`. Run runtime env validation and release checklist.
+
 
 

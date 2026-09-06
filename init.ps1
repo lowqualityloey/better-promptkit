@@ -126,6 +126,7 @@ Activate workflows anytime with these namespaced triggers:
 - `pk:spike` (or `pk:research`): Technical spikes, benchmarks, and multi-vector trade-off matrices.
 - `pk:design`: Modern UI/UX, Design Tokens, and WCAG 2.2 Level AA accessibility.
 - `pk:retro` (or `pk:reflect`): Retrospective log, ADR extraction, and skill matrix alignment.
+- `pk:checkpoint` (or `pk:handoff`): Session state compaction, invariant locking, and fresh chat handover prompt.
 
 ### Smart Auto-Route & Guardrails (Triggers Are Optional)
 You do not need to memorize triggers. If a prompt lacks an explicit `pk:` trigger, apply this triage:
@@ -139,6 +140,7 @@ You do not need to memorize triggers. If a prompt lacks an explicit `pk:` trigge
   - Test suites, seam allocation, or mocking -> `pk:test` (pyramid seam allocation)
   - Code audits or PR reviews -> `pk:review` (two-axis standard review)
   - Git commits, staging, or PR preparation -> `pk:commit` (atomic conventional commits)
+  - Context bloat, chat lag, session handover, or pausing -> `pk:checkpoint` (zero-loss handover)
   - Deployments, env validation, or releases -> `pk:ship` (pre-flight checks and rollback)
   When auto-routing a substantive task, announce it briefly in one sentence (e.g., "[Better-PromptKit: Auto-routed to pk:plan]") and enforce its quality gate.
 
@@ -157,6 +159,7 @@ You do not need to memorize triggers. If a prompt lacks an explicit `pk:` trigge
 - **Research**: $KitDirRel/workflows/research.md
 - **Design System**: $KitDirRel/workflows/design-system.md
 - **Reflect**: $KitDirRel/workflows/reflect.md
+- **Checkpoint**: $KitDirRel/workflows/checkpoint.md
 - **Quality Gate (DoD)**: $KitDirRel/protocols/code-quality-gate.md
 - **Context Sync**: $KitDirRel/protocols/context-sync.md
 - **Project Profile & Rules**: ./PROMPTKIT.md (if present)
