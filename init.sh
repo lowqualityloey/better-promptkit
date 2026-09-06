@@ -97,6 +97,7 @@ Activate workflows anytime with these namespaced triggers:
 - \`pk:grill\`: Intensive Staff Engineer architecture interview and defense drill.
 - \`pk:plan\`: Spec-Driven Architecture & feature planning (domain models, API contracts, failure modes).
 - \`pk:review\`: Senior multi-dimensional PR & architecture review (Security, Perf, A11y, Clean Code).
+- \`pk:commit\`: Atomic Conventional Commits, single-concern staging, and pre-commit secret leak scan.
 - \`pk:debug\`: Hypothesis-driven scientific debugging & root cause analysis (5-Whys).
 - \`pk:data\` (or \`pk:db\`): Relational database modeling, indexing strategies, RLS, and transaction boundaries.
 - \`pk:auth\`: Authentication flows, cookie security, session management, and RBAC/ABAC matrices.
@@ -117,8 +118,9 @@ You do not need to memorize triggers. If a prompt lacks an explicit \`pk:\` trig
   - Auth, sessions, cookies, or RBAC -> \`pk:auth\` (threat model and capability matrix)
   - Endpoints, contracts, or client types -> \`pk:api\` (envelope and schemas)
   - Test suites, seam allocation, or mocking -> \`pk:test\` (pyramid seam allocation)
-  - Deployments, env validation, or releases -> \`pk:ship\` (pre-flight checks and rollback)
   - Code audits or PR reviews -> \`pk:review\` (two-axis standard review)
+  - Git commits, staging, or PR preparation -> \`pk:commit\` (atomic conventional commits)
+  - Deployments, env validation, or releases -> \`pk:ship\` (pre-flight checks and rollback)
   When auto-routing a substantive task, announce it briefly in one sentence (e.g., "[Better-PromptKit: Auto-routed to pk:plan]") and enforce its quality gate.
 
 ### Workflows & Protocols Reference
@@ -126,6 +128,7 @@ You do not need to memorize triggers. If a prompt lacks an explicit \`pk:\` trig
 - **Tutor**: $KIT_DIR_REL/workflows/tutor.md
 - **Plan**: $KIT_DIR_REL/workflows/plan.md
 - **Review**: $KIT_DIR_REL/workflows/review.md
+- **Commit**: $KIT_DIR_REL/workflows/commit.md
 - **Debug**: $KIT_DIR_REL/workflows/debug.md
 - **Data**: $KIT_DIR_REL/workflows/data.md
 - **Auth**: $KIT_DIR_REL/workflows/auth.md

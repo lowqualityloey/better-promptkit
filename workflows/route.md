@@ -31,6 +31,7 @@ Find your current engineering context below and activate the corresponding workf
 | **Unproven Tech or Benchmark** | `pk:spike` | `docs/spikes/` | Sharpest-risk test, baseline comparison, ADR |
 | **Defect, Bug or Regression** | `pk:debug` | `docs/rca/` | Red loop first, tagged probes, 5-Whys post-mortem |
 | **Pre-Merge Pull Request Audit**| `pk:review` | Review report | Two-axis review: Spec Fidelity vs Technical Standards |
+| **Atomic Git Staging & Commit** | `pk:commit` | Git History | Conventional Commits, single-concern staging, secret leak check |
 | **Zero-Downtime Deployment** | `pk:ship` | `docs/releases/` | Runtime env validation, Expand-Contract migrations |
 | **Post-Implementation Retro** | `pk:retro` | `docs/adrs/` & journal| MADR records, progress journal, skill matrix updates |
 | **Learning & Socratic Coaching**| `pk:tutor` | Conversation / Notes | 3-tier progressive hints, conceptual mental models |
@@ -70,6 +71,9 @@ Find your current engineering context below and activate the corresponding workf
      │                                             │
      └──────────────────────┬──────────────────────┘
                             │
+                        pk:commit
+             (Atomic Conventional Commits)
+                            │
                      [ Release & Ops ]
                             │
                          pk:ship
@@ -90,7 +94,7 @@ When a developer asks for help without specifying a command, the assistant shoul
 1. **What phase of the change are you in?**
    - *Pre-code*: Are we clarifying requirements (`pk:plan`), evaluating an unknown library (`pk:spike`), or designing schemas (`pk:data` / `pk:auth` / `pk:api`)?
    - *Active coding*: Are we building tests (`pk:test`), styling components (`pk:design`), or investigating broken behavior (`pk:debug`)?
-   - *Post-code*: Are we auditing code quality before merging (`pk:review`), shipping to production (`pk:ship`), or capturing architectural decisions (`pk:retro`)?
+   - *Post-code*: Are we auditing code quality (`pk:review`), staging atomic commits (`pk:commit`), shipping to production (`pk:ship`), or capturing decisions (`pk:retro`)?
 
 2. **Is there an active broken state?**
    - If yes: Immediately recommend `pk:debug`. Stop writing speculative code until a deterministic reproduction loop (<3 seconds) is established.
@@ -125,6 +129,8 @@ If the request involves non-trivial engineering changes (new features, crashes, 
    - **Login, session tokens, cookies, permissions**: Auto-route to `pk:auth`. Establish the capability matrix first.
    - **API routes, endpoints, contracts, error envelopes**: Auto-route to `pk:api`. Define schema types and envelope formats first.
    - **Test suites, unit/integration splits, mock boundaries**: Auto-route to `pk:test`. Allocate pyramid seams before code.
-   - **Production deployment, env vars, rollback prep**: Auto-route to `pk:ship`. Run runtime env validation and release checklist.
    - **PR review, diff audit, refactoring assessment**: Auto-route to `pk:review`. Audit against spec fidelity and Fowler smells.
+   - **Git commits, staging changes, commit message generation**: Auto-route to `pk:commit`. Scan for secret leaks and format Conventional Commit.
+   - **Production deployment, env vars, rollback prep**: Auto-route to `pk:ship`. Run runtime env validation and release checklist.
+
 

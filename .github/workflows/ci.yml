@@ -62,6 +62,7 @@ jobs:
             "workflows/tutor.md"
             "workflows/plan.md"
             "workflows/review.md"
+            "workflows/commit.md"
             "workflows/debug.md"
             "workflows/data.md"
             "workflows/auth.md"
@@ -94,7 +95,7 @@ jobs:
               exit 1
             fi
           done
-          echo "All 29 referenced files exist on disk."
+          echo "All 30 referenced files exist on disk."
 
   validate-windows:
     name: Lint & Validate (Windows)

@@ -85,6 +85,7 @@ All triggers use the `pk:` prefix to avoid collisions with native slash commands
 | `pk:grill` | Staff-level architecture defense drill challenging assumptions and edge cases. | Conversation / Notes |
 | `pk:plan` | Spec-driven architecture: deep module design, Expand-Contract zero-downtime database migrations, and TDD milestones. | `docs/specs/` |
 | `pk:review` | Two-axis review: Spec Fidelity vs. Technical Standards (Martin Fowler's 12 code smells), with data loss prevention audits. | Review report |
+| `pk:commit` | Atomic Conventional Commits: single-concern staging, Conventional Commits v1.0.0, and secret leak scanning. | Git History |
 | `pk:debug` | Scientific debugging: 10-tier feedback loop hierarchy, "no red loop, no Phase 2" gate, tagged logs (`[DEBUG-xxxx]`), and 5-Whys. | `docs/rca/` |
 | `pk:data` | Relational database design: primary keys, composite indexing, Row-Level Security (RLS) policies, and transaction boundaries. | `docs/data/` |
 | `pk:auth` | Authentication architecture: cookie security (HttpOnly, SameSite), OAuth PKCE, session management, and RBAC/ABAC matrices. | `docs/auth/` |
@@ -115,8 +116,9 @@ For non-trivial changes (features, crashes, schema changes, auth flows, releases
 * **Auth, cookies, session security**: Auto-routes to `pk:auth` (builds a capability matrix).
 * **API contracts & endpoints**: Auto-routes to `pk:api` (types and error envelopes).
 * **Testing strategy & seams**: Auto-routes to `pk:test` (seam allocation before code).
-* **Production deployment & env vars**: Auto-routes to `pk:ship` (validates runtime env and rollback steps).
 * **Code review & PR audits**: Auto-routes to `pk:review` (two-axis quality check).
+* **Git commits & staging**: Auto-routes to `pk:commit` (atomic staging, secret scan, Conventional Commits).
+* **Production deployment & env vars**: Auto-routes to `pk:ship` (validates runtime env and rollback steps).
 
 If you ever want an interactive overview of all workflows, simply run `pk:route` or ask the assistant to route your task.
 
@@ -182,6 +184,9 @@ Trigger anytime with `pk:route`. Navigate across the entire engineering lifecycl
      │                                             │
      └──────────────────────┬──────────────────────┘
                             │
+                        pk:commit
+             (Atomic Conventional Commits)
+                            │
                      [ Release & Ops ]
                             │
                          pk:ship
@@ -214,6 +219,7 @@ better-promptkit/
 │   ├── tutor.md                 # Socratic mentorship & 3-tier progressive hints (pk:tutor, pk:grill)
 │   ├── plan.md                  # Spec-Driven Development & deep modular design (pk:plan)
 │   ├── review.md                # Two-axis PR & Fowler smell review with data safety audit (pk:review)
+│   ├── commit.md                # Atomic Conventional Commits & staging hygiene (pk:commit)
 │   ├── debug.md                 # Empirical feedback-loop debugging & root cause analysis (pk:debug)
 │   ├── data.md                  # Relational schema design, composite indexes & RLS (pk:data)
 │   ├── auth.md                  # Authentication, cookie security & RBAC/ABAC (pk:auth)
@@ -277,6 +283,9 @@ Reviews evaluate **Spec Fidelity** (missing requirements, scope creep) separatel
 ### 5. Accidental Data Loss Prevention and Isolated History
 Destructive operations (dropping tables, broad deletions, hard git resets) trigger a mandatory halt-and-verify step. All generated project documentation is stored in your project's `./docs/` folder, keeping team history in your git repository while `.promptkit/` remains an upgradeable submodule.
 
+### 6. Atomic Conventional Commits and Secret Leak Prevention
+The `pk:commit` workflow enforces single-concern atomic commits instead of bundling unrelated changes. Before staging, it scans for secret leaks (`.env`, credentials) and temporary debug probes (`[DEBUG-xxxx]`), formatting high-signal messages strictly according to the Conventional Commits v1.0.0 standard.
+
 ---
 
 ## Ecosystem and Framework Scope
@@ -291,6 +300,7 @@ The core architectural principles apply across any tech stack (TypeScript, Pytho
 - Unified error envelopes, pagination conventions, and idempotency (`pk:api`)
 - Testing pyramid seam allocations and mock boundaries (`pk:test`)
 - Empirical reproduction loops and scientific debugging (`pk:debug`)
+- Atomic Conventional Commits and pre-flight staging (`pk:commit`)
 - Zero-downtime Expand-Contract migration sequencing (`pk:ship`)
 
 ### 2. First-Class Battle-Tested Presets

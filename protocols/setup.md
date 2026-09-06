@@ -68,6 +68,7 @@ Activate workflows anytime with these namespaced triggers:
 - `pk:grill`: Intensive Staff Engineer architecture interview and defense drill.
 - `pk:plan`: Spec-Driven Architecture & feature planning (domain models, API contracts, failure modes).
 - `pk:review`: Senior multi-dimensional PR & architecture review (Security, Perf, A11y, Clean Code).
+- `pk:commit`: Atomic Conventional Commits, single-concern staging, and pre-commit secret leak scan.
 - `pk:debug`: Hypothesis-driven scientific debugging & root cause analysis (5-Whys).
 - `pk:data` (or `pk:db`): Relational database modeling, indexing strategies, RLS, and transaction boundaries.
 - `pk:auth`: Authentication flows, cookie security, session management, and RBAC/ABAC matrices.
@@ -88,8 +89,9 @@ You do not need to memorize triggers. If a prompt lacks an explicit `pk:` trigge
   - Auth, sessions, cookies, or RBAC -> `pk:auth` (threat model and capability matrix)
   - Endpoints, contracts, or client types -> `pk:api` (envelope and schemas)
   - Test suites, seam allocation, or mocking -> `pk:test` (pyramid seam allocation)
-  - Deployments, env validation, or releases -> `pk:ship` (pre-flight checks and rollback)
   - Code audits or PR reviews -> `pk:review` (two-axis standard review)
+  - Git commits, staging, or PR preparation -> `pk:commit` (atomic conventional commits)
+  - Deployments, env validation, or releases -> `pk:ship` (pre-flight checks and rollback)
   When auto-routing a substantive task, announce it briefly in one sentence (e.g., "[Better-PromptKit: Auto-routed to pk:plan]") and enforce its quality gate.
 
 ### Workflows & Protocols Reference
@@ -97,6 +99,7 @@ You do not need to memorize triggers. If a prompt lacks an explicit `pk:` trigge
 - **Tutor**: `.promptkit/workflows/tutor.md`
 - **Plan**: `.promptkit/workflows/plan.md`
 - **Review**: `.promptkit/workflows/review.md`
+- **Commit**: `.promptkit/workflows/commit.md`
 - **Debug**: `.promptkit/workflows/debug.md`
 - **Data**: `.promptkit/workflows/data.md`
 - **Auth**: `.promptkit/workflows/auth.md`
@@ -134,6 +137,7 @@ After updating configuration:
    - `[pk:tutor]`: Explore a concept, debug together, or build mental models.
    - `[pk:plan]`: Design an architecture, draft an RFC/spec, or break down a feature.
    - `[pk:review]`: Conduct a Senior-level code & architecture audit on recent changes.
+   - `[pk:commit]`: Stage atomic changes, scan for secret leaks, and format Conventional Commits.
    - `[pk:debug]`: Perform systematic root cause analysis on a defect.
    - `[pk:data]`: Design relational schemas, indexes, and RLS policies.
    - `[pk:auth]`: Architect authentication, cookies, and RBAC matrices.
@@ -143,6 +147,7 @@ After updating configuration:
    - `[pk:spike]`: Run a technical spike comparing libraries/patterns.
    - `[pk:design]`: Design accessible UI components with modern tokens.
    - `[pk:retro]`: Run a retro on completed work, capture insights, and generate ADRs.
+
 
 ---
 

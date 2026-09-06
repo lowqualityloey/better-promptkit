@@ -76,3 +76,5 @@ Before completing any coding task or finishing a Better-PromptKit session:
 2. Run test suites (`npm test`, `pytest`, `cargo test`, or commands in `./PROMPTKIT.md`).
 3. Audit against the checklist above.
 4. If any gate fails, address it before declaring the task done.
+5. When ready to stage and commit, invoke `workflows/commit.md` (`pk:commit`) to ensure atomic staging, Conventional Commit formatting, and secret leak prevention.
+
