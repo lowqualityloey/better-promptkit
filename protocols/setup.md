@@ -49,6 +49,7 @@ Ensure the host repository contains documentation directories so generated artif
 - `docs/auth/`: Authentication & Authorization Matrices
 - `docs/api/`: API Contracts & Error Specifications
 - `docs/tests/`: Test Plans, Seam Allocations & Test Matrices
+- `docs/perf/`: Performance Audits, Query Execution Plans & Profiling Reports
 - `docs/releases/`: Release Checklists, Rollback Decision Logs & Verification Reports
 
 If `PROMPTKIT.md` does not exist in the project root, copy `.promptkit/templates/project-profile-template.md` to `./PROMPTKIT.md` for project-specific rules and commands. If `DESIGN.md` is desired for custom visual identity, copy `.promptkit/templates/design-profile-template.md` to `./DESIGN.md`.
@@ -71,6 +72,7 @@ Activate workflows anytime with these namespaced triggers:
 - `pk:commit`: Atomic Conventional Commits, single-concern staging, and pre-commit secret leak scan.
 - `pk:pr`: High-signal PR descriptions, verification evidence compilation, data safety checklist, and GitHub CLI creation.
 - `pk:debug`: Hypothesis-driven scientific debugging & root cause analysis (5-Whys).
+- `pk:perf` (or `pk:profile`): Empirical performance profiling, latency SLAs, EXPLAIN ANALYZE, and delta verification.
 - `pk:data` (or `pk:db`): Relational database modeling, indexing strategies, RLS, and transaction boundaries.
 - `pk:auth`: Authentication flows, cookie security, session management, and RBAC/ABAC matrices.
 - `pk:api`: Frontend-backend handshake, unified error envelopes, and contract generation.
@@ -86,6 +88,7 @@ You do not need to memorize triggers. If a prompt lacks an explicit `pk:` trigge
 - **Fast-Path (Zero Overhead)**: For simple questions, syntax lookups, quick explanations, formatting, or single-line tweaks, answer directly and concisely. Do NOT invoke heavy workflow ceremonies or produce unnecessary documents.
 - **Protocol Auto-Route (Substantive Tasks)**: For multi-file changes, architecture, broken code, or production ops, automatically adopt the matching workflow:
   - Defects, bugs, crashes, or test failures -> `pk:debug` (reproduce before patching)
+  - Performance regressions, slow queries, or latency -> `pk:perf` (measure baseline first)
   - New features, redesigns, or multi-component additions -> `pk:plan` (spec and risk analysis first)
   - Database schema, indexing, or migrations -> `pk:data` (Expand-Contract ordering)
   - Auth, sessions, cookies, or RBAC -> `pk:auth` (threat model and capability matrix)
@@ -106,6 +109,7 @@ You do not need to memorize triggers. If a prompt lacks an explicit `pk:` trigge
 - **Commit**: `.promptkit/workflows/commit.md`
 - **Pull Request**: `.promptkit/workflows/pr.md`
 - **Debug**: `.promptkit/workflows/debug.md`
+- **Performance**: `.promptkit/workflows/perf.md`
 - **Data**: `.promptkit/workflows/data.md`
 - **Auth**: `.promptkit/workflows/auth.md`
 - **API**: `.promptkit/workflows/api.md`
@@ -131,6 +135,7 @@ All generated project documentation must be saved to the host project:
 - Auth Specs: `docs/auth/`
 - API Contracts: `docs/api/`
 - Test Plans: `docs/tests/`
+- Performance Audits: `docs/perf/`
 - Releases: `docs/releases/`
 <!-- PROMPTKIT_END -->
 ```
@@ -146,6 +151,7 @@ After updating configuration:
    - `[pk:commit]`: Stage atomic changes, scan for secret leaks, and format Conventional Commits.
    - `[pk:pr]`: Compile high-signal pull request descriptions, verification evidence, and safe rollback plans.
    - `[pk:debug]`: Perform systematic root cause analysis on a defect.
+   - `[pk:perf]`: Profile latency, run EXPLAIN ANALYZE, isolate bottlenecks, and verify performance deltas.
    - `[pk:data]`: Design relational schemas, indexes, and RLS policies.
    - `[pk:auth]`: Architect authentication, cookies, and RBAC matrices.
    - `[pk:api]`: Define frontend-backend contracts and error envelopes.

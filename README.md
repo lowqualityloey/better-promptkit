@@ -48,7 +48,7 @@ Tell your assistant:
 1. Detects your active AI editor or CLI configuration (`CLAUDE.md`, `GEMINI.md`, `AGENTS.md`, `.cursorrules`, `.windsurfrules`, `.github/copilot-instructions.md`).
 2. Injects conflict-free `pk:` triggers into your agent briefing file.
 3. Scaffolds `PROMPTKIT.md` for project tech stack rules, and links `DESIGN.md` if present for visual brand identity.
-4. Creates documentation folders (`docs/adrs/`, `docs/specs/`, `docs/rca/`, `docs/spikes/`, `docs/design/`, `docs/data/`, `docs/auth/`, `docs/api/`, `docs/tests/`, `docs/releases/`) so architectural decisions stay tracked in your project's repository.
+4. Creates documentation folders (`docs/adrs/`, `docs/specs/`, `docs/rca/`, `docs/spikes/`, `docs/design/`, `docs/data/`, `docs/auth/`, `docs/api/`, `docs/tests/`, `docs/perf/`, `docs/releases/`) so architectural decisions stay tracked in your project's repository.
 
 ---
 
@@ -88,6 +88,7 @@ All triggers use the `pk:` prefix to avoid collisions with native slash commands
 | `pk:commit` | Atomic Conventional Commits: single-concern staging, Conventional Commits v1.0.0, and secret leak scanning. | Git History |
 | `pk:pr` | Pull Request descriptions: verification evidence compilation, data safety checklist, and GitHub CLI creation. | PR Body / `gh pr` |
 | `pk:debug` | Scientific debugging: 10-tier feedback loop hierarchy, "no red loop, no Phase 2" gate, tagged logs (`[DEBUG-xxxx]`), and 5-Whys. | `docs/rca/` |
+| `pk:perf` | Empirical performance profiling: baseline quantification, EXPLAIN ANALYZE, flamegraphs, and delta verification. | `docs/perf/` |
 | `pk:data` | Relational database design: primary keys, composite indexing, Row-Level Security (RLS) policies, and transaction boundaries. | `docs/data/` |
 | `pk:auth` | Authentication architecture: cookie security (HttpOnly, SameSite), OAuth PKCE, session management, and RBAC/ABAC matrices. | `docs/auth/` |
 | `pk:api` | Frontend-backend handshake: unified error envelopes, cursor/offset pagination, mutation idempotency, and contract types. | `docs/api/` |
@@ -113,6 +114,7 @@ For simple queries, syntax lookups, quick explanations, formatting, or single-li
 ### 2. Protocol Auto-Route (Substantive Engineering)
 For non-trivial changes (features, crashes, schema changes, auth flows, releases), the assistant announces the active protocol and enforces its quality gates:
 * **Errors, crashes, test failures**: Auto-routes to `pk:debug` (reproduces before patching).
+* **Performance regressions & latency**: Auto-routes to `pk:perf` (establishes baseline before modifying code).
 * **New features, cross-component additions**: Auto-routes to `pk:plan` (creates an RFC spec first).
 * **Databases & migrations**: Auto-routes to `pk:data` (enforces Expand-Contract ordering).
 * **Auth, cookies, session security**: Auto-routes to `pk:auth` (builds a capability matrix).
@@ -181,12 +183,12 @@ Trigger anytime with `pk:route`. Navigate across the entire engineering lifecycl
                             │
                [ Verification & Merge ]
                             │
-     ┌──────────────────────┴──────────────────────┐
-     ▼                                             ▼
-  pk:debug                                     pk:review
-(Empirical Root Cause)                   (Two-Axis Code Audit)
-     │                                             │
-     └──────────────────────┬──────────────────────┘
+     ┌──────────────────────┼──────────────────────┐
+     ▼                      ▼                      ▼
+  pk:debug               pk:perf               pk:review
+(Empirical Root Cause) (Latency & Profiling) (Two-Axis Code Audit)
+     │                      │                      │
+     └──────────────────────┼──────────────────────┘
                             │
                         pk:commit
              (Atomic Conventional Commits)
@@ -231,6 +233,7 @@ better-promptkit/
 │   ├── commit.md                # Atomic Conventional Commits & staging hygiene (pk:commit)
 │   ├── pr.md                    # High-signal pull request descriptions & evidence audit (pk:pr)
 │   ├── debug.md                 # Empirical feedback-loop debugging & root cause analysis (pk:debug)
+│   ├── perf.md                  # Empirical performance profiling & latency SLAs (pk:perf)
 │   ├── data.md                  # Relational schema design, composite indexes & RLS (pk:data)
 │   ├── auth.md                  # Authentication, cookie security & RBAC/ABAC (pk:auth)
 │   ├── api.md                   # API contracts, error envelopes & idempotency (pk:api)
@@ -249,6 +252,7 @@ better-promptkit/
 │   ├── test-plan-template.md       # Upfront test strategy & pyramid seam specification
 │   ├── release-checklist.md        # Release engineering & zero-downtime deploy checklist
 │   ├── pull-request-template.md    # High-signal Pull Request description & safety checklist
+│   ├── perf-audit-template.md      # Performance audit report & before/after delta spec
 │   ├── adr-template.md             # MADR standard Architectural Decision Record
 │   ├── tech-spec-template.md       # Engineering RFC / Technical Specification
 │   ├── rca-postmortem-template.md  # Blameless Post-Mortem & Incident RCA

@@ -43,6 +43,7 @@ $DocDirs = @(
     "docs/auth",
     "docs/api",
     "docs/tests",
+    "docs/perf",
     "docs/releases"
 )
 
@@ -119,6 +120,7 @@ Activate workflows anytime with these namespaced triggers:
 - `pk:commit`: Atomic Conventional Commits, single-concern staging, and pre-commit secret leak scan.
 - `pk:pr`: High-signal PR descriptions, verification evidence compilation, data safety checklist, and GitHub CLI creation.
 - `pk:debug`: Hypothesis-driven scientific debugging & root cause analysis (5-Whys).
+- `pk:perf` (or `pk:profile`): Empirical performance profiling, latency SLAs, EXPLAIN ANALYZE, and delta verification.
 - `pk:data` (or `pk:db`): Relational database modeling, indexing strategies, RLS, and transaction boundaries.
 - `pk:auth`: Authentication flows, cookie security, session management, and RBAC/ABAC matrices.
 - `pk:api`: Frontend-backend handshake, unified error envelopes, and contract generation.
@@ -134,6 +136,7 @@ You do not need to memorize triggers. If a prompt lacks an explicit `pk:` trigge
 - **Fast-Path (Zero Overhead)**: For simple questions, syntax lookups, quick explanations, formatting, or single-line tweaks, answer directly and concisely. Do NOT invoke heavy workflow ceremonies or produce unnecessary documents.
 - **Protocol Auto-Route (Substantive Tasks)**: For multi-file changes, architecture, broken code, or production ops, automatically adopt the matching workflow:
   - Defects, bugs, crashes, or test failures -> `pk:debug` (reproduce before patching)
+  - Performance regressions, slow queries, or latency -> `pk:perf` (measure baseline first)
   - New features, redesigns, or multi-component additions -> `pk:plan` (spec and risk analysis first)
   - Database schema, indexing, or migrations -> `pk:data` (Expand-Contract ordering)
   - Auth, sessions, cookies, or RBAC -> `pk:auth` (threat model and capability matrix)
@@ -154,6 +157,7 @@ You do not need to memorize triggers. If a prompt lacks an explicit `pk:` trigge
 - **Commit**: $KitDirRel/workflows/commit.md
 - **Pull Request**: $KitDirRel/workflows/pr.md
 - **Debug**: $KitDirRel/workflows/debug.md
+- **Performance**: $KitDirRel/workflows/perf.md
 - **Data**: $KitDirRel/workflows/data.md
 - **Auth**: $KitDirRel/workflows/auth.md
 - **API**: $KitDirRel/workflows/api.md
@@ -179,6 +183,7 @@ All generated project documentation must be saved to the host project:
 - Auth Specs: docs/auth/
 - API Contracts: docs/api/
 - Test Plans: docs/tests/
+- Performance Audits: docs/perf/
 - Releases: docs/releases/
 <!-- PROMPTKIT_END -->
 "@

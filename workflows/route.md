@@ -30,6 +30,7 @@ Find your current engineering context below and activate the corresponding workf
 | **UI, Styling & Design System**| `pk:design` | `docs/design/` | WCAG 2.2 AA contrast, design tokens, anti-slop UI |
 | **Unproven Tech or Benchmark** | `pk:spike` | `docs/spikes/` | Sharpest-risk test, baseline comparison, ADR |
 | **Defect, Bug or Regression** | `pk:debug` | `docs/rca/` | Red loop first, tagged probes, 5-Whys post-mortem |
+| **Performance, Latency & Profiling** | `pk:perf` | `docs/perf/` | Baseline metrics, flamegraphs, EXPLAIN ANALYZE, delta audit |
 | **Pre-Merge Pull Request Audit**| `pk:review` | Review report | Two-axis review: Spec Fidelity vs Technical Standards |
 | **Atomic Git Staging & Commit** | `pk:commit` | Git History | Conventional Commits, single-concern staging, secret leak check |
 | **Pull Request Description**   | `pk:pr`     | PR Body / `gh pr`    | Verification evidence, migration safety check, rollback plan |
@@ -66,12 +67,12 @@ Find your current engineering context below and activate the corresponding workf
                             │
                [ Verification & Merge ]
                             │
-     ┌──────────────────────┴──────────────────────┐
-     ▼                                             ▼
-  pk:debug                                     pk:review
-(Empirical Root Cause)                   (Two-Axis Code Audit)
-     │                                             │
-     └──────────────────────┬──────────────────────┘
+     ┌──────────────────────┼──────────────────────┐
+     ▼                      ▼                      ▼
+  pk:debug               pk:perf               pk:review
+(Empirical Root Cause) (Latency & Profiling) (Two-Axis Code Audit)
+     │                      │                      │
+     └──────────────────────┼──────────────────────┘
                             │
                         pk:commit
              (Atomic Conventional Commits)
@@ -100,7 +101,7 @@ When a developer asks for help without specifying a command, the assistant shoul
 
 1. **What phase of the change are you in?**
    - *Pre-code*: Are we clarifying requirements (`pk:plan`), evaluating an unknown library (`pk:spike`), or designing schemas (`pk:data` / `pk:auth` / `pk:api`)?
-   - *Active coding*: Are we building tests (`pk:test`), styling components (`pk:design`), or investigating broken behavior (`pk:debug`)?
+   - *Active coding*: Are we building tests (`pk:test`), styling components (`pk:design`), investigating broken behavior (`pk:debug`), or profiling slow performance (`pk:perf`)?
    - *Post-code*: Are we auditing code quality (`pk:review`), staging atomic commits (`pk:commit`), opening a pull request (`pk:pr`), shipping to production (`pk:ship`), or capturing decisions (`pk:retro`)?
    - *Session pause / Handover*: Are we experiencing context window bloat or switching to a fresh chat window (`pk:checkpoint`)?
 
@@ -132,6 +133,7 @@ If the request involves non-trivial engineering changes (new features, crashes, 
    `[Better-PromptKit: Auto-routed to pk:<workflow>]`
 2. Automatically adhere to that workflow's quality gates, pre-conditions, and artifact outputs:
    - **Bugs, errors, broken tests, unexpected behavior**: Auto-route to `pk:debug`. Establish the reproduction loop before proposing any fix.
+   - **Performance regressions, slow queries, latency, memory leaks, bundle bloat**: Auto-route to `pk:perf`. Capture baseline metrics before modifying code.
    - **New features, cross-component additions, new pages**: Auto-route to `pk:plan`. Create the RFC spec before writing code.
    - **Database tables, migrations, RLS policies, indexing**: Auto-route to `pk:data`. Enforce Expand-Contract sequencing.
    - **Login, session tokens, cookies, permissions**: Auto-route to `pk:auth`. Establish the capability matrix first.

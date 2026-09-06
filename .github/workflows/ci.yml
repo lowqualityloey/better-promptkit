@@ -26,7 +26,7 @@ jobs:
           mkdir -p "$TEST_DIR"
           ./init.sh "$TEST_DIR"
 
-          for d in adrs specs rca spikes design data auth api tests releases; do
+          for d in adrs specs rca spikes design data auth api tests perf releases; do
             if [ ! -d "$TEST_DIR/docs/$d" ]; then
               echo "Error: Missing directory docs/$d"
               exit 1
@@ -65,6 +65,7 @@ jobs:
             "workflows/commit.md"
             "workflows/pr.md"
             "workflows/debug.md"
+            "workflows/perf.md"
             "workflows/data.md"
             "workflows/auth.md"
             "workflows/api.md"
@@ -85,6 +86,7 @@ jobs:
             "templates/test-plan-template.md"
             "templates/release-checklist.md"
             "templates/pull-request-template.md"
+            "templates/perf-audit-template.md"
             "templates/adr-template.md"
             "templates/tech-spec-template.md"
             "templates/rca-postmortem-template.md"
@@ -98,7 +100,7 @@ jobs:
               exit 1
             fi
           done
-          echo "All 33 referenced files exist on disk."
+          echo "All 35 referenced files exist on disk."
 
   validate-windows:
     name: Lint & Validate (Windows)
@@ -124,7 +126,7 @@ jobs:
           $testDir = New-Item -ItemType Directory -Path "$env:RUNNER_TEMP\test-project" -Force
           .\init.ps1 -ProjectRoot $testDir.FullName
 
-          $docDirs = @("adrs", "specs", "rca", "spikes", "design", "data", "auth", "api", "tests", "releases")
+          $docDirs = @("adrs", "specs", "rca", "spikes", "design", "data", "auth", "api", "tests", "perf", "releases")
           foreach ($d in $docDirs) {
             $p = Join-Path $testDir.FullName "docs\$d"
             if (-not (Test-Path $p)) {
