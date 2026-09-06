@@ -63,6 +63,7 @@ jobs:
             "workflows/plan.md"
             "workflows/review.md"
             "workflows/commit.md"
+            "workflows/pr.md"
             "workflows/debug.md"
             "workflows/data.md"
             "workflows/auth.md"
@@ -83,6 +84,7 @@ jobs:
             "templates/api-contract-spec.md"
             "templates/test-plan-template.md"
             "templates/release-checklist.md"
+            "templates/pull-request-template.md"
             "templates/adr-template.md"
             "templates/tech-spec-template.md"
             "templates/rca-postmortem-template.md"
@@ -96,7 +98,7 @@ jobs:
               exit 1
             fi
           done
-          echo "All 31 referenced files exist on disk."
+          echo "All 33 referenced files exist on disk."
 
   validate-windows:
     name: Lint & Validate (Windows)

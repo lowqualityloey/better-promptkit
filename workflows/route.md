@@ -32,6 +32,7 @@ Find your current engineering context below and activate the corresponding workf
 | **Defect, Bug or Regression** | `pk:debug` | `docs/rca/` | Red loop first, tagged probes, 5-Whys post-mortem |
 | **Pre-Merge Pull Request Audit**| `pk:review` | Review report | Two-axis review: Spec Fidelity vs Technical Standards |
 | **Atomic Git Staging & Commit** | `pk:commit` | Git History | Conventional Commits, single-concern staging, secret leak check |
+| **Pull Request Description**   | `pk:pr`     | PR Body / `gh pr`    | Verification evidence, migration safety check, rollback plan |
 | **Context Bloat & Handover**    | `pk:checkpoint`| Conversation / Notes | Session state compaction, invariant locking, fresh chat prompt |
 | **Zero-Downtime Deployment**    | `pk:ship`   | `docs/releases/` | Runtime env validation, Expand-Contract migrations |
 | **Post-Implementation Retro**   | `pk:retro`  | `docs/adrs/` & journal| MADR records, progress journal, skill matrix updates |
@@ -75,6 +76,9 @@ Find your current engineering context below and activate the corresponding workf
                         pk:commit
              (Atomic Conventional Commits)
                             │
+                         pk:pr
+             (High-Signal PR Descriptions)
+                            │
                      [ Release & Ops ]
                             │
                          pk:ship
@@ -97,7 +101,7 @@ When a developer asks for help without specifying a command, the assistant shoul
 1. **What phase of the change are you in?**
    - *Pre-code*: Are we clarifying requirements (`pk:plan`), evaluating an unknown library (`pk:spike`), or designing schemas (`pk:data` / `pk:auth` / `pk:api`)?
    - *Active coding*: Are we building tests (`pk:test`), styling components (`pk:design`), or investigating broken behavior (`pk:debug`)?
-   - *Post-code*: Are we auditing code quality (`pk:review`), staging atomic commits (`pk:commit`), shipping to production (`pk:ship`), or capturing decisions (`pk:retro`)?
+   - *Post-code*: Are we auditing code quality (`pk:review`), staging atomic commits (`pk:commit`), opening a pull request (`pk:pr`), shipping to production (`pk:ship`), or capturing decisions (`pk:retro`)?
    - *Session pause / Handover*: Are we experiencing context window bloat or switching to a fresh chat window (`pk:checkpoint`)?
 
 2. **Is there an active broken state?**
@@ -135,6 +139,7 @@ If the request involves non-trivial engineering changes (new features, crashes, 
    - **Test suites, unit/integration splits, mock boundaries**: Auto-route to `pk:test`. Allocate pyramid seams before code.
    - **PR review, diff audit, refactoring assessment**: Auto-route to `pk:review`. Audit against spec fidelity and Fowler smells.
    - **Git commits, staging changes, commit message generation**: Auto-route to `pk:commit`. Scan for secret leaks and format Conventional Commit.
+   - **Pull requests, PR descriptions, or opening a PR**: Auto-route to `pk:pr`. Compile verification evidence and format PR description.
    - **Context bloat, chat lag, session handover, or pausing**: Auto-route to `pk:checkpoint`. Compress working state and generate handover prompt.
    - **Production deployment, env vars, rollback prep**: Auto-route to `pk:ship`. Run runtime env validation and release checklist.
 

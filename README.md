@@ -86,6 +86,7 @@ All triggers use the `pk:` prefix to avoid collisions with native slash commands
 | `pk:plan` | Spec-driven architecture: deep module design, Expand-Contract zero-downtime database migrations, and TDD milestones. | `docs/specs/` |
 | `pk:review` | Two-axis review: Spec Fidelity vs. Technical Standards (Martin Fowler's 12 code smells), with data loss prevention audits. | Review report |
 | `pk:commit` | Atomic Conventional Commits: single-concern staging, Conventional Commits v1.0.0, and secret leak scanning. | Git History |
+| `pk:pr` | Pull Request descriptions: verification evidence compilation, data safety checklist, and GitHub CLI creation. | PR Body / `gh pr` |
 | `pk:debug` | Scientific debugging: 10-tier feedback loop hierarchy, "no red loop, no Phase 2" gate, tagged logs (`[DEBUG-xxxx]`), and 5-Whys. | `docs/rca/` |
 | `pk:data` | Relational database design: primary keys, composite indexing, Row-Level Security (RLS) policies, and transaction boundaries. | `docs/data/` |
 | `pk:auth` | Authentication architecture: cookie security (HttpOnly, SameSite), OAuth PKCE, session management, and RBAC/ABAC matrices. | `docs/auth/` |
@@ -119,6 +120,7 @@ For non-trivial changes (features, crashes, schema changes, auth flows, releases
 * **Testing strategy & seams**: Auto-routes to `pk:test` (seam allocation before code).
 * **Code review & PR audits**: Auto-routes to `pk:review` (two-axis quality check).
 * **Git commits & staging**: Auto-routes to `pk:commit` (atomic staging, secret scan, Conventional Commits).
+* **Pull requests & PR descriptions**: Auto-routes to `pk:pr` (verification evidence, data safety, PR body).
 * **Context bloat & handovers**: Auto-routes to `pk:checkpoint` (session compaction, zero-loss chat handover).
 * **Production deployment & env vars**: Auto-routes to `pk:ship` (validates runtime env and rollback steps).
 
@@ -189,6 +191,9 @@ Trigger anytime with `pk:route`. Navigate across the entire engineering lifecycl
                         pk:commit
              (Atomic Conventional Commits)
                             │
+                         pk:pr
+             (High-Signal PR Descriptions)
+                            │
                      [ Release & Ops ]
                             │
                          pk:ship
@@ -224,6 +229,7 @@ better-promptkit/
 │   ├── plan.md                  # Spec-Driven Development & deep modular design (pk:plan)
 │   ├── review.md                # Two-axis PR & Fowler smell review with data safety audit (pk:review)
 │   ├── commit.md                # Atomic Conventional Commits & staging hygiene (pk:commit)
+│   ├── pr.md                    # High-signal pull request descriptions & evidence audit (pk:pr)
 │   ├── debug.md                 # Empirical feedback-loop debugging & root cause analysis (pk:debug)
 │   ├── data.md                  # Relational schema design, composite indexes & RLS (pk:data)
 │   ├── auth.md                  # Authentication, cookie security & RBAC/ABAC (pk:auth)
@@ -242,6 +248,7 @@ better-promptkit/
 │   ├── api-contract-spec.md        # API endpoint contract & error code catalog
 │   ├── test-plan-template.md       # Upfront test strategy & pyramid seam specification
 │   ├── release-checklist.md        # Release engineering & zero-downtime deploy checklist
+│   ├── pull-request-template.md    # High-signal Pull Request description & safety checklist
 │   ├── adr-template.md             # MADR standard Architectural Decision Record
 │   ├── tech-spec-template.md       # Engineering RFC / Technical Specification
 │   ├── rca-postmortem-template.md  # Blameless Post-Mortem & Incident RCA

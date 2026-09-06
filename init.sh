@@ -98,6 +98,7 @@ Activate workflows anytime with these namespaced triggers:
 - \`pk:plan\`: Spec-Driven Architecture & feature planning (domain models, API contracts, failure modes).
 - \`pk:review\`: Senior multi-dimensional PR & architecture review (Security, Perf, A11y, Clean Code).
 - \`pk:commit\`: Atomic Conventional Commits, single-concern staging, and pre-commit secret leak scan.
+- \`pk:pr\`: High-signal PR descriptions, verification evidence compilation, data safety checklist, and GitHub CLI creation.
 - \`pk:debug\`: Hypothesis-driven scientific debugging & root cause analysis (5-Whys).
 - \`pk:data\` (or \`pk:db\`): Relational database modeling, indexing strategies, RLS, and transaction boundaries.
 - \`pk:auth\`: Authentication flows, cookie security, session management, and RBAC/ABAC matrices.
@@ -120,7 +121,8 @@ You do not need to memorize triggers. If a prompt lacks an explicit \`pk:\` trig
   - Endpoints, contracts, or client types -> \`pk:api\` (envelope and schemas)
   - Test suites, seam allocation, or mocking -> \`pk:test\` (pyramid seam allocation)
   - Code audits or PR reviews -> \`pk:review\` (two-axis standard review)
-  - Git commits, staging, or PR preparation -> \`pk:commit\` (atomic conventional commits)
+  - Git commits or staging -> \`pk:commit\` (atomic conventional commits)
+  - Pull requests or PR descriptions -> \`pk:pr\` (verification evidence and PR body)
   - Context bloat, chat lag, session handover, or pausing -> \`pk:checkpoint\` (zero-loss handover)
   - Deployments, env validation, or releases -> \`pk:ship\` (pre-flight checks and rollback)
   When auto-routing a substantive task, announce it briefly in one sentence (e.g., "[Better-PromptKit: Auto-routed to pk:plan]") and enforce its quality gate.
@@ -131,6 +133,7 @@ You do not need to memorize triggers. If a prompt lacks an explicit \`pk:\` trig
 - **Plan**: $KIT_DIR_REL/workflows/plan.md
 - **Review**: $KIT_DIR_REL/workflows/review.md
 - **Commit**: $KIT_DIR_REL/workflows/commit.md
+- **Pull Request**: $KIT_DIR_REL/workflows/pr.md
 - **Debug**: $KIT_DIR_REL/workflows/debug.md
 - **Data**: $KIT_DIR_REL/workflows/data.md
 - **Auth**: $KIT_DIR_REL/workflows/auth.md
