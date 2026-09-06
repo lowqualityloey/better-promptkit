@@ -1,6 +1,7 @@
 # Better PromptKit
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+[![CI](https://github.com/lowqualityloey/better-promptkit/actions/workflows/ci.yml/badge.svg)](https://github.com/lowqualityloey/better-promptkit/actions)
 [![GitHub](https://img.shields.io/badge/GitHub-lowqualityloey%2Fbetter--promptkit-black.svg)](https://github.com/lowqualityloey/better-promptkit)
 
 Engineering workflows, mentorship protocols, and quality gates for developers pairing with AI coding assistants (Antigravity, Claude Code, Gemini CLI, Cursor, Windsurf, GitHub Copilot, and Aider).
@@ -51,6 +52,26 @@ Tell your assistant:
 
 ---
 
+### Updating Better-PromptKit
+
+When new workflows, quality gates, or presets are released, pull the latest changes and re-run initialization:
+
+**If installed via Git Submodule:**
+```bash
+git submodule update --remote .promptkit
+./.promptkit/init.sh     # or .\.promptkit\init.ps1 on Windows
+```
+
+**If installed via Direct Clone:**
+```bash
+git -C .promptkit pull
+./.promptkit/init.sh     # or .\.promptkit\init.ps1 on Windows
+```
+
+The initialization script is idempotent: it refreshes your agent directives in place without duplicating blocks or touching existing project specs.
+
+---
+
 ## Fast Shorthand Triggers
 
 All triggers use the `pk:` prefix to avoid collisions with native slash commands in Antigravity or Cursor:
@@ -98,6 +119,32 @@ For non-trivial changes (features, crashes, schema changes, auth flows, releases
 * **Code review & PR audits**: Auto-routes to `pk:review` (two-axis quality check).
 
 If you ever want an interactive overview of all workflows, simply run `pk:route` or ask the assistant to route your task.
+
+### How Auto-Routing Looks in Practice
+
+#### Fast-Path (Trivial Query)
+> **Developer**: *"How do I format an ISO date string in TypeScript without external libraries?"*
+>
+> **Assistant**:
+> Use the native `Intl.DateTimeFormat` API:
+> ```typescript
+> export function formatDate(isoDate: string): string {
+>   return new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(isoDate));
+> }
+> ```
+> *(Direct response. Zero ceremony, zero extra tokens.)*
+
+#### Substantive Auto-Route (Non-Trivial Feature)
+> **Developer**: *"We need to add email verification before users can invite team members."*
+>
+> **Assistant**:
+> `[Better-PromptKit: Auto-routed to pk:auth]`
+>
+> Before implementing changes, establishing the session verification capability matrix in `docs/auth/email-verification-matrix.md`:
+> 1. **Threat Model**: Prevent unverified session state escalation via invite links.
+> 2. **Session Invariant**: Store `email_verified_at: timestamptz | null`.
+> 3. **Capability Boundary**: Restrict `teams:invite` permission to verified owners and admins.
+> *(Enforces senior engineering discipline before any application code is touched.)*
 
 ---
 
@@ -251,6 +298,27 @@ While protocols remain universal, workflows and scaffolding provide tailored tem
 - **Frontend**: React 19, Next.js (App Router), Tailwind CSS (v3 / v4), Radix UI, Headless UI.
 - **Database & Auth**: PostgreSQL, Supabase (Auth + Row-Level Security), Prisma, Drizzle ORM, Kysely.
 - **API & Handshake**: tRPC, Next.js Server Actions, Zod, OpenAPI.
+
+---
+
+## Customizing Project Guardrails
+
+Better-PromptKit separates universal workflow protocols from project-specific rules. You customize your assistant's behavior using two root configuration files:
+
+### 1. `PROMPTKIT.md` (Engineering Guardrails & Stack Constraints)
+Scaffolded automatically during initialization from `templates/project-profile-template.md`. This file tells the assistant your project's non-negotiable boundaries:
+- **Project Domain & Users**: Contextual overview so the assistant grasps business context.
+- **Active Commands**: Explicit test runner (`pnpm test:e2e`), typecheck (`pnpm tsc --noEmit`), and linter commands.
+- **Non-Negotiable Guardrails**: Hard architectural invariants (e.g., zero `any` in TypeScript, no business logic in React components, mandatory database check constraints).
+- **Artifact Storage**: Destination paths for all generated specs (`docs/specs/`, `docs/data/`, `docs/auth/`, etc.).
+
+### 2. `DESIGN.md` (Visual Brand & Anti-Slop Authority)
+Optional brand identity file created from `templates/design-profile-template.md`. Serves as the supreme visual authority for all UI generation (`pk:design`, `pk:review`):
+- **Color Tokens**: Neutral base, primary brand tone, and deliberate focal accents.
+- **Anti-Slop Directives**: Explicit bans on generic AI aesthetics (no purple-to-cyan gradients, no glowing backdrops, no uniform pill badges).
+- **Typography & Numerics**: Heading fonts, widow prevention (`text-wrap: balance`), and mandatory `tabular-nums` for financial tables and timers.
+- **Surfaces & Radii**: Hierarchy rules (`rounded-md` controls, `rounded-lg` containers) and elevation dose caps.
+- **Mobile Ergonomics**: Minimum $44 \times 44\text{px}$ touch targets and single-column mobile reflow.
 
 ---
 
