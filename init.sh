@@ -92,21 +92,23 @@ Better-PromptKit is active in this workspace (\`./$KIT_DIR_REL\`). Follow these 
 
 ### Fast Shorthand Triggers (Collision-Free)
 Activate workflows anytime with these namespaced triggers:
-- \`pk:tutor\` (or \`pk:tutor beginner\`, \`pk:tutor architect\`) — Socratic mentorship & 3-tier progressive hints (never dump unsolicited code).
-- \`pk:grill\` — Intensive Staff Engineer architecture interview and defense drill.
-- \`pk:plan\` — Spec-Driven Architecture & feature planning (domain models, API contracts, failure modes).
-- \`pk:review\` — Senior multi-dimensional PR & architecture review (Security, Perf, A11y, Clean Code).
-- \`pk:debug\` — Hypothesis-driven scientific debugging & root cause analysis (5-Whys).
-- \`pk:data\` (or \`pk:db\`) — Relational database modeling, indexing strategies, RLS, and transaction boundaries.
-- \`pk:auth\` — Authentication flows, cookie security, session management, and RBAC/ABAC matrices.
-- \`pk:api\` — Frontend-backend handshake, unified error envelopes, and contract generation.
-- \`pk:test\` — Upfront testing strategy, seam allocation, and mock boundaries.
-- \`pk:ship\` — Release engineering, migration sequencing, runtime env checks, and rollbacks.
-- \`pk:spike\` (or \`pk:research\`) — Technical spikes, benchmarks, and multi-vector trade-off matrices.
-- \`pk:design\` — Modern UI/UX, Design Tokens, and WCAG 2.2 Level AA accessibility.
-- \`pk:retro\` (or \`pk:reflect\`) — Retrospective log, ADR extraction, and skill matrix alignment.
+- \`pk:route\`: Engineering lifecycle router and workflow decision matrix.
+- \`pk:tutor\` (or \`pk:tutor beginner\`, \`pk:tutor architect\`): Socratic mentorship & 3-tier progressive hints (never dump unsolicited code).
+- \`pk:grill\`: Intensive Staff Engineer architecture interview and defense drill.
+- \`pk:plan\`: Spec-Driven Architecture & feature planning (domain models, API contracts, failure modes).
+- \`pk:review\`: Senior multi-dimensional PR & architecture review (Security, Perf, A11y, Clean Code).
+- \`pk:debug\`: Hypothesis-driven scientific debugging & root cause analysis (5-Whys).
+- \`pk:data\` (or \`pk:db\`): Relational database modeling, indexing strategies, RLS, and transaction boundaries.
+- \`pk:auth\`: Authentication flows, cookie security, session management, and RBAC/ABAC matrices.
+- \`pk:api\`: Frontend-backend handshake, unified error envelopes, and contract generation.
+- \`pk:test\`: Upfront testing strategy, seam allocation, and mock boundaries.
+- \`pk:ship\`: Release engineering, migration sequencing, runtime env checks, and rollbacks.
+- \`pk:spike\` (or \`pk:research\`): Technical spikes, benchmarks, and multi-vector trade-off matrices.
+- \`pk:design\`: Modern UI/UX, Design Tokens, and WCAG 2.2 Level AA accessibility.
+- \`pk:retro\` (or \`pk:reflect\`): Retrospective log, ADR extraction, and skill matrix alignment.
 
 ### Workflows & Protocols Reference
+- **Route**: $KIT_DIR_REL/workflows/route.md
 - **Tutor**: $KIT_DIR_REL/workflows/tutor.md
 - **Plan**: $KIT_DIR_REL/workflows/plan.md
 - **Review**: $KIT_DIR_REL/workflows/review.md

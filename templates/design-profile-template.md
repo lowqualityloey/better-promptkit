@@ -22,7 +22,7 @@
   - Border: `#e2e8f0` (Light) | `#1e293b` (Dark)
 - **Brand Primary**: [e.g., Deep Forest Green `#1b4332` or Indigo `#4f46e5`]
 - **Brand Secondary**: [e.g., Sage `#74c69d` or Slate `#64748b`]
-- **Deliberate Accent**: [e.g., Ochre Gold `#d4a373` or Amber `#f59e0b`] — **Used at key focal moments only, never scattered everywhere.**
+- **Deliberate Accent**: [e.g., Ochre Gold `#d4a373` or Amber `#f59e0b`]. **Used at key focal moments only, never scattered everywhere.**
 - **Semantic Feedback**:
   - Success: `#10b981` (Emerald)
   - Destructive / Error: `#e11d48` (Rose)

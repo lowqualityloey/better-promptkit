@@ -57,6 +57,7 @@ All triggers use the `pk:` prefix to avoid collisions with native slash commands
 
 | Command | Purpose | Output Location |
 | :--- | :--- | :--- |
+| `pk:route` | Engineering lifecycle router and interactive workflow decision matrix. | Conversation / Specs |
 | `pk:tutor` | Socratic mentorship using 3-tier progressive hints. Guides the developer instead of dumping unsolicited code. | Conversation / Notes |
 | `pk:tutor beginner` | Socratic coaching with plain-language explanations and immediate error translation. | Conversation / Notes |
 | `pk:tutor architect` | Invariant stress-testing, failure mode analysis, and distributed systems trade-offs. | `docs/adrs/` |
@@ -75,10 +76,60 @@ All triggers use the `pk:` prefix to avoid collisions with native slash commands
 
 ---
 
+## Lifecycle Workflow Router
+
+Trigger anytime with `pk:route`. Navigate across the entire engineering lifecycle without guessing:
+
+```text
+               [ Inception & Architecture ]
+                            │
+                         pk:plan
+                            │
+     ┌──────────────────────┼──────────────────────┐
+     ▼                      ▼                      ▼
+  pk:data                pk:auth                 pk:api
+(Relational Schema)    (Session & RBAC)    (Endpoints & Types)
+     │                      │                      │
+     └──────────────────────┼──────────────────────┘
+                            │
+                     [ Implementation ]
+                            │
+     ┌──────────────────────┼──────────────────────┐
+     ▼                      ▼                      ▼
+  pk:test               pk:design               pk:spike
+(Pyramid & Mocks)     (Tokens & A11y)      (Risk Spikes)
+     │                      │                      │
+     └──────────────────────┼──────────────────────┘
+                            │
+               [ Verification & Merge ]
+                            │
+     ┌──────────────────────┴──────────────────────┐
+     ▼                                             ▼
+  pk:debug                                     pk:review
+(Empirical Root Cause)                   (Two-Axis Code Audit)
+     │                                             │
+     └──────────────────────┬──────────────────────┘
+                            │
+                     [ Release & Ops ]
+                            │
+                         pk:ship
+             (Zero-Downtime Deploy & Rollback)
+                            │
+                   [ Knowledge Capture ]
+                            │
+                         pk:retro
+             (MADR Records & Progress Journal)
+```
+
+---
+
 ## Repository Layout
 
 ```text
 better-promptkit/
+├── .github/
+│   └── workflows/
+│       └── ci.yml               # Maintainer CI (syntax, dry-run & anti-slop checks)
 ├── init.ps1                     # Setup script for Windows (PowerShell)
 ├── init.sh                      # Setup script for Linux/macOS (Bash)
 ├── LICENSE                      # Open-source MIT License
@@ -87,6 +138,7 @@ better-promptkit/
 │   ├── context-sync.md          # Tech stack, PROMPTKIT.md, DESIGN.md & git auto-detection
 │   └── code-quality-gate.md     # Non-negotiable definition-of-done & pre-commit gate
 ├── workflows/
+│   ├── route.md                 # Lifecycle decision matrix & workflow triage (pk:route)
 │   ├── tutor.md                 # Socratic mentorship & 3-tier progressive hints (pk:tutor, pk:grill)
 │   ├── plan.md                  # Spec-Driven Development & deep modular design (pk:plan)
 │   ├── review.md                # Two-axis PR & Fowler smell review with data safety audit (pk:review)
@@ -152,6 +204,28 @@ Reviews evaluate **Spec Fidelity** (missing requirements, scope creep) separatel
 
 ### 5. Accidental Data Loss Prevention and Isolated History
 Destructive operations (dropping tables, broad deletions, hard git resets) trigger a mandatory halt-and-verify step. All generated project documentation is stored in your project's `./docs/` folder, keeping team history in your git repository while `.promptkit/` remains an upgradeable submodule.
+
+---
+
+## Ecosystem and Framework Scope
+
+Better-PromptKit operates on two complementary levels:
+
+### 1. Universal Engineering Protocols (Language-Agnostic)
+The core architectural principles apply across any tech stack (TypeScript, Python, Go, Rust, Java):
+- Spec-Driven Development and deep module boundaries (`pk:plan`)
+- Relational schema design, composite index ordering, and transaction boundaries (`pk:data`)
+- Cookie security flags, OAuth PKCE flows, and capability-based RBAC (`pk:auth`)
+- Unified error envelopes, pagination conventions, and idempotency (`pk:api`)
+- Testing pyramid seam allocations and mock boundaries (`pk:test`)
+- Empirical reproduction loops and scientific debugging (`pk:debug`)
+- Zero-downtime Expand-Contract migration sequencing (`pk:ship`)
+
+### 2. First-Class Battle-Tested Presets
+While protocols remain universal, workflows and scaffolding provide tailored templates and detection presets for the modern fullstack web ecosystem:
+- **Frontend**: React 19, Next.js (App Router), Tailwind CSS (v3 / v4), Radix UI, Headless UI.
+- **Database & Auth**: PostgreSQL, Supabase (Auth + Row-Level Security), Prisma, Drizzle ORM, Kysely.
+- **API & Handshake**: tRPC, Next.js Server Actions, Zod, OpenAPI.
 
 ---
 

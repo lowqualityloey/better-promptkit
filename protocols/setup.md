@@ -40,16 +40,16 @@ Check if the target configuration file already contains `PromptKit Engineering O
 
 ### 3. Ensure Project Documentation Directories Exist
 Ensure the host repository contains documentation directories so generated artifacts are tracked by Git:
-- `docs/adrs/` — Architectural Decision Records
-- `docs/specs/` — Technical RFC Specifications
-- `docs/rca/` — Root Cause Analysis Incident Post-Mortems
-- `docs/spikes/` — Technical Spikes & Benchmarks
-- `docs/design/` — Design Token Specs & UI Architecture
-- `docs/data/` — Database Models & Schema Specifications
-- `docs/auth/` — Authentication & Authorization Matrices
-- `docs/api/` — API Contracts & Error Specifications
-- `docs/tests/` — Test Plans, Seam Allocations & Test Matrices
-- `docs/releases/` — Release Checklists, Rollback Decision Logs & Verification Reports
+- `docs/adrs/`: Architectural Decision Records
+- `docs/specs/`: Technical RFC Specifications
+- `docs/rca/`: Root Cause Analysis Incident Post-Mortems
+- `docs/spikes/`: Technical Spikes & Benchmarks
+- `docs/design/`: Design Token Specs & UI Architecture
+- `docs/data/`: Database Models & Schema Specifications
+- `docs/auth/`: Authentication & Authorization Matrices
+- `docs/api/`: API Contracts & Error Specifications
+- `docs/tests/`: Test Plans, Seam Allocations & Test Matrices
+- `docs/releases/`: Release Checklists, Rollback Decision Logs & Verification Reports
 
 If `PROMPTKIT.md` does not exist in the project root, copy `.promptkit/templates/project-profile-template.md` to `./PROMPTKIT.md` for project-specific rules and commands. If `DESIGN.md` is desired for custom visual identity, copy `.promptkit/templates/design-profile-template.md` to `./DESIGN.md`.
 
@@ -63,21 +63,23 @@ Better-PromptKit is active in this workspace (`./.promptkit` or `./promptkit`). 
 
 ### Fast Shorthand Triggers (Collision-Free)
 Activate workflows anytime with these namespaced triggers:
-- `pk:tutor` (or `pk:tutor beginner`, `pk:tutor architect`) — Socratic mentorship & 3-tier progressive hints (never dump unsolicited code).
-- `pk:grill` — Intensive Staff Engineer architecture interview and defense drill.
-- `pk:plan` — Spec-Driven Architecture & feature planning (domain models, API contracts, failure modes).
-- `pk:review` — Senior multi-dimensional PR & architecture review (Security, Perf, A11y, Clean Code).
-- `pk:debug` — Hypothesis-driven scientific debugging & root cause analysis (5-Whys).
-- `pk:data` (or `pk:db`) — Relational database modeling, indexing strategies, RLS, and transaction boundaries.
-- `pk:auth` — Authentication flows, cookie security, session management, and RBAC/ABAC matrices.
-- `pk:api` — Frontend-backend handshake, unified error envelopes, and contract generation.
-- `pk:test` — Upfront testing strategy, seam allocation, and mock boundaries.
-- `pk:ship` — Release engineering, migration sequencing, runtime env checks, and rollbacks.
-- `pk:spike` (or `pk:research`) — Technical spikes, benchmarks, and multi-vector trade-off matrices.
-- `pk:design` — Modern UI/UX, Design Tokens, and WCAG 2.2 Level AA accessibility.
-- `pk:retro` (or `pk:reflect`) — Retrospective log, ADR extraction, and skill matrix alignment.
+- `pk:route`: Engineering lifecycle router and workflow decision matrix.
+- `pk:tutor` (or `pk:tutor beginner`, `pk:tutor architect`): Socratic mentorship & 3-tier progressive hints (never dump unsolicited code).
+- `pk:grill`: Intensive Staff Engineer architecture interview and defense drill.
+- `pk:plan`: Spec-Driven Architecture & feature planning (domain models, API contracts, failure modes).
+- `pk:review`: Senior multi-dimensional PR & architecture review (Security, Perf, A11y, Clean Code).
+- `pk:debug`: Hypothesis-driven scientific debugging & root cause analysis (5-Whys).
+- `pk:data` (or `pk:db`): Relational database modeling, indexing strategies, RLS, and transaction boundaries.
+- `pk:auth`: Authentication flows, cookie security, session management, and RBAC/ABAC matrices.
+- `pk:api`: Frontend-backend handshake, unified error envelopes, and contract generation.
+- `pk:test`: Upfront testing strategy, seam allocation, and mock boundaries.
+- `pk:ship`: Release engineering, migration sequencing, runtime env checks, and rollbacks.
+- `pk:spike` (or `pk:research`): Technical spikes, benchmarks, and multi-vector trade-off matrices.
+- `pk:design`: Modern UI/UX, Design Tokens, and WCAG 2.2 Level AA accessibility.
+- `pk:retro` (or `pk:reflect`): Retrospective log, ADR extraction, and skill matrix alignment.
 
 ### Workflows & Protocols Reference
+- **Route**: `.promptkit/workflows/route.md`
 - **Tutor**: `.promptkit/workflows/tutor.md`
 - **Plan**: `.promptkit/workflows/plan.md`
 - **Review**: `.promptkit/workflows/review.md`
@@ -114,18 +116,19 @@ All generated project documentation must be saved to the host project:
 After updating configuration:
 1. Run `.promptkit/protocols/context-sync.md` to detect active technologies, inspect `./PROMPTKIT.md`, and check recent git status.
 2. Ask the developer which workflow they wish to activate:
-   - `[pk:tutor]` — Explore a concept, debug together, or build mental models.
-   - `[pk:plan]` — Design an architecture, draft an RFC/spec, or break down a feature.
-   - `[pk:review]` — Conduct a Senior-level code & architecture audit on recent changes.
-   - `[pk:debug]` — Perform systematic root cause analysis on a defect.
-   - `[pk:data]` — Design relational schemas, indexes, and RLS policies.
-   - `[pk:auth]` — Architect authentication, cookies, and RBAC matrices.
-   - `[pk:api]` — Define frontend-backend contracts and error envelopes.
-   - `[pk:test]` — Define upfront testing strategy, pyramid seam allocation, and mock boundaries.
-   - `[pk:ship]` — Execute release checklist, runtime env checks, zero-downtime migration, and rollback plan.
-   - `[pk:spike]` — Run a technical spike comparing libraries/patterns.
-   - `[pk:design]` — Design accessible UI components with modern tokens.
-   - `[pk:retro]` — Run a retro on completed work, capture insights, and generate ADRs.
+   - `[pk:route]`: Navigate workflows using the engineering lifecycle decision matrix.
+   - `[pk:tutor]`: Explore a concept, debug together, or build mental models.
+   - `[pk:plan]`: Design an architecture, draft an RFC/spec, or break down a feature.
+   - `[pk:review]`: Conduct a Senior-level code & architecture audit on recent changes.
+   - `[pk:debug]`: Perform systematic root cause analysis on a defect.
+   - `[pk:data]`: Design relational schemas, indexes, and RLS policies.
+   - `[pk:auth]`: Architect authentication, cookies, and RBAC matrices.
+   - `[pk:api]`: Define frontend-backend contracts and error envelopes.
+   - `[pk:test]`: Define upfront testing strategy, pyramid seam allocation, and mock boundaries.
+   - `[pk:ship]`: Execute release checklist, runtime env checks, zero-downtime migration, and rollback plan.
+   - `[pk:spike]`: Run a technical spike comparing libraries/patterns.
+   - `[pk:design]`: Design accessible UI components with modern tokens.
+   - `[pk:retro]`: Run a retro on completed work, capture insights, and generate ADRs.
 
 ---
 

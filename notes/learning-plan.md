@@ -36,7 +36,7 @@ Use this document to direct your technical growth, focus areas, and deliberate p
 ---
 
 ## 5. Engineering Milestones & Evidence Checkpoints
-- **Target Date: [YYYY-MM-DD]** — [Milestone description, e.g. Deploy rate-limited auth flow with integration tests]
+- **Target Date: [YYYY-MM-DD]**: [Milestone description, e.g. Deploy rate-limited auth flow with integration tests]
   - *Evidence of Mastery*: [Passing test suite, verified PR checklist]
-- **Target Date: [YYYY-MM-DD]** — [Milestone description, e.g. Publish first Architectural Decision Record]
+- **Target Date: [YYYY-MM-DD]**: [Milestone description, e.g. Publish first Architectural Decision Record]
   - *Evidence of Mastery*: [Documented ADR accepted in `./docs/adrs/`]

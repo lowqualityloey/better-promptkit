@@ -60,7 +60,7 @@ Design and test your own `research.md` workflow file that lives in `.promptkit/w
 - How should code snippets, diagrams, or examples be formatted?
 
 **Design goals:**
-- Notes are scannable—you can quickly find what you need
+- Notes are scannable: you can quickly find what you need
 - Enough detail to understand the concept without re-researching
 - Clear structure that works whether you read top-to-bottom or jump to sections
 
@@ -68,10 +68,10 @@ Design and test your own `research.md` workflow file that lives in `.promptkit/w
 
 ### Step 1: Draft Your Workflow
 Create `.promptkit/workflows/research.md` with these sections:
-- **Mission** — What the AI should accomplish during a research session
-- **Preconditions** — What the student needs before starting (topic, research question, etc.)
-- **Workflow Steps** — Detailed instructions for gathering, organizing, citing, and validating research
-- **Completion Criteria** — How to know the research session succeeded
+- **Mission**: What the AI should accomplish during a research session
+- **Preconditions**: What the student needs before starting (topic, research question, etc.)
+- **Workflow Steps**: Detailed instructions for gathering, organizing, citing, and validating research
+- **Completion Criteria**: How to know the research session succeeded
 
 Refer to `.promptkit/workflows/tutor.md` and `.promptkit/workflows/reflect.md` for examples of workflow structure and AI-facing instructions.
 
@@ -106,14 +106,14 @@ Run another research session on a new topic and see if your improvements worked.
 
 ### Step 5: Extend Your Workflow (Optional Stretch)
 Once you have a solid research workflow, consider adding:
-- **Curriculum generation** — Use research notes to create personalized tutorials
+- **Curriculum generation**: Use research notes to create personalized tutorials
   ```
   read my research on WebSockets and my learning-plan.md, then draft a tutorial
   that teaches me WebSockets at my current level
   ```
-- **Comparison research** — Instruct the AI to research multiple competing technologies and produce a comparison table with trade-offs
-- **Progressive research** — Create a workflow that builds on previous research sessions, connecting new findings to past notes
-- **Research summaries** — Generate weekly digests of all research conducted, highlighting key themes and open questions
+- **Comparison research**: Instruct the AI to research multiple competing technologies and produce a comparison table with trade-offs
+- **Progressive research**: Create a workflow that builds on previous research sessions, connecting new findings to past notes
+- **Research summaries**: Generate weekly digests of all research conducted, highlighting key themes and open questions
 
 ## Success Criteria
 You'll know your research workflow is ready when:
@@ -134,4 +134,4 @@ After completing this activity, use `workflow reflect` to capture:
 - Add your new research workflow to `notes/learning-plan.md` under "Projects & Practice"
 - Test the workflow on a technology you'll need for your next challenge
 - Consider building a curriculum generation workflow that reads your research notes and creates custom learning materials
-- Share your research workflow approach with peers—different students may have clever citation or validation strategies worth adopting
+- Share your research workflow approach with peers: different students may have clever citation or validation strategies worth adopting

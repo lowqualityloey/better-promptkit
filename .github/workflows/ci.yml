@@ -1,0 +1,144 @@
+name: Better-PromptKit CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate-linux:
+    name: Lint & Validate (Linux)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Validate Bash Script Syntax
+        run: |
+          bash -n init.sh
+          echo "init.sh parsed with 0 syntax errors."
+
+      - name: Test init.sh Dry-Run & Idempotency
+        run: |
+          TEST_DIR="/tmp/test-project"
+          mkdir -p "$TEST_DIR"
+          ./init.sh "$TEST_DIR"
+
+          for d in adrs specs rca spikes design data auth api tests releases; do
+            if [ ! -d "$TEST_DIR/docs/$d" ]; then
+              echo "Error: Missing directory docs/$d"
+              exit 1
+            fi
+          done
+
+          test -f "$TEST_DIR/PROMPTKIT.md" || (echo "Error: Missing PROMPTKIT.md" && exit 1)
+          test -f "$TEST_DIR/AGENTS.md" || (echo "Error: Missing AGENTS.md" && exit 1)
+          grep -q "Better-PromptKit Engineering Operating System" "$TEST_DIR/AGENTS.md" || (echo "Error: Directive not found in AGENTS.md" && exit 1)
+
+          # Idempotency re-run
+          ./init.sh "$TEST_DIR"
+          COUNT=$(grep -c "<!-- PROMPTKIT_START -->" "$TEST_DIR/AGENTS.md")
+          if [ "$COUNT" -ne 1 ]; then
+            echo "Error: Directive duplicated: expected 1 occurrence, found $COUNT"
+            exit 1
+          fi
+          echo "Linux setup script and idempotency verified successfully."
+
+      - name: Anti-Slop Hygiene Check (Zero Em Dashes)
+        run: |
+          echo "Checking workflows/ and templates/ for forbidden em dashes..."
+          if grep -rn "—" workflows/ templates/; then
+            echo "Error: Em dashes (—) detected in workflows or templates."
+            exit 1
+          fi
+          echo "Anti-slop check passed: 0 em dashes found."
+
+      - name: Verify All Referenced Workflows & Templates Exist
+        run: |
+          FILES=(
+            "workflows/route.md"
+            "workflows/tutor.md"
+            "workflows/plan.md"
+            "workflows/review.md"
+            "workflows/debug.md"
+            "workflows/data.md"
+            "workflows/auth.md"
+            "workflows/api.md"
+            "workflows/test.md"
+            "workflows/ship.md"
+            "workflows/research.md"
+            "workflows/design-system.md"
+            "workflows/reflect.md"
+            "protocols/setup.md"
+            "protocols/code-quality-gate.md"
+            "protocols/context-sync.md"
+            "templates/project-profile-template.md"
+            "templates/design-profile-template.md"
+            "templates/data-model-spec.md"
+            "templates/auth-matrix-template.md"
+            "templates/api-contract-spec.md"
+            "templates/test-plan-template.md"
+            "templates/release-checklist.md"
+            "templates/adr-template.md"
+            "templates/tech-spec-template.md"
+            "templates/rca-postmortem-template.md"
+            "templates/code-review-checklist.md"
+            "templates/design-tokens-spec.md"
+            "templates/spike-template.md"
+          )
+          for f in "${FILES[@]}"; do
+            if [ ! -f "$f" ]; then
+              echo "Error: Referenced file does not exist: $f"
+              exit 1
+            fi
+          done
+          echo "All 29 referenced files exist on disk."
+
+  validate-windows:
+    name: Lint & Validate (Windows)
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Validate PowerShell Script Syntax
+        shell: pwsh
+        run: |
+          $errors = @()
+          [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path "init.ps1"), [ref]$null, [ref]$errors) | Out-Null
+          if ($errors.Count -gt 0) {
+            $errors | ForEach-Object { Write-Error $_ }
+            exit 1
+          }
+          Write-Host "init.ps1 parsed with 0 syntax errors."
+
+      - name: Test init.ps1 Dry-Run & Idempotency
+        shell: pwsh
+        run: |
+          $testDir = New-Item -ItemType Directory -Path "$env:RUNNER_TEMP\test-project" -Force
+          .\init.ps1 -ProjectRoot $testDir.FullName
+
+          $docDirs = @("adrs", "specs", "rca", "spikes", "design", "data", "auth", "api", "tests", "releases")
+          foreach ($d in $docDirs) {
+            $p = Join-Path $testDir.FullName "docs\$d"
+            if (-not (Test-Path $p)) {
+              throw "Missing directory: docs\$d"
+            }
+          }
+
+          if (-not (Test-Path (Join-Path $testDir.FullName "PROMPTKIT.md"))) {
+            throw "Missing PROMPTKIT.md"
+          }
+          if (-not (Test-Path (Join-Path $testDir.FullName "AGENTS.md"))) {
+            throw "Missing AGENTS.md"
+          }
+
+          # Idempotency re-run
+          .\init.ps1 -ProjectRoot $testDir.FullName
+          $content = Get-Content (Join-Path $testDir.FullName "AGENTS.md") -Raw
+          $matches = [regex]::Matches($content, "<!-- PROMPTKIT_START -->")
+          if ($matches.Count -ne 1) {
+            throw "Directive duplicated: expected 1 occurrence, found $($matches.Count)"
+          }
+          Write-Host "Windows setup dry-run and idempotency verified successfully."
