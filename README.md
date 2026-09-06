@@ -47,7 +47,7 @@ Tell your assistant:
 1. Detects your active AI editor or CLI configuration (`CLAUDE.md`, `GEMINI.md`, `AGENTS.md`, `.cursorrules`, `.windsurfrules`, `.github/copilot-instructions.md`).
 2. Injects conflict-free `pk:` triggers into your agent briefing file.
 3. Scaffolds `PROMPTKIT.md` for project tech stack rules, and links `DESIGN.md` if present for visual brand identity.
-4. Creates documentation folders (`docs/adrs/`, `docs/specs/`, `docs/rca/`, `docs/spikes/`, `docs/design/`, `docs/data/`, `docs/auth/`, `docs/api/`) so architectural decisions stay tracked in your project's repository.
+4. Creates documentation folders (`docs/adrs/`, `docs/specs/`, `docs/rca/`, `docs/spikes/`, `docs/design/`, `docs/data/`, `docs/auth/`, `docs/api/`, `docs/tests/`, `docs/releases/`) so architectural decisions stay tracked in your project's repository.
 
 ---
 
@@ -67,6 +67,8 @@ All triggers use the `pk:` prefix to avoid collisions with native slash commands
 | `pk:data` | Relational database design: primary keys, composite indexing, Row-Level Security (RLS) policies, and transaction boundaries. | `docs/data/` |
 | `pk:auth` | Authentication architecture: cookie security (HttpOnly, SameSite), OAuth PKCE, session management, and RBAC/ABAC matrices. | `docs/auth/` |
 | `pk:api` | Frontend-backend handshake: unified error envelopes, cursor/offset pagination, mutation idempotency, and contract types. | `docs/api/` |
+| `pk:test` | Upfront testing strategy: pyramid seam allocation (Unit vs. Real DB vs. E2E), modular data factories, and mock boundaries. | `docs/tests/` |
+| `pk:ship` | Release engineering: fail-fast runtime env checks (Zod/T3), Expand-Contract migration ordering, smoke tests, and rollbacks. | `docs/releases/` |
 | `pk:spike` | Technical research spikes: tests the sharpest risk first, compares against the boring baseline, with direct ADR export. | `docs/spikes/` |
 | `pk:design` | UI design: anti-slop guidelines, WCAG 2.2 AA contrast/keyboard compliance, React runtime performance, and `DESIGN.md` brand tokens. | `docs/design/` |
 | `pk:retro` | Post-implementation retrospective: extracts architectural decisions into MADRs and logs progress. | `docs/adrs/` & journal |
@@ -92,6 +94,8 @@ better-promptkit/
 │   ├── data.md                  # Relational schema design, composite indexes & RLS (pk:data)
 │   ├── auth.md                  # Authentication, cookie security & RBAC/ABAC (pk:auth)
 │   ├── api.md                   # API contracts, error envelopes & idempotency (pk:api)
+│   ├── test.md                  # Upfront test strategy, seam allocation & mock boundaries (pk:test)
+│   ├── ship.md                  # Release engineering, runtime env checks & rollbacks (pk:ship)
 │   ├── research.md              # Technical spikes & sharpest-risk benchmark matrix (pk:spike)
 │   ├── design-system.md         # Anti-slop UI, Design Tokens, and WCAG 2.2 accessibility (pk:design)
 │   └── reflect.md               # Engineering retrospectives & ADR generation (pk:retro)
@@ -101,6 +105,8 @@ better-promptkit/
 │   ├── data-model-spec.md          # Relational schema & RLS specification
 │   ├── auth-matrix-template.md     # Auth architecture & RBAC capability matrix
 │   ├── api-contract-spec.md        # API endpoint contract & error code catalog
+│   ├── test-plan-template.md       # Upfront test strategy & pyramid seam specification
+│   ├── release-checklist.md        # Release engineering & zero-downtime deploy checklist
 │   ├── adr-template.md             # MADR standard Architectural Decision Record
 │   ├── tech-spec-template.md       # Engineering RFC / Technical Specification
 │   ├── rca-postmortem-template.md  # Blameless Post-Mortem & Incident RCA

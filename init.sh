@@ -27,6 +27,8 @@ DOC_DIRS=(
     "docs/data"
     "docs/auth"
     "docs/api"
+    "docs/tests"
+    "docs/releases"
 )
 for dir in "${DOC_DIRS[@]}"; do
     if [[ ! -d "$PROJECT_ROOT/$dir" ]]; then
@@ -98,6 +100,8 @@ Activate workflows anytime with these namespaced triggers:
 - \`pk:data\` (or \`pk:db\`) — Relational database modeling, indexing strategies, RLS, and transaction boundaries.
 - \`pk:auth\` — Authentication flows, cookie security, session management, and RBAC/ABAC matrices.
 - \`pk:api\` — Frontend-backend handshake, unified error envelopes, and contract generation.
+- \`pk:test\` — Upfront testing strategy, seam allocation, and mock boundaries.
+- \`pk:ship\` — Release engineering, migration sequencing, runtime env checks, and rollbacks.
 - \`pk:spike\` (or \`pk:research\`) — Technical spikes, benchmarks, and multi-vector trade-off matrices.
 - \`pk:design\` — Modern UI/UX, Design Tokens, and WCAG 2.2 Level AA accessibility.
 - \`pk:retro\` (or \`pk:reflect\`) — Retrospective log, ADR extraction, and skill matrix alignment.
@@ -110,6 +114,8 @@ Activate workflows anytime with these namespaced triggers:
 - **Data**: $KIT_DIR_REL/workflows/data.md
 - **Auth**: $KIT_DIR_REL/workflows/auth.md
 - **API**: $KIT_DIR_REL/workflows/api.md
+- **Test**: $KIT_DIR_REL/workflows/test.md
+- **Ship**: $KIT_DIR_REL/workflows/ship.md
 - **Research**: $KIT_DIR_REL/workflows/research.md
 - **Design System**: $KIT_DIR_REL/workflows/design-system.md
 - **Reflect**: $KIT_DIR_REL/workflows/reflect.md
@@ -128,6 +134,8 @@ All generated project documentation must be saved to the host project:
 - Data Models: docs/data/
 - Auth Specs: docs/auth/
 - API Contracts: docs/api/
+- Test Plans: docs/tests/
+- Releases: docs/releases/
 <!-- PROMPTKIT_END -->
 EOF
 )

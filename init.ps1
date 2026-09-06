@@ -39,7 +39,9 @@ $DocDirs = @(
     "docs/design",
     "docs/data",
     "docs/auth",
-    "docs/api"
+    "docs/api",
+    "docs/tests",
+    "docs/releases"
 )
 
 foreach ($dir in $DocDirs) {
@@ -115,6 +117,8 @@ Activate workflows anytime with these namespaced triggers:
 - `pk:data` (or `pk:db`) — Relational database modeling, indexing strategies, RLS, and transaction boundaries.
 - `pk:auth` — Authentication flows, cookie security, session management, and RBAC/ABAC matrices.
 - `pk:api` — Frontend-backend handshake, unified error envelopes, and contract generation.
+- `pk:test` — Upfront testing strategy, seam allocation, and mock boundaries.
+- `pk:ship` — Release engineering, migration sequencing, runtime env checks, and rollbacks.
 - `pk:spike` (or `pk:research`) — Technical spikes, benchmarks, and multi-vector trade-off matrices.
 - `pk:design` — Modern UI/UX, Design Tokens, and WCAG 2.2 Level AA accessibility.
 - `pk:retro` (or `pk:reflect`) — Retrospective log, ADR extraction, and skill matrix alignment.
@@ -127,6 +131,8 @@ Activate workflows anytime with these namespaced triggers:
 - **Data**: $KitDirRel/workflows/data.md
 - **Auth**: $KitDirRel/workflows/auth.md
 - **API**: $KitDirRel/workflows/api.md
+- **Test**: $KitDirRel/workflows/test.md
+- **Ship**: $KitDirRel/workflows/ship.md
 - **Research**: $KitDirRel/workflows/research.md
 - **Design System**: $KitDirRel/workflows/design-system.md
 - **Reflect**: $KitDirRel/workflows/reflect.md
@@ -145,6 +151,8 @@ All generated project documentation must be saved to the host project:
 - Data Models: docs/data/
 - Auth Specs: docs/auth/
 - API Contracts: docs/api/
+- Test Plans: docs/tests/
+- Releases: docs/releases/
 <!-- PROMPTKIT_END -->
 "@
 

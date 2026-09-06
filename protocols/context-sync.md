@@ -38,6 +38,8 @@ Scan the workspace root and key subdirectories for project manifests:
 - **Authentication**: Supabase Auth, NextAuth / Auth.js, Clerk, Lucia, Better-Auth, Kinde, Stytch
 - **API & Routing**: tRPC, Hono, Next.js Route Handlers, Express, Fastify, FastAPI, GraphQL
 - **Testing Suites**: Vitest, Jest, Playwright, Cypress, Pytest, Go testing
+- **Deployment & Hosting**: Vercel, Cloudflare Pages/Workers, Fly.io, Railway, AWS, GCP, Docker, Kubernetes
+- **CI / CD Pipelines**: GitHub Actions (`.github/workflows`), GitLab CI, CircleCI
 
 ### 4. Architecture & Pattern Recognition
 Identify existing project structural patterns:
@@ -69,6 +71,8 @@ Generate a 3-4 bullet point internal context summary before executing any workfl
 - **Data (`pk:data`)**: Adapts schema and RLS policies to the detected database engine and ORM.
 - **Auth (`pk:auth`)**: Aligns session strategy, cookie rules, and RBAC matrix to the detected auth library.
 - **API (`pk:api`)**: Conforms endpoint definitions to existing router styles (tRPC, REST, or Server Actions).
+- **Test (`pk:test`)**: Adapts pyramid seam allocation and runner commands to detected test suites and CI constraints.
+- **Ship (`pk:ship`)**: Aligns runtime env validation, migration ordering, smoke tests, and rollback triggers with the detected deployment platform and CI/CD setup.
 - **Design System (`pk:design`)**: Translates `DESIGN.md` rules directly into tokens, themes, and accessible component variants.
 - **Tutor (`pk:tutor`)**: Tailors analogies and code hints to the exact libraries, idioms, and design tokens used in the codebase.
 - **Plan (`pk:plan`)**: Ensures proposed architectures and UI wireframes fit cleanly into existing folder conventions and design boundaries.

@@ -48,6 +48,8 @@ Ensure the host repository contains documentation directories so generated artif
 - `docs/data/` — Database Models & Schema Specifications
 - `docs/auth/` — Authentication & Authorization Matrices
 - `docs/api/` — API Contracts & Error Specifications
+- `docs/tests/` — Test Plans, Seam Allocations & Test Matrices
+- `docs/releases/` — Release Checklists, Rollback Decision Logs & Verification Reports
 
 If `PROMPTKIT.md` does not exist in the project root, copy `.promptkit/templates/project-profile-template.md` to `./PROMPTKIT.md` for project-specific rules and commands. If `DESIGN.md` is desired for custom visual identity, copy `.promptkit/templates/design-profile-template.md` to `./DESIGN.md`.
 
@@ -69,6 +71,8 @@ Activate workflows anytime with these namespaced triggers:
 - `pk:data` (or `pk:db`) — Relational database modeling, indexing strategies, RLS, and transaction boundaries.
 - `pk:auth` — Authentication flows, cookie security, session management, and RBAC/ABAC matrices.
 - `pk:api` — Frontend-backend handshake, unified error envelopes, and contract generation.
+- `pk:test` — Upfront testing strategy, seam allocation, and mock boundaries.
+- `pk:ship` — Release engineering, migration sequencing, runtime env checks, and rollbacks.
 - `pk:spike` (or `pk:research`) — Technical spikes, benchmarks, and multi-vector trade-off matrices.
 - `pk:design` — Modern UI/UX, Design Tokens, and WCAG 2.2 Level AA accessibility.
 - `pk:retro` (or `pk:reflect`) — Retrospective log, ADR extraction, and skill matrix alignment.
@@ -81,6 +85,8 @@ Activate workflows anytime with these namespaced triggers:
 - **Data**: `.promptkit/workflows/data.md`
 - **Auth**: `.promptkit/workflows/auth.md`
 - **API**: `.promptkit/workflows/api.md`
+- **Test**: `.promptkit/workflows/test.md`
+- **Ship**: `.promptkit/workflows/ship.md`
 - **Research**: `.promptkit/workflows/research.md`
 - **Design System**: `.promptkit/workflows/design-system.md`
 - **Reflect**: `.promptkit/workflows/reflect.md`
@@ -99,6 +105,8 @@ All generated project documentation must be saved to the host project:
 - Data Models: `docs/data/`
 - Auth Specs: `docs/auth/`
 - API Contracts: `docs/api/`
+- Test Plans: `docs/tests/`
+- Releases: `docs/releases/`
 <!-- PROMPTKIT_END -->
 ```
 
@@ -113,6 +121,8 @@ After updating configuration:
    - `[pk:data]` — Design relational schemas, indexes, and RLS policies.
    - `[pk:auth]` — Architect authentication, cookies, and RBAC matrices.
    - `[pk:api]` — Define frontend-backend contracts and error envelopes.
+   - `[pk:test]` — Define upfront testing strategy, pyramid seam allocation, and mock boundaries.
+   - `[pk:ship]` — Execute release checklist, runtime env checks, zero-downtime migration, and rollback plan.
    - `[pk:spike]` — Run a technical spike comparing libraries/patterns.
    - `[pk:design]` — Design accessible UI components with modern tokens.
    - `[pk:retro]` — Run a retro on completed work, capture insights, and generate ADRs.
