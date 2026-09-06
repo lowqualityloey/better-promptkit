@@ -21,6 +21,7 @@ jobs:
 
       - name: Test init.sh Dry-Run & Idempotency
         run: |
+          chmod +x init.sh
           TEST_DIR="/tmp/test-project"
           mkdir -p "$TEST_DIR"
           ./init.sh "$TEST_DIR"
