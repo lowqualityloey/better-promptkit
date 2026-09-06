@@ -45,6 +45,9 @@ Ensure the host repository contains documentation directories so generated artif
 - `docs/rca/` — Root Cause Analysis Incident Post-Mortems
 - `docs/spikes/` — Technical Spikes & Benchmarks
 - `docs/design/` — Design Token Specs & UI Architecture
+- `docs/data/` — Database Models & Schema Specifications
+- `docs/auth/` — Authentication & Authorization Matrices
+- `docs/api/` — API Contracts & Error Specifications
 
 If `PROMPTKIT.md` does not exist in the project root, copy `.promptkit/templates/project-profile-template.md` to `./PROMPTKIT.md` for project-specific rules and commands. If `DESIGN.md` is desired for custom visual identity, copy `.promptkit/templates/design-profile-template.md` to `./DESIGN.md`.
 
@@ -63,6 +66,9 @@ Activate workflows anytime with these namespaced triggers:
 - `pk:plan` — Spec-Driven Architecture & feature planning (domain models, API contracts, failure modes).
 - `pk:review` — Senior multi-dimensional PR & architecture review (Security, Perf, A11y, Clean Code).
 - `pk:debug` — Hypothesis-driven scientific debugging & root cause analysis (5-Whys).
+- `pk:data` (or `pk:db`) — Relational database modeling, indexing strategies, RLS, and transaction boundaries.
+- `pk:auth` — Authentication flows, cookie security, session management, and RBAC/ABAC matrices.
+- `pk:api` — Frontend-backend handshake, unified error envelopes, and contract generation.
 - `pk:spike` (or `pk:research`) — Technical spikes, benchmarks, and multi-vector trade-off matrices.
 - `pk:design` — Modern UI/UX, Design Tokens, and WCAG 2.2 Level AA accessibility.
 - `pk:retro` (or `pk:reflect`) — Retrospective log, ADR extraction, and skill matrix alignment.
@@ -72,6 +78,9 @@ Activate workflows anytime with these namespaced triggers:
 - **Plan**: `.promptkit/workflows/plan.md`
 - **Review**: `.promptkit/workflows/review.md`
 - **Debug**: `.promptkit/workflows/debug.md`
+- **Data**: `.promptkit/workflows/data.md`
+- **Auth**: `.promptkit/workflows/auth.md`
+- **API**: `.promptkit/workflows/api.md`
 - **Research**: `.promptkit/workflows/research.md`
 - **Design System**: `.promptkit/workflows/design-system.md`
 - **Reflect**: `.promptkit/workflows/reflect.md`
@@ -87,6 +96,9 @@ All generated project documentation must be saved to the host project:
 - Post-Mortems: `docs/rca/`
 - Spikes: `docs/spikes/`
 - Design Specs: `docs/design/`
+- Data Models: `docs/data/`
+- Auth Specs: `docs/auth/`
+- API Contracts: `docs/api/`
 <!-- PROMPTKIT_END -->
 ```
 
@@ -98,6 +110,9 @@ After updating configuration:
    - `[pk:plan]` — Design an architecture, draft an RFC/spec, or break down a feature.
    - `[pk:review]` — Conduct a Senior-level code & architecture audit on recent changes.
    - `[pk:debug]` — Perform systematic root cause analysis on a defect.
+   - `[pk:data]` — Design relational schemas, indexes, and RLS policies.
+   - `[pk:auth]` — Architect authentication, cookies, and RBAC matrices.
+   - `[pk:api]` — Define frontend-backend contracts and error envelopes.
    - `[pk:spike]` — Run a technical spike comparing libraries/patterns.
    - `[pk:design]` — Design accessible UI components with modern tokens.
    - `[pk:retro]` — Run a retro on completed work, capture insights, and generate ADRs.

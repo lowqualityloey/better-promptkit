@@ -142,11 +142,11 @@ Construct a feedback loop using the first viable option from this hierarchy:
 
 Once the failure point is proven, trace the failure back to the fundamental broken invariant:
 
-1. *Why did the transaction fail?* — Because the inventory count was negative.
-2. *Why was inventory negative?* — Because the checkout worker processed order items without an atomic row lock.
-3. *Why was the lock omitted?* — Because the ORM query used `.find()` instead of `.findAndLock()`.
-4. *Why did the developer use `.find()`?* — Because the repository interface did not expose an explicit transactional locking method.
-5. *Why was this not caught in CI?* — Because integration tests used SQLite in-memory which does not simulate PostgreSQL table row locking concurrency.
+1. *Why did the transaction fail?*: Because the inventory count was negative.
+2. *Why was inventory negative?*: Because the checkout worker processed order items without an atomic row lock.
+3. *Why was the lock omitted?*: Because the ORM query used `.find()` instead of `.findAndLock()`.
+4. *Why did the developer use `.find()`?*: Because the repository interface did not expose an explicit transactional locking method.
+5. *Why was this not caught in CI?*: Because integration tests used SQLite in-memory which does not simulate PostgreSQL table row locking concurrency.
 
 ---
 

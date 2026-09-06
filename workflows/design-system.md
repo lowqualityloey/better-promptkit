@@ -45,7 +45,7 @@ Guide the developer in designing, engineering, and auditing production-grade, hu
 ### Step 1: Design Tokens & Anti-Slop Visual Foundations
 
 1. **Derive the Palette from Brand Identity (`antislop-ui`)**:
-   - Ground colors in the product's identity or `DESIGN.md`—**never default to generic AI blue-to-purple gradients, cyan glows, or rainbow borders**.
+   - Ground colors in the product's identity or `DESIGN.md`: **never default to generic AI blue-to-purple gradients, cyan glows, or rainbow borders**.
    - Cap the active palette at 2–3 core colors + 1 intentional accent.
    - **Elevation & Glassmorphism Dose Cap**: Treat glassmorphism (`backdrop-blur`) and heavy drop-shadows as accents, not character traits. Dose cap: at most 1–2 elevated surfaces; everything else sits matte.
    - **Avoid Uniform Pill Syndrome**: Use intentional radii (`rounded-md` or `rounded-lg`). Do not make every button, input, card, and badge pill-shaped (`rounded-full`).

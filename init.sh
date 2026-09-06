@@ -18,7 +18,16 @@ echo -e "   Host Project: $PROJECT_ROOT"
 echo -e "   Engine Path:  $SCRIPT_DIR\n"
 
 # 1. Ensure Documentation Directories Exist in Host Project
-DOC_DIRS=("docs/adrs" "docs/specs" "docs/rca" "docs/spikes" "docs/design")
+DOC_DIRS=(
+    "docs/adrs"
+    "docs/specs"
+    "docs/rca"
+    "docs/spikes"
+    "docs/design"
+    "docs/data"
+    "docs/auth"
+    "docs/api"
+)
 for dir in "${DOC_DIRS[@]}"; do
     if [[ ! -d "$PROJECT_ROOT/$dir" ]]; then
         mkdir -p "$PROJECT_ROOT/$dir"
@@ -86,6 +95,9 @@ Activate workflows anytime with these namespaced triggers:
 - \`pk:plan\` — Spec-Driven Architecture & feature planning (domain models, API contracts, failure modes).
 - \`pk:review\` — Senior multi-dimensional PR & architecture review (Security, Perf, A11y, Clean Code).
 - \`pk:debug\` — Hypothesis-driven scientific debugging & root cause analysis (5-Whys).
+- \`pk:data\` (or \`pk:db\`) — Relational database modeling, indexing strategies, RLS, and transaction boundaries.
+- \`pk:auth\` — Authentication flows, cookie security, session management, and RBAC/ABAC matrices.
+- \`pk:api\` — Frontend-backend handshake, unified error envelopes, and contract generation.
 - \`pk:spike\` (or \`pk:research\`) — Technical spikes, benchmarks, and multi-vector trade-off matrices.
 - \`pk:design\` — Modern UI/UX, Design Tokens, and WCAG 2.2 Level AA accessibility.
 - \`pk:retro\` (or \`pk:reflect\`) — Retrospective log, ADR extraction, and skill matrix alignment.
@@ -95,6 +107,9 @@ Activate workflows anytime with these namespaced triggers:
 - **Plan**: $KIT_DIR_REL/workflows/plan.md
 - **Review**: $KIT_DIR_REL/workflows/review.md
 - **Debug**: $KIT_DIR_REL/workflows/debug.md
+- **Data**: $KIT_DIR_REL/workflows/data.md
+- **Auth**: $KIT_DIR_REL/workflows/auth.md
+- **API**: $KIT_DIR_REL/workflows/api.md
 - **Research**: $KIT_DIR_REL/workflows/research.md
 - **Design System**: $KIT_DIR_REL/workflows/design-system.md
 - **Reflect**: $KIT_DIR_REL/workflows/reflect.md
@@ -109,6 +124,10 @@ All generated project documentation must be saved to the host project:
 - Technical Specs: docs/specs/
 - Post-Mortems: docs/rca/
 - Spikes: docs/spikes/
+- Design Specs: docs/design/
+- Data Models: docs/data/
+- Auth Specs: docs/auth/
+- API Contracts: docs/api/
 <!-- PROMPTKIT_END -->
 EOF
 )

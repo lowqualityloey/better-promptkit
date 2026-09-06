@@ -36,7 +36,10 @@ $DocDirs = @(
     "docs/specs",
     "docs/rca",
     "docs/spikes",
-    "docs/design"
+    "docs/design",
+    "docs/data",
+    "docs/auth",
+    "docs/api"
 )
 
 foreach ($dir in $DocDirs) {
@@ -109,6 +112,9 @@ Activate workflows anytime with these namespaced triggers:
 - `pk:plan` — Spec-Driven Architecture & feature planning (domain models, API contracts, failure modes).
 - `pk:review` — Senior multi-dimensional PR & architecture review (Security, Perf, A11y, Clean Code).
 - `pk:debug` — Hypothesis-driven scientific debugging & root cause analysis (5-Whys).
+- `pk:data` (or `pk:db`) — Relational database modeling, indexing strategies, RLS, and transaction boundaries.
+- `pk:auth` — Authentication flows, cookie security, session management, and RBAC/ABAC matrices.
+- `pk:api` — Frontend-backend handshake, unified error envelopes, and contract generation.
 - `pk:spike` (or `pk:research`) — Technical spikes, benchmarks, and multi-vector trade-off matrices.
 - `pk:design` — Modern UI/UX, Design Tokens, and WCAG 2.2 Level AA accessibility.
 - `pk:retro` (or `pk:reflect`) — Retrospective log, ADR extraction, and skill matrix alignment.
@@ -118,6 +124,9 @@ Activate workflows anytime with these namespaced triggers:
 - **Plan**: $KitDirRel/workflows/plan.md
 - **Review**: $KitDirRel/workflows/review.md
 - **Debug**: $KitDirRel/workflows/debug.md
+- **Data**: $KitDirRel/workflows/data.md
+- **Auth**: $KitDirRel/workflows/auth.md
+- **API**: $KitDirRel/workflows/api.md
 - **Research**: $KitDirRel/workflows/research.md
 - **Design System**: $KitDirRel/workflows/design-system.md
 - **Reflect**: $KitDirRel/workflows/reflect.md
@@ -132,6 +141,10 @@ All generated project documentation must be saved to the host project:
 - Technical Specs: docs/specs/
 - Post-Mortems: docs/rca/
 - Spikes: docs/spikes/
+- Design Specs: docs/design/
+- Data Models: docs/data/
+- Auth Specs: docs/auth/
+- API Contracts: docs/api/
 <!-- PROMPTKIT_END -->
 "@
 

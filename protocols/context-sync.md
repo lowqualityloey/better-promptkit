@@ -34,7 +34,9 @@ Scan the workspace root and key subdirectories for project manifests:
 - **Frontend Frameworks**: Next.js, Vite, Remix, Astro, SvelteKit, React 19, Vue, Nuxt
 - **Styling & UI**: Tailwind CSS (v3 vs v4), CSS Modules, Radix UI, Shadcn UI, Styled Components
 - **State Management**: TanStack Query / SWR, Zustand, Redux Toolkit, Jotai, Pinia
-- **Database / ORM**: Prisma, Drizzle, TypeORM, SQLAlchemy, Mongoose, Supabase
+- **Database / ORM**: Prisma, Drizzle, Kysely, TypeORM, SQLAlchemy, Mongoose, Supabase Postgres
+- **Authentication**: Supabase Auth, NextAuth / Auth.js, Clerk, Lucia, Better-Auth, Kinde, Stytch
+- **API & Routing**: tRPC, Hono, Next.js Route Handlers, Express, Fastify, FastAPI, GraphQL
 - **Testing Suites**: Vitest, Jest, Playwright, Cypress, Pytest, Go testing
 
 ### 4. Architecture & Pattern Recognition
@@ -54,8 +56,9 @@ Generate a 3-4 bullet point internal context summary before executing any workfl
 ```markdown
 - **Project Profile**: [From PROMPTKIT.md if present, e.g. Acme Dashboard (B2B Logistics)]
 - **Visual Identity**: [From DESIGN.md if present, e.g. Deep Forest Green + Ochre Gold Accent, 6px radius, matte]
-- **Stack**: [e.g., Next.js 15 (App Router) + TypeScript Strict + Tailwind v4 + Prisma]
-- **State/Data Layer**: [e.g., TanStack Query v5 + Server Actions + PostgreSQL]
+- **Stack**: [e.g., Next.js 15 (App Router) + TypeScript Strict + Tailwind v4 + Drizzle]
+- **Auth & Data**: [e.g., Supabase Auth + Row-Level Security + PostgreSQL]
+- **API Layer**: [e.g., tRPC v11 + Server Actions]
 - **Testing Commands**: [e.g., pnpm test (Unit) + pnpm test:e2e (Playwright)]
 - **Active Task / Branch**: [e.g., feature/auth-rate-limiting, 3 files modified]
 ```
@@ -63,6 +66,9 @@ Generate a 3-4 bullet point internal context summary before executing any workfl
 ---
 
 ## Usage in Workflows
+- **Data (`pk:data`)**: Adapts schema and RLS policies to the detected database engine and ORM.
+- **Auth (`pk:auth`)**: Aligns session strategy, cookie rules, and RBAC matrix to the detected auth library.
+- **API (`pk:api`)**: Conforms endpoint definitions to existing router styles (tRPC, REST, or Server Actions).
 - **Design System (`pk:design`)**: Translates `DESIGN.md` rules directly into tokens, themes, and accessible component variants.
 - **Tutor (`pk:tutor`)**: Tailors analogies and code hints to the exact libraries, idioms, and design tokens used in the codebase.
 - **Plan (`pk:plan`)**: Ensures proposed architectures and UI wireframes fit cleanly into existing folder conventions and design boundaries.

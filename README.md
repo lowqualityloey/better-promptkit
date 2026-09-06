@@ -47,7 +47,7 @@ Tell your assistant:
 1. Detects your active AI editor or CLI configuration (`CLAUDE.md`, `GEMINI.md`, `AGENTS.md`, `.cursorrules`, `.windsurfrules`, `.github/copilot-instructions.md`).
 2. Injects conflict-free `pk:` triggers into your agent briefing file.
 3. Scaffolds `PROMPTKIT.md` for project tech stack rules, and links `DESIGN.md` if present for visual brand identity.
-4. Creates documentation folders (`docs/adrs/`, `docs/specs/`, `docs/rca/`, `docs/spikes/`, `docs/design/`) so architectural decisions stay tracked in your project's repository.
+4. Creates documentation folders (`docs/adrs/`, `docs/specs/`, `docs/rca/`, `docs/spikes/`, `docs/design/`, `docs/data/`, `docs/auth/`, `docs/api/`) so architectural decisions stay tracked in your project's repository.
 
 ---
 
@@ -64,6 +64,9 @@ All triggers use the `pk:` prefix to avoid collisions with native slash commands
 | `pk:plan` | Spec-driven architecture: deep module design, Expand-Contract zero-downtime database migrations, and TDD milestones. | `docs/specs/` |
 | `pk:review` | Two-axis review: Spec Fidelity vs. Technical Standards (Martin Fowler's 12 code smells), with data loss prevention audits. | Review report |
 | `pk:debug` | Scientific debugging: 10-tier feedback loop hierarchy, "no red loop, no Phase 2" gate, tagged logs (`[DEBUG-xxxx]`), and 5-Whys. | `docs/rca/` |
+| `pk:data` | Relational database design: primary keys, composite indexing, Row-Level Security (RLS) policies, and transaction boundaries. | `docs/data/` |
+| `pk:auth` | Authentication architecture: cookie security (HttpOnly, SameSite), OAuth PKCE, session management, and RBAC/ABAC matrices. | `docs/auth/` |
+| `pk:api` | Frontend-backend handshake: unified error envelopes, cursor/offset pagination, mutation idempotency, and contract types. | `docs/api/` |
 | `pk:spike` | Technical research spikes: tests the sharpest risk first, compares against the boring baseline, with direct ADR export. | `docs/spikes/` |
 | `pk:design` | UI design: anti-slop guidelines, WCAG 2.2 AA contrast/keyboard compliance, React runtime performance, and `DESIGN.md` brand tokens. | `docs/design/` |
 | `pk:retro` | Post-implementation retrospective: extracts architectural decisions into MADRs and logs progress. | `docs/adrs/` & journal |
@@ -86,34 +89,40 @@ better-promptkit/
 │   ├── plan.md                  # Spec-Driven Development & deep modular design (pk:plan)
 │   ├── review.md                # Two-axis PR & Fowler smell review with data safety audit (pk:review)
 │   ├── debug.md                 # Empirical feedback-loop debugging & root cause analysis (pk:debug)
+│   ├── data.md                  # Relational schema design, composite indexes & RLS (pk:data)
+│   ├── auth.md                  # Authentication, cookie security & RBAC/ABAC (pk:auth)
+│   ├── api.md                   # API contracts, error envelopes & idempotency (pk:api)
 │   ├── research.md              # Technical spikes & sharpest-risk benchmark matrix (pk:spike)
 │   ├── design-system.md         # Anti-slop UI, Design Tokens, and WCAG 2.2 accessibility (pk:design)
 │   └── reflect.md               # Engineering retrospectives & ADR generation (pk:retro)
 ├── templates/
 │   ├── project-profile-template.md # Scaffolds PROMPTKIT.md for custom project guardrails
 │   ├── design-profile-template.md  # Scaffolds DESIGN.md for brand identity & visual tokens
-│   ├── adr-template.md          # MADR standard Architectural Decision Record
-│   ├── tech-spec-template.md    # Engineering RFC / Technical Specification
-│   ├── rca-postmortem-template.md # Blameless Post-Mortem & Incident RCA
-│   ├── code-review-checklist.md # Senior Developer PR Review Checklist
-│   ├── design-tokens-spec.md    # Design System & Token Specification
-│   └── spike-template.md        # Technical Spike & Benchmark Evaluation Template
+│   ├── data-model-spec.md          # Relational schema & RLS specification
+│   ├── auth-matrix-template.md     # Auth architecture & RBAC capability matrix
+│   ├── api-contract-spec.md        # API endpoint contract & error code catalog
+│   ├── adr-template.md             # MADR standard Architectural Decision Record
+│   ├── tech-spec-template.md       # Engineering RFC / Technical Specification
+│   ├── rca-postmortem-template.md  # Blameless Post-Mortem & Incident RCA
+│   ├── code-review-checklist.md    # Senior Developer PR Review Checklist
+│   ├── design-tokens-spec.md       # Design System & Token Specification
+│   └── spike-template.md           # Technical Spike & Benchmark Evaluation Template
 ├── examples/
-│   ├── sample-progress-journal.md # Retrospective entries from the Shelf full-stack app
-│   └── sample-learning-plan.md    # Engineering OKRs & mental model notes
+│   ├── sample-progress-journal.md  # Retrospective entries from the Shelf full-stack app
+│   └── sample-learning-plan.md     # Engineering OKRs & mental model notes
 ├── notes/
-│   ├── README.md                # Knowledge base guide
-│   ├── learning-plan.md         # Template for engineering OKRs & practice katas
-│   ├── progress-journal.md      # Template for progressive retro logs
-│   ├── skill-matrix.md          # Software Engineering Competency Matrix (L1 → L4)
-│   ├── adrs/                    # Local ADR directory (for standalone vault mode)
-│   └── spikes/                  # Local Spikes directory (for standalone vault mode)
+│   ├── README.md                   # Knowledge base guide
+│   ├── learning-plan.md            # Template for engineering OKRs & practice katas
+│   ├── progress-journal.md         # Template for progressive retro logs
+│   ├── skill-matrix.md             # Software Engineering Competency Matrix (L1 → L4)
+│   ├── adrs/                       # Local ADR directory (for standalone vault mode)
+│   └── spikes/                     # Local Spikes directory (for standalone vault mode)
 └── activities/
-    ├── README.md                # Interactive simulation catalog
-    ├── 01-system-design-spike.md      # High-throughput webhook engine design
-    ├── 02-refactoring-clean-arch.md   # Refactoring monolith to Clean Architecture
-    ├── 03-async-concurrency-debug.md  # Concurrency race conditions & memory leaks
-    └── 04-accessible-design-system.md # Accessible, tokenized component library
+    ├── README.md                   # Interactive simulation catalog
+    ├── 01-system-design-spike.md         # High-throughput webhook engine design
+    ├── 02-refactoring-clean-arch.md      # Refactoring monolith to Clean Architecture
+    ├── 03-async-concurrency-debug.md     # Concurrency race conditions & memory leaks
+    └── 04-accessible-design-system.md    # Accessible, tokenized component library
 ```
 
 ---
