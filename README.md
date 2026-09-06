@@ -76,6 +76,31 @@ All triggers use the `pk:` prefix to avoid collisions with native slash commands
 
 ---
 
+## Smart Auto-Route with Guardrails (Triggers Are Optional)
+
+You do not need to memorize `pk:` triggers. When Better-PromptKit is active in your project, the assistant automatically routes plain-English requests using a two-tier policy:
+
+> [!TIP]
+> **Zero-Memorization**: Ask naturally (e.g., *"This checkout endpoint throws a 500 error"* or *"Design a multi-tenant user table"*). The assistant recognizes your intent, announces the protocol, and enforces its engineering quality gate.
+
+### 1. Fast-Path (Zero Token Overhead)
+For simple queries, syntax lookups, quick explanations, formatting, or single-line tweaks, the assistant responds directly and concisely. It does **not** trigger workflow ceremonies or write unnecessary documentation, keeping token consumption minimal and developer velocity high.
+
+### 2. Protocol Auto-Route (Substantive Engineering)
+For non-trivial changes (features, crashes, schema changes, auth flows, releases), the assistant announces the active protocol and enforces its quality gates:
+* **Errors, crashes, test failures**: Auto-routes to `pk:debug` (reproduces before patching).
+* **New features, cross-component additions**: Auto-routes to `pk:plan` (creates an RFC spec first).
+* **Databases & migrations**: Auto-routes to `pk:data` (enforces Expand-Contract ordering).
+* **Auth, cookies, session security**: Auto-routes to `pk:auth` (builds a capability matrix).
+* **API contracts & endpoints**: Auto-routes to `pk:api` (types and error envelopes).
+* **Testing strategy & seams**: Auto-routes to `pk:test` (seam allocation before code).
+* **Production deployment & env vars**: Auto-routes to `pk:ship` (validates runtime env and rollback steps).
+* **Code review & PR audits**: Auto-routes to `pk:review` (two-axis quality check).
+
+If you ever want an interactive overview of all workflows, simply run `pk:route` or ask the assistant to route your task.
+
+---
+
 ## Lifecycle Workflow Router
 
 Trigger anytime with `pk:route`. Navigate across the entire engineering lifecycle without guessing:

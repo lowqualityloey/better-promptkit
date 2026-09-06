@@ -97,3 +97,34 @@ When a developer asks for help without specifying a command, the assistant shoul
 
 3. **Are you looking for an answer, or looking to build mental models?**
    - If learning or stuck on a concept: Activate `pk:tutor` to receive 3-tier progressive hints instead of unsolicited solution dumping.
+
+---
+
+## Smart Auto-Route Protocol & Guardrails
+
+When working in an environment with Better-PromptKit, the developer may prompt using natural language without specifying a `pk:` shorthand. The assistant must evaluate incoming requests according to this two-tier routing policy:
+
+### Tier 1: Fast-Path (Zero Overhead Guardrail)
+If the request is:
+- A conceptual question, syntax lookup, or library query (e.g., "How does `useId` work in React 19?")
+- A quick single-line or small localized tweak (e.g., "Rename this variable to `userEmail`")
+- A simple code explanation, formatting, or lightweight helper request
+
+**Action**: Answer directly, concisely, and immediately. Do **not** trigger a workflow ceremony, do **not** write files to `docs/`, and do **not** add unnecessary process overhead. Preserve tokens and developer velocity.
+
+### Tier 2: Substantive Protocol Auto-Route
+If the request involves non-trivial engineering changes (new features, crashes, schema changes, auth, API modifications, or releases):
+
+**Action**:
+1. Announce the active workflow in a single brief line:
+   `[Better-PromptKit: Auto-routed to pk:<workflow>]`
+2. Automatically adhere to that workflow's quality gates, pre-conditions, and artifact outputs:
+   - **Bugs, errors, broken tests, unexpected behavior**: Auto-route to `pk:debug`. Establish the reproduction loop before proposing any fix.
+   - **New features, cross-component additions, new pages**: Auto-route to `pk:plan`. Create the RFC spec before writing code.
+   - **Database tables, migrations, RLS policies, indexing**: Auto-route to `pk:data`. Enforce Expand-Contract sequencing.
+   - **Login, session tokens, cookies, permissions**: Auto-route to `pk:auth`. Establish the capability matrix first.
+   - **API routes, endpoints, contracts, error envelopes**: Auto-route to `pk:api`. Define schema types and envelope formats first.
+   - **Test suites, unit/integration splits, mock boundaries**: Auto-route to `pk:test`. Allocate pyramid seams before code.
+   - **Production deployment, env vars, rollback prep**: Auto-route to `pk:ship`. Run runtime env validation and release checklist.
+   - **PR review, diff audit, refactoring assessment**: Auto-route to `pk:review`. Audit against spec fidelity and Fowler smells.
+

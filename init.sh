@@ -107,6 +107,20 @@ Activate workflows anytime with these namespaced triggers:
 - \`pk:design\`: Modern UI/UX, Design Tokens, and WCAG 2.2 Level AA accessibility.
 - \`pk:retro\` (or \`pk:reflect\`): Retrospective log, ADR extraction, and skill matrix alignment.
 
+### Smart Auto-Route & Guardrails (Triggers Are Optional)
+You do not need to memorize triggers. If a prompt lacks an explicit \`pk:\` trigger, apply this triage:
+- **Fast-Path (Zero Overhead)**: For simple questions, syntax lookups, quick explanations, formatting, or single-line tweaks, answer directly and concisely. Do NOT invoke heavy workflow ceremonies or produce unnecessary documents.
+- **Protocol Auto-Route (Substantive Tasks)**: For multi-file changes, architecture, broken code, or production ops, automatically adopt the matching workflow:
+  - Defects, bugs, crashes, or test failures -> \`pk:debug\` (reproduce before patching)
+  - New features, redesigns, or multi-component additions -> \`pk:plan\` (spec and risk analysis first)
+  - Database schema, indexing, or migrations -> \`pk:data\` (Expand-Contract ordering)
+  - Auth, sessions, cookies, or RBAC -> \`pk:auth\` (threat model and capability matrix)
+  - Endpoints, contracts, or client types -> \`pk:api\` (envelope and schemas)
+  - Test suites, seam allocation, or mocking -> \`pk:test\` (pyramid seam allocation)
+  - Deployments, env validation, or releases -> \`pk:ship\` (pre-flight checks and rollback)
+  - Code audits or PR reviews -> \`pk:review\` (two-axis standard review)
+  When auto-routing a substantive task, announce it briefly in one sentence (e.g., "[Better-PromptKit: Auto-routed to pk:plan]") and enforce its quality gate.
+
 ### Workflows & Protocols Reference
 - **Route**: $KIT_DIR_REL/workflows/route.md
 - **Tutor**: $KIT_DIR_REL/workflows/tutor.md
