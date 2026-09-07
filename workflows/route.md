@@ -157,3 +157,17 @@ If the request involves non-trivial engineering changes (new features, crashes, 
    - **Pull requests, PR descriptions, or opening a PR**: Auto-route to `pk:pr`. Compile verification evidence and format PR description.
    - **Context bloat, chat lag, session handover, or pausing**: Auto-route to `pk:checkpoint`. Compress working state, sync `docs/STATE.md`, and generate handover prompt.
    - **Production deployment, env vars, rollback prep**: Auto-route to `pk:ship`. Run runtime env validation and release checklist.
+
+### Tier 3: Subagent Delegation Guardrails
+When executing workflows in agentic multi-agent environments (Antigravity, Claude Code, Cursor background agents), follow `.promptkit/protocols/subagent-delegation.md`:
+- **Delegate to Subagents**:
+  - `pk:spike`: Fan out parallel subagents to benchmark competing frameworks concurrently.
+  - `pk:review`: Run Spec Fidelity and Fowler Code Smells audits in concurrent subagents.
+  - `pk:onboard`: Delegate deep manifest parsing and directory topology scanning.
+  - Heavy exploration requiring reading >3 files or external documentation searches.
+- **Retain in Main Thread**:
+  - Direct user questions, clarifications, and interactive approvals.
+  - Quick single-file edits (<10 lines) and syntax lookups.
+  - Git staging, atomic commits (`pk:commit`), and pull request creation (`pk:pr`).
+  - Final architectural synthesis and invariant locking (`pk:plan`, `docs/STATE.md`).
+- **Synthesis Mandate**: All subagents must return compact 5-15 line synthesized reports (with exact file paths and line numbers) rather than dumping raw tool scrollback into parent context.

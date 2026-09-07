@@ -66,6 +66,10 @@ Evaluate 2 to 4 realistic options, always including the baseline:
 - **Candidate B (Leading Modern Standard)**: The most widely adopted modern solution.
 - **Candidate C (Lightweight / Specialized Alternative)**: A high-performance or minimal alternative.
 
+> [!TIP]
+> **Subagent Parallel Fan-Out (`protocols/subagent-delegation.md`)**:
+> In agentic environments, fan out candidate explorations to concurrent subagents (e.g. Subagent 1 evaluates Candidate A, Subagent 2 benchmarks Candidate B). Require each subagent to return a compact 10-line synthesis adhering to the Multi-Vector Evaluation Dimensions below.
+
 ### Step 3: Multi-Vector Comparative Matrix
 Audit all candidates across engineering dimensions:
 

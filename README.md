@@ -249,7 +249,8 @@ better-promptkit/
 ├── protocols/                   # Non-negotiable AI rules & operating standards
 │   ├── setup.md                 # Universal multi-agent configuration protocol
 │   ├── context-sync.md          # Tech stack, PROMPTKIT.md, DESIGN.md & git auto-detection
-│   └── code-quality-gate.md     # Non-negotiable definition-of-done & pre-commit gate
+│   ├── code-quality-gate.md     # Non-negotiable definition-of-done & pre-commit gate
+│   └── subagent-delegation.md   # Subagent delegation, parallel execution & context preservation
 ├── workflows/                   # Step-by-step engineering lifecycle procedures
 │   ├── route.md                 # Lifecycle decision matrix & workflow triage (pk:route)
 │   ├── tutor.md                 # Socratic mentorship & 3-tier progressive hints (pk:tutor, pk:grill)
@@ -354,6 +355,7 @@ The core architectural principles apply across any tech stack (TypeScript, Pytho
 * Atomic Conventional Commits and pre-flight staging (`pk:commit`)
 * High-signal Pull Request authoring and verification evidence (`pk:pr`)
 * Zero-loss session checkpoints and context compaction (`pk:checkpoint`)
+* Context preservation and parallel subagent delegation (`protocols/subagent-delegation.md`)
 * Zero-downtime Expand-Contract migration sequencing (`pk:ship`)
 
 ### 2. First-Class Battle-Tested Presets

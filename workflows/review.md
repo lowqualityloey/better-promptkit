@@ -68,6 +68,10 @@ If the diff is empty or the reference fails to resolve, halt and resolve the bas
 
 ## Evaluation Axes
 
+> [!TIP]
+> **Subagent Delegation for Dual-Axis Auditing (`protocols/subagent-delegation.md`)**:
+> In agentic environments, delegate Axis 1 (Spec Fidelity) and Axis 2 (Technical Standards) to concurrent subagents. The parent agent receives both synthesized reports and merges them into the final side-by-side review comment table.
+
 ### Axis 1: Spec Fidelity Review
 Review the diff against the originating specification, issue description, or PR requirements:
 - [ ] **Missing Requirements**: What requirements did the spec ask for that are omitted or only partially implemented?

@@ -189,6 +189,7 @@ You do not need to memorize triggers. If a prompt lacks an explicit `pk:` trigge
 - **Checkpoint**: $KitDirRel/workflows/checkpoint.md
 - **Quality Gate (DoD)**: $KitDirRel/protocols/code-quality-gate.md
 - **Context Sync**: $KitDirRel/protocols/context-sync.md
+- **Subagent Delegation**: $KitDirRel/protocols/subagent-delegation.md
 - **Project Profile & Rules**: ./PROMPTKIT.md (if present)
 - **Visual Identity & Brand**: ./DESIGN.md (if present)
 - **Living State & Tracker**: ./docs/STATE.md (if present)
