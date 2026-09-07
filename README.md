@@ -17,6 +17,7 @@ Better-PromptKit equips your coding assistant with senior development discipline
 | **What is it?** | A modular, collision-free engineering operating system that lives in your project as `.promptkit/`. |
 | **Who is it for?** | Developers pairing with AI assistants who want senior-level discipline, clean git history, and zero downtime. |
 | **Why is it better?** | Replaces unguided "vibe coding" and token-wasting guess-and-patch loops with structured, deterministic development workflows. |
+| **How does it differ?** | Zero slash command collisions (`pk:` prefix), zero destructive database drops (Expand-Contract only), and zero unsolicited code dumps (Socratic guidance). |
 
 ---
 
@@ -142,9 +143,12 @@ Trigger anytime with `pk:route`. Navigate across the entire engineering lifecycl
                             │
      ┌──────────────────────┴──────────────────────┐
      ▼                                             ▼
-  pk:retro                                   pk:checkpoint
+   pk:retro                                   pk:checkpoint
 (MADR & Journals)                       (Zero-Loss Chat Handover)
 ```
+
+> [!NOTE]
+> **Cross-Cutting Coaching**: `pk:tutor` (Socratic mentorship & 3-tier progressive hints) and `pk:grill` (Staff Engineer architecture defense drills) operate perpendicularly across all lifecycle phases whenever conceptual guidance or invariant stress-testing is needed.
 
 ---
 
@@ -160,7 +164,7 @@ All triggers use the `pk:` prefix to avoid collisions with native slash commands
 | `pk:tutor architect` | Invariant stress-testing, failure mode analysis, and distributed systems trade-offs. | `docs/adrs/` |
 | `pk:grill` | Staff-level architecture defense drill challenging assumptions and edge cases. | Conversation / Notes |
 | `pk:plan` | Spec-driven architecture: deep module design, Expand-Contract zero-downtime database migrations, and TDD milestones. | `docs/specs/` |
-| `pk:onboard` | Brownfield codebase intake: auto-detects stack, extracts commands, scaffolds `PROMPTKIT.md` & `DESIGN.md`, and indexes debt. | `PROMPTKIT.md` / `DESIGN.md` |
+| `pk:onboard` | Brownfield codebase intake: auto-detects stack, extracts commands, scaffolds `PROMPTKIT.md`, `DESIGN.md` & `docs/STATE.md`, and indexes debt. | `PROMPTKIT.md`, `DESIGN.md`, `docs/STATE.md` |
 | `pk:tasks` | Task breakdown: atomic 1-4h issues, Gherkin Acceptance Criteria, priority tags (#priority/p0-p3), and Kanban board sync. | `docs/tasks/` or gh CLI |
 | `pk:review` | Two-axis review: Spec Fidelity vs. Technical Standards (Martin Fowler's 12 code smells), with data loss prevention audits. | Review report |
 | `pk:commit` | Atomic Conventional Commits: single-concern staging, Conventional Commits v1.0.0, and secret leak scanning. | Git History |
@@ -207,6 +211,12 @@ For non-trivial changes (features, crashes, schema changes, auth flows, releases
 * **Production deployment & env vars**: Auto-routes to `pk:ship` (validates runtime env and rollback steps).
 
 If you ever want an interactive overview of all workflows, simply run `pk:route` or ask the assistant to route your task.
+
+### 3. Subagent Delegation (Parallel Fan-Out)
+When operating in agentic multi-agent environments (Antigravity, Claude Code, Cursor background agents), the assistant delegates high-volume exploration according to `.promptkit/protocols/subagent-delegation.md`:
+* **Offloaded to Subagents**: Multi-candidate architecture benchmarks (`pk:spike`), dual-axis PR reviews (`pk:review`), repository intake scans (`pk:onboard`), and codebase surveys reading >3 files.
+* **Retained in Main Thread**: Direct developer conversations, single-file edits (<10 lines), atomic git commits (`pk:commit`), and pull request submission (`pk:pr`).
+* **Synthesis Mandate**: Subagents must return compact 5-15 line synthesized reports (file paths + findings) rather than dumping raw tool scrollback into parent context.
 
 ### How Auto-Routing Looks in Practice
 
