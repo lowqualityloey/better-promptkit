@@ -110,6 +110,9 @@ For each decomposed task, fill out `.promptkit/templates/issue-task-template.md`
      - `## To Do`: `- [ ] <Task description> #priority/pX`
      - `## In Progress`: `- [/] <Task description> #priority/pX`
      - `## Done`: `- [x] <Task description> #priority/pX ✅ YYYY-MM-DD`
+4. **Living State Sync (`docs/STATE.md`)**:
+   - If `./docs/STATE.md` exists, update Section 2 (`Milestone & Task Progress`) with the newly decomposed tasks (`- [ ] TASK-XX: ...`).
+   - Update Section 3 (`Active Working Set`) with links to the generated task spec in `docs/tasks/`.
 
 ---
 
@@ -119,3 +122,4 @@ For each decomposed task, fill out `.promptkit/templates/issue-task-template.md`
 - Every task includes both happy path and negative/edge-case Acceptance Criteria.
 - Automated verification commands provided for every testable task.
 - Tasks document saved to `docs/tasks/` with copy-pasteable `gh issue create` commands.
+- Living tracker in `docs/STATE.md` updated with the active milestone tasks (if present).

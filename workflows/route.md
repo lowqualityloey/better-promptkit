@@ -23,7 +23,7 @@ Find your current engineering context below and activate the corresponding workf
 | Current Context / Problem | Recommended Trigger | Primary Artifact Output | Core Value Delivered |
 | :--- | :--- | :--- | :--- |
 | **New Feature or Inception** | `pk:plan` | `docs/specs/` | Modular RFC spec, deletion test, threat modeling |
-| **Existing Repo / Brownfield Intake** | `pk:onboard` | `PROMPTKIT.md` & `DESIGN.md` | Automated stack scan, command extraction, PROMPTKIT.md generation |
+| **Existing Repo / Brownfield Intake** | `pk:onboard` | `PROMPTKIT.md` & `docs/STATE.md` | Automated stack scan, command extraction, PROMPTKIT.md generation |
 | **Task Breakdown & Acceptance Criteria** | `pk:tasks` | `docs/tasks/` or gh CLI | Atomic issues, Gherkin AC, Kanban lane sync, gh CLI |
 | **Relational Database Design** | `pk:data` | `docs/data/` | UUIDv7 keys, composite indexes, RLS policies |
 | **Auth, Cookies & Permissions**| `pk:auth` | `docs/auth/` | HttpOnly cookies, OAuth PKCE, RBAC matrix |
@@ -36,7 +36,7 @@ Find your current engineering context below and activate the corresponding workf
 | **Pre-Merge Pull Request Audit**| `pk:review` | Review report | Two-axis review: Spec Fidelity vs Technical Standards |
 | **Atomic Git Staging & Commit** | `pk:commit` | Git History | Conventional Commits, single-concern staging, secret leak check |
 | **Pull Request Description**   | `pk:pr`     | PR Body / `gh pr`    | Verification evidence, migration safety check, rollback plan |
-| **Context Bloat & Handover**    | `pk:checkpoint`| Conversation / Notes | Session state compaction, invariant locking, fresh chat prompt |
+| **Context Bloat & Handover**    | `pk:checkpoint`| `docs/STATE.md` & Notes | Session state compaction, invariant locking, docs/STATE.md sync |
 | **Zero-Downtime Deployment**    | `pk:ship`   | `docs/releases/` | Runtime env validation, Expand-Contract migrations |
 | **Post-Implementation Retro**   | `pk:retro`  | `docs/adrs/` & journal| MADR records, progress journal, skill matrix updates |
 | **Learning & Socratic Coaching**| `pk:tutor`  | Conversation / Notes | 3-tier progressive hints, conceptual mental models |
@@ -155,8 +155,5 @@ If the request involves non-trivial engineering changes (new features, crashes, 
    - **PR review, diff audit, refactoring assessment**: Auto-route to `pk:review`. Audit against spec fidelity and Fowler smells.
    - **Git commits, staging changes, commit message generation**: Auto-route to `pk:commit`. Scan for secret leaks and format Conventional Commit.
    - **Pull requests, PR descriptions, or opening a PR**: Auto-route to `pk:pr`. Compile verification evidence and format PR description.
-   - **Context bloat, chat lag, session handover, or pausing**: Auto-route to `pk:checkpoint`. Compress working state and generate handover prompt.
+   - **Context bloat, chat lag, session handover, or pausing**: Auto-route to `pk:checkpoint`. Compress working state, sync `docs/STATE.md`, and generate handover prompt.
    - **Production deployment, env vars, rollback prep**: Auto-route to `pk:ship`. Run runtime env validation and release checklist.
-
-
-

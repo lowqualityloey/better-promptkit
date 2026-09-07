@@ -97,6 +97,13 @@ The assistant must perform the investigative heavy lifting: reading manifests, c
    - Extract primary brand colors, font families, base radius (`rounded-md`), and typography tokens.
    - Scaffold `./DESIGN.md` incorporating Better-PromptKit anti-slop directives and detected tokens.
 
+3. **Auto-Populate `docs/STATE.md` (Living Project Tracker)**:
+   Copy `.promptkit/templates/state-tracker-template.md` to `./docs/STATE.md`:
+   - Populate project name, current branch, and active status.
+   - Record detected architectural invariants in Section 4.
+   - Seed Section 8 (`Session Continuity Log`) with an initial onboarding entry:
+     `| YYYY-MM-DD | Assistant (pk:onboard) | Brownfield Codebase Intake | Generated PROMPTKIT.md and initialized docs/STATE.md |`
+
 ---
 
 ### Phase 4: Architecture Health Scorecard & Backlog Ingestion
@@ -112,9 +119,10 @@ The assistant must perform the investigative heavy lifting: reading manifests, c
    - `git grep -in "TODO:"` or `git grep -in "FIXME:"`.
    - Unmigrated database drafts or missing test suites.
    - Offer to run `pk:tasks` to structure high-priority debt items into atomic task cards in `docs/tasks/`.
+   - Record discovered debt tasks in `docs/STATE.md` under initial remediation items.
 
 3. **Announce Ready State**:
-   Confirm that `./PROMPTKIT.md` is active and suggest the immediate next workflow:
+   Confirm that `./PROMPTKIT.md` and `./docs/STATE.md` are active and suggest the immediate next workflow:
    - Use `pk:plan` for upcoming new features.
    - Use `pk:tasks` to break down existing backlog items.
    - Use `pk:debug` for active defects.
@@ -125,5 +133,6 @@ The assistant must perform the investigative heavy lifting: reading manifests, c
 - Manifests and scripts inspected; package manager verified.
 - `./PROMPTKIT.md` generated with non-generic, working project commands.
 - `./DESIGN.md` generated or skipped with explicit rationale.
+- `./docs/STATE.md` initialized with project baseline and active branch.
 - Executive Architecture Scorecard delivered to developer.
 - Workspace ready for immediate `pk:` workflow pairing.

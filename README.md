@@ -175,7 +175,7 @@ All triggers use the `pk:` prefix to avoid collisions with native slash commands
 | `pk:spike` | Technical research spikes: tests the sharpest risk first, compares against the boring baseline, with direct ADR export. | `docs/spikes/` |
 | `pk:design` | UI design: anti-slop guidelines, WCAG 2.2 AA contrast/keyboard compliance, React runtime performance, and `DESIGN.md` brand tokens. | `docs/design/` |
 | `pk:retro` | Post-implementation retrospective: extracts architectural decisions into MADRs and logs progress. | `docs/adrs/` & journal |
-| `pk:checkpoint` | Session checkpoint & handover: state compaction, invariant locking, and fresh chat handover prompt. | Conversation / Notes |
+| `pk:checkpoint` | Session checkpoint & handover: state compaction, invariant locking, docs/STATE.md sync, and fresh chat handover prompt. | `docs/STATE.md` & Notes |
 
 ---
 
@@ -203,7 +203,7 @@ For non-trivial changes (features, crashes, schema changes, auth flows, releases
 * **Code review & PR audits**: Auto-routes to `pk:review` (two-axis quality check).
 * **Git commits & staging**: Auto-routes to `pk:commit` (atomic staging, secret scan, Conventional Commits).
 * **Pull requests & PR descriptions**: Auto-routes to `pk:pr` (verification evidence, data safety, PR body).
-* **Context bloat & handovers**: Auto-routes to `pk:checkpoint` (session compaction, zero-loss chat handover).
+* **Context bloat & handovers**: Auto-routes to `pk:checkpoint` (session compaction, docs/STATE.md sync, zero-loss chat handover).
 * **Production deployment & env vars**: Auto-routes to `pk:ship` (validates runtime env and rollback steps).
 
 If you ever want an interactive overview of all workflows, simply run `pk:route` or ask the assistant to route your task.
@@ -273,6 +273,7 @@ better-promptkit/
 ├── templates/                   # Structured artifact schemas saved to project docs/
 │   ├── project-profile-template.md # Scaffolds PROMPTKIT.md for custom project guardrails
 │   ├── design-profile-template.md  # Scaffolds DESIGN.md for brand identity & visual tokens
+│   ├── state-tracker-template.md   # Scaffolds docs/STATE.md for living project tracking
 │   ├── data-model-spec.md          # Relational schema & RLS specification
 │   ├── auth-matrix-template.md     # Auth architecture & RBAC capability matrix
 │   ├── api-contract-spec.md        # API endpoint contract & error code catalog
@@ -363,9 +364,9 @@ While protocols remain universal, workflows and scaffolding provide tailored tem
 
 ---
 
-## Customizing Project Guardrails
+## Customizing Project Guardrails & Living State
 
-Better-PromptKit separates universal workflow protocols from project-specific rules. You customize your assistant's behavior using two root configuration files:
+Better-PromptKit separates universal workflow protocols from project-specific rules. You customize your assistant's behavior and track execution using three core living project files:
 
 ### 1. `PROMPTKIT.md` (Engineering Guardrails & Stack Constraints)
 Scaffolded automatically during initialization from `templates/project-profile-template.md`. This file tells the assistant your project's non-negotiable boundaries:
@@ -381,6 +382,13 @@ Optional brand identity file created from `templates/design-profile-template.md`
 * **Typography & Numerics**: Heading fonts, widow prevention (`text-wrap: balance`), and mandatory `tabular-nums` for financial tables and timers.
 * **Surfaces & Radii**: Hierarchy rules (`rounded-md` controls, `rounded-lg` containers) and elevation dose caps.
 * **Mobile Ergonomics**: Minimum $44 \times 44\text{px}$ touch targets and single-column mobile reflow.
+
+### 3. `docs/STATE.md` (The Living Project Tracker)
+Scaffolded automatically during initialization from `templates/state-tracker-template.md`. Serves as the single source of truth for ongoing project execution:
+* **Current Position & Milestone**: Active epic, overall health and status (`ACTIVE`, `BLOCKED`, `STABILIZING`), target release, and current working branch.
+* **Progress Tracking**: Hierarchical checklist with atomic task status (`[x]` Done, `[/]` In Progress, `[ ]` Queued, `[!]` Blocked).
+* **Locked Architectural Invariants**: Non-negotiable decisions made during pairing sessions that future sessions must not regress.
+* **Session Continuity**: Updated by `pk:checkpoint`, `pk:tasks`, and `pk:onboard` to eliminate AI context degradation and maintain persistent memory across fresh chats.
 
 ---
 

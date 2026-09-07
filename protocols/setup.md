@@ -53,7 +53,7 @@ Ensure the host repository contains documentation directories so generated artif
 - `docs/tasks/`: Task Breakdowns, Issue Drafts & Milestone Trackers
 - `docs/releases/`: Release Checklists, Rollback Decision Logs & Verification Reports
 
-If `PROMPTKIT.md` does not exist in the project root, copy `.promptkit/templates/project-profile-template.md` to `./PROMPTKIT.md` for project-specific rules and commands. If `DESIGN.md` is desired for custom visual identity, copy `.promptkit/templates/design-profile-template.md` to `./DESIGN.md`.
+If `PROMPTKIT.md` does not exist in the project root, copy `.promptkit/templates/project-profile-template.md` to `./PROMPTKIT.md` for project-specific rules and commands. If `DESIGN.md` is desired for custom visual identity, copy `.promptkit/templates/design-profile-template.md` to `./DESIGN.md`. If `docs/STATE.md` does not exist, copy `.promptkit/templates/state-tracker-template.md` to `./docs/STATE.md` for living project state tracking.
 
 ### 4. Inject PromptKit Core Directives
 Append or merge the following directive block into the detected configuration file(s):
@@ -84,7 +84,7 @@ Activate workflows anytime with these namespaced triggers:
 - `pk:spike` (or `pk:research`): Technical spikes, benchmarks, and multi-vector trade-off matrices.
 - `pk:design`: Modern UI/UX, Design Tokens, and WCAG 2.2 Level AA accessibility.
 - `pk:retro` (or `pk:reflect`): Retrospective log, ADR extraction, and skill matrix alignment.
-- `pk:checkpoint` (or `pk:handoff`): Session state compaction, invariant locking, and fresh chat handover prompt.
+- `pk:checkpoint` (or `pk:handoff`): Session state compaction, invariant locking, docs/STATE.md update, and fresh chat handover prompt.
 
 ### Smart Auto-Route & Guardrails (Triggers Are Optional)
 You do not need to memorize triggers. If a prompt lacks an explicit `pk:` trigger, apply this triage:
@@ -102,7 +102,7 @@ You do not need to memorize triggers. If a prompt lacks an explicit `pk:` trigge
   - Code audits or PR reviews -> `pk:review` (two-axis standard review)
   - Git commits or staging -> `pk:commit` (atomic conventional commits)
   - Pull requests or PR descriptions -> `pk:pr` (verification evidence and PR body)
-  - Context bloat, chat lag, session handover, or pausing -> `pk:checkpoint` (zero-loss handover)
+  - Context bloat, chat lag, session handover, or pausing -> `pk:checkpoint` (sync docs/STATE.md & zero-loss handover)
   - Deployments, env validation, or releases -> `pk:ship` (pre-flight checks and rollback)
   When auto-routing a substantive task, announce it briefly in one sentence (e.g., "[Better-PromptKit: Auto-routed to pk:plan]") and enforce its quality gate.
 
@@ -130,9 +130,11 @@ You do not need to memorize triggers. If a prompt lacks an explicit `pk:` trigge
 - **Context Sync**: `.promptkit/protocols/context-sync.md`
 - **Project Profile & Rules**: `./PROMPTKIT.md` (if present)
 - **Visual Identity & Brand**: `./DESIGN.md` (if present)
+- **Living State & Tracker**: `./docs/STATE.md` (if present)
 
 ### Project Artifact Output Paths
 All generated project documentation must be saved to the host project:
+- State Tracker: `docs/STATE.md`
 - ADRs: `docs/adrs/`
 - Technical Specs: `docs/specs/`
 - Task Breakdowns: `docs/tasks/`

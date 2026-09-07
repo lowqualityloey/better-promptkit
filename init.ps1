@@ -74,6 +74,19 @@ if (Test-Path $DesignProfile) {
     Write-Host "  [✓] DESIGN.md detected (brand identity & anti-slop rules)" -ForegroundColor DarkGray
 }
 
+# Scaffold docs/STATE.md if missing
+$StateTracker = Join-Path $ProjectRoot "docs/STATE.md"
+$TemplateState = Join-Path $ScriptDir "templates/state-tracker-template.md"
+
+if (-not (Test-Path $StateTracker)) {
+    if (Test-Path $TemplateState) {
+        Copy-Item -Path $TemplateState -Destination $StateTracker
+        Write-Host "  [+] Created: docs/STATE.md (living project & state tracker)" -ForegroundColor Green
+    }
+} else {
+    Write-Host "  [✓] docs/STATE.md already present" -ForegroundColor DarkGray
+}
+
 # 3. Detect Agent Files or Default to AGENTS.md
 $AgentFiles = @(
     "AGENTS.md",
@@ -132,7 +145,7 @@ Activate workflows anytime with these namespaced triggers:
 - `pk:spike` (or `pk:research`): Technical spikes, benchmarks, and multi-vector trade-off matrices.
 - `pk:design`: Modern UI/UX, Design Tokens, and WCAG 2.2 Level AA accessibility.
 - `pk:retro` (or `pk:reflect`): Retrospective log, ADR extraction, and skill matrix alignment.
-- `pk:checkpoint` (or `pk:handoff`): Session state compaction, invariant locking, and fresh chat handover prompt.
+- `pk:checkpoint` (or `pk:handoff`): Session state compaction, invariant locking, docs/STATE.md update, and fresh chat handover prompt.
 
 ### Smart Auto-Route & Guardrails (Triggers Are Optional)
 You do not need to memorize triggers. If a prompt lacks an explicit `pk:` trigger, apply this triage:
@@ -150,7 +163,7 @@ You do not need to memorize triggers. If a prompt lacks an explicit `pk:` trigge
   - Code audits or PR reviews -> `pk:review` (two-axis standard review)
   - Git commits or staging -> `pk:commit` (atomic conventional commits)
   - Pull requests or PR descriptions -> `pk:pr` (verification evidence and PR body)
-  - Context bloat, chat lag, session handover, or pausing -> `pk:checkpoint` (zero-loss handover)
+  - Context bloat, chat lag, session handover, or pausing -> `pk:checkpoint` (sync docs/STATE.md & zero-loss handover)
   - Deployments, env validation, or releases -> `pk:ship` (pre-flight checks and rollback)
   When auto-routing a substantive task, announce it briefly in one sentence (e.g., "[Better-PromptKit: Auto-routed to pk:plan]") and enforce its quality gate.
 
@@ -178,9 +191,11 @@ You do not need to memorize triggers. If a prompt lacks an explicit `pk:` trigge
 - **Context Sync**: $KitDirRel/protocols/context-sync.md
 - **Project Profile & Rules**: ./PROMPTKIT.md (if present)
 - **Visual Identity & Brand**: ./DESIGN.md (if present)
+- **Living State & Tracker**: ./docs/STATE.md (if present)
 
 ### Project Artifact Output Paths
 All generated project documentation must be saved to the host project:
+- State Tracker: docs/STATE.md
 - ADRs: docs/adrs/
 - Technical Specs: docs/specs/
 - Task Breakdowns: docs/tasks/

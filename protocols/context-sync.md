@@ -26,7 +26,17 @@ Check if `./DESIGN.md` exists in the repository root:
   - **Mobile Constraints**: Minimum touch target area ($\ge 44 \times 44\text{px}$) and reflow breakpoints.
 - **Single Source of Truth**: Treat `DESIGN.md` as the supreme visual authority for all UI generation, styling, and design reviews (`pk:design`, `pk:review`).
 
-### 3. Technology & Runtime Detection
+### 3. Living Project Tracker Inspection (`docs/STATE.md`)
+Check if `./docs/STATE.md` exists in the host project:
+- If present, parse:
+  - **Active Milestone & Status**: Current phase (e.g. Milestone 2: Core Domain Logic), overall state (`ACTIVE`, `BLOCKED`, `STABILIZING`).
+  - **Active Working Set**: Current feature RFC (`docs/specs/...`), target files in flight, and verification commands.
+  - **Locked Technical Invariants**: Non-negotiable decisions from previous sessions (e.g. UUIDv7 keys, HttpOnly cookies, tenant RLS).
+  - **Known Blockers & Risks**: Immediate impediments to resolve or work around.
+  - **Next Immediate Actions**: The prioritized next tasks queued for execution.
+- If `docs/STATE.md` is missing, rely on git status, active issue specs, and `PROMPTKIT.md`.
+
+### 4. Technology & Runtime Detection
 Scan the workspace root and key subdirectories for project manifests:
 - **Node.js / TypeScript**: `package.json`, `tsconfig.json`, `pnpm-lock.yaml`, `bun.lockb`
 - **Python**: `pyproject.toml`, `requirements.txt`, `Pipfile`, `uv.lock`
@@ -41,23 +51,24 @@ Scan the workspace root and key subdirectories for project manifests:
 - **Deployment & Hosting**: Vercel, Cloudflare Pages/Workers, Fly.io, Railway, AWS, GCP, Docker, Kubernetes
 - **CI / CD Pipelines**: GitHub Actions (`.github/workflows`), GitLab CI, CircleCI
 
-### 4. Architecture & Pattern Recognition
+### 5. Architecture & Pattern Recognition
 Identify existing project structural patterns:
 - **Layering**: Feature-sliced (`src/features/*`), Layered (`src/controllers`, `src/services`, `src/repositories`), Clean / Hexagonal (`domain`, `application`, `infrastructure`), Monorepo (`apps/*`, `packages/*`).
 - **API Style**: RESTful (OpenAPI), tRPC, GraphQL, Server Actions, gRPC.
 - **Strictness**: TypeScript `strict: true`, ESLint config, Prettier rules, Biome, Ruff.
 
-### 5. Git Status & Recent Evolution
+### 6. Git Status & Recent Evolution
 Check active branches and recent changes:
 - Run `git status -s` to see uncommitted work.
 - Run `git log -n 5 --oneline` to understand recent milestones.
 - Identify current pain points or WIP areas.
 
-### 6. Context Synthesis Summary
+### 7. Context Synthesis Summary
 Generate a 3-4 bullet point internal context summary before executing any workflow:
 ```markdown
 - **Project Profile**: [From PROMPTKIT.md if present, e.g. Acme Dashboard (B2B Logistics)]
 - **Visual Identity**: [From DESIGN.md if present, e.g. Deep Forest Green + Ochre Gold Accent, 6px radius, matte]
+- **Project State**: [From docs/STATE.md if present, e.g. Milestone 2: In Progress (3/6 tasks done), 0 blockers]
 - **Stack**: [e.g., Next.js 15 (App Router) + TypeScript Strict + Tailwind v4 + Drizzle]
 - **Auth & Data**: [e.g., Supabase Auth + Row-Level Security + PostgreSQL]
 - **API Layer**: [e.g., tRPC v11 + Server Actions]
@@ -68,6 +79,8 @@ Generate a 3-4 bullet point internal context summary before executing any workfl
 ---
 
 ## Usage in Workflows
+- **Checkpoint (`pk:checkpoint`)**: Synchronizes session accomplishments, locked invariants, and next actions directly back to `docs/STATE.md`.
+- **Tasks (`pk:tasks`)**: Reflects milestone decomposition and active task checklists into `docs/STATE.md`.
 - **Data (`pk:data`)**: Adapts schema and RLS policies to the detected database engine and ORM.
 - **Auth (`pk:auth`)**: Aligns session strategy, cookie rules, and RBAC matrix to the detected auth library.
 - **API (`pk:api`)**: Conforms endpoint definitions to existing router styles (tRPC, REST, or Server Actions).

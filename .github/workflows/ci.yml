@@ -34,6 +34,7 @@ jobs:
           done
 
           test -f "$TEST_DIR/PROMPTKIT.md" || (echo "Error: Missing PROMPTKIT.md" && exit 1)
+          test -f "$TEST_DIR/docs/STATE.md" || (echo "Error: Missing docs/STATE.md" && exit 1)
           test -f "$TEST_DIR/AGENTS.md" || (echo "Error: Missing AGENTS.md" && exit 1)
           grep -q "Better-PromptKit Engineering Operating System" "$TEST_DIR/AGENTS.md" || (echo "Error: Directive not found in AGENTS.md" && exit 1)
 
@@ -82,6 +83,7 @@ jobs:
             "protocols/context-sync.md"
             "templates/project-profile-template.md"
             "templates/design-profile-template.md"
+            "templates/state-tracker-template.md"
             "templates/data-model-spec.md"
             "templates/auth-matrix-template.md"
             "templates/api-contract-spec.md"
@@ -103,7 +105,7 @@ jobs:
               exit 1
             fi
           done
-          echo "All 38 referenced files exist on disk."
+          echo "All 39 referenced files exist on disk."
 
   validate-windows:
     name: Lint & Validate (Windows)
@@ -139,6 +141,9 @@ jobs:
 
           if (-not (Test-Path (Join-Path $testDir.FullName "PROMPTKIT.md"))) {
             throw "Missing PROMPTKIT.md"
+          }
+          if (-not (Test-Path (Join-Path $testDir.FullName "docs\STATE.md"))) {
+            throw "Missing docs/STATE.md"
           }
           if (-not (Test-Path (Join-Path $testDir.FullName "AGENTS.md"))) {
             throw "Missing AGENTS.md"

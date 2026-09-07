@@ -4,7 +4,7 @@
 Trigger anytime with: `pk:checkpoint` (or `/pk-checkpoint`, `pk:handoff`)
 
 ## Mission
-Eliminate AI context window degradation, token lag, and instruction drift during extended pairing sessions. Compress the active working state into an architectural snapshot and generate a plug-and-play **Handover Prompt** to resume work in a fresh chat window with zero lost context.
+Eliminate AI context window degradation, token lag, and instruction drift during extended pairing sessions. Compress the active working state into an architectural snapshot, persist progress into `docs/STATE.md` on disk, and generate a plug-and-play **Handover Prompt** to resume work in a fresh chat window with zero lost context.
 
 ---
 
@@ -21,8 +21,8 @@ Eliminate AI context window degradation, token lag, and instruction drift during
 │                  PK:CHECKPOINT LIFECYCLE                    │
 ├──────────────┬──────────────┬──────────────┬────────────────┤
 │ Phase 1:     │ Phase 2:     │ Phase 3:     │ Phase 4:       │
-│ Workspace    │ Invariant &  │ Pre-Handover │ Clean Handover │
-│ Delta Audit  │ State Synthe │ Hygiene Scan │ Prompt Gen     │
+│ Workspace    │ Invariant &  │ Pre-Handover │ State Sync &   │
+│ Delta Audit  │ State Synthe │ Hygiene Scan │ Handover Gen   │
 └──────────────┴──────────────┴──────────────┴────────────────┘
 ```
 
@@ -68,9 +68,22 @@ Ensure the workspace is in a clean state before switching sessions:
 
 ---
 
-### Phase 4: Clean Handover Prompt Generation
+### Phase 4: docs/STATE.md Sync & Handover Prompt Generation
 
-Generate a self-contained, copy-pasteable prompt block formatted for a brand-new chat session:
+1. **Synchronize docs/STATE.md on Disk**:
+   If `./docs/STATE.md` exists in the host repository, update it to preserve session progress in git:
+   - Check off completed tasks in Section 2 (`- [x] TASK-XX: ...`).
+   - Update `Last Updated` date and overall status.
+   - Update Section 3 (`Active Working Set`) with files in flight and test commands.
+   - Record newly agreed-upon non-negotiables in Section 4 (`Locked Technical Invariants`).
+   - Record active blockers in Section 5 (`Known Blockers, Risks & Open Questions`).
+   - Set the prioritized next tasks in Section 7 (`Next Immediate Actions`).
+   - Append an entry to Section 8 (`Session Continuity Log`):
+     `| YYYY-MM-DD | [Agent/Author] | [Active Task/Milestone] | [Summary of work & decisions] |`
+   If `docs/STATE.md` does not yet exist, offer to scaffold it from `templates/state-tracker-template.md`.
+
+2. **Generate Clean Handover Prompt**:
+   Generate a self-contained, copy-pasteable prompt block formatted for a brand-new chat session:
 
 ````markdown
 ### Handover Prompt for Fresh Chat Session
@@ -111,6 +124,7 @@ Please inspect the files listed above and confirm you are ready to proceed with 
 
 ````markdown
 [Better-PromptKit: Session Checkpoint Generated]
+[Better-PromptKit: Synced session updates to docs/STATE.md]
 
 ### Session Summary
 * **Objective**: Add email verification invariant to team invite flow.
