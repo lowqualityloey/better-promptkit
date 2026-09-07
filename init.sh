@@ -29,6 +29,7 @@ DOC_DIRS=(
     "docs/api"
     "docs/tests"
     "docs/perf"
+    "docs/tasks"
     "docs/releases"
 )
 for dir in "${DOC_DIRS[@]}"; do
@@ -97,6 +98,7 @@ Activate workflows anytime with these namespaced triggers:
 - \`pk:tutor\` (or \`pk:tutor beginner\`, \`pk:tutor architect\`): Socratic mentorship & 3-tier progressive hints (never dump unsolicited code).
 - \`pk:grill\`: Intensive Staff Engineer architecture interview and defense drill.
 - \`pk:plan\`: Spec-Driven Architecture & feature planning (domain models, API contracts, failure modes).
+- \`pk:tasks\` (or \`pk:issue\`, \`pk:kanban\`): Decompose RFC specs into atomic GitHub issues with Gherkin Acceptance Criteria and Kanban sync.
 - \`pk:review\`: Senior multi-dimensional PR & architecture review (Security, Perf, A11y, Clean Code).
 - \`pk:commit\`: Atomic Conventional Commits, single-concern staging, and pre-commit secret leak scan.
 - \`pk:pr\`: High-signal PR descriptions, verification evidence compilation, data safety checklist, and GitHub CLI creation.
@@ -119,6 +121,7 @@ You do not need to memorize triggers. If a prompt lacks an explicit \`pk:\` trig
   - Defects, bugs, crashes, or test failures -> \`pk:debug\` (reproduce before patching)
   - Performance regressions, slow queries, or latency -> \`pk:perf\` (measure baseline first)
   - New features, redesigns, or multi-component additions -> \`pk:plan\` (spec and risk analysis first)
+  - Task breakdowns, issue creation, or Kanban cards -> \`pk:tasks\` (atomic issues and Gherkin AC)
   - Database schema, indexing, or migrations -> \`pk:data\` (Expand-Contract ordering)
   - Auth, sessions, cookies, or RBAC -> \`pk:auth\` (threat model and capability matrix)
   - Endpoints, contracts, or client types -> \`pk:api\` (envelope and schemas)
@@ -134,6 +137,7 @@ You do not need to memorize triggers. If a prompt lacks an explicit \`pk:\` trig
 - **Route**: $KIT_DIR_REL/workflows/route.md
 - **Tutor**: $KIT_DIR_REL/workflows/tutor.md
 - **Plan**: $KIT_DIR_REL/workflows/plan.md
+- **Tasks**: $KIT_DIR_REL/workflows/tasks.md
 - **Review**: $KIT_DIR_REL/workflows/review.md
 - **Commit**: $KIT_DIR_REL/workflows/commit.md
 - **Pull Request**: $KIT_DIR_REL/workflows/pr.md
@@ -157,6 +161,7 @@ You do not need to memorize triggers. If a prompt lacks an explicit \`pk:\` trig
 All generated project documentation must be saved to the host project:
 - ADRs: docs/adrs/
 - Technical Specs: docs/specs/
+- Task Breakdowns: docs/tasks/
 - Post-Mortems: docs/rca/
 - Spikes: docs/spikes/
 - Design Specs: docs/design/

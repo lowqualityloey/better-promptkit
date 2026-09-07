@@ -93,6 +93,9 @@ Trigger anytime with `pk:route`. Navigate across the entire engineering lifecycl
                             │
                          pk:plan
                             │
+                         pk:tasks
+         (Atomic Issues, Gherkin AC & Kanban Sync)
+                            │
      ┌──────────────────────┼──────────────────────┐
      ▼                      ▼                      ▼
   pk:data                pk:auth                 pk:api
@@ -109,7 +112,7 @@ Trigger anytime with `pk:route`. Navigate across the entire engineering lifecycl
      │                      │                      │
      └──────────────────────┼──────────────────────┘
                             │
-               [ Verification & Merge ]
+                [ Verification & Merge ]
                             │
      ┌──────────────────────┼──────────────────────┐
      ▼                      ▼                      ▼
@@ -151,6 +154,7 @@ All triggers use the `pk:` prefix to avoid collisions with native slash commands
 | `pk:tutor architect` | Invariant stress-testing, failure mode analysis, and distributed systems trade-offs. | `docs/adrs/` |
 | `pk:grill` | Staff-level architecture defense drill challenging assumptions and edge cases. | Conversation / Notes |
 | `pk:plan` | Spec-driven architecture: deep module design, Expand-Contract zero-downtime database migrations, and TDD milestones. | `docs/specs/` |
+| `pk:tasks` | Task breakdown: atomic 1-4h issues, Gherkin Acceptance Criteria, priority tags (#priority/p0-p3), and Kanban board sync. | `docs/tasks/` or gh CLI |
 | `pk:review` | Two-axis review: Spec Fidelity vs. Technical Standards (Martin Fowler's 12 code smells), with data loss prevention audits. | Review report |
 | `pk:commit` | Atomic Conventional Commits: single-concern staging, Conventional Commits v1.0.0, and secret leak scanning. | Git History |
 | `pk:pr` | Pull Request descriptions: verification evidence compilation, data safety checklist, and GitHub CLI creation. | PR Body / `gh pr` |
@@ -183,6 +187,7 @@ For non-trivial changes (features, crashes, schema changes, auth flows, releases
 * **Errors, crashes, test failures**: Auto-routes to `pk:debug` (reproduces before patching).
 * **Performance regressions & latency**: Auto-routes to `pk:perf` (establishes baseline before modifying code).
 * **New features, cross-component additions**: Auto-routes to `pk:plan` (creates an RFC spec first).
+* **Task breakdowns & issue creation**: Auto-routes to `pk:tasks` (chunks specs into atomic issues with Gherkin AC).
 * **Databases & migrations**: Auto-routes to `pk:data` (enforces Expand-Contract ordering).
 * **Auth, cookies, session security**: Auto-routes to `pk:auth` (builds a capability matrix).
 * **API contracts & endpoints**: Auto-routes to `pk:api` (types and error envelopes).
@@ -241,6 +246,7 @@ better-promptkit/
 │   ├── route.md                 # Lifecycle decision matrix & workflow triage (pk:route)
 │   ├── tutor.md                 # Socratic mentorship & 3-tier progressive hints (pk:tutor, pk:grill)
 │   ├── plan.md                  # Spec-Driven Development & deep modular design (pk:plan)
+│   ├── tasks.md                 # Atomic issue breakdown, Gherkin AC & Kanban sync (pk:tasks)
 │   ├── review.md                # Two-axis PR & Fowler smell review with data safety audit (pk:review)
 │   ├── commit.md                # Atomic Conventional Commits & staging hygiene (pk:commit)
 │   ├── pr.md                    # High-signal pull request descriptions & evidence audit (pk:pr)
@@ -265,6 +271,7 @@ better-promptkit/
 │   ├── release-checklist.md        # Release engineering & zero-downtime deploy checklist
 │   ├── pull-request-template.md    # High-signal Pull Request description & safety checklist
 │   ├── perf-audit-template.md      # Performance audit report & before/after delta spec
+│   ├── issue-task-template.md      # Staff-level GitHub Issue template with Gherkin AC
 │   ├── adr-template.md             # MADR standard Architectural Decision Record
 │   ├── tech-spec-template.md       # Engineering RFC / Technical Specification
 │   ├── rca-postmortem-template.md  # Blameless Post-Mortem & Incident RCA
@@ -326,6 +333,7 @@ Better-PromptKit operates on two complementary levels:
 ### 1. Universal Engineering Protocols (Language-Agnostic)
 The core architectural principles apply across any tech stack (TypeScript, Python, Go, Rust, Java):
 * Spec-Driven Development and deep module boundaries (`pk:plan`)
+* Atomic task decomposition, Gherkin Acceptance Criteria, and Kanban sync (`pk:tasks`)
 * Relational schema design, composite index ordering, and transaction boundaries (`pk:data`)
 * Cookie security flags, OAuth PKCE flows, and capability-based RBAC (`pk:auth`)
 * Unified error envelopes, pagination conventions, and idempotency (`pk:api`)
@@ -354,7 +362,7 @@ Scaffolded automatically during initialization from `templates/project-profile-t
 * **Project Domain & Users**: Contextual overview so the assistant grasps business context.
 * **Active Commands**: Explicit test runner (`pnpm test:e2e`), typecheck (`pnpm tsc --noEmit`), and linter commands.
 * **Non-Negotiable Guardrails**: Hard architectural invariants (e.g., zero `any` in TypeScript, no business logic in React components, mandatory database check constraints).
-* **Artifact Storage**: Destination paths for all generated specs (`docs/specs/`, `docs/data/`, `docs/auth/`, `docs/perf/`, etc.).
+* **Artifact Storage**: Destination paths for all generated specs (`docs/specs/`, `docs/tasks/`, `docs/data/`, `docs/auth/`, `docs/perf/`, etc.).
 
 ### 2. `DESIGN.md` (Visual Brand & Anti-Slop Authority)
 Optional brand identity file created from `templates/design-profile-template.md`. Serves as the supreme visual authority for all UI generation (`pk:design`, `pk:review`):
