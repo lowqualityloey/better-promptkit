@@ -136,6 +136,14 @@ foreach ($file in $AllMarkdownFiles) {
                     "handoff" = "checkpoint.md"
                     "issue" = "tasks.md"
                     "kanban" = "tasks.md"
+                    "scan" = "onboard.md"
+                    "latency" = "perf.md"
+                    "grill" = "tutor.md"
+                    "spike" = "research.md"
+                    "retro" = "reflect.md"
+                    "design" = "design-system.md"
+                    "init" = "onboard.md"
+                    "task" = "tasks.md"
                 }
                 
                 if (-not $aliases.ContainsKey($trigger)) {

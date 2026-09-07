@@ -25,7 +25,8 @@ Better-PromptKit equips your coding assistant with disciplined engineering workf
 
 ## Quick Start (60 Seconds)
 
-**New to PromptKit?** → See **[QUICKSTART.md](./QUICKSTART.md)** for a 5-minute guided tour  
+**New to PromptKit?** → See **[FAQ.md](./FAQ.md)** for the 10 most common questions  
+**Getting started?** → See **[QUICKSTART.md](./QUICKSTART.md)** for a 5-minute guided tour  
 **Existing project?** → See **[ADOPTION-GUIDE.md](./docs/ADOPTION-GUIDE.md)** for gradual adoption  
 **Visual learner?** → See **[WORKFLOW-MAP.md](./docs/WORKFLOW-MAP.md)** for decision trees and diagrams  
 **Want to know more?** → See **[INTERESTING-FACTS.md](./docs/INTERESTING-FACTS.md)** for unique insights and design principles
@@ -201,6 +202,7 @@ better-promptkit/
 ├── .github/
 │   └── workflows/
 │       └── ci.yml               # Maintainer CI (syntax, dry-run & anti-slop checks)
+├── FAQ.md                       # 🌟 NEW: The 10 questions every developer asks before adopting
 ├── QUICKSTART.md                # 🌟 NEW: 5-minute introduction with 4 core workflows
 ├── init.ps1                     # Setup script for Windows (PowerShell)
 ├── init.sh                      # Setup script for Linux/macOS (Bash)

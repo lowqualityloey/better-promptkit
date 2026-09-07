@@ -68,50 +68,43 @@ for file in "${ALL_MD_FILES[@]}"; do
     rel_path="${file#$PROMPTKIT_ROOT/}"
     file_has_issues=false
     
-    # Check template references (.promptkit/templates/*)
-    while IFS= read -r line_content; do
+    line_num=0
+    while IFS= read -r line_content || [[ -n "$line_content" ]]; do
+        ((line_num++))
+
+        # Check template references (.promptkit/templates/*)
         if [[ "$line_content" =~ \.promptkit/templates/([a-zA-Z0-9_-]+\.md) ]]; then
             template_name="${BASH_REMATCH[1]}"
-            line_num=$(grep -n "$line_content" "$file" | head -1 | cut -d: -f1)
             if ! check_file_reference "$file" "Template" "templates/$template_name" "$line_num"; then
                 file_has_issues=true
             fi
         fi
-    done < "$file"
-    
-    # Check workflow references (.promptkit/workflows/*)
-    while IFS= read -r line_content; do
+
+        # Check workflow references (.promptkit/workflows/*)
         if [[ "$line_content" =~ \.promptkit/workflows/([a-zA-Z0-9_-]+\.md) ]]; then
             workflow_name="${BASH_REMATCH[1]}"
-            line_num=$(grep -n "$line_content" "$file" | head -1 | cut -d: -f1)
             if ! check_file_reference "$file" "Workflow" "workflows/$workflow_name" "$line_num"; then
                 file_has_issues=true
             fi
         fi
-    done < "$file"
-    
-    # Check protocol references (.promptkit/protocols/*)
-    while IFS= read -r line_content; do
+
+        # Check protocol references (.promptkit/protocols/*)
         if [[ "$line_content" =~ \.promptkit/protocols/([a-zA-Z0-9_-]+\.md) ]]; then
             protocol_name="${BASH_REMATCH[1]}"
-            line_num=$(grep -n "$line_content" "$file" | head -1 | cut -d: -f1)
             if ! check_file_reference "$file" "Protocol" "protocols/$protocol_name" "$line_num"; then
                 file_has_issues=true
             fi
         fi
-    done < "$file"
-    
-    # Check relative template references (templates/* without .promptkit prefix)
-    while IFS= read -r line_content; do
-        if [[ "$line_content" =~ [^\.]templates/([a-zA-Z0-9_-]+\.md) ]] && [[ ! "$line_content" =~ \.promptkit ]]; then
-            template_name="${BASH_REMATCH[1]}"
-            line_num=$(grep -n "$line_content" "$file" | head -1 | cut -d: -f1)
+
+        # Check relative template references (templates/* without .promptkit prefix)
+        if [[ ! "$line_content" =~ \.promptkit ]] && [[ "$line_content" =~ (^|[^./])templates/([a-zA-Z0-9_-]+\.md) ]]; then
+            template_name="${BASH_REMATCH[2]}"
             if ! check_file_reference "$file" "Template (relative)" "templates/$template_name" "$line_num"; then
                 file_has_issues=true
             fi
         fi
     done < "$file"
-    
+
     # Check for workflow triggers without matching files
     triggers=$(grep -oE 'pk:[a-z]+' "$file" | sed 's/pk://' | sort -u)
     for trigger in $triggers; do
@@ -119,7 +112,7 @@ for file in "${ALL_MD_FILES[@]}"; do
         if [ ! -f "$expected_workflow" ]; then
             # Check if it's a known alias
             case "$trigger" in
-                db|profile|research|reflect|handoff|issue|kanban)
+                db|profile|research|reflect|handoff|issue|kanban|scan|latency|grill|spike|retro|design|init|task)
                     # Known aliases, skip warning
                     ;;
                 *)
