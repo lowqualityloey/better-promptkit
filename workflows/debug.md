@@ -190,3 +190,29 @@ Before closing the debugging session:
 | **Untagged Probe Leaks** | Scattering ad-hoc `console.log` lines that accidentally get committed. | Mandate `[DEBUG-xxxx]` prefixes and run grep before committing. |
 | **Shallow Seam Mocking** | Writing a unit test that mocks out the exact faulty subsystem. | Write the test at the integration boundary where the defect actually manifested. |
 | **Destructive Resets** | Running `DROP`, `TRUNCATE`, or `rm -rf` without explicit approval. | Trigger mandatory STOP AND VERIFY procedure. |
+
+
+---
+
+## Related Workflows
+
+### Before Debugging
+- **`pk:route`** - Confirm this is actually a bug (not a misunderstanding or missing feature)
+- **`pk:tutor`** - If unfamiliar with the system, learn the architecture first
+
+### During Debugging
+- **`pk:perf`** - If the issue is performance-related (slow, not broken), use performance profiling instead
+- **`pk:review`** - If you suspect code quality issues beyond the immediate bug
+
+### After Debugging
+- **`pk:test`** - Ensure regression test added at the correct architectural seam
+- **`pk:commit`** - Create atomic commit with root cause explanation
+- **`pk:retro`** - Document incident in RCA post-mortem if production-impacting
+- **`pk:checkpoint`** - Update STATE.md with lessons learned
+
+### For Learning
+- **`pk:tutor`** - Understand debugging techniques and scientific method
+- **`pk:grill`** - Stress-test your fix against edge cases
+
+### See Also
+- **Templates**: `rca-postmortem-template.md` for production incidents

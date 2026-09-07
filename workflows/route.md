@@ -171,3 +171,29 @@ When executing workflows in agentic multi-agent environments (Antigravity, Claud
   - Git staging, atomic commits (`pk:commit`), and pull request creation (`pk:pr`).
   - Final architectural synthesis and invariant locking (`pk:plan`, `docs/STATE.md`).
 - **Synthesis Mandate**: All subagents must return compact 5-15 line synthesized reports (with exact file paths and line numbers) rather than dumping raw tool scrollback into parent context.
+
+
+---
+
+## Related Resources
+
+### Quick References
+- **QUICKSTART.md**: 5-minute introduction to the 4 most common workflows
+- **docs/WORKFLOW-MAP.md**: Visual decision trees and Mermaid diagrams
+- **README.md**: Full system overview and philosophy
+
+### For Beginners
+- **`pk:tutor`** - Start here for Socratic guidance and mental models
+- **QUICKSTART.md**: Fast onboarding with practical scenarios
+
+### For Teams
+- **`pk:onboard`** - First workflow to run on existing codebases
+- **`pk:checkpoint`** - Essential for collaboration and handoffs
+- **PROMPTKIT.md**: Team-shared project profile and standards
+
+### Visual Maps
+- See **docs/WORKFLOW-MAP.md** for:
+  - Interactive Mermaid decision tree
+  - "I want to..." quick reference tables
+  - Workflow relationship clusters
+  - Common task sequences

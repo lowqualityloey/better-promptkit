@@ -157,3 +157,33 @@ Please inspect the files listed above and confirm you are ready to proceed with 
 Update `inviteUser` in `src/server/actions/invite.ts` to enforce the `email_verified_at` check and add an integration test for the rejection path.
 ```
 ````
+
+
+---
+
+## Related Workflows
+
+### When to Checkpoint
+- **End of Session**: Always run before ending work for the day
+- **Before Handoff**: When switching to another developer or AI assistant
+- **Context Bloat**: When chat feels laggy or responses degrade
+- **Milestone Complete**: After finishing a major feature or phase
+
+### What to Checkpoint After
+- **`pk:plan`** - Lock architectural decisions from planning session
+- **`pk:tasks`** - Update task progress and completion status
+- **`pk:debug`** - Document root cause findings and lessons learned
+- **`pk:review`** - Note review feedback and action items
+- **`pk:retro`** - Sync retrospective insights to STATE.md
+
+### Resuming Work
+- **`pk:route`** - Use handover prompt in fresh chat, then route to next workflow
+- **`pk:onboard`** - If returning after long break, re-familiarize with codebase
+
+### State Management
+- **STATE.md**: Primary artifact updated by checkpoint
+- **PROMPTKIT.md**: Reference for project constraints
+- **ADRs**: Link to decisions made during session
+
+### See Also
+- **Template**: `state-tracker-template.md` for STATE.md structure

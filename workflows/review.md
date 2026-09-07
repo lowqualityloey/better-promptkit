@@ -183,3 +183,32 @@ Audit the diff against documented project standards (`PROMPTKIT.md`, `CODING_STA
 - Zero unaddressed `🚨 [BLOCKING]` data loss or security issues.
 - All code smells linked to actionable refactoring remedies.
 - Verification tests pass against `.promptkit/protocols/code-quality-gate.md`.
+
+
+---
+
+## Related Workflows
+
+### Before Review
+- **`pk:commit`** - Run before staging changes to catch issues early
+- **`pk:test`** - Verify test coverage is adequate before requesting review
+- **`pk:debug`** - Fix known issues before review to avoid noise
+
+### During Review
+- **`pk:plan`** - Reference the original spec for spec fidelity check
+- **`pk:data`** - Verify database changes follow Expand-Contract pattern
+- **`pk:auth`** - Check RBAC enforcement and session security
+- **`pk:perf`** - Profile performance if concerns arise during review
+
+### After Review
+- **`pk:commit`** - Create clean commits addressing review feedback
+- **`pk:pr`** - Write high-signal PR description after review passes
+- **`pk:checkpoint`** - Document review learnings in STATE.md
+
+### For Reviewers
+- **`pk:grill`** - Deep architecture questioning mode for complex changes
+- **`pk:tutor`** - Provide Socratic guidance to the author
+
+### See Also
+- **Code Quality Gate**: `.promptkit/protocols/code-quality-gate.md` for checklist
+- **Templates**: `code-review-checklist.md` for manual review aid

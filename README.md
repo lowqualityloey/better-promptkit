@@ -24,6 +24,10 @@ Better-PromptKit equips your coding assistant with disciplined engineering workf
 
 ## Quick Start (60 Seconds)
 
+**New to PromptKit?** → See **[QUICKSTART.md](./QUICKSTART.md)** for a 5-minute guided tour  
+**Existing project?** → See **[ADOPTION-GUIDE.md](./docs/ADOPTION-GUIDE.md)** for gradual adoption  
+**Visual learner?** → See **[WORKFLOW-MAP.md](./docs/WORKFLOW-MAP.md)** for decision trees and diagrams
+
 ### 1. Add to Your Project
 
 ```bash
@@ -193,9 +197,13 @@ better-promptkit/
 ├── .github/
 │   └── workflows/
 │       └── ci.yml               # Maintainer CI (syntax, dry-run & anti-slop checks)
+├── QUICKSTART.md                # 🌟 NEW: 5-minute introduction with 4 core workflows
 ├── init.ps1                     # Setup script for Windows (PowerShell)
 ├── init.sh                      # Setup script for Linux/macOS (Bash)
 ├── LICENSE                      # Open-source MIT License
+├── docs/
+│   ├── WORKFLOW-MAP.md          # 🌟 NEW: Visual decision trees and Mermaid diagrams
+│   └── ADOPTION-GUIDE.md        # 🌟 NEW: Incremental adoption for existing projects
 ├── protocols/                   # Non-negotiable AI rules & operating standards
 │   ├── setup.md                 # Universal multi-agent configuration protocol
 │   ├── context-sync.md          # Tech stack, monorepos, PROMPTKIT.md, DESIGN.md & git detection
@@ -239,9 +247,15 @@ better-promptkit/
 │   ├── code-review-checklist.md    # Senior Developer PR Review Checklist
 │   ├── design-tokens-spec.md       # Design System & Token Specification
 │   └── spike-template.md           # Technical Spike & Benchmark Evaluation Template
-├── examples/                    # Reference implementations from real production apps
-│   ├── sample-progress-journal.md  # Retrospective entries from the Shelf full-stack app
-│   └── sample-learning-plan.md     # Engineering OKRs & mental model notes
+├── examples/                    # 🌟 EXPANDED: Real-world production examples
+│   ├── README.md                       # Example catalog and usage guide
+│   ├── saas-dashboard/                 # Complete B2B SaaS example (Next.js + Supabase)
+│   │   ├── PROMPTKIT.md               # Full project profile with monorepo config
+│   │   ├── docs/STATE.md              # Living project tracker across milestones
+│   │   ├── docs/adrs/                 # Real ADR: magic link invitations
+│   │   └── conversations/             # Before/after code review with security fixes
+│   ├── sample-progress-journal.md     # Retrospective entries from real projects
+│   └── sample-learning-plan.md        # Engineering OKRs & mental model notes
 ├── notes/                       # Engineering competency & growth templates
 │   ├── README.md                   # Knowledge base guide
 │   ├── learning-plan.md            # Template for engineering OKRs & practice katas
@@ -249,6 +263,9 @@ better-promptkit/
 │   ├── skill-matrix.md             # Software Engineering Competency Matrix (L1 → L4)
 │   ├── adrs/                       # Local ADR directory (for standalone vault mode)
 │   └── spikes/                     # Local Spikes directory (for standalone vault mode)
+├── scripts/                     # 🌟 NEW: Validation and maintenance utilities
+│   ├── validate-references.sh          # Bash: Check all workflow→template references
+│   └── validate-references.ps1         # PowerShell: Check all workflow→template references
 └── activities/                  # Interactive simulation katas & system design drills
     ├── README.md                   # Interactive simulation catalog
     ├── 01-system-design-spike.md         # High-throughput webhook engine design

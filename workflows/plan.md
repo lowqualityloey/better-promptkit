@@ -122,3 +122,27 @@ Decompose the implementation into bite-sized, independently reviewable PRs follo
 - Zero-downtime Expand-Contract migration plan detailed for all database changes.
 - FMEA failure modes and mitigation fallbacks explicitly documented.
 - Phased implementation broken down into test-first (TDD) milestones.
+
+
+---
+
+## Related Workflows
+
+### Before Planning
+- **`pk:onboard`** - If working with an existing codebase, run this first to understand the current architecture
+- **`pk:spike`** - For unproven technology choices, run technical spikes before committing to a design
+
+### During Planning
+- **`pk:data`** - Deep dive into database schema design and migration strategy
+- **`pk:auth`** - Detail authentication flows and RBAC matrices
+- **`pk:api`** - Specify API contracts and error envelopes
+- **`pk:test`** - Define testing strategy and pyramid seam allocation
+- **`pk:grill`** - Stress-test your architecture before implementation
+
+### After Planning
+- **`pk:tasks`** - Decompose the spec into atomic, estimable issues with Gherkin acceptance criteria
+- **`pk:checkpoint`** - Save architectural decisions to STATE.md before starting implementation
+
+### See Also
+- **`pk:tutor`** - Learn architectural patterns while planning
+- **`pk:route`** - Return to lifecycle decision matrix
