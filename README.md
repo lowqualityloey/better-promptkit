@@ -17,7 +17,7 @@ Better-PromptKit equips your coding assistant with senior development discipline
 | **What is it?** | A modular, collision-free engineering operating system that lives in your project as `.promptkit/`. |
 | **Who is it for?** | Developers pairing with AI assistants who want senior-level discipline, clean git history, and zero downtime. |
 | **Why is it better?** | Replaces unguided "vibe coding" and token-wasting guess-and-patch loops with structured, deterministic development workflows. |
-| **How does it differ?** | Zero slash command collisions (`pk:` prefix), zero destructive database drops (Expand-Contract only), and zero unsolicited code dumps (Socratic guidance). |
+| **How does it differ?** | Zero slash command collisions (`pk:` prefix), zero destructive database drops (Expand-Contract only), zero unsolicited code dumps (Socratic guidance), and monorepo workspace isolation (scoped `--filter` commands and boundary guardrails). |
 
 ---
 
@@ -164,7 +164,7 @@ All triggers use the `pk:` prefix to avoid collisions with native slash commands
 | `pk:tutor architect` | Invariant stress-testing, failure mode analysis, and distributed systems trade-offs. | `docs/adrs/` |
 | `pk:grill` | Staff-level architecture defense drill challenging assumptions and edge cases. | Conversation / Notes |
 | `pk:plan` | Spec-driven architecture: deep module design, Expand-Contract zero-downtime database migrations, and TDD milestones. | `docs/specs/` |
-| `pk:onboard` | Brownfield codebase intake: auto-detects stack, extracts commands, scaffolds `PROMPTKIT.md`, `DESIGN.md` & `docs/STATE.md`, and indexes debt. | `PROMPTKIT.md`, `DESIGN.md`, `docs/STATE.md` |
+| `pk:onboard` | Brownfield codebase intake: auto-detects stack & monorepo workspaces, extracts commands, scaffolds `PROMPTKIT.md`, `DESIGN.md` & `docs/STATE.md`, and indexes debt. | `PROMPTKIT.md`, `DESIGN.md`, `docs/STATE.md` |
 | `pk:tasks` | Task breakdown: atomic 1-4h issues, Gherkin Acceptance Criteria, priority tags (#priority/p0-p3), and Kanban board sync. | `docs/tasks/` or gh CLI |
 | `pk:review` | Two-axis review: Spec Fidelity vs. Technical Standards (Martin Fowler's 12 code smells), with data loss prevention audits. | Review report |
 | `pk:commit` | Atomic Conventional Commits: single-concern staging, Conventional Commits v1.0.0, and secret leak scanning. | Git History |
@@ -198,7 +198,7 @@ For non-trivial changes (features, crashes, schema changes, auth flows, releases
 * **Errors, crashes, test failures**: Auto-routes to `pk:debug` (reproduces before patching).
 * **Performance regressions & latency**: Auto-routes to `pk:perf` (establishes baseline before modifying code).
 * **New features, cross-component additions**: Auto-routes to `pk:plan` (creates an RFC spec first).
-* **Existing codebase intake & repo analysis**: Auto-routes to `pk:onboard` (scans repository and scaffolds PROMPTKIT.md).
+* **Existing codebase intake & monorepo analysis**: Auto-routes to `pk:onboard` (scans repository, maps workspaces, and scaffolds PROMPTKIT.md).
 * **Task breakdowns & issue creation**: Auto-routes to `pk:tasks` (chunks specs into atomic issues with Gherkin AC).
 * **Databases & migrations**: Auto-routes to `pk:data` (enforces Expand-Contract ordering).
 * **Auth, cookies, session security**: Auto-routes to `pk:auth` (builds a capability matrix).
@@ -258,14 +258,14 @@ better-promptkit/
 ├── LICENSE                      # Open-source MIT License
 ├── protocols/                   # Non-negotiable AI rules & operating standards
 │   ├── setup.md                 # Universal multi-agent configuration protocol
-│   ├── context-sync.md          # Tech stack, PROMPTKIT.md, DESIGN.md & git auto-detection
+│   ├── context-sync.md          # Tech stack, monorepos, PROMPTKIT.md, DESIGN.md & git detection
 │   ├── code-quality-gate.md     # Non-negotiable definition-of-done & pre-commit gate
 │   └── subagent-delegation.md   # Subagent delegation, parallel execution & context preservation
 ├── workflows/                   # Step-by-step engineering lifecycle procedures
 │   ├── route.md                 # Lifecycle decision matrix & workflow triage (pk:route)
 │   ├── tutor.md                 # Socratic mentorship & 3-tier progressive hints (pk:tutor, pk:grill)
 │   ├── plan.md                  # Spec-Driven Development & deep modular design (pk:plan)
-│   ├── onboard.md               # Brownfield codebase intake & PROMPTKIT.md generation (pk:onboard)
+│   ├── onboard.md               # Brownfield intake, monorepo workspaces & PROMPTKIT.md (pk:onboard)
 │   ├── tasks.md                 # Atomic issue breakdown, Gherkin AC & Kanban sync (pk:tasks)
 │   ├── review.md                # Two-axis PR & Fowler smell review with data safety audit (pk:review)
 │   ├── commit.md                # Atomic Conventional Commits & staging hygiene (pk:commit)
@@ -282,7 +282,7 @@ better-promptkit/
 │   ├── reflect.md               # Engineering retrospectives & ADR generation (pk:retro)
 │   └── checkpoint.md            # Session state compaction & handover prompt (pk:checkpoint)
 ├── templates/                   # Structured artifact schemas saved to project docs/
-│   ├── project-profile-template.md # Scaffolds PROMPTKIT.md for custom project guardrails
+│   ├── project-profile-template.md # Scaffolds PROMPTKIT.md for project guardrails & monorepo topology
 │   ├── design-profile-template.md  # Scaffolds DESIGN.md for brand identity & visual tokens
 │   ├── state-tracker-template.md   # Scaffolds docs/STATE.md for living project tracking
 │   ├── data-model-spec.md          # Relational schema & RLS specification
@@ -384,6 +384,7 @@ Better-PromptKit separates universal workflow protocols from project-specific ru
 Scaffolded automatically during initialization from `templates/project-profile-template.md`. This file tells the assistant your project's non-negotiable boundaries:
 * **Project Domain & Users**: Contextual overview so the assistant grasps business context.
 * **Active Commands**: Explicit test runner (`pnpm test:e2e`), typecheck (`pnpm tsc --noEmit`), and linter commands.
+* **Monorepo & Workspace Topology**: Explicit package graph (`apps/*`, `packages/*`), scoped `--filter` commands, and four non-negotiable import boundaries.
 * **Non-Negotiable Guardrails**: Hard architectural invariants (e.g., zero `any` in TypeScript, no business logic in React components, mandatory database check constraints).
 * **Artifact Storage**: Destination paths for all generated specs (`docs/specs/`, `docs/tasks/`, `docs/data/`, `docs/auth/`, `docs/perf/`, etc.).
 

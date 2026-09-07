@@ -110,6 +110,25 @@ Prevent frontend and backend drift:
 
 ---
 
+### 6. Monorepo Seam Allocation & Filtered Execution
+In multi-package monorepos (Turborepo, pnpm workspaces, Nx), running full test suites at the root for every code change destroys developer iteration speed and overwhelms context windows:
+
+1. **Scoped Package Execution (`--filter`)**:
+   - Always run tests targeted to the impacted package:
+     - **Turborepo**: `turbo run test --filter=@repo/package...` (runs the package and its internal dependencies)
+     - **pnpm workspaces**: `pnpm --filter @repo/package test`
+     - **Nx**: `nx test <project-name>`
+2. **Shared Package vs Application Boundary**:
+   - When modifying a shared library (`packages/db`, `packages/ui`):
+     - First, run the shared package's own isolated unit/integration tests.
+     - Second, run downstream consumer tests to detect contract regressions:
+       - Turborepo: `turbo run test --filter=...@repo/db` (tests `@repo/db` and all packages that depend on it).
+       - pnpm: `pnpm --filter ...@repo/db test`.
+3. **Zero Leaked Environment Variables Across Workspaces**:
+   - Never assume `.env` in `apps/web` is available inside `packages/db`. Each package must source its own test environment configuration explicitly.
+
+---
+
 ## Workflow Steps
 
 ### Step 1: Analyze Feature Risk and Surface Area

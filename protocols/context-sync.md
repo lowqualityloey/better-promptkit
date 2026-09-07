@@ -12,6 +12,7 @@ Check if `./PROMPTKIT.md` exists in the repository root:
 - If present, parse:
   - **Project Name & Domain**
   - **Specific Test & Lint Commands**
+  - **Monorepo & Workspace Topology** (if present: package graph, `--filter` commands, import boundaries)
   - **Designated Documentation Paths** (default: `docs/adrs/`, `docs/specs/`, `docs/rca/`)
   - **Strict Non-Negotiables & Guardrails** (e.g., forbidden packages, mandatory schemas, architectural layers)
 - Prioritize rules in `PROMPTKIT.md` over generic defaults.
@@ -30,14 +31,15 @@ Check if `./DESIGN.md` exists in the repository root:
 Check if `./docs/STATE.md` exists in the host project:
 - If present, parse:
   - **Active Milestone & Status**: Current phase (e.g. Milestone 2: Core Domain Logic), overall state (`ACTIVE`, `BLOCKED`, `STABILIZING`).
-  - **Active Working Set**: Current feature RFC (`docs/specs/...`), target files in flight, and verification commands.
-  - **Locked Technical Invariants**: Non-negotiable decisions from previous sessions (e.g. UUIDv7 keys, HttpOnly cookies, tenant RLS).
+  - **Active Working Set**: Target workspace package (if monorepo), current feature RFC (`docs/specs/...`), target files in flight, and scoped verification commands.
+  - **Locked Technical Invariants**: Non-negotiable decisions from previous sessions (e.g. UUIDv7 keys, HttpOnly cookies, tenant RLS, package import rules).
   - **Known Blockers & Risks**: Immediate impediments to resolve or work around.
   - **Next Immediate Actions**: The prioritized next tasks queued for execution.
 - If `docs/STATE.md` is missing, rely on git status, active issue specs, and `PROMPTKIT.md`.
 
 ### 4. Technology & Runtime Detection
 Scan the workspace root and key subdirectories for project manifests:
+- **Monorepo Managers & Workspaces**: Turborepo (`turbo.json`), pnpm workspaces (`pnpm-workspace.yaml`), Nx (`nx.json`), Lerna (`lerna.json`), Bun (`bunfig.toml`), or npm/yarn workspaces (`"workspaces"` in root `package.json`).
 - **Node.js / TypeScript**: `package.json`, `tsconfig.json`, `pnpm-lock.yaml`, `bun.lockb`
 - **Python**: `pyproject.toml`, `requirements.txt`, `Pipfile`, `uv.lock`
 - **Go / Rust / Java**: `go.mod`, `Cargo.toml`, `pom.xml`, `build.gradle`
@@ -53,7 +55,12 @@ Scan the workspace root and key subdirectories for project manifests:
 
 ### 5. Architecture & Pattern Recognition
 Identify existing project structural patterns:
-- **Layering**: Feature-sliced (`src/features/*`), Layered (`src/controllers`, `src/services`, `src/repositories`), Clean / Hexagonal (`domain`, `application`, `infrastructure`), Monorepo (`apps/*`, `packages/*`).
+- **Layering**: Feature-sliced (`src/features/*`), Layered (`src/controllers`, `src/services`, `src/repositories`), Clean / Hexagonal (`domain`, `application`, `infrastructure`).
+- **Monorepo Topology & Workspace Scoping**:
+  - **Catalog Package Graph**: Map apps (`apps/*`) and shared packages (`packages/*`, `libs/*`). Read each package's `package.json` name (e.g. `@repo/web`, `@repo/db`).
+  - **Owning Package Correlation**: Correlate files currently in flight with their owning workspace package.
+  - **Command Scoping Law**: NEVER execute unbounded root test, typecheck, or build commands when working on a specific package. Always filter commands by workspace package (e.g. `pnpm --filter <pkg> test`, `turbo run test --filter=<pkg>`, `nx test <project>`). Unfiltered root runs exhaust terminal context, slow down the inner loop, and mask localized package isolation bugs.
+  - **Enforce Architectural Import Boundaries**: Verify that UI/presentation packages (`packages/ui`) never import database or backend services (`packages/db`), client components never import server secrets, and all cross-package imports consume public package exports rather than reaching into private internals (`../../packages/db/src/...`).
 - **API Style**: RESTful (OpenAPI), tRPC, GraphQL, Server Actions, gRPC.
 - **Strictness**: TypeScript `strict: true`, ESLint config, Prettier rules, Biome, Ruff.
 

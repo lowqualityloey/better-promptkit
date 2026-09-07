@@ -32,16 +32,17 @@ Track tasks using atomic checklists (`[x]` Done, `[/]` In Progress, `[ ]` Queued
 ---
 
 ## 3. Active Working Set
+- **Target Workspace / Package (if Monorepo)**: [e.g. `apps/web` or `@repo/db` (leave blank for standalone repo)]
 - **Active RFC / Spec**: `docs/specs/YYYY-MM-DD-feature-name.md`
 - **Active Task Spec**: `docs/tasks/YYYY-MM-DD-task-breakdown.md`
 - **Key Source Files in Flight**:
   - `src/domain/service.ts`: Primary business logic implementation
   - `src/domain/types.ts`: Domain models and entity interfaces
   - `tests/domain/service.test.ts`: Active test suite
-- **Verification Commands**:
-  - Unit Tests: `npm test` (or `pnpm test`, `cargo test`, `pytest`)
-  - Typecheck: `npm run typecheck`
-  - Linter: `npm run lint`
+- **Verification Commands (Scoped)**:
+  - Unit Tests: `npm test` (or `pnpm --filter <pkg> test`, `turbo run test --filter=<pkg>`)
+  - Typecheck: `npm run typecheck` (or `pnpm --filter <pkg> typecheck`)
+  - Linter: `npm run lint` (or `pnpm --filter <pkg> lint`)
 
 ---
 

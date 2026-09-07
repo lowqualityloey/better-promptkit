@@ -44,7 +44,16 @@ The assistant must perform the investigative heavy lifting: reading manifests, c
    - Python: `uv.lock` (uv), `poetry.lock` (poetry), `Pipfile.lock` (pipenv), `requirements.txt`.
    - Rust / Go / Java: `Cargo.lock` (cargo), `go.mod` (go), `pom.xml` / `build.gradle`.
 
-2. **Developer Script Extraction**:
+2. **Monorepo & Workspace Manifest Detection**:
+   Inspect root directory for multi-package monorepo managers:
+   - Turborepo: `turbo.json`.
+   - pnpm Workspaces: `pnpm-workspace.yaml`.
+   - Nx: `nx.json`.
+   - Lerna: `lerna.json`.
+   - Bun / npm / yarn workspaces: `"workspaces"` field in root `package.json` or `bunfig.toml`.
+   - Parse workspace target globs (e.g. `apps/*`, `packages/*`, `libs/*`).
+
+3. **Developer Script Extraction**:
    Parse project scripts (e.g. `scripts` in `package.json`, `Makefile`, `justfile`, `pyproject.toml`) to identify exact commands:
    - **Unit Tests**: e.g., `pnpm test`, `npm run test:unit`, `pytest`, `cargo test`.
    - **Integration / E2E Tests**: e.g., `pnpm test:e2e`, `playwright test`, `cypress run`.
@@ -62,7 +71,12 @@ The assistant must perform the investigative heavy lifting: reading manifests, c
    - **Next.js Pages Router**: `pages/` directory, `pages/api/`.
    - **Clean / Hexagonal Architecture**: `domain/`, `application/`, `infrastructure/`, `adapters/`.
    - **Feature-Sliced Design**: `src/features/*`, `src/modules/*`.
-   - **Monorepo**: `pnpm-workspace.yaml`, `turbo.json`, `apps/*`, `packages/*`.
+   - **Monorepo Multi-Package Topology**:
+     If monorepo manifests are detected:
+     - Scan all packages matching workspace globs (`apps/*`, `packages/*`, `libs/*`).
+     - Catalog each package's `name` and domain responsibility (e.g. `@repo/web` $\rightarrow$ Frontend, `@repo/api` $\rightarrow$ API server, `@repo/db` $\rightarrow$ Database & ORM, `@repo/ui` $\rightarrow$ Shared component library).
+     - Inspect inter-package dependencies (`dependencies` using `workspace:*`).
+     - Map boundary rules: identify server vs client packages and verify that shared UI packages do not depend on backend services.
 
 2. **Data & Persistence Inspection**:
    Identify database engine and ORM layers:
@@ -88,6 +102,7 @@ The assistant must perform the investigative heavy lifting: reading manifests, c
    Copy `.promptkit/templates/project-profile-template.md` to `./PROMPTKIT.md` and fill out all sections using findings from Phases 1 and 2:
    - Project Name inferred from directory or manifest `name`.
    - Active commands configured to the exact detected package manager and runner scripts.
+   - If monorepo detected, populate Section 4 (`Monorepo & Workspace Topology`) with the mapped workspace manager, package table, filtered command conventions (`pnpm --filter <pkg>`, `turbo run <cmd> --filter=<pkg>`), and boundary guardrails. If single-package repo, set Section 4 to `N/A (Standalone Repository)`.
    - Document paths set to standard defaults (`docs/specs/`, `docs/tasks/`, `docs/data/`, etc.).
    - Tailored architectural invariants added (e.g. strict TypeScript, zero loose casting, database check constraints, RLS enforcement).
 
@@ -100,6 +115,7 @@ The assistant must perform the investigative heavy lifting: reading manifests, c
 3. **Auto-Populate `docs/STATE.md` (Living Project Tracker)**:
    Copy `.promptkit/templates/state-tracker-template.md` to `./docs/STATE.md`:
    - Populate project name, current branch, and active status.
+   - If monorepo, set initial Target Workspace / Package in Section 3 (`Active Working Set`).
    - Record detected architectural invariants in Section 4.
    - Seed Section 8 (`Session Continuity Log`) with an initial onboarding entry:
      `| YYYY-MM-DD | Assistant (pk:onboard) | Brownfield Codebase Intake | Generated PROMPTKIT.md and initialized docs/STATE.md |`
