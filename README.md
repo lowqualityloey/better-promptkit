@@ -89,13 +89,19 @@ To make the system immediately intuitive, Better-PromptKit separates responsibil
 Trigger anytime with `pk:route`. Navigate across the entire engineering lifecycle without guessing:
 
 ```text
-               [ Inception & Architecture ]
-                            │
-                         pk:plan
-                            │
-                         pk:tasks
-         (Atomic Issues, Gherkin AC & Kanban Sync)
-                            │
+               [ Inception & Intake ]
+                             │
+            ┌────────────────┴────────────────┐
+            ▼                                 ▼
+         pk:plan                           pk:onboard
+    (Greenfield RFC)                  (Brownfield Ingestion)
+            │                                 │
+            └────────────────┬────────────────┘
+                             │
+                             ▼
+                          pk:tasks
+          (Atomic Issues, Gherkin AC & Kanban Sync)
+                             │
      ┌──────────────────────┼──────────────────────┐
      ▼                      ▼                      ▼
   pk:data                pk:auth                 pk:api
@@ -112,7 +118,7 @@ Trigger anytime with `pk:route`. Navigate across the entire engineering lifecycl
      │                      │                      │
      └──────────────────────┼──────────────────────┘
                             │
-                [ Verification & Merge ]
+                 [ Verification & Merge ]
                             │
      ┌──────────────────────┼──────────────────────┐
      ▼                      ▼                      ▼
@@ -154,6 +160,7 @@ All triggers use the `pk:` prefix to avoid collisions with native slash commands
 | `pk:tutor architect` | Invariant stress-testing, failure mode analysis, and distributed systems trade-offs. | `docs/adrs/` |
 | `pk:grill` | Staff-level architecture defense drill challenging assumptions and edge cases. | Conversation / Notes |
 | `pk:plan` | Spec-driven architecture: deep module design, Expand-Contract zero-downtime database migrations, and TDD milestones. | `docs/specs/` |
+| `pk:onboard` | Brownfield codebase intake: auto-detects stack, extracts commands, scaffolds `PROMPTKIT.md` & `DESIGN.md`, and indexes debt. | `PROMPTKIT.md` / `DESIGN.md` |
 | `pk:tasks` | Task breakdown: atomic 1-4h issues, Gherkin Acceptance Criteria, priority tags (#priority/p0-p3), and Kanban board sync. | `docs/tasks/` or gh CLI |
 | `pk:review` | Two-axis review: Spec Fidelity vs. Technical Standards (Martin Fowler's 12 code smells), with data loss prevention audits. | Review report |
 | `pk:commit` | Atomic Conventional Commits: single-concern staging, Conventional Commits v1.0.0, and secret leak scanning. | Git History |
@@ -187,6 +194,7 @@ For non-trivial changes (features, crashes, schema changes, auth flows, releases
 * **Errors, crashes, test failures**: Auto-routes to `pk:debug` (reproduces before patching).
 * **Performance regressions & latency**: Auto-routes to `pk:perf` (establishes baseline before modifying code).
 * **New features, cross-component additions**: Auto-routes to `pk:plan` (creates an RFC spec first).
+* **Existing codebase intake & repo analysis**: Auto-routes to `pk:onboard` (scans repository and scaffolds PROMPTKIT.md).
 * **Task breakdowns & issue creation**: Auto-routes to `pk:tasks` (chunks specs into atomic issues with Gherkin AC).
 * **Databases & migrations**: Auto-routes to `pk:data` (enforces Expand-Contract ordering).
 * **Auth, cookies, session security**: Auto-routes to `pk:auth` (builds a capability matrix).
@@ -246,6 +254,7 @@ better-promptkit/
 │   ├── route.md                 # Lifecycle decision matrix & workflow triage (pk:route)
 │   ├── tutor.md                 # Socratic mentorship & 3-tier progressive hints (pk:tutor, pk:grill)
 │   ├── plan.md                  # Spec-Driven Development & deep modular design (pk:plan)
+│   ├── onboard.md               # Brownfield codebase intake & PROMPTKIT.md generation (pk:onboard)
 │   ├── tasks.md                 # Atomic issue breakdown, Gherkin AC & Kanban sync (pk:tasks)
 │   ├── review.md                # Two-axis PR & Fowler smell review with data safety audit (pk:review)
 │   ├── commit.md                # Atomic Conventional Commits & staging hygiene (pk:commit)
@@ -333,6 +342,7 @@ Better-PromptKit operates on two complementary levels:
 ### 1. Universal Engineering Protocols (Language-Agnostic)
 The core architectural principles apply across any tech stack (TypeScript, Python, Go, Rust, Java):
 * Spec-Driven Development and deep module boundaries (`pk:plan`)
+* Brownfield codebase intake, stack discovery, and PROMPTKIT.md generation (`pk:onboard`)
 * Atomic task decomposition, Gherkin Acceptance Criteria, and Kanban sync (`pk:tasks`)
 * Relational schema design, composite index ordering, and transaction boundaries (`pk:data`)
 * Cookie security flags, OAuth PKCE flows, and capability-based RBAC (`pk:auth`)

@@ -69,6 +69,7 @@ Activate workflows anytime with these namespaced triggers:
 - `pk:tutor` (or `pk:tutor beginner`, `pk:tutor architect`): Socratic mentorship & 3-tier progressive hints (never dump unsolicited code).
 - `pk:grill`: Intensive Staff Engineer architecture interview and defense drill.
 - `pk:plan`: Spec-Driven Architecture & feature planning (domain models, API contracts, failure modes).
+- `pk:onboard`: Brownfield codebase intake: scan repository, extract scripts, and auto-populate PROMPTKIT.md.
 - `pk:tasks` (or `pk:issue`, `pk:kanban`): Decompose RFC specs into atomic GitHub issues with Gherkin Acceptance Criteria and Kanban sync.
 - `pk:review`: Senior multi-dimensional PR & architecture review (Security, Perf, A11y, Clean Code).
 - `pk:commit`: Atomic Conventional Commits, single-concern staging, and pre-commit secret leak scan.
@@ -92,6 +93,7 @@ You do not need to memorize triggers. If a prompt lacks an explicit `pk:` trigge
   - Defects, bugs, crashes, or test failures -> `pk:debug` (reproduce before patching)
   - Performance regressions, slow queries, or latency -> `pk:perf` (measure baseline first)
   - New features, redesigns, or multi-component additions -> `pk:plan` (spec and risk analysis first)
+  - Existing repo intake, setup, or codebase audit -> `pk:onboard` (scan repo and scaffold PROMPTKIT.md)
   - Task breakdowns, issue creation, or Kanban cards -> `pk:tasks` (atomic issues and Gherkin AC)
   - Database schema, indexing, or migrations -> `pk:data` (Expand-Contract ordering)
   - Auth, sessions, cookies, or RBAC -> `pk:auth` (threat model and capability matrix)
@@ -108,6 +110,7 @@ You do not need to memorize triggers. If a prompt lacks an explicit `pk:` trigge
 - **Route**: `.promptkit/workflows/route.md`
 - **Tutor**: `.promptkit/workflows/tutor.md`
 - **Plan**: `.promptkit/workflows/plan.md`
+- **Onboard**: `.promptkit/workflows/onboard.md`
 - **Tasks**: `.promptkit/workflows/tasks.md`
 - **Review**: `.promptkit/workflows/review.md`
 - **Commit**: `.promptkit/workflows/commit.md`
@@ -152,6 +155,7 @@ After updating configuration:
    - `[pk:route]`: Navigate workflows using the engineering lifecycle decision matrix.
    - `[pk:tutor]`: Explore a concept, debug together, or build mental models.
    - `[pk:plan]`: Design an architecture, draft an RFC/spec, or break down a feature.
+   - `[pk:onboard]`: Ingest an existing codebase and generate a tailored PROMPTKIT.md.
    - `[pk:tasks]`: Decompose specs into atomic issues with Gherkin AC and GitHub Projects sync.
    - `[pk:review]`: Conduct a Senior-level code & architecture audit on recent changes.
    - `[pk:commit]`: Stage atomic changes, scan for secret leaks, and format Conventional Commits.

@@ -1,0 +1,129 @@
+# Brownfield Codebase Intake & Onboarding Workflow
+
+## Fast Shorthand
+Trigger anytime with: `pk:onboard` (or `/pk-onboard`, `pk:scan`, `pk:init-repo`)
+
+## Mission
+Ingest any existing repository into the Better-PromptKit engineering operating system in under 60 seconds. Inspect package manifests, active developer scripts, database schemas, and architectural boundaries. Auto-populate `./PROMPTKIT.md` (and `./DESIGN.md` if frontend surfaces exist), establish a concrete baseline for code quality gates, and index existing technical debt into `docs/tasks/`.
+
+Eliminate day-one setup friction. Replace manual configuration chores with automated, deterministic architectural discovery.
+
+---
+
+## Core Principle: Zero Manual Boilerplate on Day One
+The assistant must perform the investigative heavy lifting: reading manifests, configs, and directory structures directly. The developer should never have to manually type out test commands, linter flags, or stack details that are already committed to the repository.
+
+---
+
+## Preconditions
+- The repository contains existing application code, manifests, or configuration files.
+- Better-PromptKit is installed in `.promptkit/` or `promptkit/`.
+- Access to `.promptkit/templates/project-profile-template.md` and `.promptkit/templates/design-profile-template.md`.
+
+---
+
+## 4-Phase Onboarding Protocol
+
+```text
+┌─────────────────────────────────────────────────────────────┐
+│                    PK:ONBOARD LIFECYCLE                     │
+├──────────────┬──────────────┬──────────────┬────────────────┤
+│ Phase 1:     │ Phase 2:     │ Phase 3:     │ Phase 4:       │
+│ Manifest &   │ Architecture │ Profile &    │ Health Score-  │
+│ Tooling Scan │ & Boundaries │ Guardrail Gen│ card & Backlog │
+└──────────────┴──────────────┴──────────────┴────────────────┘
+```
+
+---
+
+### Phase 1: Manifest & Tooling Discovery
+
+1. **Package Manager & Ecosystem Detection**:
+   Inspect the repository root for lockfiles and manifests:
+   - Node.js / TypeScript: `pnpm-lock.yaml` (pnpm), `bun.lockb` / `bun.lock` (bun), `package-lock.json` (npm), `yarn.lock` (yarn).
+   - Python: `uv.lock` (uv), `poetry.lock` (poetry), `Pipfile.lock` (pipenv), `requirements.txt`.
+   - Rust / Go / Java: `Cargo.lock` (cargo), `go.mod` (go), `pom.xml` / `build.gradle`.
+
+2. **Developer Script Extraction**:
+   Parse project scripts (e.g. `scripts` in `package.json`, `Makefile`, `justfile`, `pyproject.toml`) to identify exact commands:
+   - **Unit Tests**: e.g., `pnpm test`, `npm run test:unit`, `pytest`, `cargo test`.
+   - **Integration / E2E Tests**: e.g., `pnpm test:e2e`, `playwright test`, `cypress run`.
+   - **Typecheck**: e.g., `pnpm tsc --noEmit`, `mypy .`, `pyright`.
+   - **Linter & Formatter**: e.g., `pnpm lint`, `biome check`, `eslint .`, `ruff check`.
+   - **Dev Server & Build**: e.g., `pnpm dev`, `pnpm build`.
+
+---
+
+### Phase 2: Architecture & Boundary Mapping
+
+1. **Structural Layering & Pattern Detection**:
+   Inspect directory layout to classify architecture:
+   - **Next.js App Router**: `app/` directory, Server Components, Route Handlers.
+   - **Next.js Pages Router**: `pages/` directory, `pages/api/`.
+   - **Clean / Hexagonal Architecture**: `domain/`, `application/`, `infrastructure/`, `adapters/`.
+   - **Feature-Sliced Design**: `src/features/*`, `src/modules/*`.
+   - **Monorepo**: `pnpm-workspace.yaml`, `turbo.json`, `apps/*`, `packages/*`.
+
+2. **Data & Persistence Inspection**:
+   Identify database engine and ORM layers:
+   - Prisma: `prisma/schema.prisma`.
+   - Drizzle: `drizzle.config.ts`, `schema/`.
+   - Supabase: `supabase/migrations/`, `supabase/config.toml`.
+   - SQL / Raw: `migrations/`, `db/`.
+
+3. **Authentication & Authorization Model**:
+   Detect identity providers and session strategies:
+   - Supabase Auth, NextAuth / Auth.js, Clerk, Lucia, Better-Auth, Stytch, Firebase.
+   - Session storage mechanism: HttpOnly cookies, JWT headers, or server sessions.
+
+4. **API Communication Style**:
+   Identify communication conventions:
+   - tRPC (`server/routers/`), Server Actions (`"use server"`), GraphQL, RESTful endpoints (`app/api/*`).
+
+---
+
+### Phase 3: Profile & Guardrail Generation
+
+1. **Auto-Populate `PROMPTKIT.md`**:
+   Copy `.promptkit/templates/project-profile-template.md` to `./PROMPTKIT.md` and fill out all sections using findings from Phases 1 and 2:
+   - Project Name inferred from directory or manifest `name`.
+   - Active commands configured to the exact detected package manager and runner scripts.
+   - Document paths set to standard defaults (`docs/specs/`, `docs/tasks/`, `docs/data/`, etc.).
+   - Tailored architectural invariants added (e.g. strict TypeScript, zero loose casting, database check constraints, RLS enforcement).
+
+2. **Auto-Populate `DESIGN.md` (If Frontend Surfaces Exist)**:
+   If UI components are detected (`.tsx`, `.jsx`, `.vue`, `.svelte`):
+   - Inspect styling configurations: `tailwind.config.*`, `globals.css`, `components.json` (Shadcn UI).
+   - Extract primary brand colors, font families, base radius (`rounded-md`), and typography tokens.
+   - Scaffold `./DESIGN.md` incorporating Better-PromptKit anti-slop directives and detected tokens.
+
+---
+
+### Phase 4: Architecture Health Scorecard & Backlog Ingestion
+
+1. **Emit Executive Architecture Scorecard**:
+   Present the developer with a concise summary table in the conversation:
+   - **Stack & Tooling**: Confirmed runtime, framework, ORM, and test runners.
+   - **Architectural Strengths**: High test coverage, strict typing, clean modular boundaries.
+   - **Vulnerabilities & Missing Seams**: Zero integration tests, unindexed foreign keys, loose `any` types, missing error boundaries.
+
+2. **Technical Debt Indexing (Optional Backlog Scaffolding)**:
+   Search for existing codebase debt markers:
+   - `git grep -in "TODO:"` or `git grep -in "FIXME:"`.
+   - Unmigrated database drafts or missing test suites.
+   - Offer to run `pk:tasks` to structure high-priority debt items into atomic task cards in `docs/tasks/`.
+
+3. **Announce Ready State**:
+   Confirm that `./PROMPTKIT.md` is active and suggest the immediate next workflow:
+   - Use `pk:plan` for upcoming new features.
+   - Use `pk:tasks` to break down existing backlog items.
+   - Use `pk:debug` for active defects.
+
+---
+
+## Completion Criteria
+- Manifests and scripts inspected; package manager verified.
+- `./PROMPTKIT.md` generated with non-generic, working project commands.
+- `./DESIGN.md` generated or skipped with explicit rationale.
+- Executive Architecture Scorecard delivered to developer.
+- Workspace ready for immediate `pk:` workflow pairing.

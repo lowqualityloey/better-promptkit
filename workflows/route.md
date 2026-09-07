@@ -23,6 +23,7 @@ Find your current engineering context below and activate the corresponding workf
 | Current Context / Problem | Recommended Trigger | Primary Artifact Output | Core Value Delivered |
 | :--- | :--- | :--- | :--- |
 | **New Feature or Inception** | `pk:plan` | `docs/specs/` | Modular RFC spec, deletion test, threat modeling |
+| **Existing Repo / Brownfield Intake** | `pk:onboard` | `PROMPTKIT.md` & `DESIGN.md` | Automated stack scan, command extraction, PROMPTKIT.md generation |
 | **Task Breakdown & Acceptance Criteria** | `pk:tasks` | `docs/tasks/` or gh CLI | Atomic issues, Gherkin AC, Kanban lane sync, gh CLI |
 | **Relational Database Design** | `pk:data` | `docs/data/` | UUIDv7 keys, composite indexes, RLS policies |
 | **Auth, Cookies & Permissions**| `pk:auth` | `docs/auth/` | HttpOnly cookies, OAuth PKCE, RBAC matrix |
@@ -43,16 +44,22 @@ Find your current engineering context below and activate the corresponding workf
 
 ---
 
-## Visual Lifecycle Flow
+### Visual Lifecycle Flow
 
 ```text
-               [ Inception & Architecture ]
-                            │
-                         pk:plan
-                            │
-                         pk:tasks
-         (Atomic Issues, Gherkin AC & Kanban Sync)
-                            │
+               [ Inception & Intake ]
+                             │
+            ┌────────────────┴────────────────┐
+            ▼                                 ▼
+         pk:plan                           pk:onboard
+    (Greenfield RFC)                  (Brownfield Ingestion)
+            │                                 │
+            └────────────────┬────────────────┘
+                             │
+                             ▼
+                          pk:tasks
+          (Atomic Issues, Gherkin AC & Kanban Sync)
+                             │
      ┌──────────────────────┼──────────────────────┐
      ▼                      ▼                      ▼
   pk:data                pk:auth                 pk:api
@@ -69,7 +76,7 @@ Find your current engineering context below and activate the corresponding workf
      │                      │                      │
      └──────────────────────┼──────────────────────┘
                             │
-               [ Verification & Merge ]
+                [ Verification & Merge ]
                             │
      ┌──────────────────────┼──────────────────────┐
      ▼                      ▼                      ▼
@@ -104,7 +111,7 @@ Find your current engineering context below and activate the corresponding workf
 When a developer asks for help without specifying a command, the assistant should evaluate these 3 triage questions:
 
 1. **What phase of the change are you in?**
-   - *Pre-code*: Are we clarifying requirements (`pk:plan`), decomposing tasks into issues (`pk:tasks`), evaluating an unknown library (`pk:spike`), or designing schemas (`pk:data` / `pk:auth` / `pk:api`)?
+   - *Pre-code*: Are we onboarding an existing repository (`pk:onboard`), clarifying requirements (`pk:plan`), decomposing tasks into issues (`pk:tasks`), evaluating an unknown library (`pk:spike`), or designing schemas (`pk:data` / `pk:auth` / `pk:api`)?
    - *Active coding*: Are we building tests (`pk:test`), styling components (`pk:design`), investigating broken behavior (`pk:debug`), or profiling slow performance (`pk:perf`)?
    - *Post-code*: Are we auditing code quality (`pk:review`), staging atomic commits (`pk:commit`), opening a pull request (`pk:pr`), shipping to production (`pk:ship`), or capturing decisions (`pk:retro`)?
    - *Session pause / Handover*: Are we experiencing context window bloat or switching to a fresh chat window (`pk:checkpoint`)?
@@ -139,6 +146,7 @@ If the request involves non-trivial engineering changes (new features, crashes, 
    - **Bugs, errors, broken tests, unexpected behavior**: Auto-route to `pk:debug`. Establish the reproduction loop before proposing any fix.
    - **Performance regressions, slow queries, latency, memory leaks, bundle bloat**: Auto-route to `pk:perf`. Capture baseline metrics before modifying code.
    - **New features, cross-component additions, new pages**: Auto-route to `pk:plan`. Create the RFC spec before writing code.
+   - **Existing codebase intake, repo analysis, setup**: Auto-route to `pk:onboard`. Scan repository manifests and populate PROMPTKIT.md.
    - **Task breakdowns, issue creation, acceptance criteria, Kanban cards**: Auto-route to `pk:tasks`. Structure atomic 1-4 hour issues with Gherkin AC.
    - **Database tables, migrations, RLS policies, indexing**: Auto-route to `pk:data`. Enforce Expand-Contract sequencing.
    - **Login, session tokens, cookies, permissions**: Auto-route to `pk:auth`. Establish the capability matrix first.
