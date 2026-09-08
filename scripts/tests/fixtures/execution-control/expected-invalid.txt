@@ -1,0 +1,13 @@
+MISSING_FIELD|TASK-2026-09-08-invalid|docs/tasks/TASK-2026-09-08-invalid.md|Missing usable value: Approval Boundary|Provide a non-placeholder value for the labeled field
+READINESS_FAILURE|TASK-2026-09-08-invalid|docs/tasks/TASK-2026-09-08-invalid.md|Missing usable value: Objective|Provide a non-placeholder value for the labeled field
+READINESS_FAILURE|TASK-2026-09-08-invalid|docs/tasks/TASK-2026-09-08-invalid.md|Missing usable value: Verification Condition|Provide a non-placeholder value for the labeled field
+READINESS_FAILURE|TASK-2026-09-08-invalid|docs/tasks/TASK-2026-09-08-invalid.md|In Scope must contain at least one concrete item|List the bounded files, behaviors, or deliverables
+READINESS_FAILURE|TASK-2026-09-08-invalid|docs/tasks/TASK-2026-09-08-invalid.md|Explicit Non-Goals must contain a concrete boundary|Record what is deliberately excluded
+POLICY_LIMITATION|TASK-2026-09-08-invalid|docs/tasks/TASK-2026-09-08-invalid.md|Host timer capability does not record an enforcement limitation|State that live host timing or forced termination is unavailable or limited
+ACTIVE_TASK_CONFLICT|TASK-2026-09-08-invalid|docs/tasks/TASK-2026-09-08-invalid.md|In-progress task does not own its active pointer|Set Active Task Pointer to this Task ID
+MISSING_FIELD|TASK-2026-09-08-invalid|docs/tasks/TASK-2026-09-08-invalid.md|Missing usable value: Start Time|Provide a non-placeholder value for the labeled field
+MISSING_FIELD|TASK-2026-09-08-invalid|docs/tasks/TASK-2026-09-08-invalid.md|Missing usable value: Next Action|Provide a non-placeholder value for the labeled field
+INVALID_TRANSITION|TASK-2026-09-08-invalid|docs/tasks/TASK-2026-09-08-invalid.md|Illegal transition: ready -> completed|Use the documented execution-state transition graph
+INVALID_TRANSITION|TASK-2026-09-08-invalid|docs/tasks/TASK-2026-09-08-invalid.md|Last transition state 'completed' does not match current state 'in_progress'|Reconcile transition history with Execution State
+READINESS_FAILURE|TASK-2026-09-08-invalid|docs/tasks/TASK-2026-09-08-invalid.md|No stable acceptance criterion ID found|Add at least one AC-* acceptance criterion
+SCOPE_CHANGE_MISSING|TASK-2026-09-08-invalid|docs/tasks/TASK-2026-09-08-invalid.md|Changed file 'outside/scope.txt' is outside the recorded In Scope boundary|Link an approved Scope Change Record or keep the change within scope

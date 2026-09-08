@@ -2,9 +2,9 @@ name: Better-PromptKit CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   validate-linux:
@@ -17,7 +17,12 @@ jobs:
       - name: Validate Bash Script Syntax
         run: |
           bash -n init.sh
-          echo "init.sh parsed with 0 syntax errors."
+          bash -n scripts/validate-execution-control.sh
+          bash -n scripts/tests/run-execution-control-fixtures.sh
+          echo "Bash scripts parsed with 0 syntax errors."
+
+      - name: Run Agent Execution Control Fixture Harness (Bash)
+        run: bash scripts/tests/run-execution-control-fixtures.sh
 
       - name: Test init.sh Dry-Run & Idempotency
         run: |
@@ -118,13 +123,24 @@ jobs:
       - name: Validate PowerShell Script Syntax
         shell: pwsh
         run: |
-          $errors = @()
-          [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path "init.ps1"), [ref]$null, [ref]$errors) | Out-Null
-          if ($errors.Count -gt 0) {
-            $errors | ForEach-Object { Write-Error $_ }
-            exit 1
+          $syntaxFiles = @(
+            "init.ps1",
+            "scripts/validate-execution-control.ps1",
+            "scripts/tests/run-execution-control-fixtures.ps1"
+          )
+          foreach ($file in $syntaxFiles) {
+            $errors = @()
+            [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path $file), [ref]$null, [ref]$errors) | Out-Null
+            if ($errors.Count -gt 0) {
+              $errors | ForEach-Object { Write-Error $_ }
+              exit 1
+            }
           }
-          Write-Host "init.ps1 parsed with 0 syntax errors."
+          Write-Host "PowerShell scripts parsed with 0 syntax errors."
+
+      - name: Run Agent Execution Control Fixture Harness (PowerShell)
+        shell: pwsh
+        run: pwsh -NoProfile -File .\scripts\tests\run-execution-control-fixtures.ps1
 
       - name: Test init.ps1 Dry-Run & Idempotency
         shell: pwsh
