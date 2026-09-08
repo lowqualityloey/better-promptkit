@@ -1,0 +1,1 @@
+TRACEABILITY_MISSING|CHECKPOINT-2026-09-08-TASK-2026-09-08-unknown-1|docs/tasks/TASK-2026-09-08-traceability-mismatch.checkpoint-1.md|Checkpoint references unknown Task ID: TASK-2026-09-08-unknown|Link the checkpoint to an existing Task Record

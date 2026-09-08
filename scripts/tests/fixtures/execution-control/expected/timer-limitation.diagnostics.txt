@@ -1,0 +1,1 @@
+POLICY_LIMITATION|TASK-2026-09-08-timer-limitation|docs/tasks/TASK-2026-09-08-timer-limitation.md|Host timer capability does not record an enforcement limitation|State that live host timing or forced termination is unavailable or limited

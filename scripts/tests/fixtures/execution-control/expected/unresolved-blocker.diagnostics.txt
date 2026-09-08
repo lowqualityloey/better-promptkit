@@ -1,0 +1,1 @@
+BLOCKER_UNRESOLVED|TASK-2026-09-08-unresolved-blocker|docs/tasks/TASK-2026-09-08-unresolved-blocker.md|Stop state lacks a blocker or resume condition|Record the owner, evidence, and precise resume condition

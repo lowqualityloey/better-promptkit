@@ -1,0 +1,23 @@
+# Checkpoint Record: Traceability mismatch fixture
+
+- **Record Type**: `Checkpoint Record`
+- **Checkpoint ID**: CHECKPOINT-2026-09-08-TASK-2026-09-08-unknown-1
+- **Task ID**: TASK-2026-09-08-unknown
+- **Specification**: `synthetic-fixture`
+- **Created**: 2026-09-08 14:00 UTC
+- **Checkpoint Type**: Event-driven traceability checkpoint
+- **Execution State**: `in_progress`
+- **Objective**: Demonstrate a checkpoint that is not linked to a canonical task.
+- **Completed Work**: Created the synthetic checkpoint record.
+- **Remaining Work**: Link the checkpoint to a known task record.
+- **Changed Files**:
+  - `fixture/traceability-mismatch.md`
+- **Branch / Revision**: fixture-matrix @ REV-CASE-001
+- **Locked Decisions and Invariants**: Validator remains read-only.
+- **Verification Evidence**: Native validator invocation is the expected check.
+- **CI Evidence**: Local synthetic case.
+- **Blockers**: Traceability link is missing.
+- **Scope Changes**: None
+- **Next Action**: Link the checkpoint to an existing Task Record.
+- **Resume Condition**: A canonical task reference is present.
+- **Recorded By**: Fixture validator

@@ -1,0 +1,1 @@
+READINESS_FAILURE|TASK-2026-09-08-readiness-objective|docs/tasks/TASK-2026-09-08-readiness-objective.md|Missing usable value: Objective|Provide a non-placeholder value for the labeled field

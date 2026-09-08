@@ -11,9 +11,11 @@ FIXTURE_ROOT="$REPO_ROOT/scripts/tests/fixtures/execution-control"
 VALIDATOR="$REPO_ROOT/scripts/validate-execution-control.sh"
 VALID_ROOT="$FIXTURE_ROOT/valid"
 INVALID_ROOT="$FIXTURE_ROOT/invalid"
+CASE_ROOT="$FIXTURE_ROOT/cases"
 EXPECTED_VALID="$FIXTURE_ROOT/expected-valid.txt"
 EXPECTED_INVALID="$FIXTURE_ROOT/expected-invalid.txt"
 EXPECTED_INVALID_SUMMARY="$FIXTURE_ROOT/expected-invalid-summary.txt"
+EXPECTED_CASES="$FIXTURE_ROOT/expected/cases.tsv"
 TEMP_BASE="${RUNNER_TEMP:-${TMPDIR:-/tmp}}"
 TEMP_ROOT="$(mktemp -d "$TEMP_BASE/promptkit-execution-control.XXXXXX")"
 
@@ -94,12 +96,47 @@ assert_case() {
     fi
 }
 
+assert_matrix_case() {
+    local name="$1" root="$2" expected_exit="$3" expected_summary_file="$4" expected_diagnostics_file="$5"
+    local output_file="$TEMP_ROOT/${name}.output"
+    local normalized_file="$TEMP_ROOT/${name}.normalized"
+    local actual_exit
+
+    set +e
+    bash "$VALIDATOR" --root "$root" --strict > "$output_file" 2>&1
+    actual_exit=$?
+    set -e
+    [ "$actual_exit" -eq "$expected_exit" ] || fail "$name expected exit $expected_exit but received $actual_exit"
+
+    normalize_output "$output_file" "$normalized_file"
+    local expected_summary actual_summary
+    expected_summary="$(tr -d '\r\n' < "$expected_summary_file")"
+    actual_summary="$(grep -E '^(VALID|FAILED)\|' "$normalized_file" | tail -n 1 || true)"
+    [ "$actual_summary" = "$expected_summary" ] || fail "$name summary mismatch: $actual_summary"
+    [ "$(grep -Ec '^(VALID|FAILED)\|' "$normalized_file" || true)" -eq 1 ] || fail "$name emitted an unexpected summary count"
+
+    local expected_diagnostics="" actual_diagnostics=""
+    if [ -s "$expected_diagnostics_file" ]; then
+        expected_diagnostics="$(sort "$expected_diagnostics_file")"
+    fi
+    actual_diagnostics="$(grep -E '^[A-Z_]+\|' "$normalized_file" | grep -vE '^(VALID|FAILED)\|' | sort || true)"
+    [ "$actual_diagnostics" = "$expected_diagnostics" ] || {
+        echo "Expected diagnostics for $name:" >&2
+        printf '%s\n' "$expected_diagnostics" >&2
+        echo "Actual diagnostics for $name:" >&2
+        printf '%s\n' "$actual_diagnostics" >&2
+        fail "$name diagnostic contract mismatch"
+    }
+}
+
 [ -x "$VALIDATOR" ] || fail "Bash validator is not executable: $VALIDATOR"
 [ -d "$VALID_ROOT" ] || fail "Missing valid fixture root: $VALID_ROOT"
 [ -d "$INVALID_ROOT" ] || fail "Missing invalid fixture root: $INVALID_ROOT"
+[ -d "$CASE_ROOT" ] || fail "Missing isolated case root: $CASE_ROOT"
 [ -f "$EXPECTED_VALID" ] || fail "Missing expected valid result: $EXPECTED_VALID"
 [ -f "$EXPECTED_INVALID" ] || fail "Missing expected invalid diagnostics: $EXPECTED_INVALID"
 [ -f "$EXPECTED_INVALID_SUMMARY" ] || fail "Missing expected invalid summary: $EXPECTED_INVALID_SUMMARY"
+[ -f "$EXPECTED_CASES" ] || fail "Missing isolated case manifest: $EXPECTED_CASES"
 
 before_files="$TEMP_ROOT/before-files.txt"
 before_status="$TEMP_ROOT/before-status.txt"
@@ -115,6 +152,23 @@ snapshot_git_status "$before_invalid_status"
 assert_case invalid "$INVALID_ROOT" 1
 assert_snapshot_unchanged "$before_invalid_files" "$before_invalid_status" invalid
 
+while IFS=$'\t' read -r name expected_exit expected_summary expected_diagnostics; do
+    [ -n "$name" ] || continue
+    case_root="$CASE_ROOT/$name"
+    summary_file="$FIXTURE_ROOT/expected/$expected_summary"
+    diagnostics_file="$FIXTURE_ROOT/expected/$expected_diagnostics"
+    [ -d "$case_root" ] || fail "Missing matrix case root: $case_root"
+    [ -f "$summary_file" ] || fail "Missing matrix summary: $summary_file"
+    [ -f "$diagnostics_file" ] || fail "Missing matrix diagnostics: $diagnostics_file"
+    before_case_files="$TEMP_ROOT/${name}-before-files.txt"
+    before_case_status="$TEMP_ROOT/${name}-before-status.txt"
+    snapshot_files "$before_case_files"
+    snapshot_git_status "$before_case_status"
+    assert_matrix_case "$name" "$case_root" "$expected_exit" "$summary_file" "$diagnostics_file"
+    assert_snapshot_unchanged "$before_case_files" "$before_case_status" "$name"
+done < "$EXPECTED_CASES"
+
+echo "Execution-control Bash matrix cases passed: $(grep -c '^[^#[:space:]]' "$EXPECTED_CASES") isolated contracts."
 echo "CI evidence: provider=${GITHUB_ACTIONS:-local} workflow=${GITHUB_WORKFLOW:-local} job=${GITHUB_JOB:-local} run=${GITHUB_RUN_ID:-local} revision=${GITHUB_SHA:-local} timestamp=$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
 echo "Execution-control validation is durable evidence only; it cannot observe live chat duration or approve external actions."
-echo "Execution-control Bash fixture harness passed: valid and invalid contracts are stable and read-only."
+echo "Execution-control Bash fixture harness passed: regression and isolated matrix contracts are stable and read-only."
