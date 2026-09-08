@@ -75,7 +75,7 @@
 
 - **Changed Files**:
   - `docs/tasks/TASK-2026-09-08-execution-control-release-impact.md` - Canonical Wave 8 preliminary release-impact review record.
-- **Branch / Revision**: `feature/agent-execution-control-release-impact` @ `9b4176d70ea222f4ac28e10bd98b234ada636687` before review-record changes; candidate tree equals merged cached `origin/main`.
+- **Branch / Revision**: `feature/agent-execution-control-release-impact` @ `f4df76a` (`docs(execution-control): link Wave 8 review PR`), based on frozen candidate `9b4176d70ea222f4ac28e10bd98b234ada636687`.
 - **Baseline / Candidate**: Immutable `v1.0.0` commit `fa6d921ed4ca9b1bc21248f37f0ef6f10775d420` through frozen candidate `9b4176d70ea222f4ac28e10bd98b234ada636687`, inclusive at the candidate boundary.
 - **Scope Change Records**: None
 - **Checkpoint Records**: None
@@ -92,11 +92,11 @@
   - Mandatory consumer adoption or consumer release-policy enforcement: rejected because adoption is optional and the feature applies internally to Better-PromptKit records.
   - Automatic SemVer calculation as release approval, tag creation, publication, deployment, or rollback: rejected because candidate analysis and human Release Coordinator approval are separate boundaries.
   - Third-party property-testing dependency or live Git/network data for Wave 7: rejected because local deterministic harnesses preserve portability and read-only behavior.
-- **Verification Evidence**: Both strict validators returned `VALID|RECORDS=3`; Bash and PowerShell fixture harnesses passed the regression and 19 isolated matrix contracts; Bash and PowerShell property harnesses passed five properties at 100 iterations with seed `20260908` and five example records; paired reference validators passed; Bash syntax checks and `git diff --check` passed. The tracked tree has zero differences from origin/main; the only working-tree entries are this Wave 8 record and the three pre-existing unrelated untracked specification directories.
+- **Verification Evidence**: Both strict validators returned `VALID|RECORDS=3`; Bash and PowerShell fixture harnesses passed the regression and 19 isolated matrix contracts; Bash and PowerShell property harnesses passed five properties at 100 iterations with seed `20260908` and five example records; paired reference validators passed; Bash syntax checks and `git diff --check` passed. At the initial review commit, the tracked tree had zero differences from origin/main; the later traceability commit changes only this record. The only working-tree entries are this Wave 8 record and the three pre-existing unrelated untracked specification directories.
 - **CI Evidence**: N/A for this documentation-only local review; no CI workflow change is in scope. Existing merged Wave 7 hosted CI evidence remains historical support, not release approval.
-- **Review Evidence**: Pending human review of the preliminary impact classification.
-- **Commit Evidence**: N/A before the review record commit.
-- **Pull Request Evidence**: N/A before the review record PR.
+- **Review Evidence**: PR #14 was merged by the repository owner: https://github.com/lowqualityloey/better-promptkit/pull/14
+- **Commit Evidence**: `1c388b9` - `docs(execution-control): record Wave 8 release impact`; `f4df76a` - `docs(execution-control): link Wave 8 review PR`
+- **Pull Request Evidence**: PR #14, titled `docs(execution-control): review Wave 8 release impact`, targeted `main` from `feature/agent-execution-control-release-impact` and contained the initial Task Record change; this follow-up carries the final traceability correction.
 - **Release Evidence**: N/A; no release evaluation approval, tag, hosted release, publication, deployment, or rollback is authorized by this Task Record.
 - **Blocker and Resume Condition**: None; human review may accept the preliminary classification, request corrections, or authorize a separate release-evaluation implementation. No release action is implied.
 
@@ -106,6 +106,6 @@
 - **Acceptance Results**: AC-1 Pass; AC-2 Pass; AC-3 Pass.
 - **Changed-File Summary**: Added one dedicated Wave 8 Task Record; no implementation, release, CI, consumer, or unrelated planning files are in scope.
 - **Completion Exception**: None
-- **Completion Decision and Timestamp**: Wave 8 history, public-contract, preliminary version-impact, consumer, non-goal, rejected-alternative, and local validation analysis is complete; the Task Record is awaiting human review on 2026-09-08 15:31 UTC.
+- **Completion Decision and Timestamp**: Wave 8 history, public-contract, preliminary version-impact, consumer, non-goal, rejected-alternative, local validation, commit, and PR packaging is complete; the Task Record is awaiting human review on 2026-09-08 UTC.
 
 A passing validator or CI job will provide evidence only. It will not authorize a commit, pull request, merge, release, publication, deployment, rollback, or consumer-policy change.
