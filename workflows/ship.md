@@ -136,6 +136,12 @@ Before Step 3, record the execution evidence needed by the release evaluation:
 - Record host/timer limitations and any execution-control validator result as evidence only. A passing validator or CI job cannot approve a version or authorize a tag, hosted release, publication, deployment, or rollback.
 - Release Coordinator approval remains explicit and separate. The existing Step 3-5 actions, release checklist, production safety gates, and rollback authority remain owned by `pk:ship` and must not be automated by this overlay.
 
+### Release Evidence Template Cross-Reference
+
+Use the optional **Execution-Control Evidence** section in `templates/release-checklist.md` for the Task Record path and ID, specification, state, owner/approval boundary, acceptance and changed-file evidence, candidate revision, verification/CI/review/commit/PR links, checkpoint/handoff, scope or exception records, blockers, host/timer limitation, and release-impact evaluation. `N/A` is valid for Trivial Work or consumers that do not adopt the optional protocol. This evidence evaluates a candidate against the approved immutable `v1.0.0` baseline; it does not rewrite that baseline or authorize tag, push, publication, deployment, or rollback.
+
+---
+
 ### Step 3: Trigger Production Deployment
 1. Create a version tag (`git tag -a vX.Y.Z -m "Release message"`).
 2. Push to production deployment pipeline.

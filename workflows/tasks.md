@@ -109,11 +109,12 @@ For each decomposed task, fill out `.promptkit/templates/issue-task-template.md`
 
 ### Phase 4: Local Storage & GitHub Projects Sync
 
-1. **Persist Local Source of Truth**:
-   - Save the complete breakdown to `docs/tasks/YYYY-MM-DD-<feature>-tasks.md`.
+1. **Persist the Canonical Local Source of Truth**:
+   - For each Controlled Work unit, create one canonical Task Record at `docs/tasks/<task-id>.md` from `.promptkit/templates/execution-task-record-template.md`.
+   - A dated breakdown document may index the per-task records, but it cannot replace them or become a second lifecycle authority.
    - This provides offline resilience and protects against agent context compaction (`pk:checkpoint`).
-2. **Generate GitHub CLI (`gh issue create`) Commands**:
-   - Append ready-to-run CLI commands at the bottom of the document:
+2. **Generate GitHub CLI (`gh issue create`) Commands (Optional)**:
+   - Append ready-to-run CLI commands at the bottom of an index or issue document. External issues may coordinate work but must link to the canonical Task Record and never replace it:
      ```bash
      gh issue create \
        --title "feat(cart): implement server-side discount validation" \
@@ -128,13 +129,19 @@ For each decomposed task, fill out `.promptkit/templates/issue-task-template.md`
      ```
    - Track progress through standard Kanban status lanes:
      `To Do` -> `In Progress` -> `In Review` -> `Done`
+   - Treat board status as a mapping from the Task Record execution state, not as a replacement for the record.
    - For local Obsidian Kanban users, format cards matching the `kanban-project-planner` conventions:
      - `## To Do`: `- [ ] <Task description> #priority/pX`
      - `## In Progress`: `- [/] <Task description> #priority/pX`
      - `## Done`: `- [x] <Task description> #priority/pX ✅ YYYY-MM-DD`
-4. **Living State Sync (`docs/STATE.md`)**:
+4. **Living State Projection Sync (`docs/STATE.md`)**:
    - If `./docs/STATE.md` exists, update Section 2 (`Milestone & Task Progress`) with the newly decomposed tasks (`- [ ] TASK-XX: ...`).
    - Update Section 3 (`Active Working Set`) with links to the generated task spec in `docs/tasks/`.
+   - `docs/STATE.md` is a synchronized projection owned by `pk:checkpoint`; the canonical `docs/tasks/<task-id>.md` Task Record remains authoritative. If no state file exists, offer to scaffold it from `templates/state-tracker-template.md`.
+
+### Engineer Handoff
+
+Before implementation, the Engineer validates the Task ID, scope, acceptance criteria, revision context, blockers, invariants, and exactly one prioritized next action. Scope expansion requires a Scope Change Record before changing the objective, files, acceptance criteria, dependencies, non-goals, risk, or verification condition.
 
 ---
 

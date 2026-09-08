@@ -23,6 +23,24 @@ Better-PromptKit equips your coding assistant with disciplined engineering workf
 
 ---
 
+## Agent Execution Control v1.1 Follow-Up
+
+Agent Execution Control is an additive follow-up to the published and immutable `v1.0.0` baseline. It is not an approved `v1.1.0` release and does not authorize a tag, publication, deployment, rollback, or other remote action.
+
+### Trivial vs Controlled Work
+
+- **Trivial Work** is short, bounded, and single-concern. Keep the fast path and avoid unnecessary execution records.
+- **Controlled Work** changes durable files, task state, project configuration, commits, pull requests, release artifacts, or multiple independent concerns. Create the canonical Local Task Source at `docs/tasks/<task-id>.md` before implementation.
+- A dated task breakdown, external issue, conversation, board status, or `docs/STATE.md` may support the work, but the Task Record remains authoritative. `docs/STATE.md` is a synchronized projection owned by `pk:checkpoint`.
+
+### Controlled Work Lifecycle and Roles
+
+`pk:route` classifies the request; `pk:plan` supplies architecture and verification inputs; `pk:tasks` creates the stable Task ID and canonical record; the Engineer implements within the recorded scope; `pk:checkpoint` preserves checkpoints and handoffs; QA/Reviewer records findings through `pk:review`; `pk:commit` and `pk:pr` preserve evidence; and the Release Coordinator evaluates release impact through `pk:ship`. Human approval remains required for scope exceptions, commits, pull requests, tags, releases, deployments, and rollback.
+
+The current repository includes three execution-control record templates, paired read-only validators, and paired fixture harnesses. They make durable evidence reviewable but do not create a runtime orchestrator or a mechanical live-generation timer. Consumer adoption remains optional and does not impose Better-PromptKit release policy on consuming repositories.
+
+---
+
 ## Quick Start (60 Seconds)
 
 **New to PromptKit?** → See **[FAQ.md](./FAQ.md)** for the 11 most common questions  
@@ -184,10 +202,11 @@ All triggers use the `pk:` prefix to avoid collisions with native slash commands
 
 You do not need to memorize commands. You can prompt naturally (e.g., *"This checkout endpoint throws 500 errors"* or *"Design a multi-tenant user table"*), and the assistant auto-routes to the proper workflow.
 
-### 1. Two-Tier Execution
+### 1. Trivial vs Controlled Execution
 
-- **Fast-Path (Trivial Queries)**: Quick syntax questions, single-line adjustments, or formatting requests execute directly with zero workflow ceremony or token overhead.
-- **Protocol Routing (Non-Trivial Tasks)**: Non-trivial features, schema migrations, bug investigations, and releases announce their active protocol, run upfront checks, and produce tracked documentation in `./docs/`.
+- **Fast-Path (Trivial Work)**: Quick syntax questions, single-line adjustments, or bounded formatting requests execute directly with zero workflow ceremony.
+- **Controlled Work**: Non-trivial changes that affect durable project state route through `pk:route`, readiness, and a canonical `docs/tasks/<task-id>.md` Task Record before implementation. The record carries scope, non-goals, acceptance, dependencies, owner/approval boundary, verification, execution policy, state, and next action.
+- External issues and board statuses remain optional references or mappings. They do not replace the Local Task Source, and a passing validator does not approve a remote action.
 
 ### 2. Subagent Delegation (Parallel Fan-Out)
 
@@ -200,13 +219,15 @@ In multi-agent environments (Antigravity, Claude Code, Cursor background agents)
 
 ## How Enforcement Actually Works
 
-PromptKit is an instruction layer, not a compiler or sandbox. The workflows guide the AI's reasoning and structure, but an LLM can still deviate, especially in long sessions where context degrades.
+PromptKit is an instruction layer, not a compiler, sandbox, runtime orchestrator, or live-generation timer. Its controls have different authorities:
 
-The real enforcement boundary is **Git-tracked artifacts and human review**:
+1. **Protocol guidance**: Workflows classify work, require readiness, define checkpoints, and preserve ownership boundaries.
+2. **Optional host gating**: IDE hooks or host controls may provide prompts or tool gating when available, but capability varies by host.
+3. **Durable Markdown records**: Task, checkpoint, handoff, scope-change, and evidence records preserve what happened and what must happen next.
+4. **Local and CI validation**: Reference checks and execution-control validators test durable repository evidence. They are read-only and cannot observe live chat duration or forcibly terminate generation.
+5. **Human approval**: People remain authoritative for scope exceptions, commits, pull requests, tags, releases, publication, deployment, and rollback.
 
-1. **Artifact Gates**: Workflows produce durable, reviewable files (`docs/specs/*.md`, `docs/STATE.md`, test suites, migration scripts). If the artifact is missing or wrong, you catch it in review.
-2. **CI Checks**: Your existing CI pipeline (linters, type checkers, test runners) remains the mechanical enforcement layer. PromptKit structures the AI's output so it passes your CI gates on the first attempt.
-3. **Code Review**: `pk:review` produces a two-axis audit report. A human reviews the report and the diff. The human is always the final gate.
+A passing validator or CI job proves only that the recorded evidence is internally consistent. It never approves a version, authorizes a remote action, or replaces review by the owning workflow and human decision-maker.
 
 > [!NOTE]
 > PromptKit makes AI assistants **systematic and disciplined**, not mechanically deterministic. Think of it as engineering standards for a junior developer: they follow the playbook most of the time, but you still review their PRs.
@@ -272,7 +293,10 @@ better-promptkit/
 ├── templates/                   # Structured artifact schemas saved to project docs/
 │   ├── project-profile-template.md # Scaffolds PROMPTKIT.md for project guardrails & monorepo topology
 │   ├── design-profile-template.md  # Scaffolds DESIGN.md for brand identity & visual tokens
-│   ├── state-tracker-template.md   # Scaffolds docs/STATE.md for living project tracking
+│   ├── state-tracker-template.md   # Scaffolds docs/STATE.md as a synchronized projection
+│   ├── execution-task-record-template.md # Canonical Controlled Work Task Record
+│   ├── execution-scope-change-template.md # Approved scope expansion/change record
+│   ├── execution-handoff-template.md # Receiver-validated session or role handoff
 │   ├── data-model-spec.md          # Relational schema & RLS specification
 │   ├── auth-matrix-template.md     # Auth architecture & RBAC capability matrix
 │   ├── api-contract-spec.md        # API endpoint contract & error code catalog
@@ -305,7 +329,10 @@ better-promptkit/
 │   └── spikes/                     # Local Spikes directory (for standalone vault mode)
 ├── scripts/                     # 🌟 NEW: Validation and maintenance utilities
 │   ├── validate-references.sh          # Bash: Check all workflow→template references
-│   └── validate-references.ps1         # PowerShell: Check all workflow→template references
+│   ├── validate-references.ps1         # PowerShell: Check all workflow→template references
+│   ├── validate-execution-control.sh   # Bash: Read-only Task/STATE evidence validator
+│   ├── validate-execution-control.ps1  # PowerShell: Read-only Task/STATE evidence validator
+│   └── tests/run-execution-control-fixtures.* # Paired regression and isolated fixture harnesses
 └── activities/                  # Interactive simulation katas & system design drills
     ├── README.md                   # Interactive simulation catalog
     ├── 01-system-design-spike.md         # High-throughput webhook engine design
@@ -337,8 +364,8 @@ Optional brand identity file created from `templates/design-profile-template.md`
 * **Mobile Ergonomics**: Minimum $44 \times 44\text{px}$ touch targets and single-column mobile reflow.
 * **Existing File Safety**: If you already maintain a custom `DESIGN.md`, PromptKit detects it automatically without overwriting it (see [DESIGN-MD-FAQ.md](./docs/DESIGN-MD-FAQ.md)).
 
-### 3. `docs/STATE.md` (The Living Project Tracker)
-Scaffolded automatically during initialization from `templates/state-tracker-template.md`. Serves as the single source of truth for ongoing project execution:
+### 3. `docs/STATE.md` (Synchronized Project State Projection)
+Scaffolded automatically during initialization from `templates/state-tracker-template.md`. `docs/STATE.md` is a synchronized projection maintained by `pk:checkpoint`, not a competing task source. For Controlled Work, the canonical `docs/tasks/<task-id>.md` Task Record remains authoritative; external issues, dated breakdowns, and conversational claims are supporting references only.
 * **Current Position & Milestone**: Active epic, overall health and status (`ACTIVE`, `BLOCKED`, `STABILIZING`), target release, and current working branch.
 * **Progress Tracking**: Hierarchical checklist with atomic task status (`[x]` Done, `[/]` In Progress, `[ ]` Queued, `[!]` Blocked).
 * **Locked Architectural Invariants**: Non-negotiable decisions made during pairing sessions that future sessions must not regress.

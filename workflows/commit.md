@@ -55,6 +55,7 @@ After the existing hygiene checks and before staging, Controlled Work must pass 
 - Confirm acceptance-criteria results, verification evidence, changed-file summary, blockers/resume condition, and review prerequisites are recorded. A commit link is not required before the first commit exists; it is added after the human-confirmed commit.
 - Confirm the current revision and checkpoint/handoff state are consistent. A hard checkpoint blocks staging and commit actions until explicit resume evidence is recorded.
 - Route commit construction, Conventional Commit formatting, staging, and developer confirmation through the rest of this workflow. A passing record or validator does not authorize `git add`, `git commit`, push, or any remote action.
+- After the human confirms the commit, record the exact revision and commit evidence in the canonical Task Record. Validator success proves evidence consistency only; it does not approve the commit.
 
 3. **Untracked File Inspection**:
    Inspect untracked files (`??` in `git status -s`). Ensure scratch scripts or build output folders are added to `.gitignore` rather than accidentally committed.

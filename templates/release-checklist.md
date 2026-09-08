@@ -15,6 +15,28 @@
 - [ ] Build succeeds with zero bundle size alerts (`pnpm build`).
 - [ ] Git tag created and pushed: `git tag -a vX.Y.Z -m "..." && git push origin vX.Y.Z`.
 
+## Execution-Control Evidence (Optional)
+
+Use this section for Controlled Work. Enter `N/A` for Trivial Work or for a consumer repository that does not adopt the optional protocol.
+
+- **Local Task Record**: `docs/tasks/<task-id>.md`
+- **Task ID / Specification**: `[TASK-YYYY-MM-DD-slug]` / `[specification path]`
+- **Execution Scope**: `[bounded files, artifacts, or behaviors]`
+- **Execution State**: `[awaiting_review / completed]`
+- **Owner / Approval Boundary**: `[owner]` / `[human approval boundary]`
+- **Acceptance Results**: `[AC-* results and evidence]`
+- **Changed-File Summary**: `[files and concise summaries]`
+- **Candidate Branch / Revision**: `[branch] @ [exact revision]`
+- **Verification and CI Evidence**: `[commands, results, workflow/run links]`
+- **Review / Commit / Pull Request Evidence**: `[links or evidence]`
+- **Latest Checkpoint / Handoff**: `[record links or N/A]`
+- **Scope Change / Exception Records**: `[record links or N/A]`
+- **Blockers and Resume Condition**: `[blocker, owner, evidence, and condition or None]`
+- **Host / Timer Limitation**: `[record the limitation; do not claim live enforcement]`
+- **Release-Impact Evaluation**: `[candidate assessment against the approved baseline]`
+
+> Execution-control evidence supports durable traceability only. It does not authorize a tag, push, hosted release, publication, deployment, rollback, or any other external action. Release Coordinator approval remains separate and human-only.
+
 ---
 
 ## 2. Environment Variables & Secrets Audit
