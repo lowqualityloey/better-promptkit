@@ -100,6 +100,42 @@ Format all commit messages strictly according to the Conventional Commits specif
 [Closes #<issue-number>]
 ```
 
+
+#### Contract Impact Evidence or Maintenance Classification
+
+Before developer confirmation, classify every Better-PromptKit eligible commit using one of the two paths below. The classification may be recorded in the commit body or in a stable linked planning or review record. It provides traceability for later QA and release evaluation; it does not approve a version or release.
+
+##### Public PromptKit Contract Impact
+
+Use this path when the commit intentionally changes a user-observable Better-PromptKit workflow, template, protocol, command trigger, documented output schema, required artifact, or documented behavior. Record all of the following in the commit body or linked record:
+
+- **Evidence ID**: A stable evidence reference such as `EVIDENCE-YYYY-MM-DD-slug`.
+- **Commit Evidence Location**: The commit-body field or linked planning/review record path and anchor containing this evidence.
+- **Affected Public PromptKit Contract**: The workflow, template, protocol, trigger, output schema, required artifact, or behavior that changes.
+- **User-Observable Before Behavior**: What a Better-PromptKit user or maintainer observes before the change.
+- **User-Observable After Behavior**: What the user or maintainer observes after the change.
+- **Impact Classification**: `User-Facing Additive Contract Change`, `User-Facing Corrective Contract Change`, or `Breaking Contract Change`.
+- **Proposed SemVer Candidate Impact**: `minor` for additive, `patch` for corrective, `major` for breaking with complete guidance, or `blocked` when required guidance is missing.
+- **Impact Rationale**: Why the proposed impact follows the observable contract evidence.
+- **Supporting Planning / Review Record**: The linked record when the evidence is not complete in the commit body, or `N/A` when the body is complete.
+- **Migration and Upgrade Guidance**: For a breaking change, identify affected consumers, required consumer actions, and the supported transition path. Missing guidance is a release blocker. Use `N/A` only for non-breaking changes.
+
+The Conventional Commit label is informational, not the versioning authority. A `feat`, `fix`, or `perf` label does not determine SemVer impact by itself. The evidence and later effective-range review determine the candidate.
+
+##### Maintenance Commit
+
+Use this path when the commit has no intentional Public PromptKit Contract change. Record an explicit declaration in the commit body or linked planning/review record:
+
+- **Maintenance Commit**: `Yes`
+- **No Intentional Public PromptKit Contract Change**: State this explicitly.
+- **Maintenance Rationale**: Explain the documentation, test, refactor, style, chore, or internal evidence purpose.
+- **Proposed SemVer Candidate Impact**: `none`
+- **Supporting Planning / Review Record**: `[record path or N/A]`
+
+A `docs`, `test`, `refactor`, `style`, or `chore` label does not silently establish the maintenance classification; the explicit declaration is required. A passing evidence check does not authorize staging, committing, pushing, merging, tagging, releasing, publishing, deploying, or rolling back.
+
+---
+
 #### Valid Commit Types:
 * `feat`: New user-facing capability or API feature
 * `fix`: Bug fix, defect resolution, or regression patch
