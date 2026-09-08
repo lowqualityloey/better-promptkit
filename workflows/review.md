@@ -52,6 +52,8 @@ Before applying the two-axis review, validate the Controlled Work evidence witho
 - Treat stale handoffs, unresolved blockers, illegal transitions, scope violations, missing completion evidence, and revision mismatches as review findings. Route them through the existing severity framework; do not silently repair records or create a third review axis.
 - A passing validator, checkpoint, or CI job supports traceability only. It is not code-review approval, merge approval, release approval, or authorization for remote actions.
 
+QA/Reviewer records stale or inconsistent execution evidence as findings in the existing severity framework, links review evidence to the Task Record, and does not silently repair records or create a third review axis. Review findings do not become release approval; the Release Coordinator remains the owner of release evaluation.
+
 ---
 
 ## Review Severity Framework

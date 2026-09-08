@@ -8,6 +8,23 @@
 - **Technical RFC / Spec**: `docs/specs/`
 - **Architectural Decision Record (ADR)**: `docs/adrs/`
 
+## Execution-Control Traceability (Optional)
+
+Use this section for Controlled Work. Enter `N/A` for Trivial Work or for a consumer repository that does not adopt the optional protocol.
+
+- **Task ID / Canonical Task Record**: `[TASK-YYYY-MM-DD-slug]` / `docs/tasks/<task-id>.md`
+- **Specification / Execution Scope**: `[specification path]` / `[bounded files, artifacts, or behaviors]`
+- **Current Execution State / Active Ownership**: `[awaiting_review / completed]` / `[owner and active pointer]`
+- **Acceptance Criteria Results**: `[AC-* results and evidence]`
+- **Changed-File Summary**: `[files and concise summaries]`
+- **Branch / Exact Revision**: `[branch] @ [revision]`
+- **Checkpoint / Handoff Records**: `[links or N/A]`
+- **Scope Changes / Exceptions**: `[links or N/A]`
+- **Verification / CI Evidence**: `[commands, results, and links]`
+- **Blockers / Receiver Validation**: `[blockers and resume condition; receiver/revision validation or N/A]`
+
+> A passing execution-control validator or CI job supports traceability only. It does not approve opening, merging, shipping, deploying, or rolling back this PR. Human review and the owning workflow remain authoritative.
+
 ---
 
 ## Summary of Changes

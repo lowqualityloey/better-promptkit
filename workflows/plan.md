@@ -121,6 +121,8 @@ After architectural context, contracts, failure analysis, and TDD milestones are
 
 `pk:plan` supplies architecture and planning inputs. `pk:tasks` creates the stable Task ID and canonical `docs/tasks/<task-id>.md` Task Record; planning does not start implementation, change task state to `in_progress`, or approve commits, pull requests, releases, or deployments.
 
+The Planner / Architect hands the objective, bounded files or behaviors, acceptance inputs, verification condition, dependencies, risks, approval boundary, execution policy, and locked invariants to `pk:tasks`. External issues may be linked for coordination, but they are not required and do not replace the Local Task Source.
+
 ### Step 6: Generate Technical Specification & Grilling Pre-Flight
 1. Scaffold the RFC document using `.promptkit/templates/tech-spec-template.md`.
 2. Save to `./docs/specs/YYYY-MM-DD-spec-<feature-name>.md` (or directory configured in `PROMPTKIT.md`).

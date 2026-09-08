@@ -71,7 +71,7 @@ For Controlled Work, checkpointing is a durable execution gate in addition to th
 - A Handoff Record at `docs/tasks/<task-id>.handoff-<sequence>.md` is required at a session/role boundary, handoff state, or major milestone. The receiver must validate the task ID, revision, changed files, acceptance criteria, invariants, blockers, and next action before editing.
 - Scope changes require a linked Scope Change Record before changing objective, files, acceptance criteria, dependencies, non-goals, risk, or verification. Expansion requires human confirmation or a separate Task Record.
 
-Phase 4 may synchronize `docs/STATE.md`, but STATE is a projection owned by `pk:checkpoint`; `docs/tasks/<task-id>.md` remains the Local Task Source. A mismatch leaves execution blocked or `checkpoint_due` until reconciled.
+Phase 4 may synchronize `docs/STATE.md`, but STATE is a projection owned by `pk:checkpoint`; the canonical `docs/tasks/<task-id>.md` Task Record remains the Local Task Source. At a session or role boundary, the receiver must validate the Task ID, revision, changed files, acceptance criteria, blockers, invariants, and exactly one next action before editing. A mismatch leaves execution blocked or `checkpoint_due` until reconciled.
 
 ---
 
@@ -197,7 +197,7 @@ Update `inviteUser` in `src/server/actions/invite.ts` to enforce the `email_veri
 - **`pk:onboard`** - If returning after long break, re-familiarize with codebase
 
 ### State Management
-- **STATE.md**: Primary artifact updated by checkpoint
+- **STATE.md**: Synchronized projection updated by `pk:checkpoint`; the canonical Task Record remains authoritative
 - **PROMPTKIT.md**: Reference for project constraints
 - **ADRs**: Link to decisions made during session
 

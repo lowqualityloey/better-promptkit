@@ -4,6 +4,17 @@ Visual guide to help you quickly find the right workflow for your current task.
 
 ---
 
+## Work Classification First
+
+Before selecting a workflow, classify the request:
+
+- **Trivial Work** is short, bounded, and single-concern. Use the existing fast path without creating unnecessary execution records.
+- **Controlled Work** changes durable files, task state, project configuration, commits, pull requests, release artifacts, or multiple independent concerns. Route it through readiness and create the canonical Local Task Source at `docs/tasks/<task-id>.md` before implementation.
+
+The Task Record is authoritative for Controlled Work. `docs/STATE.md` is a synchronized projection owned by `pk:checkpoint`; external issues, dated breakdowns, board statuses, and conversation claims are supporting references. This follow-up is additive to the immutable published `v1.0.0` baseline and is not an approved `v1.1.0` release.
+
+---
+
 ## Interactive Decision Tree
 
 ```mermaid
@@ -68,7 +79,7 @@ graph TD
 ### 🔨 Building & Testing
 | I Want To... | Use | Output |
 |:---|:---|:---|
-| Break feature into tasks | `pk:tasks` | `docs/tasks/*.md` or GitHub issues |
+| Break feature into tasks | `pk:tasks` | `docs/tasks/<task-id>.md` plus optional issue/index |
 | Write test strategy | `pk:test` | `docs/tests/*.md` |
 | Learn without code dumps | `pk:tutor` | Interactive learning |
 | Challenge my architecture | `pk:grill` | Socratic defense drill |
@@ -161,11 +172,26 @@ graph LR
 
 ---
 
+## Controlled Work Role Handoffs
+
+| Role / owner | Durable handoff | Boundary preserved |
+| :--- | :--- | :--- |
+| Planner / Architect via `pk:plan` | Objective, scope, non-goals, dependencies, acceptance, verification, and locked invariants into the Task Record inputs | Planning does not start implementation or approve remote actions. |
+| `pk:tasks` | Stable Task ID, canonical `docs/tasks/<task-id>.md`, acceptance IDs, and existing board-status mapping | The Local Task Source remains the authority; external issues are optional. |
+| Engineer | Implementation within scope, checkpoints, changed-file evidence, and one prioritized next action | Scope expansion requires a Scope Change Record before edits. |
+| QA / Reviewer via `pk:review` | Review findings, acceptance results, revision, CI evidence, and review evidence | Review does not silently repair records or approve releases. |
+| `pk:commit` / `pk:pr` | Human-confirmed commit and PR evidence linked to the Task Record | Evidence consistency never authorizes commit, merge, or deployment. |
+| Release Coordinator via `pk:ship` | Release-impact evaluation and release checklist evidence | Tag, publication, deployment, and rollback remain separate human decisions. |
+
+Session or role boundaries use `pk:checkpoint`: `docs/STATE.md` is synchronized as a projection, while the receiver validates the Task ID, revision, changed files, acceptance, blockers, invariants, and next action in the canonical records.
+
+---
+
 ## Common Task Sequences
 
-### Sequence 1: New Feature (Full Cycle)
+### Sequence 1: Controlled New Feature (Full Cycle)
 ```
-pk:plan → pk:data → pk:api → pk:test → [Build] → pk:review → pk:commit → pk:pr → pk:ship
+pk:route → readiness → pk:plan → pk:tasks → docs/tasks/<task-id>.md → pk:data/pk:api/pk:test → [Build] → pk:checkpoint → pk:review → pk:commit → pk:pr → pk:ship
 ```
 
 ### Sequence 2: Bug Fix
@@ -188,9 +214,9 @@ pk:tutor → [Practice] → pk:grill → [Strengthen]
 pk:onboard → pk:tutor → pk:plan → [Continue]
 ```
 
-### Sequence 6: Session Management
+### Sequence 6: Session or Role Handoff
 ```
-[Work] → pk:checkpoint → [Break] → [Resume with handover prompt]
+[Work within Task Record scope] → pk:checkpoint → [Receiver validates revision, files, acceptance, blockers, invariants, next action] → [Resume]
 ```
 
 ---
@@ -237,14 +263,16 @@ When you're stuck and need immediate help:
 
 How workflows feed into each other:
 
-- **`pk:plan`** generates specs that **`pk:tasks`** decomposes
-- **`pk:tasks`** creates issues that guide daily work
-- **`pk:debug`** findings inform **`pk:test`** regression coverage
-- **`pk:review`** catches issues before **`pk:commit`**
-- **`pk:commit`** creates clean history for **`pk:pr`**
-- **`pk:pr`** approved code goes through **`pk:ship`**
-- **`pk:checkpoint`** preserves state for **`pk:retro`**
-- **`pk:retro`** captures ADRs that inform future **`pk:plan`**
+- **`pk:route`** classifies Trivial versus Controlled Work and routes readiness without creating a new trigger.
+- **`pk:plan`** generates architecture/spec inputs that **`pk:tasks`** turns into a canonical `docs/tasks/<task-id>.md` Task Record.
+- **`pk:tasks`** maps the Task Record to existing board statuses; issues and dated breakdowns are optional indexes, not alternate authority.
+- **`pk:checkpoint`** preserves checkpoints, handoffs, and the synchronized `docs/STATE.md` projection; the Task Record remains authoritative.
+- **`pk:debug`** findings inform **`pk:test`** regression coverage.
+- **`pk:review`** catches fidelity, quality, and traceability issues before **`pk:commit`**.
+- **`pk:commit`** creates human-confirmed clean history for **`pk:pr`**.
+- **`pk:pr`** compiles evidence for review; approved code goes through **`pk:ship`**.
+- **`pk:ship`** evaluates release impact without rewriting the immutable published `v1.0.0` baseline.
+- Passing validators or CI checks supports durable evidence only and never authorizes a remote, release, deployment, or rollback action.
 
 ---
 

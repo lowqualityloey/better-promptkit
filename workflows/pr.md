@@ -74,6 +74,12 @@ A consistent Task Record or validator result proves durable evidence consistency
 
 ---
 
+### Execution-Control PR Evidence Template
+
+For Controlled Work, use the optional **Execution-Control Traceability** section in `templates/pull-request-template.md` to link the Task ID and canonical record, `awaiting_review` state, acceptance results, exact revision, checkpoint/handoff, CI, blockers, scope changes, and exceptions. For Trivial Work, record `N/A`. Keep `gh pr create` optional and explicitly developer-approved; a passing validator or CI job supports traceability only and does not approve opening, merging, shipping, or deploying the PR.
+
+---
+
 ### Phase 3: PR Body Generation
 
 Structure the PR description using `templates/pull-request-template.md`:

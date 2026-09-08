@@ -25,6 +25,18 @@ Before selecting a workflow for a substantive request, classify the work:
 - When ready, route architecture inputs to `pk:plan`, stable task IDs and acceptance criteria to `pk:tasks`, and then the selected implementation workflow. Do not introduce a new execution-control trigger or make the router own task decomposition.
 - If Trivial Work expands into a public-contract, persistent-data, authorization, integration, release, or multi-concern change, reclassify it as Controlled Work before further implementation.
 
+### Controlled Work Ownership Handoff
+
+| Handoff | Owner | Output and boundary |
+| :--- | :--- | :--- |
+| Classification → architecture | `pk:route` → `pk:plan` | Route the request and readiness inputs; do not decompose tasks or approve implementation. |
+| Architecture → task source | `pk:plan` → `pk:tasks` | Carry objective, scope, non-goals, dependencies, acceptance, verification, and invariants into the canonical Task Record. |
+| Task source → implementation | `pk:tasks` → Engineer | Start only after readiness and active-task ownership are recorded; implement within scope. |
+| Implementation → review/evidence | Engineer → `pk:checkpoint` / `pk:review` | Preserve checkpoints, handoffs, changed files, acceptance, blockers, and review findings. |
+| Review → commit/PR/release | `pk:review` → `pk:commit` → `pk:pr` → `pk:ship` | Link evidence while keeping human approval for commit, merge, tag, release, deployment, and rollback. |
+
+The Local Task Record remains authoritative throughout. `docs/STATE.md` is a synchronized projection, and external issues or dated breakdowns are optional references.
+
 ---
 
 ## The Engineering Lifecycle Decision Matrix
