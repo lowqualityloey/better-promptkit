@@ -1,0 +1,24 @@
+# Checkpoint Record: Validator evidence snapshot
+
+- **Record Type**: `Checkpoint Record`
+- **Checkpoint ID**: CHECKPOINT-2026-09-08-TASK-2026-09-08-validator-1
+- **Task ID**: TASK-2026-09-08-validator
+- **Specification**: `.kiro/specs/agent-execution-control-handoff/`
+- **Created**: 2026-09-08 13:30 UTC
+- **Checkpoint Type**: Event-driven milestone checkpoint
+- **Execution State**: awaiting_review
+- **Objective**: Preserve validator implementation evidence.
+- **Completed Work**: Added paired parser implementations.
+- **Remaining Work**: Review the fixture result.
+- **Changed Files**:
+  - `scripts/validate-execution-control.sh`
+  - `scripts/validate-execution-control.ps1`
+- **Branch / Revision**: feature/agent-execution-control-validator @ REV-VALID-001
+- **Locked Decisions and Invariants**: Read-only local validation; no remote action.
+- **Verification Evidence**: Valid fixture returned exit code 0.
+- **CI Evidence**: Local CI-equivalent result passed.
+- **Blockers**: None
+- **Scope Changes**: docs/tasks/TASK-2026-09-08-validator.scope-1.md
+- **Next Action**: Review the validator fixture output.
+- **Resume Condition**: Review evidence is recorded.
+- **Recorded By**: Validator maintainer
