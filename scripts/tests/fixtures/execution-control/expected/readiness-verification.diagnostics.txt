@@ -1,0 +1,1 @@
+READINESS_FAILURE|TASK-2026-09-08-readiness-verification|docs/tasks/TASK-2026-09-08-readiness-verification.md|Missing usable value: Verification Condition|Provide a non-placeholder value for the labeled field

@@ -1,0 +1,1 @@
+READINESS_FAILURE|TASK-2026-09-08-readiness-scope|docs/tasks/TASK-2026-09-08-readiness-scope.md|In Scope must contain at least one concrete item|List the bounded files, behaviors, or deliverables

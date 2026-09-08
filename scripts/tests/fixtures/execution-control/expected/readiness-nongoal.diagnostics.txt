@@ -1,0 +1,1 @@
+READINESS_FAILURE|TASK-2026-09-08-readiness-nongoal|docs/tasks/TASK-2026-09-08-readiness-nongoal.md|Explicit Non-Goals must contain a concrete boundary|Record what is deliberately excluded

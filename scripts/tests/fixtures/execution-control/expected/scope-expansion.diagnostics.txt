@@ -1,0 +1,1 @@
+SCOPE_CHANGE_MISSING|TASK-2026-09-08-scope-expansion|docs/tasks/TASK-2026-09-08-scope-expansion.md|Changed file 'fixture/out-of-scope.txt' is outside the recorded In Scope boundary|Link an approved Scope Change Record or keep the change within scope

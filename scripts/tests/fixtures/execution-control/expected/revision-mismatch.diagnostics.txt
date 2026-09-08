@@ -1,0 +1,1 @@
+REVISION_MISMATCH|TASK-2026-09-08-revision-mismatch|docs/STATE.md|STATE revision 'REV-OTHER-001' disagrees with Task Record revision 'REV-CASE-001'|Use one exact validated revision across linked evidence

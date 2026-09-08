@@ -1,0 +1,1 @@
+STATE_PROJECTION_MISMATCH|TASK-2026-09-08-state-projection-mismatch|docs/STATE.md|STATE Execution State 'in_progress' disagrees with Task Record 'completed'|Reconcile the projection without overriding the Task Record

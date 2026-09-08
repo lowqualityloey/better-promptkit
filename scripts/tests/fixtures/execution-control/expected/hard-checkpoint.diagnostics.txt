@@ -1,0 +1,1 @@
+CHECKPOINT_INCOMPLETE|TASK-2026-09-08-hard-checkpoint|docs/tasks/TASK-2026-09-08-hard-checkpoint.md|checkpoint_due task has no checkpoint record reference|Create and link a checkpoint record before resuming
