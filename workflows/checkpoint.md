@@ -75,6 +75,24 @@ Phase 4 may synchronize `docs/STATE.md`, but STATE is a projection owned by `pk:
 
 ---
 
+
+### Optional Release-Evaluation Handoff
+
+When a Better-PromptKit release evaluation is being handed from QA/Reviewer to a Release Coordinator, include this optional fragment in the existing Checkpoint Record, Handoff Record, and applicable `docs/STATE.md` projection. The canonical release evaluation and Local Task Record remain authoritative; this fragment is a handoff projection, not a new approval record.
+
+- **Evaluation ID**: `[stable release-evaluation identifier or N/A]`
+- **Release Candidate Commit**: `[exact Better-PromptKit candidate revision or N/A]`
+- **Preliminary SemVer Candidate**: `[candidate version or no candidate]` with status `preliminary`
+- **QA Status**: `[QA/Reviewer result, findings reference, and review state or N/A]`
+- **Unresolved Blockers**: `[named blocker, owner, and resolution condition, or none recorded]`
+- **Requested Release Coordinator Decision**: `[one explicit next human action, such as proceed to pk:ship for approval review, resolve blockers and re-review, defer, or record a no-contract-change decision]`
+- **Source Evaluation / Task Record**: `[authoritative evaluation and task-record paths or N/A]`
+- **Handoff Status**: `[Ready for Coordinator Review | Blocked | Deferred | N/A]`
+
+The Preliminary SemVer Candidate is not an Approved Release Version. A checkpoint handoff, QA status, empty blocker list, or requested decision does not approve a candidate. `pk:checkpoint` must not create or push tags, create hosted releases, publish changelogs, perform remote operations, deploy, or roll back. Final release evaluation and approval remain with `pk:ship` and the Release Coordinator.
+
+---
+
 ### Phase 3: Pre-Handover Hygiene Scan
 
 Ensure the workspace is in a clean state before switching sessions:
@@ -127,6 +145,16 @@ Copy and paste the block below into a new chat window to resume work with zero l
 ## 4. Current State & Immediate Next Step
 - **What is done**: [Brief list of completed work]
 - **Next immediate action**: [Exact next task to execute]
+
+## 5. Optional Release-Evaluation Handoff
+- **Evaluation ID**: [Stable evaluation identifier or N/A]
+- **Release Candidate Commit**: [Exact candidate revision or N/A]
+- **Preliminary SemVer Candidate**: [Candidate version or no candidate] (status: `preliminary`, not approved)
+- **QA Status**: [QA/Reviewer result, findings reference, and review state or N/A]
+- **Unresolved Blockers**: [Named blocker, owner, and resolution condition, or none recorded]
+- **Requested Release Coordinator Decision**: [One explicit next human action or N/A]
+- **Source Evaluation / Task Record**: [Authoritative record paths or N/A]
+- **Handoff Boundary**: [This is a handoff projection only; final approval belongs to `pk:ship` and the Release Coordinator. No tag, release, publication, remote, deployment, or rollback action is authorized.]
 
 Please inspect the files listed above and confirm you are ready to proceed with the next step.
 ```
