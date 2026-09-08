@@ -233,7 +233,7 @@ better-promptkit/
 ├── .github/
 │   └── workflows/
 │       └── ci.yml               # Maintainer CI (syntax, dry-run & anti-slop checks)
-├── FAQ.md                       # 🌟 NEW: The 10 questions every developer asks before adopting
+├── FAQ.md                       # 🌟 NEW: The 11 questions every developer asks before adopting
 ├── QUICKSTART.md                # 🌟 NEW: 5-minute introduction with 4 core workflows
 ├── init.ps1                     # Setup script for Windows (PowerShell)
 ├── init.sh                      # Setup script for Linux/macOS (Bash)
