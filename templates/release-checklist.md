@@ -37,6 +37,60 @@ Use this section for Controlled Work. Enter `N/A` for Trivial Work or for a cons
 
 > Execution-control evidence supports durable traceability only. It does not authorize a tag, push, hosted release, publication, deployment, rollback, or any other external action. Release Coordinator approval remains separate and human-only.
 
+## Better-PromptKit Internal Release Evidence (Optional)
+
+Use this appendix only for Better-PromptKit's own release-evidence evaluation. Enter `N/A` for a consumer repository or when no internal release evaluation applies. These fields record analysis and decisions; they do not execute any release action.
+
+- **Evaluation ID / Status / Date**: `[evaluation ID]` / `[preliminary | blocked | deferred | approved]` / `[YYYY-MM-DD HH:MM UTC]`
+- **Applicability**: `Better-PromptKit only`; consumer repositories: `N/A`
+- **Latest Approved Release Record / Version Source of Truth**: `[record path, approved version, and source commit, or N/A for First Release]`
+- **Prior Approved Release Commit**: `[exclusive baseline commit or N/A for First Release]`
+- **First Release**: `[Yes | No]`
+- **Release Range Start / End**: `[exclusive start]` / `[inclusive Release Candidate Commit]`
+- **Release Candidate Commit**: `[exact candidate revision]`
+- **Candidate-Inclusive Range Result**: `[Pass | Fail | Pending]`
+- **Normalized Effective Change Set**: `[merge, squash, duplicate, revert, eligibility, and maintenance treatment summary]`
+- **Normalization Blockers / Empty-Range Decision**: `[blocker or explicit coordinator decision, or None/N/A]`
+- **Preliminary SemVer Candidate**: `[preliminary core version and optional prerelease identifier]`
+- **Impact Precedence and Provenance**: `[greatest effective impact, supporting commits/evidence IDs, and candidate rationale]`
+- **Prerelease / Promotion Record**: `[suffix and promotion provenance, or N/A]`
+- **QA/Reviewer Result**: `[range, classification, normalization, precedence, blocker, and note-coverage result]`
+- **QA - Every Release Note Has Supporting Contract Impact Evidence**: `[Pass | Fail | Pending]` - `[evidence references]`
+- **QA - Every Effective Contract Change Has Exactly One Public Release Note**: `[Pass | Fail | Pending]` - `[effective change-set and note references]`
+- **Reviewed Public Release Notes**: `[note references and both coverage results, or N/A]`
+- **Reviewed Maintenance Release Notes**: `[omitted or labeled Maintenance, with references, or N/A]`
+- **Draft Changelog State**: `Unpublished draft`
+- **Draft Changelog Entries**: `[derived entries and note-to-changelog coverage result]`
+- **Approved Release Record**: `[record path or N/A until separately approved]`
+- **Approved Release Candidate Commit**: `[exact candidate revision or Not approved]`
+- **Approved Release Range Start / End**: `[exclusive start]` / `[inclusive end]` or `Not approved`
+- **Approved Release Version / Tag**: `[version]` / `[tag]` or `Not approved`
+- **Candidate-versus-Approved Comparison**: `[Equal | Different with rationale | Not approved]`
+- **Approval Difference Rationale**: `[required when approved version differs from the preliminary candidate, or N/A]`
+- **Approval Decision / Coordinator / Date**: `[decision]` / `[coordinator]` / `[date]` or `Not approved`
+- **Canonical Evaluation Authority**: `[release-evaluation-template record path; its approved candidate/range, rationale, QA result, and consistency table are authoritative]`
+- **Consistency - Evaluation ID Linkage**: `[Pass | Fail | Pending | N/A]` - `[reference]`
+- **Consistency - Candidate Membership**: `[Pass | Fail | Pending]` - `[reference]`
+- **Consistency - Tag / Version Alignment**: `[Pass | Fail | Pending | N/A]` - `[reference]`
+- **Consistency - Baseline Precedence**: `[Pass | Fail | Pending | N/A]` - `[reference]`
+- **Consistency - Required Approval and Rationale**: `[Pass | Fail | Pending | N/A]` - `[reference]`
+- **Consistency - QA / Note Linkage**: `[Pass | Fail | Pending]` - `[reference]`
+- **Release-Consistency Results**: `[overall result and canonical evaluation reference]`
+
+### Human-Only External-Action Decisions
+
+Record decisions only. Do not execute actions from this appendix.
+
+- **Tag Creation**: `[Not requested | Request human decision | Approved separately | Declined]`
+- **Hosted Release Creation**: `[Not requested | Request human decision | Approved separately | Declined]`
+- **Changelog Publication**: `[Not requested | Request human decision | Approved separately | Declined]`
+- **Remote Operations**: `[Not requested | Request human decision | Approved separately | Declined]`
+- **Deployment**: `[Not requested | Request human decision | Approved separately | Declined]`
+- **Rollback**: `[Not requested | Request human decision | Approved separately | Declined]`
+- **External-Action Owner / Evidence**: `[Release Coordinator record or N/A]`
+
+> A preliminary candidate, QA result, handoff, or checklist entry is not an approved release. Tagging, hosted release creation, changelog publication, remote operations, deployment, and rollback remain separate, explicit, human-approved decisions.
+
 ---
 
 ## 2. Environment Variables & Secrets Audit

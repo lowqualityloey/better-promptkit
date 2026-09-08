@@ -73,6 +73,22 @@ Track tasks using atomic checklists (`[x]` Done, `[/]` In Progress, `[ ]` Queued
 
 ---
 
+## 3B. Release-Evaluation Handoff (Optional)
+
+> Use this projection only when Better-PromptKit release evaluation is being handed from QA/Reviewer to a Release Coordinator. It is a durable handoff, not approval, and the canonical evaluation or Task Record remains authoritative.
+
+- **Evaluation ID**: `[evaluation ID or N/A]`
+- **Release Candidate Commit**: `[exact candidate revision or N/A]`
+- **Preliminary SemVer Candidate**: `[preliminary version, including prerelease identifier when applicable, or N/A]`
+- **QA/Reviewer Result**: `[Pass | Fail | Pending | N/A]`
+- **Unresolved Blockers**: `[blocker, owner, and resolution condition, or None]`
+- **Requested Release Coordinator Decision / Next Approval Action**: `[exact human decision requested, or N/A]`
+- **Handoff Status**: `[Ready for Coordinator Review | Blocked | Deferred | N/A]`
+- **Approval Boundary**: `This projection does not approve a candidate or version and does not authorize tag creation, hosted release creation, changelog publication, remote operations, deployment, or rollback.`
+- **Source Evaluation / Task Record**: `[authoritative record path or N/A]`
+
+---
+
 ## 4. Locked Technical Invariants (Do Not Undo)
 Document non-negotiable architectural decisions agreed upon during pairing sessions:
 - [Invariant 1]: All database queries must enforce tenant-level isolation via Row-Level Security (RLS).
