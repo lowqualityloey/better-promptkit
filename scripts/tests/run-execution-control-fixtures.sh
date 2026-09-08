@@ -1,0 +1,120 @@
+#!/usr/bin/env bash
+# Cross-platform fixture harness for the read-only execution-control validator.
+# Run from repository root: bash scripts/tests/run-execution-control-fixtures.sh
+
+set -u
+set -o pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+FIXTURE_ROOT="$REPO_ROOT/scripts/tests/fixtures/execution-control"
+VALIDATOR="$REPO_ROOT/scripts/validate-execution-control.sh"
+VALID_ROOT="$FIXTURE_ROOT/valid"
+INVALID_ROOT="$FIXTURE_ROOT/invalid"
+EXPECTED_VALID="$FIXTURE_ROOT/expected-valid.txt"
+EXPECTED_INVALID="$FIXTURE_ROOT/expected-invalid.txt"
+EXPECTED_INVALID_SUMMARY="$FIXTURE_ROOT/expected-invalid-summary.txt"
+TEMP_BASE="${RUNNER_TEMP:-${TMPDIR:-/tmp}}"
+TEMP_ROOT="$(mktemp -d "$TEMP_BASE/promptkit-execution-control.XXXXXX")"
+
+cleanup() {
+    rm -rf "$TEMP_ROOT"
+}
+trap cleanup EXIT
+
+fail() {
+    echo "HARNESS_FAILURE|$1" >&2
+    exit 1
+}
+
+snapshot_files() {
+    local output_file="$1"
+    : > "$output_file"
+    while IFS= read -r file; do
+        printf '%s|' "${file#"$REPO_ROOT"/}" >> "$output_file"
+        sha256sum "$file" >> "$output_file"
+    done < <(find "$REPO_ROOT" -path "$REPO_ROOT/.git" -prune -o -type f -print | sort)
+}
+
+snapshot_git_status() {
+    local output_file="$1"
+    git -C "$REPO_ROOT" status --porcelain=v1 --untracked-files=all > "$output_file" || fail "Unable to read Git status"
+}
+
+assert_snapshot_unchanged() {
+    local before_files="$1" before_status="$2" label="$3"
+    local after_files="$TEMP_ROOT/${label}-after-files.txt"
+    local after_status="$TEMP_ROOT/${label}-after-status.txt"
+    snapshot_files "$after_files"
+    snapshot_git_status "$after_status"
+    cmp -s "$before_files" "$after_files" || fail "Repository file hashes changed during $label validation"
+    cmp -s "$before_status" "$after_status" || fail "Git status changed during $label validation"
+}
+
+normalize_output() {
+    local input_file="$1" output_file="$2"
+    tr -d '\r' < "$input_file" | sed 's#\\#/#g' > "$output_file"
+}
+
+assert_case() {
+    local name="$1" root="$2" expected_exit="$3"
+    local output_file="$TEMP_ROOT/${name}.output"
+    local normalized_file="$TEMP_ROOT/${name}.normalized"
+    local actual_exit
+
+    set +e
+    bash "$VALIDATOR" --root "$root" --strict > "$output_file" 2>&1
+    actual_exit=$?
+    set -e
+    [ "$actual_exit" -eq "$expected_exit" ] || fail "$name expected exit $expected_exit but received $actual_exit"
+
+    normalize_output "$output_file" "$normalized_file"
+    if [ "$name" = "valid" ]; then
+        local expected_summary
+        expected_summary="$(tr -d '\r\n' < "$EXPECTED_VALID")"
+        local actual_summary
+        actual_summary="$(grep -E '^(VALID|FAILED)\|' "$normalized_file" | tail -n 1 || true)"
+        [ "$actual_summary" = "$expected_summary" ] || fail "valid summary mismatch: $actual_summary"
+        [ "$(grep -Ec '^(VALID|FAILED)\|' "$normalized_file" || true)" -eq 1 ] || fail "valid case emitted an unexpected summary count"
+    else
+        local expected_failure_summary actual_failure_summary
+        expected_failure_summary="$(tr -d '\r\n' < "$EXPECTED_INVALID_SUMMARY")"
+        actual_failure_summary="$(grep -E '^FAILED\|' "$normalized_file" | tail -n 1 || true)"
+        [ "$actual_failure_summary" = "$expected_failure_summary" ] || fail "invalid summary mismatch: $actual_failure_summary"
+        local expected_diagnostics actual_diagnostics
+        expected_diagnostics="$(sort "$EXPECTED_INVALID")"
+        actual_diagnostics="$(grep -E '^[A-Z_]+\|' "$normalized_file" | grep -vE '^(VALID|FAILED)\|' | sort || true)"
+        [ "$actual_diagnostics" = "$expected_diagnostics" ] || {
+            echo "Expected diagnostics:" >&2
+            printf '%s\n' "$expected_diagnostics" >&2
+            echo "Actual diagnostics:" >&2
+            printf '%s\n' "$actual_diagnostics" >&2
+            fail "invalid diagnostic contract mismatch"
+        }
+    fi
+}
+
+[ -x "$VALIDATOR" ] || fail "Bash validator is not executable: $VALIDATOR"
+[ -d "$VALID_ROOT" ] || fail "Missing valid fixture root: $VALID_ROOT"
+[ -d "$INVALID_ROOT" ] || fail "Missing invalid fixture root: $INVALID_ROOT"
+[ -f "$EXPECTED_VALID" ] || fail "Missing expected valid result: $EXPECTED_VALID"
+[ -f "$EXPECTED_INVALID" ] || fail "Missing expected invalid diagnostics: $EXPECTED_INVALID"
+[ -f "$EXPECTED_INVALID_SUMMARY" ] || fail "Missing expected invalid summary: $EXPECTED_INVALID_SUMMARY"
+
+before_files="$TEMP_ROOT/before-files.txt"
+before_status="$TEMP_ROOT/before-status.txt"
+snapshot_files "$before_files"
+snapshot_git_status "$before_status"
+assert_case valid "$VALID_ROOT" 0
+assert_snapshot_unchanged "$before_files" "$before_status" valid
+
+before_invalid_files="$TEMP_ROOT/before-invalid-files.txt"
+before_invalid_status="$TEMP_ROOT/before-invalid-status.txt"
+snapshot_files "$before_invalid_files"
+snapshot_git_status "$before_invalid_status"
+assert_case invalid "$INVALID_ROOT" 1
+assert_snapshot_unchanged "$before_invalid_files" "$before_invalid_status" invalid
+
+echo "CI evidence: provider=${GITHUB_ACTIONS:-local} workflow=${GITHUB_WORKFLOW:-local} job=${GITHUB_JOB:-local} run=${GITHUB_RUN_ID:-local} revision=${GITHUB_SHA:-local} timestamp=$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
+echo "Execution-control validation is durable evidence only; it cannot observe live chat duration or approve external actions."
+echo "Execution-control Bash fixture harness passed: valid and invalid contracts are stable and read-only."
