@@ -42,6 +42,31 @@
 
 ---
 
+## Controlled Work Execution (Optional)
+
+> Complete this section when the request is Controlled Work. Trivial Work may use the existing issue flow unless it expands into Controlled Work. The Local Task Record under `docs/tasks/` is authoritative; GitHub or another external tracker is an optional reference only.
+
+- **Work Classification**: `[Trivial | Controlled]`
+- **Task ID**: `TASK-[YYYY-MM-DD]-[slug]`
+- **Local Task Record**: `docs/tasks/<task-id>.md`
+- **Specification**: `docs/specs/[specification].md` or `.kiro/specs/[specification]/`
+- **Execution Scope**: `[Repository, workspace, package, or session boundary]`
+- **Owner / Actor**: `[Person, role, or agent]`
+- **Approval Boundary**: `[Actions requiring explicit human confirmation]`
+- **Dependencies**: `[Dependency and owner, or None]`
+- **Execution Policy**: `[Gated Mode | Approved Batch Mode]`
+- **Checkpoint Policy**: `[Soft/hard intervals, event triggers, and host timer limitation]`
+- **Stop Conditions**: `[Missing approval/context, failed verification/CI/invariant, blocker, hard checkpoint, or developer stop]`
+- **Execution State**: `[Reference to the Local Task Record; planned | ready | in_progress | checkpoint_due | blocked | paused | handoff_ready | awaiting_review | completed | aborted]`
+- **Mapped `pk:tasks` Status**: `[To Do | In Progress | In Review | Done]`
+- **Active Task Pointer**: `[Task ID while active, otherwise None]`
+- **Checkpoint / Handoff / Scope Change Links**: `[Record paths or None]`
+- **Next Action**: `[Exactly one prioritized action]`
+
+Acceptance Criteria in this issue should use stable IDs such as `AC-1` and link to the corresponding results in the Local Task Record. Do not mark Controlled Work complete from the issue alone; completion requires the record's acceptance, verification, changed-file, and commit/PR evidence or an explicit documented exception.
+
+---
+
 ## Implementation Tasks (The Build)
 <!-- Concrete, ordered sequence of files and functions to create or modify. -->
 - [ ] 1. Define schema types and database migration (`Expand` phase).

@@ -46,6 +46,33 @@ Track tasks using atomic checklists (`[x]` Done, `[/]` In Progress, `[ ]` Queued
 
 ---
 
+## 3A. Execution-Control Projection (Optional)
+
+> This section is a synchronized projection for checkpoint continuity when the host project uses Controlled Work. The canonical authority remains `docs/tasks/<task-id>.md`; disagreement with that record is a validation failure and leaves execution blocked or `checkpoint_due` until reconciled.
+
+- **Local Task Source**: `docs/tasks/<task-id>.md`
+- **Task ID**: `TASK-[YYYY-MM-DD]-[slug]`
+- **Task Record**: `docs/tasks/<task-id>.md`
+- **Specification**: `docs/specs/[specification].md` or `.kiro/specs/[specification]/`
+- **Execution Scope**: `[Repository, workspace, package, or session boundary]`
+- **Execution State**: `[planned | ready | in_progress | checkpoint_due | blocked | paused | handoff_ready | awaiting_review | completed | aborted]`
+- **Mapped `pk:tasks` Status**: `[To Do | In Progress | In Review | Done]`
+- **Active Task Pointer**: `[Task ID while active, otherwise None]`
+- **Owner / Current Actor**: `[Person, role, agent, or session]`
+- **Start Time**: `[YYYY-MM-DD HH:MM UTC or N/A]`
+- **Current Branch**: `[Branch name]`
+- **Current Revision**: `[Exact commit or revision]`
+- **Checkpoint Policy**: `[Soft/hard intervals, event triggers, and host timer capability/limitation]`
+- **Blockers and Resume Condition**: `[Blocker, owner, evidence, and precise condition, or None]`
+- **Verification Status**: `[Commands, results, and timestamp]`
+- **CI Evidence**: `[Provider, workflow/job, run, revision, result, or N/A]`
+- **Changed-File Summary**: `[Current working set summary]`
+- **Latest Checkpoint**: `[Record path or None]`
+- **Latest Handoff**: `[Record path or None]`
+- **Next Action**: `[Exactly one prioritized action]`
+
+---
+
 ## 4. Locked Technical Invariants (Do Not Undo)
 Document non-negotiable architectural decisions agreed upon during pairing sessions:
 - [Invariant 1]: All database queries must enforce tenant-level isolation via Row-Level Security (RLS).
