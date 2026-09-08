@@ -8,7 +8,7 @@ The feature extends existing Better-PromptKit workflows, especially `pk:route`, 
 
 The minimum source of truth for controlled work is a local task record. GitHub, Jira, GitLab, Linear, or another external tracker may be synchronized optionally, but no external issue or ticket is required before work can begin. The feature applies the same execution-control model whether or not an external tracker is available.
 
-The current Better-PromptKit release context is a preliminary First Release candidate of `v1.0.0`. This requirements document does not approve a release, create a Git tag, publish a release, or establish a new version source of truth. The eventual public-contract impact of this feature SHALL be evaluated under the Conventional Commit Versioning requirements after implementation and review.
+The approved Better-PromptKit baseline is the published `v1.0.0` release at candidate commit `fa6d921ed4ca9b1bc21248f37f0ef6f10775d420`. This requirements document defines a follow-up planning candidate only; it does not modify, retag, or reinterpret `v1.0.0`, approve `v1.1.0`, create a Git tag, publish a release, or establish a new version source of truth. The eventual public-contract impact of this feature SHALL be evaluated under the Conventional Commit Versioning requirements after implementation and review.
 
 PromptKit is an instruction layer. It can require an agent to stop, preserve state, and request confirmation, but it cannot by itself guarantee that every host model or IDE will forcibly terminate an in-progress generation. Durable artifacts, host-supported hooks, CI validation, and human review provide the enforceable boundaries where available.
 
@@ -208,3 +208,33 @@ PromptKit is an instruction layer. It can require an agent to stop, preserve sta
 5. WHEN implementation changes the Better-PromptKit public workflow contract, THE release-impact record SHALL classify the change under the Conventional Commit Versioning workflow and SHALL provide migration guidance if the change is breaking.
 6. THE Agent Execution Control SHALL identify host-specific enforcement limitations and SHALL distinguish advisory protocol behavior, host-supported tool gating, durable artifact validation, CI enforcement, and human approval.
 7. THE Agent Execution Control SHALL keep external issue synchronization, remote actions, release publication, deployment, and rollback as explicit decisions of their owning workflows rather than implicit consequences of a task state transition.
+
+## v1.1 Planning Boundary and Decision Status
+
+This package is a planning candidate for an additive follow-up to the approved `v1.0.0` release. The intended implementation slice is documentation-first: canonical local execution records, optional templates and state projections, overlays in the existing `pk:*` workflows, local read-only Bash and PowerShell validation, deterministic synthetic fixtures, and repository CI checks for durable evidence.
+
+The package does not authorize implementation, release, tagging, publication, deployment, or remote operations by itself. A feature branch and reviewable pull request are required for implementation. The eventual version remains a proposal until the implemented public-contract impact is evaluated and explicitly approved through the Conventional Commit Versioning and release workflows.
+
+### Resolved design decisions
+
+1. `docs/tasks/<task-id>.md` is the canonical Local Task Source for Controlled Work. Scope changes, checkpoints, handoffs, batch authorizations, and exceptions use linked records under `docs/tasks/` with stable IDs.
+2. `docs/STATE.md`, when present, is a synchronized projection owned by `pk:checkpoint`; it is not a competing task source. A mismatch blocks continuation until reconciled.
+3. Execution states map onto the existing `pk:tasks` statuses rather than creating a second lifecycle: active and stopped work remains `In Progress`, review-pending work is `In Review`, completed work is `Done`, and planned/aborted work is `To Do` with its reason retained.
+4. The validator contract is local, read-only, deterministic, and implemented with equivalent Bash and PowerShell scripts. It reports stable categories and never mutates records or performs Git, remote, release, publication, deployment, or rollback actions.
+5. Soft and hard checkpoint intervals are recorded execution policy, not guaranteed host timers. A host limitation must be visible in the record and validator output.
+6. Existing `pk:route`, `pk:plan`, `pk:tasks`, `pk:checkpoint`, `pk:commit`, `pk:pr`, `pk:review`, and `pk:ship` retain ownership of their current content and decisions. Agent Execution Control adds gates and traceability links at their boundaries.
+
+### Explicit non-goals
+
+- No runtime agent orchestrator, daemon, IDE plugin, model wrapper, background timer, or forced generation termination.
+- No second task tracker, database, external issue requirement, or automatic tracker synchronization.
+- No new `pk:execution-control` trigger or automatic task switching.
+- No autonomous commit, push, pull-request, merge, CI retry, repository configuration change, tag, hosted release, changelog publication, deployment, or rollback.
+- No new SemVer algorithm and no inference that implementation completion approves `v1.1.0`.
+- No mandatory execution-control policy for consumer repositories.
+
+### Implementation and release boundary
+
+Implementation SHALL preserve the public v1.0.0 release and SHALL classify any changed workflow, template, validator, or CI contract under the Conventional Commit Versioning workflow. Breaking changes require migration guidance. A passing execution-control validator or CI check proves only that durable evidence is internally consistent; it never authorizes a remote or release action.
+
+The companion `design.md` defines the canonical record schema, lifecycle, enforcement levels, validator interface, and compatibility boundary. The companion `tasks.md` defines the dependency-ordered implementation plan, fixtures, CI wiring, checkpoints, and final release-impact review. These artifacts are planning content until selected and implemented through a separate branch and pull request.
