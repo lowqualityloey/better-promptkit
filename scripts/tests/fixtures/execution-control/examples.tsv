@@ -1,0 +1,6 @@
+# name	category	fixture-relative-path
+readiness-objective	readiness	cases/readiness-objective/docs/tasks/TASK-2026-09-08-readiness-objective.md
+hard-checkpoint	checkpoint	cases/hard-checkpoint/docs/tasks/TASK-2026-09-08-hard-checkpoint.md
+handoff-complete	handoff	valid/docs/tasks/TASK-2026-09-08-validator.handoff-1.md
+completion-valid	completion	valid/docs/tasks/TASK-2026-09-08-validator.md
+completion-missing-evidence	completion	cases/missing-completion-evidence/docs/tasks/TASK-2026-09-08-missing-completion-evidence.md

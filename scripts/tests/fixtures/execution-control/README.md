@@ -6,6 +6,7 @@ These fixtures are synthetic and local-only. They contain no real commit, releas
 - `invalid/` contains the original compound readiness, policy-limitation, active-task, transition, and scope-change failures. Both validators must return nonzero and the same 13 diagnostic lines.
 - `cases/` contains isolated synthetic roots for readiness fields, duplicate active tasks, illegal transitions, hard checkpoints, valid `blocked`/`paused`/`aborted` states, scope expansion, handoffs, blockers, completion evidence, traceability, revision and STATE projections, and timer limitations. The valid stop-state rows return exit code 0; negative rows isolate one supported diagnostic category.
 - `expected/` contains the tab-separated `cases.tsv` manifest plus one shared summary and diagnostic contract per isolated case. Bash and PowerShell consume the same expected files.
+- `examples.tsv` indexes existing synthetic readiness, checkpoint, handoff, and completion records for schema-example coverage without duplicating record bodies.
 - `expected-valid.txt`, `expected-invalid.txt`, and `expected-invalid-summary.txt` remain the shared regression contract for the original roots.
 
 Run the paired harnesses from the repository root:
@@ -14,6 +15,16 @@ Run the paired harnesses from the repository root:
 bash scripts/tests/run-execution-control-fixtures.sh
 pwsh -NoProfile -File .\scripts\tests\run-execution-control-fixtures.ps1
 ```
+
+Optional Wave 7 property/example coverage is local-only and dependency-free:
+
+```text
+bash -n scripts/tests/run-execution-control-properties.sh
+bash scripts/tests/run-execution-control-properties.sh
+pwsh -NoProfile -File .\scripts\tests\run-execution-control-properties.ps1
+```
+
+The property harnesses run five deterministic in-memory invariant checks with 100 iterations per property, validate the shared example manifest, and snapshot fixture/repository hashes plus Git status. They do not add a CI gate or authorize any remote, release, deployment, or rollback action.
 
 The harnesses invoke the native validator for each platform, capture expected nonzero failure status, normalize semantic diagnostics, and snapshot fixture/repository hashes plus Git status before and after each run. Temporary capture files are created outside the repository.
 
