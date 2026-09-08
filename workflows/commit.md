@@ -46,6 +46,16 @@ Before staging any file, run these 4 safety checks:
    ```
    If temporary probes remain, remove them before committing.
 
+### Controlled Work Commit Gate
+
+After the existing hygiene checks and before staging, Controlled Work must pass this evidence gate:
+
+- Confirm the active `docs/tasks/<task-id>.md` Task Record exists, is in an editable state, and owns the current execution scope. `checkpoint_due`, `blocked`, `paused`, `handoff_ready`, and `aborted` tasks cannot proceed to commit.
+- Confirm changed files remain within the recorded scope and every scope expansion has a linked Scope Change Record and required approval or separate Task Record.
+- Confirm acceptance-criteria results, verification evidence, changed-file summary, blockers/resume condition, and review prerequisites are recorded. A commit link is not required before the first commit exists; it is added after the human-confirmed commit.
+- Confirm the current revision and checkpoint/handoff state are consistent. A hard checkpoint blocks staging and commit actions until explicit resume evidence is recorded.
+- Route commit construction, Conventional Commit formatting, staging, and developer confirmation through the rest of this workflow. A passing record or validator does not authorize `git add`, `git commit`, push, or any remote action.
+
 3. **Untracked File Inspection**:
    Inspect untracked files (`??` in `git status -s`). Ensure scratch scripts or build output folders are added to `.gitignore` rather than accidentally committed.
 

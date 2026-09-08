@@ -14,6 +14,17 @@ Eliminate decision fatigue and guesswork by mapping every software development s
 - Developer is starting a new task, facing an architectural dilemma, debugging an issue, or preparing a pull request.
 - Can be activated at any point during a pairing session to pivot into the proper workflow.
 
+## Controlled Work Classification and Readiness Routing
+
+Before selecting a workflow for a substantive request, classify the work:
+
+- **Trivial Work** is bounded, short, single-concern work that does not change a public contract, persistent data, authorization behavior, external integration, release configuration, or multiple independent concerns. Keep the existing Fast-Path and do not create unnecessary execution records.
+- **Controlled Work** can change files, task state, project configuration, commits, pull requests, release artifacts, or other durable project state. Route it through a Local Task Source at `docs/tasks/<task-id>.md` before implementation.
+- The Local Task Record is authoritative for Controlled Work. External issues, dated task breakdowns, and `docs/STATE.md` are supporting references or synchronized projections, not alternate execution authority.
+- Before implementation, the Controlled Work record must contain an objective, in-scope work, explicit non-goals, dependencies or `None`, acceptance criteria, owner/approval boundary, verification condition, and execution policy. If any readiness field is missing, remain blocked and route to `pk:plan` or `pk:tasks` rather than starting implementation.
+- When ready, route architecture inputs to `pk:plan`, stable task IDs and acceptance criteria to `pk:tasks`, and then the selected implementation workflow. Do not introduce a new execution-control trigger or make the router own task decomposition.
+- If Trivial Work expands into a public-contract, persistent-data, authorization, integration, release, or multi-concern change, reclassify it as Controlled Work before further implementation.
+
 ---
 
 ## The Engineering Lifecycle Decision Matrix
