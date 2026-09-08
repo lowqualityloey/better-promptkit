@@ -1,0 +1,27 @@
+# Version Precedence Regression
+
+- **Record Type**: `Release Evaluation`
+- **Evaluation ID**: `EVAL-2099-02-04-PRECEDENCE`
+- **Repository Scope**: `Better-PromptKit only`
+- **Evaluation Owner / Role**: `Synthetic Coordinator`
+- **QA/Reviewer**: `Synthetic Reviewer`
+- **Release Coordinator**: `Synthetic Coordinator`
+- **Created**: `2099-02-04 00:00 UTC`
+- **Evaluation Status**: `approved`
+- **Consumer Repository Applicability**: `N/A`
+- **Evaluation Objective**: `Test non-regressing version precedence`
+- **Latest Approved Release Record**: `synthetic-approved-v1.2.0.md`
+- **Version Source of Truth**: `1.2.0 synthetic baseline`
+- **Prior Approved Release Version**: `1.2.0`
+- **Prior Approved Release Commit**: `COMMIT-BASE-PRECEDENCE`
+- **First Release**: `No`
+- **Release Range Start**: `COMMIT-BASE-PRECEDENCE`
+- **Release Range End**: `COMMIT-CANDIDATE-PRECEDENCE`
+- **Release Candidate Commit**: `COMMIT-CANDIDATE-PRECEDENCE`
+- **Candidate-Inclusive Membership Result**: `Pass`
+- **Range Selection Rationale**: `Synthetic precedence regression`
+- **Ordered Range Commit References**: `COMMIT-CANDIDATE-PRECEDENCE`
+- **Effective Change Set Summary**: `Synthetic corrective evidence`
+- **Empty Eligible Range**: `No`
+- **Empty-Range Decision**: `N/A`
+- **Normalization Blockers**: `None`

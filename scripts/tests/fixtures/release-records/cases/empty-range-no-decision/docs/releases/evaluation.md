@@ -1,0 +1,27 @@
+# Empty Range Without Decision
+
+- **Record Type**: `Release Evaluation`
+- **Evaluation ID**: `EVAL-2099-02-07-EMPTY`
+- **Repository Scope**: `Better-PromptKit only`
+- **Evaluation Owner / Role**: `Synthetic Coordinator`
+- **QA/Reviewer**: `Synthetic Reviewer`
+- **Release Coordinator**: `Synthetic Coordinator`
+- **Created**: `2099-02-07 00:00 UTC`
+- **Evaluation Status**: `blocked`
+- **Consumer Repository Applicability**: `N/A`
+- **Evaluation Objective**: `Test explicit empty-range decisions`
+- **Latest Approved Release Record**: `synthetic-approved.md`
+- **Version Source of Truth**: `1.0.0 synthetic baseline`
+- **Prior Approved Release Version**: `1.0.0`
+- **Prior Approved Release Commit**: `COMMIT-EMPTY-BASE`
+- **First Release**: `No`
+- **Release Range Start**: `COMMIT-EMPTY-BASE`
+- **Release Range End**: `COMMIT-EMPTY-CANDIDATE`
+- **Release Candidate Commit**: `COMMIT-EMPTY-CANDIDATE`
+- **Candidate-Inclusive Membership Result**: `Pass`
+- **Range Selection Rationale**: `Synthetic no-impact range`
+- **Ordered Range Commit References**: `COMMIT-EMPTY-CANDIDATE`
+- **Effective Change Set Summary**: `No effective SemVer-impacting change remains`
+- **Empty Eligible Range**: `Yes`
+- **Empty-Range Decision**: `N/A`
+- **Normalization Blockers**: `None`

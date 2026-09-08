@@ -1,0 +1,32 @@
+# Synthetic Approved Release Record
+
+- **Record Type**: `Approved Release Record`
+- **Evaluation ID**: `EVAL-2099-01-01-W9-001`
+- **Approved Release Record**: `synthetic-approved-v1.1.0.md`
+- **Approved Release Version**: `1.1.0`
+- **Approved Release Tag**: `v1.1.0`
+- **Approved Release Candidate Commit**: `COMMIT-ADD-002`
+- **Approved Release Range**: `COMMIT-ADD-001, COMMIT-ADD-002`
+- **Candidate-versus-Approved Comparison**: `Equal`
+- **Approval Difference Rationale**: `N/A`
+- **Approval Decision**: `Approved`
+- **Approval Date**: `2099-01-01 00:00 UTC`
+- **Release Coordinator Decision Record**: `Synthetic Release Coordinator approved the internal record`
+- **Public and Maintenance Release Notes**: `NOTE-001 additive contract change; Maintenance: None`
+- **Changelog State**: `Draft and unpublished`
+- **Note-to-Changelog Coverage**: `Pass`
+- **Shared Evaluation ID Consistency Result**: `Pass`
+- **Candidate-Inclusive Range Consistency Result**: `Pass`
+- **Tag/Version Alignment Result**: `Pass`
+- **Version Precedence Result**: `Pass`
+- **Approval and Rationale Result**: `Pass`
+- **QA/Note Linkage Result**: `Pass`
+- **Overall Consistency Result**: `Pass`
+- **Consistency Blockers and Resolution**: `None`
+- **Tag Creation Decision**: `Not requested`
+- **Hosted Release Creation Decision**: `Not requested`
+- **Changelog Publication Decision**: `Not requested`
+- **Remote Operation Decision**: `Not requested`
+- **Deployment Decision**: `Not requested`
+- **Rollback Decision**: `Not requested`
+- **External-Action Owner and Evidence**: `Synthetic Release Coordinator decision record only`

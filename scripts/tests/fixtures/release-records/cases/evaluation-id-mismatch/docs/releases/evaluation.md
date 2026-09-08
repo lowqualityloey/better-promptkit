@@ -1,0 +1,27 @@
+# Evaluation ID Mismatch Baseline
+
+- **Record Type**: `Release Evaluation`
+- **Evaluation ID**: `EVAL-2099-02-05-ID-ONE`
+- **Repository Scope**: `Better-PromptKit only`
+- **Evaluation Owner / Role**: `Synthetic Coordinator`
+- **QA/Reviewer**: `Synthetic Reviewer`
+- **Release Coordinator**: `Synthetic Coordinator`
+- **Created**: `2099-02-05 00:00 UTC`
+- **Evaluation Status**: `preliminary`
+- **Consumer Repository Applicability**: `N/A`
+- **Evaluation Objective**: `Test linked evaluation identifiers`
+- **Latest Approved Release Record**: `N/A`
+- **Version Source of Truth**: `N/A for preliminary synthetic evaluation`
+- **Prior Approved Release Version**: `N/A`
+- **Prior Approved Release Commit**: `N/A`
+- **First Release**: `Yes`
+- **Release Range Start**: `COMMIT-ID-START`
+- **Release Range End**: `COMMIT-ID-CANDIDATE`
+- **Release Candidate Commit**: `COMMIT-ID-CANDIDATE`
+- **Candidate-Inclusive Membership Result**: `Pass`
+- **Range Selection Rationale**: `Synthetic identifier mismatch`
+- **Ordered Range Commit References**: `COMMIT-ID-CANDIDATE`
+- **Effective Change Set Summary**: `Synthetic additive evidence`
+- **Empty Eligible Range**: `No`
+- **Empty-Range Decision**: `N/A`
+- **Normalization Blockers**: `None`

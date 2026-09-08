@@ -1,0 +1,32 @@
+# Approval Missing
+
+- **Record Type**: `Approved Release Record`
+- **Evaluation ID**: `EVAL-2099-02-02-APPROVAL`
+- **Approved Release Record**: `synthetic-approval-missing.md`
+- **Approved Release Version**: `1.1.0`
+- **Approved Release Tag**: `v1.1.0`
+- **Approved Release Candidate Commit**: `COMMIT-CANDIDATE-APPROVAL`
+- **Approved Release Range**: `COMMIT-CANDIDATE-APPROVAL`
+- **Candidate-versus-Approved Comparison**: `Equal`
+- **Approval Difference Rationale**: `N/A`
+- **Approval Decision**: `Approved`
+- **Approval Date**: `N/A`
+- **Release Coordinator Decision Record**: `N/A`
+- **Public and Maintenance Release Notes**: `NOTE-APPROVAL synthetic note`
+- **Changelog State**: `Draft and unpublished`
+- **Note-to-Changelog Coverage**: `Pass`
+- **Shared Evaluation ID Consistency Result**: `Pass`
+- **Candidate-Inclusive Range Consistency Result**: `Pass`
+- **Tag/Version Alignment Result**: `Pass`
+- **Version Precedence Result**: `Pass`
+- **Approval and Rationale Result**: `Pass`
+- **QA/Note Linkage Result**: `Pass`
+- **Overall Consistency Result**: `Pass`
+- **Consistency Blockers and Resolution**: `None`
+- **Tag Creation Decision**: `Not requested`
+- **Hosted Release Creation Decision**: `Not requested`
+- **Changelog Publication Decision**: `Not requested`
+- **Remote Operation Decision**: `Not requested`
+- **Deployment Decision**: `Not requested`
+- **Rollback Decision**: `Not requested`
+- **External-Action Owner and Evidence**: `N/A`

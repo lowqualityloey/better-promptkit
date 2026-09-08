@@ -1,0 +1,27 @@
+# Synthetic Release Evaluation
+
+- **Record Type**: `Release Evaluation`
+- **Evaluation ID**: `EVAL-2099-01-01-W9-001`
+- **Repository Scope**: `Better-PromptKit only`
+- **Evaluation Owner / Role**: `Synthetic Release Coordinator`
+- **QA/Reviewer**: `Synthetic QA Reviewer`
+- **Release Coordinator**: `Synthetic Release Coordinator`
+- **Created**: `2099-01-01 00:00 UTC`
+- **Evaluation Status**: `approved`
+- **Consumer Repository Applicability**: `N/A`
+- **Evaluation Objective**: `Evaluate one synthetic additive contract change`
+- **Latest Approved Release Record**: `synthetic-approved-v1.0.0.md`
+- **Version Source of Truth**: `1.0.0 from synthetic-approved-v1.0.0.md`
+- **Prior Approved Release Version**: `1.0.0`
+- **Prior Approved Release Commit**: `COMMIT-BASE-001`
+- **First Release**: `No`
+- **Release Range Start**: `COMMIT-BASE-001`
+- **Release Range End**: `COMMIT-ADD-002`
+- **Release Candidate Commit**: `COMMIT-ADD-002`
+- **Candidate-Inclusive Membership Result**: `Pass`
+- **Range Selection Rationale**: `Synthetic range after the approved baseline through the inclusive candidate`
+- **Ordered Range Commit References**: `COMMIT-ADD-001, COMMIT-ADD-002`
+- **Effective Change Set Summary**: `COMMIT-ADD-002 / EVIDENCE-ADD-002 is additive; COMMIT-ADD-001 is maintenance`
+- **Empty Eligible Range**: `No`
+- **Empty-Range Decision**: `N/A`
+- **Normalization Blockers**: `None`
