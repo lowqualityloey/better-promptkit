@@ -41,6 +41,46 @@ The current repository includes three execution-control record templates, paired
 
 ---
 
+## Better-PromptKit Release-Evidence Lifecycle
+
+The release-evidence policy applies only to the Better-PromptKit repository. It documents how Better-PromptKit evaluates a candidate and records an approval decision; it does not impose Better-PromptKit Conventional Commit, SemVer, release-note, changelog, tag, remote, publication, deployment, or rollback requirements on repositories that consume Better-PromptKit.
+
+### Accountable lifecycle and handoffs
+
+The lifecycle is an accountable handoff, not an automatic release pipeline:
+
+`Planner/Architect → Engineer → QA/Reviewer → Release Coordinator`
+
+| Handoff | Required evidence | Boundary |
+| :--- | :--- | :--- |
+| **Planner/Architect → Engineer** | Affected Public PromptKit Contract, observable before/after behavior, proposed impact, and Migration and Upgrade Guidance when breaking. | Planning records intent; it does not implement or approve a release. |
+| **Engineer → QA/Reviewer** | One complete, reversible Conventional Commit plus Contract Impact Evidence, or an explicit Maintenance Commit declaration stating no intentional public-contract change. | Commit labels such as `feat`, `fix`, and `perf` do not determine SemVer impact. |
+| **QA/Reviewer → Release Coordinator** | Verified Release Range, normalized Effective Change Set, evidence-based candidate rationale, note-coverage result, and named blockers. | QA records findings and correction requirements; a calculable candidate is still preliminary. |
+| **Release Coordinator via `pk:ship`** | Evaluation ID, candidate provenance, QA result, reviewed notes, approval decision, and Release-consistency results. | Approval is an internal record; tag, release, publication, remote, deployment, and rollback actions remain separate human decisions. |
+
+`pk:checkpoint` can project the Evaluation ID, Release Candidate Commit, preliminary candidate, QA status, blockers, source records, and requested next decision into a handoff. A checkpoint is never approval and cannot tag, publish, push, deploy, or roll back.
+
+### Candidate evaluation and approval
+
+1. The Release Coordinator assigns one stable **Evaluation ID** and uses the latest complete Approved Release Record as the immutable Version Source of Truth. With no prior approved record, the evaluation records `First Release: true` and its all-history start.
+2. The evaluation records an exclusive prior baseline or First Release start and an inclusive **Release Candidate Commit** at the end of a reproducible Release Range. Candidate absence, duplication, or out-of-range membership is a blocker.
+3. QA/Reviewer normalizes merge, squash, duplicate, full-revert, and partial-revert history into one Effective Change Set. That same set feeds both the preliminary candidate and filtered notes.
+4. Contract Impact Evidence determines impact: additive is `minor`, corrective is `patch`, breaking with Migration and Upgrade Guidance is `major`, breaking without guidance is blocked, and an explicit Maintenance Commit is `none`. Greatest impact uses `major > minor > patch`. A First Release with additive public impact proposes core candidate `1.0.0`.
+5. The SemVer Candidate Record remains **preliminary** and retains its Evaluation ID, candidate commit, supporting evidence, range, rationale, and any Prerelease Identifier. Promotion preserves that provenance and does not become approval automatically.
+6. An empty eligible range requires an explicit Release Coordinator decision to defer or approve a documented no-contract-change release. It is never an automatic patch release.
+
+### Release notes and changelog drafts
+
+The filtered **Public Release Notes** contain one note for each distinct effective user-observable Public PromptKit Contract change. Breaking notes include Migration and Upgrade Guidance. **Maintenance Release Notes** are clearly labeled `Maintenance` and describe no intentional public-contract change without claiming a SemVer increment. Duplicate changes appear once, fully cancelling reverts appear in neither candidate nor public notes, and partial reverts are noted only when new evidence shows residual impact.
+
+For each reviewed Public or Maintenance Release Note, create one explicit draft Changelog Entry labeled **unpublished** or **not published**. Draft entries are evidence only. Changelog publication is a separate human decision and is never performed by documentation, validation, QA, or a passing CI job.
+
+### Human approval and external actions
+
+The Approved Release Record links the same Evaluation ID across the candidate, range, QA review, notes, and consistency results. It records the approved version and tag string, candidate commit, range, candidate rationale, QA result, approval decision/date/coordinator, and Release-consistency results. A version different from the preliminary candidate requires a non-empty rationale, and the approved tag must encode the approved version.
+
+The Release Coordinator separately and explicitly decides whether to create a tag, create a hosted release, publish a changelog, perform remote operations, trigger deployment, or execute rollback. One decision does not imply another. No candidate, QA result, checkpoint, validator, or empty blocker list authorizes any of these actions. See [`pk:commit`](./workflows/commit.md), [`pk:checkpoint`](./workflows/checkpoint.md), [`pk:ship`](./workflows/ship.md), and the [workflow map](./docs/WORKFLOW-MAP.md) for the operating details.
+
 ## Quick Start (60 Seconds)
 
 **New to PromptKit?** → See **[FAQ.md](./FAQ.md)** for the 11 most common questions  

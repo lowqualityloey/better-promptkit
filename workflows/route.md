@@ -67,6 +67,30 @@ Find your current engineering context below and activate the corresponding workf
 
 ---
 
+### Better-PromptKit Release-Evidence Routing Overlay
+
+This overlay extends the existing lifecycle router without adding a new trigger. Continue to classify Trivial versus Controlled Work first, preserve the Local Task Source readiness gate for durable changes, and use the existing workflows:
+
+| Request shape | Route | Required result |
+| :--- | :--- | :--- |
+| **Commit-level release evidence**, Public PromptKit Contract impact, or Maintenance Commit classification | `pk:commit` | Capture or link Contract Impact Evidence, or record an explicit Maintenance Commit declaration stating no intentional public-contract change. Preserve Conventional Commit syntax, one complete reversible concern, scoped staging, and developer confirmation. |
+| **Release-evaluation handoff**, QA-to-coordinator handoff, or preliminary candidate checkpoint | `pk:checkpoint` | Record the Evaluation ID, Release Candidate Commit, preliminary candidate, QA status, blockers, source records, handoff status, and one requested next human decision. The handoff is never approval. |
+| **Version-candidate** calculation, normalized-history review, filtered **release-note** derivation, draft changelog entries, consistency review, or final internal release decision | `pk:ship` | Evaluate the Better-PromptKit-only Release Range, Effective Change Set, preliminary candidate, Public and Maintenance Release Notes, and Approved Release Record. Keep deployment-specific guidance and external actions separate. |
+
+#### Release-evidence routing rules
+
+1. Route a request about evidence attached to one commit, public-contract impact, breaking guidance, or a no-public-change declaration to `pk:commit`. A `feat`, `fix`, or `perf` label does not determine the SemVer impact.
+2. Route a request to preserve an evaluation across a session or role boundary, or to hand a preliminary candidate and blockers to the next owner, to `pk:checkpoint`. `pk:checkpoint` projects handoff state and never approves, tags, publishes, pushes, deploys, or rolls back.
+3. Route a request to calculate or review a version candidate, normalize merge/squash/duplicate/revert history, derive Public or Maintenance Release Notes, prepare explicitly unpublished draft Changelog Entries, check cross-record consistency, or record an approval/defer decision to `pk:ship`.
+4. Keep the existing `pk:commit → pk:pr → pk:ship` path for ordinary reviewed changes. The optional `pk:checkpoint` release-evaluation handoff supplies evidence to `pk:ship`; it does not replace review, commit, PR, or production-safety gates.
+5. Apply this release-evidence policy only to Better-PromptKit. Consumer repositories remain outside its Conventional Commit, SemVer, release-note, changelog, tag, remote, publication, deployment, and rollback requirements.
+
+#### Candidate and external-action boundary
+
+The router may identify the appropriate phase, but routing is not approval. A preliminary candidate, QA result, checkpoint handoff, validator, CI result, or empty blocker list cannot become an Approved Release Version by itself. The Release Coordinator must make separate explicit human decisions for tag creation, hosted release creation, changelog publication, remote operations, production deployment, and rollback. No routing outcome invokes those actions automatically.
+
+Use the existing [`pk:commit`](./commit.md), [`pk:checkpoint`](./checkpoint.md), and [`pk:ship`](./ship.md) workflows for the routed phase. Use [`docs/WORKFLOW-MAP.md`](../docs/WORKFLOW-MAP.md), [`templates/contract-impact-evidence-template.md`](../templates/contract-impact-evidence-template.md), and [`templates/release-evaluation-template.md`](../templates/release-evaluation-template.md) as supporting references; do not create a new command.
+
 ### Visual Lifecycle Flow
 
 ```text
