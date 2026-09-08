@@ -15,6 +15,63 @@ The Task Record is authoritative for Controlled Work. `docs/STATE.md` is a synch
 
 ---
 
+## Better-PromptKit Release-Evidence Lifecycle
+
+This lifecycle overlay applies only to the Better-PromptKit repository. It documents evidence and accountable handoffs without adding a new trigger or imposing Better-PromptKit release policy on consumer repositories.
+
+### Evaluation path
+
+```text
+Planner/Architect
+      │  Public PromptKit Contract, before/after behavior, proposed impact, breaking guidance
+      ▼
+Engineer via pk:commit
+      │  Complete reversible commit plus Contract Impact Evidence or Maintenance Commit declaration
+      ▼
+QA/Reviewer via pk:review
+      │  Range, normalization, SemVer precedence, blockers, and note coverage
+      ▼
+Optional pk:checkpoint handoff
+      │  Evaluation ID, candidate commit, preliminary candidate, QA status, blockers, requested decision
+      ▼
+Release Coordinator via pk:ship
+      │  Internal evaluation, filtered notes, Approved Release Record, explicit action decisions
+      ▼
+Existing production-safety path
+      │  Tag, hosted release, publication, remote operation, deployment, and rollback remain separate human decisions
+```
+
+### What the evaluation records
+
+| Stage | Workflow | Durable evidence and boundary |
+| :--- | :--- | :--- |
+| Contract impact | [`pk:commit`](../workflows/commit.md) | Contract Impact Evidence or an explicit Maintenance Commit declaration. Conventional Commit labels do not determine SemVer. |
+| Release handoff | [`pk:checkpoint`](../workflows/checkpoint.md) | Evaluation ID, Release Candidate Commit, preliminary candidate, QA status, blockers, source records, and one requested next human decision. The handoff is never approval. |
+| Candidate and notes | [`pk:ship`](../workflows/ship.md) | Immutable baseline, candidate-inclusive Release Range, normalized Effective Change Set, evidence-based SemVer candidate, Public and Maintenance Release Notes, and unpublished draft Changelog Entries. |
+| Approved record | [`pk:ship`](../workflows/ship.md) | Approved version/tag, candidate provenance, QA result, approval decision/date/coordinator, and consistency results. The record does not create a tag or publish anything. |
+| Production execution | Existing `pk:ship` steps | Runtime validation, Expand/Contract migration sequencing, smoke tests, monitoring, and rollback guidance remain intact after evaluation. |
+
+### Candidate versus approved release
+
+The latest complete Approved Release Record is the immutable Version Source of Truth. If none exists, record `First Release: true` and the all-history start. The Release Range has an exclusive prior boundary or First Release start and an inclusive Release Candidate Commit; missing or out-of-range candidate membership is a blocker.
+
+Before calculating a candidate or note, QA/Reviewer normalizes merge commits, squash commits, duplicate change groups, fully cancelling revert pairs, and partial reverts. The same Effective Change Set feeds both outputs. Evidence determines `minor` for additive public contract change, `patch` for corrective change, `major` for breaking change with Migration and Upgrade Guidance, and `none` for an explicit Maintenance Commit. Breaking change without guidance is blocked, and precedence is `major > minor > patch`. A First Release with additive public impact proposes core candidate `1.0.0`.
+
+The SemVer Candidate Record is always **preliminary** and retains its Evaluation ID, Release Candidate Commit, supporting evidence, range, rationale, and optional Prerelease Identifier. Promotion preserves provenance but does not approve the candidate. An empty eligible range requires an explicit defer or documented no-contract-change decision.
+
+### Notes, role handoffs, and human-only actions
+
+- **Planner/Architect → Engineer:** record the affected contract, observable before/after behavior, proposed impact, and breaking migration guidance. Planning does not approve.
+- **Engineer → QA/Reviewer:** provide the atomic reversible commit and evidence or maintenance declaration. Engineering does not calculate an approved version.
+- **QA/Reviewer → Release Coordinator:** provide verified range boundaries, normalized history, candidate rationale, blocker status, and note coverage. QA does not approve or silently repair records.
+- **Release Coordinator:** records the Approved Release Record through `pk:ship`. Public Release Notes cover each distinct effective public change once; Maintenance Release Notes are labeled `Maintenance`; full reverts produce no public note; partial reverts require new evidence for residual impact.
+- Every Public or Maintenance Release Note has one explicit draft Changelog Entry marked **unpublished** or **not published**. Publication is separate and is never automatic.
+- Tag creation, hosted release creation, changelog publication, remote operations, deployment, and rollback each require a separate explicit human Release Coordinator decision. A candidate, QA pass, checkpoint, validator, or CI result is not approval.
+
+See [`templates/contract-impact-evidence-template.md`](../templates/contract-impact-evidence-template.md), [`templates/release-evaluation-template.md`](../templates/release-evaluation-template.md), [`templates/release-checklist.md`](../templates/release-checklist.md), and [`workflows/route.md`](../workflows/route.md) for the related records and routing boundaries.
+
+---
+
 ## Interactive Decision Tree
 
 ```mermaid
