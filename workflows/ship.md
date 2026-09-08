@@ -126,6 +126,16 @@ Trigger an immediate rollback if within 15 minutes of deployment:
    - If Expand phase: Execute migrations *before* deploying application code.
    - If Contract phase: Verify application code is deployed and verified *before* executing cleanup migrations.
 
+### Execution-Control Release Evidence Gate
+
+Before Step 3, record the execution evidence needed by the release evaluation:
+
+- Link the canonical Task Record(s), accepted completion evidence, changed-file summary, exact candidate revision, review result, CI evidence, migration sequencing, rollback plan, and any Scope Change or Exception Records.
+- Confirm the task and milestone are in a releasable state and that no unresolved blocker, hard checkpoint, stale handoff, scope mismatch, or revision mismatch remains.
+- Link the applicable release-impact evaluation and preserve the distinction between a preliminary candidate and an Approved Release Version.
+- Record host/timer limitations and any execution-control validator result as evidence only. A passing validator or CI job cannot approve a version or authorize a tag, hosted release, publication, deployment, or rollback.
+- Release Coordinator approval remains explicit and separate. The existing Step 3-5 actions, release checklist, production safety gates, and rollback authority remain owned by `pk:ship` and must not be automated by this overlay.
+
 ### Step 3: Trigger Production Deployment
 1. Create a version tag (`git tag -a vX.Y.Z -m "Release message"`).
 2. Push to production deployment pipeline.

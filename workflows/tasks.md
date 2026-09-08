@@ -48,6 +48,28 @@ An issue is only ready for implementation when its completion can be objectively
      - **Milestone 4 (Hardening & Telemetry)**: End-to-end tests, telemetry logging, Contract migration cleanup.
    - **Localized Features (e.g. pure UI or single script)**: Use an adaptive flat list ordered strictly by dependency (Task 1 -> Task 2 -> Task 3).
 
+### Controlled Work Execution Overlay
+
+When Phase 1 classifies work as Controlled Work, create the canonical Local Task Source before active coding:
+
+- Assign a stable `Task ID` and create `docs/tasks/<task-id>.md` from the execution task-record template.
+- Carry forward the objective, in-scope files/work, explicit non-goals, dependencies or `None`, owner/approval boundary, risk, verification condition, and execution policy.
+- Give every acceptance condition a stable `AC-*` identifier and link it to the issue-facing Gherkin scenario or checklist result.
+- Keep external GitHub/Jira/Linear references optional. A dated breakdown document or external issue may index the work, but the per-task Local Task Record remains authoritative for Controlled Work.
+- Do not move the record to `in_progress` until readiness is complete, the start time and execution scope are recorded, and the active-task pointer is owned by exactly one task in the current scope.
+- If the task expands its objective, files, acceptance criteria, dependencies, non-goals, risk, or verification, create a Scope Change Record before implementation. Independent discoveries become separate Task Records.
+
+The execution states `planned`, `ready`, `in_progress`, `checkpoint_due`, `blocked`, `paused`, `handoff_ready`, `awaiting_review`, `completed`, and `aborted` map onto the existing Kanban statuses without replacing them:
+
+| Execution states | Existing Kanban status |
+| :--- | :--- |
+| `planned`, `ready`, `aborted` | `To Do` |
+| `in_progress`, `checkpoint_due`, `blocked`, `paused`, `handoff_ready` | `In Progress` |
+| `awaiting_review` | `In Review` |
+| `completed` | `Done` |
+
+The Task Record, not a conversational completion claim or board status alone, controls readiness and completion.
+
 ---
 
 ### Phase 2: Atomic Task Decomposition & Sizing

@@ -59,6 +59,22 @@ Extract and structure the 5 vital signals of the session:
 
 ---
 
+### Controlled Work Checkpoint and Stop-State Contract
+
+For Controlled Work, checkpointing is a durable execution gate in addition to the existing workspace audit and handover prompt:
+
+- Request a **Soft Checkpoint** around 60 minutes after the active task starts and require a **Hard Checkpoint** at or before 90 minutes, unless the Task Record documents a different policy.
+- Require event-driven checkpoints at major milestones, task switches, scope expansion, handoff, context compaction, or detected context drift.
+- Record the configured thresholds and host capability. If the host cannot observe or forcibly stop live generation, record `POLICY_LIMITATION`; do not claim mechanical timer enforcement.
+- A Checkpoint Record at `docs/tasks/<task-id>.checkpoint-<sequence>.md` must include task/specification identity, state, objective, completed and remaining work, changed files, branch/revision, decisions/invariants, verification/CI evidence, blockers, scope changes, and exactly one prioritized next action.
+- `checkpoint_due`, `blocked`, `paused`, and `handoff_ready` are stop states. They prohibit implementation edits, commits, pull-request actions, and task switches until the recorded resume condition is satisfied. Read-only diagnosis may continue when it does not change project state.
+- A Handoff Record at `docs/tasks/<task-id>.handoff-<sequence>.md` is required at a session/role boundary, handoff state, or major milestone. The receiver must validate the task ID, revision, changed files, acceptance criteria, invariants, blockers, and next action before editing.
+- Scope changes require a linked Scope Change Record before changing objective, files, acceptance criteria, dependencies, non-goals, risk, or verification. Expansion requires human confirmation or a separate Task Record.
+
+Phase 4 may synchronize `docs/STATE.md`, but STATE is a projection owned by `pk:checkpoint`; `docs/tasks/<task-id>.md` remains the Local Task Source. A mismatch leaves execution blocked or `checkpoint_due` until reconciled.
+
+---
+
 ### Phase 3: Pre-Handover Hygiene Scan
 
 Ensure the workspace is in a clean state before switching sessions:

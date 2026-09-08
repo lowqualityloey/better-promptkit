@@ -108,6 +108,19 @@ Decompose the implementation into bite-sized, independently reviewable PRs follo
   - Structured logging with correlation IDs, alerting dashboards, E2E user flows.
   - Finalize the Contract phase of schema migration (remove deprecated legacy fields).
 
+### Controlled Work Task-Record Handoff
+
+After architectural context, contracts, failure analysis, and TDD milestones are defined, provide the execution inputs for Controlled Work:
+
+- **Objective and Scope**: State the observable objective and the files, artifacts, interfaces, or behaviors in scope.
+- **Explicit Non-Goals**: List excluded behavior, release actions, and independent concerns.
+- **Dependencies and Risk**: Record dependencies with owners or `None`, risk, mitigation, and any approval boundary.
+- **Acceptance and Verification Inputs**: Provide stable `AC-*` criteria inputs and one command, check, artifact assertion, or explicit not-applicable verification condition.
+- **Execution Policy**: Identify `Gated Mode` or an explicitly approved finite batch, checkpoint intervals, stop conditions, and host timer limitations.
+- **Locked Invariants**: Carry forward architectural decisions and non-negotiable constraints for the Task Record and later handoff.
+
+`pk:plan` supplies architecture and planning inputs. `pk:tasks` creates the stable Task ID and canonical `docs/tasks/<task-id>.md` Task Record; planning does not start implementation, change task state to `in_progress`, or approve commits, pull requests, releases, or deployments.
+
 ### Step 6: Generate Technical Specification & Grilling Pre-Flight
 1. Scaffold the RFC document using `.promptkit/templates/tech-spec-template.md`.
 2. Save to `./docs/specs/YYYY-MM-DD-spec-<feature-name>.md` (or directory configured in `PROMPTKIT.md`).

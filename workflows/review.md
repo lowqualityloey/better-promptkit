@@ -42,6 +42,16 @@ If the diff is empty or the reference fails to resolve, halt and resolve the bas
 > - **Filesystem & Cloud Storage Destruction**: Un-versioned object deletions (`rm -rf`, bucket purge scripts) without backup confirmation.
 > - **Hard Resets**: In-code process automation running destructive Git resets or database purges.
 
+### Controlled Work Traceability Preflight
+
+Before applying the two-axis review, validate the Controlled Work evidence without creating or repairing it:
+
+- Confirm the Task ID/specification and canonical `docs/tasks/<task-id>.md` record match the reviewed branch and execution scope.
+- Confirm the Task Record state, active-task ownership, allowed transitions, changed-file scope, stable `AC-*` results, verification/CI evidence, and current revision.
+- Confirm blockers, Scope Change Records, Exception Records, Checkpoint/Handoff Records, and receiver validation are complete where applicable.
+- Treat stale handoffs, unresolved blockers, illegal transitions, scope violations, missing completion evidence, and revision mismatches as review findings. Route them through the existing severity framework; do not silently repair records or create a third review axis.
+- A passing validator, checkpoint, or CI job supports traceability only. It is not code-review approval, merge approval, release approval, or authorization for remote actions.
+
 ---
 
 ## Review Severity Framework

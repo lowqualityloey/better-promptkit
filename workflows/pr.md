@@ -60,6 +60,18 @@ Before writing the PR body, collect verifiable evidence:
 3. **Secret & Probe Check**:
    Confirm that zero secrets or temporary debug probes (`[DEBUG-xxxx]`) exist across the branch diff.
 
+### Controlled Work Traceability and PR Gate
+
+Before generating a PR body for Controlled Work, include and verify:
+
+- **Task Identity**: Task ID, canonical `docs/tasks/<task-id>.md` path, specification, execution scope, and current state (normally `awaiting_review`).
+- **Scope and Acceptance**: Changed-file summary, stable `AC-*` results, verification commands/results, review findings, blockers, and linked Scope Change or Exception Records.
+- **Revision and Handoff Evidence**: Branch, exact revision, latest checkpoint/handoff links, and evidence that the working tree matches the reviewed scope.
+- **CI and Completion Evidence**: CI provider/workflow/job/run references, validator results when available, commit evidence, and the required completion or milestone decision.
+- **Risk and Rollback**: Preserve the existing migration safety, risk, and rollback requirements. Do not smuggle scope expansion into the PR body; record it first.
+
+A consistent Task Record or validator result proves durable evidence consistency only. It does not approve opening or merging a remote pull request. Preserve the optional `gh pr create` path in Phase 4, but require explicit developer approval before executing it.
+
 ---
 
 ### Phase 3: PR Body Generation
