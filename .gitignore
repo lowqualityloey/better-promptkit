@@ -8,8 +8,8 @@ Desktop.ini
 .vscode/
 *.swp
 *.swo
-.kiro/
-*.kiro/
+# .kiro/
+# *.kiro/
 
 # Local runtime & scratch files
 scratch/
