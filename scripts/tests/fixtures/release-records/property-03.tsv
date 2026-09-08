@@ -1,0 +1,9 @@
+# case-id	entity-kind	field	value
+p03-latest	approved-records	records	R1,approved,1.0.0,H-P03-010,EVAL-P03-010,1;R2,approved,1.1.0,H-P03-020,EVAL-P03-020,2;R3,preliminary,2.0.0,H-P03-030,EVAL-P03-030,3
+p03-latest	approved-records	expected	EVAL-P03-020
+p03-unapproved-newest	approved-records	records	R1,approved,1.0.0,H-P03-110,EVAL-P03-110,1;R2,deferred,9.9.9,H-P03-120,EVAL-P03-120,9;R3,preliminary,8.0.0,H-P03-130,EVAL-P03-130,10
+p03-unapproved-newest	approved-records	expected	EVAL-P03-110
+p03-explicit-order	approved-records	records	R1,approved,5.0.0,H-P03-210,EVAL-P03-210,1;R2,approved,1.0.0,H-P03-220,EVAL-P03-220,2
+p03-explicit-order	approved-records	expected	EVAL-P03-220
+p03-none	approved-records	records	R1,preliminary,1.0.0,H-P03-310,EVAL-P03-310,1;R2,deferred,1.1.0,H-P03-320,EVAL-P03-320,2
+p03-none	approved-records	expected	NONE
