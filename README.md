@@ -17,19 +17,22 @@ Better-PromptKit equips your coding assistant with disciplined engineering workf
 | **What is it?** | A modular, instruction-based engineering operating system that lives in your repository as `.promptkit/`. |
 | **Who it is for** | Developers pairing with AI coding agents who want structured specs, living project state, non-breaking schema migrations, and clean git history. |
 | **Who it is NOT for** | Developers looking for an autocomplete inline plugin, a CLI binary, or an npm dependency. Better-PromptKit is pure markdown protocols and prompts. |
-| **Why it is better** | Replaces unguided "vibe coding" and token-wasting guess-and-patch loops with structured, deterministic development workflows. **Reduces AI token costs by 60-70%** while improving code quality. |
+| **Why it is better** | Replaces unguided "vibe coding" and token-wasting guess-and-patch loops with systematic, hypothesis-driven development workflows. Modeled to reduce AI token costs by 60-70% on complex engineering tasks (see [TOKEN-EFFICIENCY.md](./docs/TOKEN-EFFICIENCY.md) for assumptions and formulas). |
 | **Key differences** | Zero slash command collisions (`pk:` prefix), zero destructive database drops (Expand-Contract only), zero unsolicited code dumps (Socratic guidance), and monorepo workspace isolation (scoped `--filter` commands). |
-| **ROI** | \$100/year saved per developer in AI costs, 5 hours/month saved in development time, and 58% higher first-attempt success rate. |
+| **Modeled impact** | \$8.40/month saved per developer in AI token costs (modeled on Claude Sonnet pricing), 5 hours/month in reduced debugging and planning loops, and measurably higher first-attempt success through spec-first planning. See [methodology](./docs/TOKEN-EFFICIENCY.md). |
 
 ---
 
 ## Quick Start (60 Seconds)
 
-**New to PromptKit?** → See **[FAQ.md](./FAQ.md)** for the 10 most common questions  
+**New to PromptKit?** → See **[FAQ.md](./FAQ.md)** for the 11 most common questions  
 **Getting started?** → See **[QUICKSTART.md](./QUICKSTART.md)** for a 5-minute guided tour  
 **Existing project?** → See **[ADOPTION-GUIDE.md](./docs/ADOPTION-GUIDE.md)** for gradual adoption  
 **Visual learner?** → See **[WORKFLOW-MAP.md](./docs/WORKFLOW-MAP.md)** for decision trees and diagrams  
 **Want to know more?** → See **[INTERESTING-FACTS.md](./docs/INTERESTING-FACTS.md)** for unique insights and design principles
+
+> [!TIP]
+> **Start with just 2 workflows.** You do not need to learn all 19 commands. Use `pk:debug` (stops guess-and-patch loops) and `pk:checkpoint` (eliminates session amnesia) to get 80% of the value immediately. Everything else is modular and on-demand.
 
 ### 1. Add to Your Project
 
@@ -64,7 +67,7 @@ The initialization script is transparent and idempotent:
 - **Agent Directives**: Injects or updates an idempotent directive block in `AGENTS.md` (or `CLAUDE.md`, `.cursorrules`, `.windsurfrules`, `.github/copilot-instructions.md`).
 - **Zero Lock-In**: Installs zero binaries, adds zero npm dependencies, and runs zero background daemons.
 
-**💡 Bonus**: See **[TOKEN-EFFICIENCY.md](./docs/TOKEN-EFFICIENCY.md)** to understand how PromptKit reduces AI costs by 60-70% while improving code quality.
+**💡 Bonus**: See **[TOKEN-EFFICIENCY.md](./docs/TOKEN-EFFICIENCY.md)** for the modeled scenario analysis behind PromptKit's token and cost savings.
 
 ---
 
@@ -192,6 +195,34 @@ In multi-agent environments (Antigravity, Claude Code, Cursor background agents)
 - **Offloaded to Subagents**: Multi-candidate architectural benchmarks (`pk:spike`), dual-axis PR reviews (`pk:review`), brownfield codebase surveys (`pk:onboard`), and codebase scans touching >3 files.
 - **Retained in Main Thread**: Direct developer conversation, small localized edits (<10 lines), atomic commits (`pk:commit`), and pull request submission (`pk:pr`).
 - **Compact Synthesis**: Subagents return 5-15 line synthesized reports with file paths and line numbers instead of dumping raw tool output into parent context.
+
+---
+
+## How Enforcement Actually Works
+
+PromptKit is an instruction layer, not a compiler or sandbox. The workflows guide the AI's reasoning and structure, but an LLM can still deviate, especially in long sessions where context degrades.
+
+The real enforcement boundary is **Git-tracked artifacts and human review**:
+
+1. **Artifact Gates**: Workflows produce durable, reviewable files (`docs/specs/*.md`, `docs/STATE.md`, test suites, migration scripts). If the artifact is missing or wrong, you catch it in review.
+2. **CI Checks**: Your existing CI pipeline (linters, type checkers, test runners) remains the mechanical enforcement layer. PromptKit structures the AI's output so it passes your CI gates on the first attempt.
+3. **Code Review**: `pk:review` produces a two-axis audit report. A human reviews the report and the diff. The human is always the final gate.
+
+> [!NOTE]
+> PromptKit makes AI assistants **systematic and disciplined**, not mechanically deterministic. Think of it as engineering standards for a junior developer: they follow the playbook most of the time, but you still review their PRs.
+
+---
+
+## How PromptKit Differs from Other Tools
+
+| Dimension | `.cursorrules` / `CLAUDE.md` | Prompt Packs (spec-kit, BMad) | **Better-PromptKit** |
+| :--- | :--- | :--- | :--- |
+| **Scope** | Tool-specific instruction endpoint | Workflow templates for one tool | Cross-tool engineering OS with 19 lifecycle workflows |
+| **Persistence** | Per-session only | Per-session only | Git-tracked `docs/STATE.md` survives context resets |
+| **Database Safety** | No schema guardrails | Varies | Expand-Contract only (zero `DROP TABLE`) |
+| **Multi-Agent** | Single agent | Single agent | Subagent delegation with compact synthesis |
+| **Enforcement** | Trust the model | Trust the model | Artifact gates + CI + human review |
+| **Lock-in** | Tool-specific format | Tool-specific format | Pure markdown, works with any AI assistant |
 
 ---
 

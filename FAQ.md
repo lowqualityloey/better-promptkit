@@ -1,6 +1,6 @@
 # Better-PromptKit FAQ
 
-**The 10 questions every developer asks before adopting Better-PromptKit.**
+**The 11 questions every developer asks before adopting Better-PromptKit.**
 
 ---
 
@@ -243,12 +243,14 @@ You: [Reviews, edits, commits]
 
 ## 7. Is 60-70% token savings realistic or marketing?
 
-**Short Answer**: Yes, it's real and measurable. Here's the breakdown.
+**Short Answer**: These are modeled scenario estimates, not telemetry from a production dashboard. The methodology and assumptions are transparent and verifiable.
 
-**Measured Token Reduction** (from [TOKEN-EFFICIENCY.md](docs/TOKEN-EFFICIENCY.md)):
+**How the numbers are derived**: We compared typical developer-AI interaction patterns (guess-and-patch debugging loops, scattered planning conversations, repeated context re-explanations) against the structured workflow equivalents. The full breakdown with assumptions is in [TOKEN-EFFICIENCY.md](docs/TOKEN-EFFICIENCY.md).
 
-| Scenario | Without PromptKit | With PromptKit | Savings |
-|:---------|:------------------|:---------------|:--------|
+**Modeled Token Reduction** (from [TOKEN-EFFICIENCY.md](docs/TOKEN-EFFICIENCY.md)):
+
+| Scenario | Without PromptKit | With PromptKit | Modeled Savings |
+|:---------|:------------------|:---------------|:----------------|
 | **Bug fix** | 8,000 tokens | 1,200 tokens | **85%** |
 | **Feature planning** | 12,000 tokens | 2,500 tokens | **79%** |
 | **Code review** | 4,500 tokens | 1,300 tokens | **71%** |
@@ -448,6 +450,11 @@ cp .promptkit/templates/project-profile-template.md ./PROMPTKIT.md
 ### Workflow suggests something incorrect
 Remember: **AI assistants aren't perfect**. PromptKit structures their reasoning but doesn't guarantee correctness.
 
+**Understanding the enforcement model**: PromptKit is an instruction layer, not a compiler. It cannot mechanically prevent the AI from deviating. What it does provide:
+- **Artifact verification**: Did the AI produce `docs/specs/*.md`? Does `docs/STATE.md` reflect the current progress? If not, something went wrong.
+- **CI as the mechanical gate**: Your linter, type checker, and test runner still enforce correctness. PromptKit just structures the AI's output so it passes those gates on the first attempt.
+- **Human review as the final gate**: `pk:review` produces a structured audit. You review the diff.
+
 **When to override**:
 - AI recommendation contradicts your domain knowledge → Trust yourself
 - Workflow feels too heavyweight for simple task → Skip it
@@ -461,6 +468,27 @@ Remember: **AI assistants aren't perfect**. PromptKit structures their reasoning
 - **This FAQ**: Search for related questions
 
 **Emergency escape hatch**: Just stop using workflows and interact with your AI assistant normally. Nothing breaks.
+
+---
+
+## 11. How is this different from .cursorrules, spec-kit, or BMad?
+
+**Short Answer**: Those are tool-specific instruction endpoints or single-purpose templates. PromptKit is a cross-tool engineering operating system with persistent project memory.
+
+**Comparison**:
+
+| Dimension | `.cursorrules` / `CLAUDE.md` | Prompt Packs (spec-kit, BMad) | **Better-PromptKit** |
+|:----------|:-----------------------------|:------------------------------|:---------------------|
+| **Scope** | Single instruction file for one tool | Workflow templates for one tool | 19 lifecycle workflows across all tools |
+| **Persistence** | Dies with the chat session | Dies with the chat session | `docs/STATE.md` survives context resets |
+| **Database safety** | No schema guardrails | Varies | Expand-Contract only (zero `DROP TABLE`) |
+| **Multi-agent** | Single agent | Single agent | Subagent delegation with compact synthesis |
+| **Enforcement** | Trust the model | Trust the model | Artifact gates + CI + human review |
+| **Lock-in** | Tool-specific format | Tool-specific format | Pure markdown, works with any AI assistant |
+
+**Key distinction**: `.cursorrules` and `CLAUDE.md` are the **delivery mechanism** (how instructions reach the AI). PromptKit is the **content** (what those instructions actually say). They work together: PromptKit generates your `.cursorrules` or `CLAUDE.md` during initialization.
+
+**Related**: [README.md](README.md) "How PromptKit Differs from Other Tools" section
 
 ---
 
