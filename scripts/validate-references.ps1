@@ -64,7 +64,7 @@ function Test-FileReference {
     
     if (-not (Test-Path $fullPath)) {
         $relSource = $SourceFile.Substring($PromptKitRoot.Path.Length).TrimStart("\", "/")
-        Write-Host "  ❌ BROKEN: $relSource:$LineNumber" -ForegroundColor Red
+        Write-Host "  ❌ BROKEN: ${relSource}:$LineNumber" -ForegroundColor Red
         Write-Host "     Type: $RefType" -ForegroundColor DarkGray
         Write-Host "     Missing: $RefPath`n" -ForegroundColor DarkGray
         $script:ErrorCount++
