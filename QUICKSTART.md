@@ -213,7 +213,7 @@ Pick one:
 
 ### 2. **Explore More Workflows**
 ```
-pk:route          # See all 20+ workflows
+pk:route          # See all 19 workflow files and their named aliases
 pk:data           # Database design & migrations
 pk:auth           # Authentication & RBAC
 pk:api            # API contracts & types
