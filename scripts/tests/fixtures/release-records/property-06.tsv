@@ -1,0 +1,16 @@
+# case-id	entity-kind	field	value
+p06-final	candidate	core	1.3.0
+p06-final	candidate	prerelease	NONE
+p06-final	candidate	commit	COMMIT-P06-001
+p06-final	candidate	supporting	EVID-P06-001
+p06-final	candidate	expected	PASS
+p06-rc	candidate	core	1.3.0
+p06-rc	candidate	prerelease	rc.1
+p06-rc	candidate	commit	COMMIT-P06-010
+p06-rc	candidate	supporting	EVID-P06-010,EVID-P06-011
+p06-rc	candidate	expected	PASS
+p06-beta	candidate	core	2.0.0
+p06-beta	candidate	prerelease	beta.2
+p06-beta	candidate	commit	COMMIT-P06-020
+p06-beta	candidate	supporting	EVID-P06-020
+p06-beta	candidate	expected	PASS
