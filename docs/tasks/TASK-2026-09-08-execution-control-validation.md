@@ -74,15 +74,15 @@
 
 - **Changed Files**:
   - `docs/tasks/TASK-2026-09-08-execution-control-validation.md` - Canonical Task Record and validation evidence log.
-- **Branch / Revision**: `feature/agent-execution-control-validation` @ `d9bc1a59e09a4ae1e3ccf1549dbeb2d6fca2a398` evidence commit.
+- **Branch / Revision**: `feature/agent-execution-control-validation` @ `1b4eab8` at PR creation; final PR-link evidence update follows.
 - **Scope Change Records**: None
 - **Checkpoint Records**: None
 - **Handoff Records**: None
 - **Verification Evidence**: Pass. `bash scripts/validate-execution-control.sh --root .` and `pwsh -NoProfile -File .\scripts\validate-execution-control.ps1 -Root .` both returned `VALID|RECORDS=1`. Bash and PowerShell fixture harnesses passed regression and 19 isolated contracts. Bash and PowerShell reference validators, Bash syntax, PowerShell parser, Linux and Windows setup dry-run/idempotency checks, no-em-dash hygiene, 40 referenced-file checks, and `git diff --check` passed. Initial validator invocation at 14:37 UTC failed with `SCOPE_CHANGE_MISSING` because this record omitted its own path from `In Scope`; the resolved record-consistency blocker is retained as evidence.
-- **CI Evidence**: Local CI-equivalent smoke path passed. Post-merge CI run `34237850119` passed Linux and Windows for the implementation slice; this branch still requires its own PR CI run.
-- **Review Evidence**: N/A before validation package review.
-- **Commit Evidence**: `d9bc1a59e09a4ae1e3ccf1549dbeb2d6fca2a398` - `docs(execution-control): record validation checkpoint evidence`.
-- **Pull Request Evidence**: N/A before evidence PR.
+- **CI Evidence**: Local CI-equivalent smoke path passed. Post-merge CI run `34237850119` passed Linux and Windows for the implementation slice; PR #12 CI is the remaining hosted check.
+- **Review Evidence**: N/A before reviewer decision.
+- **Commit Evidence**: `d9bc1a59e09a4ae1e3ccf1549dbeb2d6fca2a398` - `docs(execution-control): record validation checkpoint evidence`; `1b4eab8` - `docs(execution-control): link validation evidence commit`.
+- **Pull Request Evidence**: [PR #12](https://github.com/lowqualityloey/better-promptkit/pull/12), open and non-draft; human review and merge remain required.
 - **Release Evidence**: N/A; release-impact review is a later milestone.
 - **Blocker and Resume Condition**: Resolved record-consistency blocker: adding the Task Record path to `In Scope` made both validators pass. No unresolved product or repository blocker remains.
 
@@ -92,6 +92,6 @@
 - **Acceptance Results**: AC-1 Pass; AC-2 Pass; AC-3 Pass.
 - **Changed-File Summary**: Added only the canonical Task Record for the Wave 6 validation checkpoint; no validator, fixture, harness, CI, release, runtime, or consumer files changed.
 - **Completion Exception**: None
-- **Completion Decision and Timestamp**: Validation evidence committed at `d9bc1a5`; awaiting human review and PR packaging approval at 2026-09-08 14:42:30 UTC.
+- **Completion Decision and Timestamp**: Validation evidence committed and PR #12 opened; awaiting hosted checks and human review at 2026-09-08 14:43:31 UTC.
 
 A passing validator or CI job will provide durable consistency evidence only. It will not authorize a commit, pull request, merge, tag, release, publication, deployment, or rollback.
