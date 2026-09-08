@@ -1,0 +1,27 @@
+# Candidate Not In Range
+
+- **Record Type**: `Release Evaluation`
+- **Evaluation ID**: `EVAL-2099-02-01-RANGE`
+- **Repository Scope**: `Better-PromptKit only`
+- **Evaluation Owner / Role**: `Synthetic Coordinator`
+- **QA/Reviewer**: `Synthetic Reviewer`
+- **Release Coordinator**: `Synthetic Coordinator`
+- **Created**: `2099-02-01 00:00 UTC`
+- **Evaluation Status**: `preliminary`
+- **Consumer Repository Applicability**: `N/A`
+- **Evaluation Objective**: `Test candidate range membership`
+- **Latest Approved Release Record**: `synthetic-approved.md`
+- **Version Source of Truth**: `1.0.0 synthetic baseline`
+- **Prior Approved Release Version**: `1.0.0`
+- **Prior Approved Release Commit**: `COMMIT-BASE-RANGE`
+- **First Release**: `No`
+- **Release Range Start**: `COMMIT-BASE-RANGE`
+- **Release Range End**: `COMMIT-CANDIDATE-RANGE`
+- **Release Candidate Commit**: `COMMIT-CANDIDATE-RANGE`
+- **Candidate-Inclusive Membership Result**: `Pass`
+- **Range Selection Rationale**: `Synthetic malformed range omits the candidate`
+- **Ordered Range Commit References**: `COMMIT-OTHER-RANGE`
+- **Effective Change Set Summary**: `Synthetic additive evidence`
+- **Empty Eligible Range**: `No`
+- **Empty-Range Decision**: `N/A`
+- **Normalization Blockers**: `None`

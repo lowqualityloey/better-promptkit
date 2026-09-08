@@ -1,0 +1,32 @@
+# Version Precedence Regression Approval
+
+- **Record Type**: `Approved Release Record`
+- **Evaluation ID**: `EVAL-2099-02-04-PRECEDENCE`
+- **Approved Release Record**: `synthetic-precedence-regression.md`
+- **Approved Release Version**: `1.1.0`
+- **Approved Release Tag**: `v1.1.0`
+- **Approved Release Candidate Commit**: `COMMIT-CANDIDATE-PRECEDENCE`
+- **Approved Release Range**: `COMMIT-CANDIDATE-PRECEDENCE`
+- **Candidate-versus-Approved Comparison**: `Equal`
+- **Approval Difference Rationale**: `N/A`
+- **Approval Decision**: `Approved`
+- **Approval Date**: `2099-02-04 00:00 UTC`
+- **Release Coordinator Decision Record**: `Synthetic coordinator decision`
+- **Public and Maintenance Release Notes**: `NOTE-PRECEDENCE synthetic note`
+- **Changelog State**: `Draft and unpublished`
+- **Note-to-Changelog Coverage**: `Pass`
+- **Shared Evaluation ID Consistency Result**: `Pass`
+- **Candidate-Inclusive Range Consistency Result**: `Pass`
+- **Tag/Version Alignment Result**: `Pass`
+- **Version Precedence Result**: `Pass`
+- **Approval and Rationale Result**: `Pass`
+- **QA/Note Linkage Result**: `Pass`
+- **Overall Consistency Result**: `Pass`
+- **Consistency Blockers and Resolution**: `None`
+- **Tag Creation Decision**: `Not requested`
+- **Hosted Release Creation Decision**: `Not requested`
+- **Changelog Publication Decision**: `Not requested`
+- **Remote Operation Decision**: `Not requested`
+- **Deployment Decision**: `Not requested`
+- **Rollback Decision**: `Not requested`
+- **External-Action Owner and Evidence**: `Synthetic coordinator decision only`
