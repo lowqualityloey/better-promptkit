@@ -13,16 +13,24 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Validate Bash Script Syntax
         run: |
           bash -n init.sh
           bash -n scripts/validate-execution-control.sh
           bash -n scripts/tests/run-execution-control-fixtures.sh
+          bash -n scripts/validate-release-records.sh
           echo "Bash scripts parsed with 0 syntax errors."
 
       - name: Run Agent Execution Control Fixture Harness (Bash)
         run: bash scripts/tests/run-execution-control-fixtures.sh
+
+      - name: Run Release-Record Validator (Bash)
+        run: |
+          bash scripts/validate-release-records.sh --root scripts/tests/fixtures/release-records/valid --strict
+          bash scripts/validate-release-records.sh --root scripts/tests/fixtures/release-records/empty-range-deferred --strict
 
       - name: Test init.sh Dry-Run & Idempotency
         run: |
@@ -119,6 +127,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Validate PowerShell Script Syntax
         shell: pwsh
@@ -126,7 +136,8 @@ jobs:
           $syntaxFiles = @(
             "init.ps1",
             "scripts/validate-execution-control.ps1",
-            "scripts/tests/run-execution-control-fixtures.ps1"
+            "scripts/tests/run-execution-control-fixtures.ps1",
+            "scripts/validate-release-records.ps1"
           )
           foreach ($file in $syntaxFiles) {
             $errors = @()
@@ -141,6 +152,12 @@ jobs:
       - name: Run Agent Execution Control Fixture Harness (PowerShell)
         shell: pwsh
         run: pwsh -NoProfile -File .\scripts\tests\run-execution-control-fixtures.ps1
+
+      - name: Run Release-Record Validator (PowerShell)
+        shell: pwsh
+        run: |
+          pwsh -NoProfile -File .\scripts\validate-release-records.ps1 -Root .\scripts\tests\fixtures\release-records\valid -Strict
+          pwsh -NoProfile -File .\scripts\validate-release-records.ps1 -Root .\scripts\tests\fixtures\release-records\empty-range-deferred -Strict
 
       - name: Test init.ps1 Dry-Run & Idempotency
         shell: pwsh
