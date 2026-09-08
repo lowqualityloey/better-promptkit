@@ -22,6 +22,23 @@
 
 ---
 
+## Public PromptKit Contract Impact (Optional)
+
+> Complete this section when planning a material change to Better-PromptKit's own workflow, template, protocol, trigger, documented output, required artifact, or documented behavior. It is optional for ordinary task records and does not impose Better-PromptKit versioning or release policy on consumer repositories.
+
+- **Affected Public PromptKit Contract**: `[workflow, template, protocol, trigger, output schema, required artifact, or documented behavior]`
+- **Contract Impact Evidence ID / Path**: `[evidence ID and record path, or N/A]`
+- **Supporting Planning / Review Record**: `[record path or N/A]`
+- **User-Observable Before Behavior**: `[what the user or maintainer observes before the change]`
+- **User-Observable After Behavior**: `[what the user or maintainer observes after the change]`
+- **Impact Classification**: `[User-Facing Additive Contract Change | User-Facing Corrective Contract Change | Breaking Contract Change | Maintenance Commit]`
+- **Proposed SemVer Candidate Impact**: `[major | minor | patch | none | blocked]`
+- **Impact Rationale**: `[why the proposed impact follows observable contract evidence, not a commit label alone]`
+- **Migration and Upgrade Guidance**: `[Required for breaking changes: affected consumers, required actions, and supported transition path. Record Missing and a blocker until complete. Use N/A for non-breaking or maintenance changes.]`
+- **Maintenance Commit Declaration**: `[Required when Maintenance Commit: This change has no intentional Public PromptKit Contract change and proposes no SemVer increment. Otherwise N/A.]`
+
+---
+
 ## Technical Scope & Invariants
 
 ### Files & Endpoints Touched
