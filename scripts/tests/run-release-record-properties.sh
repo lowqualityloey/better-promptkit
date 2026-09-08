@@ -7,7 +7,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 FIXTURE_ROOT="$REPO_ROOT/scripts/tests/fixtures/release-records"
-ITERATIONS=100
+ITERATIONS="${PROMPTKIT_PROPERTY_ITERATIONS:-100}"
 SEED=20260908
 RNG_STATE=$SEED
 CHOICE=0
@@ -419,7 +419,318 @@ property_seven() {
     echo "PROPERTY|approval-justification-alignment|SEED=$SEED|ITERATIONS=$ITERATIONS|PASS"
 }
 
-for property in property-01 property-02 property-03 property-04 property-05 property-06 property-07; do
+array_contains() {
+    local needle="$1" value
+    shift
+    for value in "$@"; do
+        if [[ "$value" == "$needle" ]]; then return 0; fi
+    done
+    return 1
+}
+
+array_csv_or_none() {
+    if [[ "$#" -eq 0 ]]; then printf 'NONE'; else join_csv "$@"; fi
+}
+
+array_plus_or_none() {
+    if [[ "$#" -eq 0 ]]; then printf 'NONE'; else local IFS='+'; printf '%s' "$*"; fi
+}
+
+item_field() {
+    local property="$1" case_id="$2" item_id="$3" field="$4"
+    case_field "$property" "$case_id" "item.$item_id.$field"
+}
+
+encode_effective_item() {
+    local property="$1" case_id="$2" item_id="$3" shape kind impact contract before after guidance evidence
+    shape="$(item_field "$property" "$case_id" "$item_id" shape)"
+    kind="$(item_field "$property" "$case_id" "$item_id" kind)"
+    impact="$(item_field "$property" "$case_id" "$item_id" impact)"
+    contract="$(item_field "$property" "$case_id" "$item_id" contract)"
+    before="$(item_field "$property" "$case_id" "$item_id" before)"
+    after="$(item_field "$property" "$case_id" "$item_id" after)"
+    guidance="$(item_field "$property" "$case_id" "$item_id" guidance)"
+    evidence="$(item_field "$property" "$case_id" "$item_id" evidence)"
+    printf '%s~%s~%s~%s~%s~%s~%s~%s~%s' "$item_id" "$shape" "$kind" "$impact" "$contract" "$before" "$after" "$guidance" "$evidence"
+}
+
+normalize_history() {
+    local property="$1" case_id="$2" history="$3" id shape rep target
+    local -a ordered=()
+    NORMALIZED_ITEMS=()
+    NORMALIZED_IDS=()
+    FULL_REVERT_REMOVED=()
+    DUPLICATE_REPRESENTATIVES=()
+    PARTIAL_REVERT_SOURCES=()
+    MERGE_COUNT=0
+    SQUASH_COUNT=0
+    IFS=',' read -r -a ordered <<< "$history"
+    for id in "${ordered[@]}"; do
+        shape="$(item_field "$property" "$case_id" "$id" shape)"
+        if [[ "$shape" == full-revert ]]; then
+            target="$(item_field "$property" "$case_id" "$id" target)"
+            [[ "$target" != NONE ]] && FULL_REVERT_REMOVED+=("$target")
+            FULL_REVERT_REMOVED+=("$id")
+        fi
+    done
+    for id in "${ordered[@]}"; do
+        shape="$(item_field "$property" "$case_id" "$id" shape)"
+        if [[ "$shape" == merge ]]; then
+            MERGE_COUNT=$((MERGE_COUNT + 1))
+            continue
+        fi
+        if array_contains "$id" "${FULL_REVERT_REMOVED[@]}"; then continue; fi
+        if [[ "$shape" == duplicate ]]; then
+            rep="$(item_field "$property" "$case_id" "$id" representative)"
+            if [[ "$rep" != NONE && "$rep" != "$id" ]]; then continue; fi
+            DUPLICATE_REPRESENTATIVES+=("$id")
+        fi
+        if [[ "$shape" == squash ]]; then SQUASH_COUNT=$((SQUASH_COUNT + 1)); fi
+        if [[ "$shape" == partial-revert ]]; then PARTIAL_REVERT_SOURCES+=("$id"); fi
+        if [[ "$(item_field "$property" "$case_id" "$id" kind)" == excluded ]]; then continue; fi
+        NORMALIZED_ITEMS+=("$(encode_effective_item "$property" "$case_id" "$id")")
+        NORMALIZED_IDS+=("$id")
+    done
+    NORMALIZED_SERIALIZED="$(join_csv "${NORMALIZED_ITEMS[@]}")"
+    NORMALIZED_IDS_CSV="$(array_csv_or_none "${NORMALIZED_IDS[@]}")"
+    FULL_REVERT_REMOVED_CSV="$(array_plus_or_none "${FULL_REVERT_REMOVED[@]}")"
+    DUPLICATE_REPRESENTATIVES_CSV="$(array_csv_or_none "${DUPLICATE_REPRESENTATIVES[@]}")"
+    PARTIAL_REVERT_SOURCES_CSV="$(array_csv_or_none "${PARTIAL_REVERT_SOURCES[@]}")"
+}
+
+build_notes_input() {
+    local property="$1" case_id="$2" effective="$3" id
+    local -a ids=()
+    NOTE_BUILD_ITEMS=()
+    IFS=',' read -r -a ids <<< "$effective"
+    for id in "${ids[@]}"; do
+        [[ "$id" == NONE ]] && continue
+        NOTE_BUILD_ITEMS+=("$(encode_effective_item "$property" "$case_id" "$id")")
+    done
+    NOTES_INPUT_SERIALIZED="$(join_csv "${NOTE_BUILD_ITEMS[@]}")"
+}
+
+effective_impacts() {
+    local property="$1" case_id="$2" effective="$3" id impact
+    local -a impacts=() ids=()
+    IFS=',' read -r -a ids <<< "$effective"
+    for id in "${ids[@]}"; do
+        [[ "$id" == NONE ]] && continue
+        impact="$(case_field "$property" "$case_id" "item.$id.impact")"
+        [[ "$impact" != NONE ]] || return 1
+        impacts+=("$impact")
+    done
+    if [[ "${#impacts[@]}" -eq 0 ]]; then printf 'none'; else join_csv "${impacts[@]}"; fi
+}
+
+derive_candidate_from_effective() {
+    local snapshot="$1" record id shape kind impact contract before after guidance evidence rank=0
+    local -a records=()
+    CANDIDATE_INPUT_SNAPSHOT="$snapshot"
+    CANDIDATE_SOURCES=()
+    CANDIDATE_IMPACT=none
+    IFS=',' read -r -a records <<< "$snapshot"
+    for record in "${records[@]}"; do
+        IFS='~' read -r id shape kind impact contract before after guidance evidence <<< "$record"
+        case "$impact" in
+            major) if (( rank < 3 )); then rank=3; CANDIDATE_IMPACT=major; fi ;;
+            minor) if (( rank < 2 )); then rank=2; CANDIDATE_IMPACT=minor; fi ;;
+            patch) if (( rank < 1 )); then rank=1; CANDIDATE_IMPACT=patch; fi ;;
+            blocked) CANDIDATE_IMPACT=blocked; CANDIDATE_SOURCES+=("$id"); return ;;
+            none) ;;
+        esac
+        if [[ "$impact" != none && "$kind" != excluded ]]; then CANDIDATE_SOURCES+=("$id"); fi
+    done
+    CANDIDATE_SOURCES_CSV="$(array_csv_or_none "${CANDIDATE_SOURCES[@]}")"
+}
+
+derive_notes_from_effective() {
+    local snapshot="$1" maintenance_policy="$2" record id shape kind impact contract before after guidance evidence note_id
+    local -a records=()
+    NOTE_INPUT_SNAPSHOT="$snapshot"
+    NOTE_PUBLIC_IDS=()
+    NOTE_PUBLIC_SOURCE_IDS=()
+    NOTE_MAINTENANCE_IDS=()
+    NOTE_MAINTENANCE_SOURCE_IDS=()
+    NOTE_CHANGELOG_IDS=()
+    NOTES_RESULT=PASS
+    IFS=',' read -r -a records <<< "$snapshot"
+    for record in "${records[@]}"; do
+        IFS='~' read -r id shape kind impact contract before after guidance evidence <<< "$record"
+        if [[ "$kind" == excluded || ("$impact" == none && "$kind" != maintenance) ]]; then continue; fi
+        if [[ "$impact" == major && "$guidance" == NONE ]]; then NOTES_RESULT=FAIL; continue; fi
+        note_id="NOTE-$id"
+        if array_contains "$note_id" "${NOTE_PUBLIC_IDS[@]}" "${NOTE_MAINTENANCE_IDS[@]}"; then NOTES_RESULT=FAIL; continue; fi
+        if [[ "$kind" == maintenance ]]; then
+            if [[ "$maintenance_policy" == include ]]; then NOTE_MAINTENANCE_IDS+=("$note_id"); NOTE_MAINTENANCE_SOURCE_IDS+=("$id"); fi
+        else
+            NOTE_PUBLIC_IDS+=("$note_id")
+            NOTE_PUBLIC_SOURCE_IDS+=("$id")
+        fi
+        if [[ "$kind" != maintenance || "$maintenance_policy" == include ]]; then NOTE_CHANGELOG_IDS+=("DRAFT-$note_id"); fi
+    done
+    NOTE_PUBLIC_IDS_CSV="$(array_csv_or_none "${NOTE_PUBLIC_IDS[@]}")"
+    NOTE_PUBLIC_SOURCE_IDS_CSV="$(array_csv_or_none "${NOTE_PUBLIC_SOURCE_IDS[@]}")"
+    NOTE_MAINTENANCE_IDS_CSV="$(array_csv_or_none "${NOTE_MAINTENANCE_IDS[@]}")"
+    NOTE_CHANGELOG_IDS_CSV="$(array_csv_or_none "${NOTE_CHANGELOG_IDS[@]}")"
+    NOTE_PUBLIC_COUNT="${#NOTE_PUBLIC_IDS[@]}"
+    NOTE_MAINTENANCE_COUNT="${#NOTE_MAINTENANCE_IDS[@]}"
+    NOTE_CHANGELOG_COUNT="${#NOTE_CHANGELOG_IDS[@]}"
+    NOTE_CHANGELOG_STATE='Draft-unpublished'
+    NOTE_PUBLICATION_DECISION='Pending-human-decision'
+}
+
+property_eight() {
+    local iteration case_id history snapshot expected
+    for ((iteration = 1; iteration <= ITERATIONS; iteration++)); do
+        assert_shape_generation property-08 "$iteration"
+        for case_id in ${CASE_IDS[property-08]}; do
+            history="$(case_field property-08 "$case_id" history.ordered)"
+            normalize_history property-08 "$case_id" "$history"
+            snapshot="$NORMALIZED_SERIALIZED"
+            derive_candidate_from_effective "$snapshot"
+            derive_notes_from_effective "$snapshot" omit
+            [[ "$CANDIDATE_INPUT_SNAPSHOT" == "$snapshot" && "$NOTE_INPUT_SNAPSHOT" == "$snapshot" ]] || fail_property history-normalization-effective-set "$iteration" "$case_id consumers rebuilt the normalized set"
+            expected="$(case_field property-08 "$case_id" expected.effective)"; [[ "$NORMALIZED_IDS_CSV" == "$expected" ]] || fail_property history-normalization-effective-set "$iteration" "$case_id effective IDs expected $expected got $NORMALIZED_IDS_CSV"
+            expected="$(case_field property-08 "$case_id" expected.candidateSources)"; [[ "$CANDIDATE_SOURCES_CSV" == "$expected" ]] || fail_property history-normalization-effective-set "$iteration" "$case_id candidate sources mismatch"
+            expected="$(case_field property-08 "$case_id" expected.noteSources)"; [[ "$NOTE_PUBLIC_SOURCE_IDS_CSV" == "$expected" ]] || fail_property history-normalization-effective-set "$iteration" "$case_id note sources mismatch"
+            [[ "$MERGE_COUNT" == "$(case_field property-08 "$case_id" expected.mergeCount)" && "$SQUASH_COUNT" == "$(case_field property-08 "$case_id" expected.squashCount)" ]] || fail_property history-normalization-effective-set "$iteration" "$case_id shape counters mismatch"
+            [[ "$DUPLICATE_REPRESENTATIVES_CSV" == "$(case_field property-08 "$case_id" expected.duplicateRepresentatives)" && "$FULL_REVERT_REMOVED_CSV" == "$(case_field property-08 "$case_id" expected.fullRevertRemoved)" && "$PARTIAL_REVERT_SOURCES_CSV" == "$(case_field property-08 "$case_id" expected.partialRevertSources)" ]] || fail_property history-normalization-effective-set "$iteration" "$case_id normalization decisions mismatch"
+            [[ "$(case_field property-08 "$case_id" expected.result)" == PASS ]] || fail_property history-normalization-effective-set "$iteration" "$case_id fixture expected failure"
+        done
+    done
+    echo "PROPERTY|history-normalization-effective-set|SEED=$SEED|ITERATIONS=$ITERATIONS|PASS"
+}
+
+evaluate_empty_range() {
+    local impacts="$1" decision="$2" rationale="$3" trigger="$4" qa="$5" consistency="$6" impact
+    EMPTY_STATUS=BLOCKED
+    EMPTY_CANDIDATE_IMPACT=none
+    EMPTY_RESULT=FAIL
+    IFS=',' read -r -a empty_impacts <<< "$impacts"
+    for impact in "${empty_impacts[@]}"; do
+        if [[ "$impact" != none ]]; then EMPTY_STATUS=NOT_EMPTY; EMPTY_CANDIDATE_IMPACT="$impact"; EMPTY_RESULT=PASS; return; fi
+    done
+    case "${decision,,}" in
+        defer)
+            if [[ "$rationale" != NONE && "$trigger" != NONE ]]; then EMPTY_STATUS=DEFERRED; EMPTY_RESULT=PASS; fi
+            ;;
+        approve-no-contract-change)
+            if [[ "$rationale" != NONE && "$qa" == PASS && "$consistency" == PASS ]]; then EMPTY_STATUS=APPROVED; EMPTY_RESULT=PASS; fi
+            ;;
+    esac
+}
+
+property_nine() {
+    local iteration case_id effective derived_impacts declared_impacts decision rationale trigger qa consistency expected
+    for ((iteration = 1; iteration <= ITERATIONS; iteration++)); do
+        assert_shape_generation property-09 "$iteration"
+        for case_id in ${CASE_IDS[property-09]}; do
+            effective="$(case_field property-09 "$case_id" effective)"
+            derived_impacts="$(effective_impacts property-09 "$case_id" "$effective")" || fail_property empty-impactful-range-decision "$iteration" "$case_id effective item has no impact projection"
+            declared_impacts="$(case_field property-09 "$case_id" impacts)"
+            expected_projection="$(case_field property-09 "$case_id" expected.projection)"; if [[ "$expected_projection" == NONE ]]; then expected_projection=PASS; fi
+            actual_projection=FAIL; [[ "$derived_impacts" == "$declared_impacts" ]] && actual_projection=PASS
+            [[ "$actual_projection" == "$expected_projection" ]] || fail_property empty-impactful-range-decision "$iteration" "$case_id effective impact projection mismatch"
+            if [[ "$actual_projection" == FAIL ]]; then continue; fi
+            decision="$(case_field property-09 "$case_id" decision)"; rationale="$(case_field property-09 "$case_id" decisionRationale)"; trigger="$(case_field property-09 "$case_id" nextTrigger)"; qa="$(case_field property-09 "$case_id" qaResult)"; consistency="$(case_field property-09 "$case_id" consistencyResult)"
+            evaluate_empty_range "$derived_impacts" "$decision" "$rationale" "$trigger" "$qa" "$consistency"
+            [[ "$EMPTY_STATUS" == "$(case_field property-09 "$case_id" expected.status)" && "$EMPTY_CANDIDATE_IMPACT" == "$(case_field property-09 "$case_id" expected.candidateImpact)" && "$EMPTY_RESULT" == "$(case_field property-09 "$case_id" expected.result)" ]] || fail_property empty-impactful-range-decision "$iteration" "$case_id decision mismatch"
+        done
+    done
+    echo "PROPERTY|empty-impactful-range-decision|SEED=$SEED|ITERATIONS=$ITERATIONS|PASS"
+}
+
+property_ten() {
+    local iteration case_id effective policy snapshot expected
+    for ((iteration = 1; iteration <= ITERATIONS; iteration++)); do
+        assert_shape_generation property-10 "$iteration"
+        for case_id in ${CASE_IDS[property-10]}; do
+            effective="$(case_field property-10 "$case_id" effective)"; policy="$(case_field property-10 "$case_id" maintenancePolicy)"; build_notes_input property-10 "$case_id" "$effective"; snapshot="$NOTES_INPUT_SERIALIZED"; derive_notes_from_effective "$snapshot" "$policy"
+            [[ "$NOTE_INPUT_SNAPSHOT" == "$snapshot" ]] || fail_property exact-once-unpublished-notes "$iteration" "$case_id note derivation rebuilt its input"
+            expected="$(case_field property-10 "$case_id" expected.publicNoteIds)"; [[ "$NOTE_PUBLIC_IDS_CSV" == "$expected" ]] || fail_property exact-once-unpublished-notes "$iteration" "$case_id public note IDs mismatch"
+            [[ "$NOTE_MAINTENANCE_IDS_CSV" == "$(case_field property-10 "$case_id" expected.maintenanceNoteIds)" && "$NOTE_CHANGELOG_IDS_CSV" == "$(case_field property-10 "$case_id" expected.changelogIds)" ]] || fail_property exact-once-unpublished-notes "$iteration" "$case_id maintenance/changelog IDs mismatch"
+            [[ "$NOTE_PUBLIC_COUNT" == "$(case_field property-10 "$case_id" expected.publicCount)" && "$NOTE_MAINTENANCE_COUNT" == "$(case_field property-10 "$case_id" expected.maintenanceCount)" && "$NOTE_CHANGELOG_COUNT" == "$(case_field property-10 "$case_id" expected.changelogCount)" ]] || fail_property exact-once-unpublished-notes "$iteration" "$case_id note counts mismatch"
+            [[ "$NOTE_CHANGELOG_STATE" == "$(case_field property-10 "$case_id" expected.changelogState)" && "$NOTE_PUBLICATION_DECISION" == "$(case_field property-10 "$case_id" expected.publicationDecision)" ]] || fail_property exact-once-unpublished-notes "$iteration" "$case_id publication boundary mismatch"
+            [[ "$NOTES_RESULT" == "$(case_field property-10 "$case_id" expected.result)" ]] || fail_property exact-once-unpublished-notes "$iteration" "$case_id expected $(case_field property-10 "$case_id" expected.result) got $NOTES_RESULT"
+        done
+    done
+    echo "PROPERTY|exact-once-unpublished-notes|SEED=$SEED|ITERATIONS=$ITERATIONS|PASS"
+}
+
+evaluate_qa_gate() {
+    local classification="$1" note_coverage="$2" blocker="$3" initial_decision="$4" correction="$5" rereview="$6" final_blocker="$7" final_decision="$8"
+    QA_INITIAL_STATUS=PASS; QA_FINAL_STATUS=PASS; QA_APPROVAL_ALLOWED=0; QA_RESULT=PASS
+    if [[ "$classification" != PASS || "$note_coverage" != PASS ]]; then
+        QA_INITIAL_STATUS=BLOCKED
+        if [[ "$blocker" == NONE || "${initial_decision,,}" == approved ]]; then QA_RESULT=FAIL; fi
+        if [[ "$correction" == NONE || "$rereview" != PASS || ("$final_blocker" != NONE && "$final_blocker" != RESOLVED) || "${final_decision,,}" != approved ]]; then QA_FINAL_STATUS=BLOCKED; else QA_APPROVAL_ALLOWED=1; fi
+    else
+        if [[ "$blocker" != NONE || "${initial_decision,,}" != approved ]]; then QA_RESULT=FAIL; fi
+        if [[ "$rereview" != PASS || ("$final_blocker" != NONE && "$final_blocker" != RESOLVED) || "${final_decision,,}" != approved ]]; then QA_FINAL_STATUS=BLOCKED; else QA_APPROVAL_ALLOWED=1; fi
+    fi
+}
+
+property_eleven() {
+    local iteration case_id classification note blocker initial correction rereview final_blocker final_decision
+    for ((iteration = 1; iteration <= ITERATIONS; iteration++)); do
+        assert_shape_generation property-11 "$iteration"
+        for case_id in ${CASE_IDS[property-11]}; do
+            classification="$(case_field property-11 "$case_id" initialClassificationResult)"; note="$(case_field property-11 "$case_id" initialNoteCoverageResult)"; blocker="$(case_field property-11 "$case_id" initialBlocker)"; initial="$(case_field property-11 "$case_id" initialDecision)"; correction="$(case_field property-11 "$case_id" correction)"; rereview="$(case_field property-11 "$case_id" reReviewResult)"; final_blocker="$(case_field property-11 "$case_id" finalBlockerStatus)"; final_decision="$(case_field property-11 "$case_id" finalDecision)"
+            evaluate_qa_gate "$classification" "$note" "$blocker" "$initial" "$correction" "$rereview" "$final_blocker" "$final_decision"
+            [[ "$QA_INITIAL_STATUS" == "$(case_field property-11 "$case_id" expected.initialStatus)" && "$QA_FINAL_STATUS" == "$(case_field property-11 "$case_id" expected.finalStatus)" && "$QA_APPROVAL_ALLOWED" == "$(case_field property-11 "$case_id" expected.approvalAllowed)" && "$QA_RESULT" == "$(case_field property-11 "$case_id" expected.result)" ]] || fail_property qa-blocks-until-rereview "$iteration" "$case_id QA gate mismatch"
+        done
+    done
+    echo "PROPERTY|qa-blocks-until-rereview|SEED=$SEED|ITERATIONS=$ITERATIONS|PASS"
+}
+
+record_action_request() {
+    CONSISTENCY_REQUESTED_ACTION="$1"
+    # External requests are recorded as data only; this boundary never invokes an action.
+    CONSISTENCY_ACTION_LOG=NONE
+}
+
+validate_consistency() {
+    local property="$1" case_id="$2" eval_id candidate_eval qa_eval notes_eval approval_eval consistency_eval candidate commit approved_candidate range occurrences at_end version tag prior candidate_version rationale qa notes action_request item last_index
+    local actual_occurrences=0 actual_at_end=0 approved_major approved_minor approved_patch prior_major prior_minor prior_patch
+    local -a range_items=()
+    CONSISTENCY_RESULT=PASS; CONSISTENCY_DIAGNOSTIC=NONE; CONSISTENCY_ACTION_LOG=NONE; CONSISTENCY_SHARED_EVALUATION_ID=; CONSISTENCY_NON_REGRESSING=0; CONSISTENCY_CANDIDATE_AT_RANGE_END=0
+    eval_id="$(case_field "$property" "$case_id" artifact.evaluation.evaluationId)"; action_request="$(case_field "$property" "$case_id" artifact.actionRequest)"; record_action_request "$action_request"
+    CONSISTENCY_SHARED_EVALUATION_ID="$eval_id"
+    if [[ -z "$eval_id" || "$eval_id" == NONE ]]; then CONSISTENCY_RESULT=FAIL; CONSISTENCY_DIAGNOSTIC=EVALUATION_ID_MISMATCH; return; fi
+    candidate_eval="$(case_field "$property" "$case_id" artifact.candidate.evaluationId)"; qa_eval="$(case_field "$property" "$case_id" artifact.qa.evaluationId)"; notes_eval="$(case_field "$property" "$case_id" artifact.notes.evaluationId)"; approval_eval="$(case_field "$property" "$case_id" artifact.approval.evaluationId)"; consistency_eval="$(case_field "$property" "$case_id" artifact.consistency.evaluationId)"
+    for item in "$candidate_eval" "$qa_eval" "$notes_eval" "$approval_eval" "$consistency_eval"; do if [[ -z "$item" || "$item" == NONE || "$item" != "$eval_id" ]]; then CONSISTENCY_RESULT=FAIL; CONSISTENCY_DIAGNOSTIC=EVALUATION_ID_MISMATCH; return; fi; done
+    candidate="$(case_field "$property" "$case_id" candidateCommit)"; commit="$(case_field "$property" "$case_id" approvedCandidateCommit)"; range="$(case_field "$property" "$case_id" orderedRange)"; occurrences="$(case_field "$property" "$case_id" candidateOccurrences)"; at_end="$(case_field "$property" "$case_id" candidateAtEnd)"
+    IFS=',' read -r -a range_items <<< "$range"
+    for item in "${range_items[@]}"; do [[ "$item" == "$candidate" ]] && actual_occurrences=$((actual_occurrences + 1)); done
+    if [[ "${#range_items[@]}" -gt 0 ]]; then last_index=$(( ${#range_items[@]} - 1 )); [[ "$range" != NONE && "${range_items[$last_index]}" == "$candidate" ]] && actual_at_end=1; fi
+    CONSISTENCY_CANDIDATE_AT_RANGE_END="$actual_at_end"
+    if [[ "$candidate" == NONE || "$commit" != "$candidate" || "$actual_occurrences" -ne 1 || "$actual_at_end" -ne 1 || "$occurrences" != "$actual_occurrences" || "$at_end" != "$actual_at_end" ]]; then CONSISTENCY_RESULT=FAIL; CONSISTENCY_DIAGNOSTIC=RANGE_MEMBERSHIP; return; fi
+    version="$(case_field "$property" "$case_id" approvedVersion)"; tag="$(case_field "$property" "$case_id" approvedTag)"; prior="$(case_field "$property" "$case_id" priorVersion)"; candidate_version="$(case_field "$property" "$case_id" candidateVersion)"; rationale="$(case_field "$property" "$case_id" approvalRationale)"; qa="$(case_field "$property" "$case_id" qaResult)"; notes="$(case_field "$property" "$case_id" noteCoverage)"
+    if [[ "$tag" != "v$version" && "$tag" != "$version" ]]; then CONSISTENCY_RESULT=FAIL; CONSISTENCY_DIAGNOSTIC=TAG_VERSION_MISMATCH; return; fi
+    parse_core_semver "$version" || { CONSISTENCY_RESULT=FAIL; CONSISTENCY_DIAGNOSTIC=INVALID_VERSION; return; }; approved_major="$SEMVER_MAJOR"; approved_minor="$SEMVER_MINOR"; approved_patch="$SEMVER_PATCH"
+    parse_core_semver "$prior" || { CONSISTENCY_RESULT=FAIL; CONSISTENCY_DIAGNOSTIC=INVALID_VERSION; return; }; prior_major="$SEMVER_MAJOR"; prior_minor="$SEMVER_MINOR"; prior_patch="$SEMVER_PATCH"
+    parse_core_semver "$candidate_version" || { CONSISTENCY_RESULT=FAIL; CONSISTENCY_DIAGNOSTIC=INVALID_VERSION; return; }
+    if (( approved_major < prior_major || (approved_major == prior_major && approved_minor < prior_minor) || (approved_major == prior_major && approved_minor == prior_minor && approved_patch < prior_patch) )); then CONSISTENCY_RESULT=FAIL; CONSISTENCY_DIAGNOSTIC=VERSION_PRECEDENCE; return; fi
+    CONSISTENCY_NON_REGRESSING=1
+    if [[ "$candidate_version" != "$version" && "$rationale" == NONE ]]; then CONSISTENCY_RESULT=FAIL; CONSISTENCY_DIAGNOSTIC=APPROVAL_REQUIRED; return; fi
+    if [[ "$qa" != PASS || "$notes" != PASS ]]; then CONSISTENCY_RESULT=FAIL; CONSISTENCY_DIAGNOSTIC=QA_NOTE_LINKAGE; return; fi
+}
+
+property_twelve() {
+    local iteration case_id expected_consistency expected_diag expected_case_result
+    for ((iteration = 1; iteration <= ITERATIONS; iteration++)); do
+        assert_shape_generation property-12 "$iteration"
+        for case_id in ${CASE_IDS[property-12]}; do
+            validate_consistency property-12 "$case_id"
+            expected_consistency="$(case_field property-12 "$case_id" expected.consistency)"; expected_diag="$(case_field property-12 "$case_id" expected.diagnosticCategory)"; expected_case_result="$(case_field property-12 "$case_id" expected.result)"; expected_non_regressing="$(case_field property-12 "$case_id" expected.nonRegressing)"; expected_shared_id="$(case_field property-12 "$case_id" expected.sharedEvaluationId)"; expected_at_end="$(case_field property-12 "$case_id" expected.candidateAtRangeEnd)"; expected_action_request="$(case_field property-12 "$case_id" artifact.actionRequest)"
+            [[ "$CONSISTENCY_RESULT" == "$expected_consistency" && "$CONSISTENCY_DIAGNOSTIC" == "$expected_diag" && "$CONSISTENCY_ACTION_LOG" == "$(case_field property-12 "$case_id" expected.actionLog)" && "$CONSISTENCY_NON_REGRESSING" == "$expected_non_regressing" && "$CONSISTENCY_SHARED_EVALUATION_ID" == "$expected_shared_id" && "$CONSISTENCY_CANDIDATE_AT_RANGE_END" == "$expected_at_end" && "$CONSISTENCY_REQUESTED_ACTION" == "$expected_action_request" && "$expected_case_result" == PASS ]] || fail_property cross-record-read-only-consistency "$iteration" "$case_id consistency mismatch"
+        done
+    done
+    echo "PROPERTY|cross-record-read-only-consistency|SEED=$SEED|ITERATIONS=$ITERATIONS|PASS"
+}
+
+for property in property-01 property-02 property-03 property-04 property-05 property-06 property-07 property-08 property-09 property-10 property-11 property-12; do
     load_fixture "$property"
 done
 
@@ -430,6 +741,11 @@ property_four
 property_five
 property_six
 property_seven
+property_eight
+property_nine
+property_ten
+property_eleven
+property_twelve
 
-echo "Release-record Bash property harness passed: properties=7 iterations_per_property=$ITERATIONS seed=$SEED read_only=PASS."
+echo "Release-record Bash property harness passed: properties=12 iterations_per_property=$ITERATIONS seed=$SEED read_only=PASS."
 echo "Release-record property evidence is local and synthetic; it cannot authorize tags, releases, publication, remotes, deployment, or rollback actions."
