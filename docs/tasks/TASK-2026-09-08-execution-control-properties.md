@@ -60,7 +60,7 @@
 - **Active Task Pointer**: None
 - **Start Time**: 2026-09-08 14:53:45 UTC
 - **Current Actor**: Kiro agent
-- **Next Action**: Review and approve Wave 7 packaging; no further implementation action is authorized without review.
+- **Next Action**: Human review and approval of Wave 7 PR #13; merge, release, and consumer adoption remain outside this milestone.
 
 ### Transition History
 
@@ -69,7 +69,7 @@
 | N/A | planned | 2026-09-08 14:53:45 UTC | Kiro agent | Task Record created for optional Wave 7 coverage | This Task Record |
 | planned | ready | 2026-09-08 14:53:45 UTC | Kiro agent | Objective, scope, non-goals, acceptance, dependencies, and gated policy recorded | Sections 1-4 |
 | ready | in_progress | 2026-09-08 14:53:45 UTC | Kiro agent | Work started on dedicated branch from origin/main | Branch and revision evidence |
-| in_progress | awaiting_review | 2026-09-08 UTC | Kiro agent | AC-1 through AC-3 passed; property/example, core, read-only, hygiene, and boundary evidence recorded | Sections 3 and 6 |
+| in_progress | awaiting_review | 2026-09-08 UTC | Kiro agent | AC-1 through AC-3 passed; property/example, core, read-only, hygiene, boundary, commit, PR, and hosted CI evidence recorded | Sections 3 and 6 |
 
 ## 6. Evidence and Completion Gate
 
@@ -79,17 +79,17 @@
   - `scripts/tests/fixtures/execution-control/examples.tsv` - Shared schema-example manifest.
   - `scripts/tests/fixtures/execution-control/README.md` - Local property/example usage documentation.
   - `docs/tasks/TASK-2026-09-08-execution-control-properties.md` - Canonical Task Record and evidence log.
-- **Branch / Revision**: `feature/agent-execution-control-properties` @ `15fed5b381a81af58af9aade8e3624a0499f3ace` before implementation commits.
+- **Branch / Revision**: `feature/agent-execution-control-properties` @ `3ee3450e17324fcdcd515ac19b5fd3890851ac75`, based on origin/main merge commit `15fed5b381a81af58af9aade8e3624a0499f3ace`.
 - **Scope Change Records**: None
 - **Checkpoint Records**: None
 - **Handoff Records**: None
 - **Verification Evidence**: Pass for the complete Wave 7 property/example scope: Bash and PowerShell scripts parsed successfully; both harnesses passed five properties at 100 iterations each with seed `20260908`, validated five manifest records across readiness/checkpoint/handoff/completion categories, and confirmed repository file hashes and Git status were unchanged during execution. Strict Bash and PowerShell validators returned `VALID|RECORDS=2`; existing fixture harnesses, reference validators, setup checks, syntax checks, hygiene checks, diff checks, and protected-boundary audits also passed.
-- **CI Evidence**: N/A while Wave 7 remains optional and local-only; post-merge core CI run `34240155279` passed Linux and Windows.
-- **Review Evidence**: Pending human review of the Wave 7 packaging.
-- **Commit Evidence**: N/A before implementation commit.
-- **Pull Request Evidence**: N/A before implementation PR.
+- **CI Evidence**: PR #13 hosted CI passed both `Better-PromptKit CI/Lint & Validate (Linux)` and `Better-PromptKit CI/Lint & Validate (Windows)`; the prior post-merge core CI run `34240155279` also passed Linux and Windows. Wave 7 remains optional and local-only, with no workflow change.
+- **Review Evidence**: Non-draft PR #13 is open for human review: https://github.com/lowqualityloey/better-promptkit/pull/13
+- **Commit Evidence**: `3ee3450e17324fcdcd515ac19b5fd3890851ac75` - `test(execution-control): add Wave 7 property coverage`
+- **Pull Request Evidence**: PR #13, titled `test(execution-control): add Wave 7 property coverage`, targets `main` from `feature/agent-execution-control-properties` and has passing Linux and Windows hosted checks.
 - **Release Evidence**: N/A; release-impact review is a later milestone.
-- **Blocker and Resume Condition**: None; if a core check fails, record its command, affected path/category, owner, and precise resume condition before continuing.
+- **Blocker and Resume Condition**: None; human review may approve, request changes, or decline the optional Wave 7 packaging. Merge, release, publication, deployment, rollback, and consumer adoption require separate authorization.
 
 ### Completion Decision
 
@@ -97,6 +97,6 @@
 - **Acceptance Results**: AC-1 Pass; AC-2 Pass; AC-3 Pass.
 - **Changed-File Summary**: Added paired local property harnesses, a shared example manifest, and fixture documentation; no protected validator, fixture-contract, CI, release, runtime, or consumer files changed.
 - **Completion Exception**: None
-- **Completion Decision and Timestamp**: Wave 7 property/example implementation and local validation complete; packaging is awaiting human review on 2026-09-08 UTC.
+- **Completion Decision and Timestamp**: Wave 7 property/example implementation, local validation, commit packaging, PR creation, and hosted CI verification complete; awaiting human review on 2026-09-08 UTC.
 
 A passing property harness or CI job will provide evidence only. It will not authorize a commit, pull request, merge, release, publication, deployment, or rollback.
