@@ -197,6 +197,57 @@ Audit the diff against documented project standards (`PROMPTKIT.md`, `CODING_STA
 
 ---
 
+## Simplification Audit
+
+The Simplification Audit is a recommendation-only section inside this existing `pk:review` report. It is not a third review workflow, severity axis, execution authority, or replacement for the Spec Fidelity and Standards & Code Quality axes.
+
+### Audit Trigger and Record
+
+Run this section only after the mandatory pre-flight, including a resolved fixed-point baseline, and only when the resolved diff is non-empty. If the diff is empty or the baseline is unresolved, stop the review and resolve the baseline; do not record a successful no-candidate result for an empty diff.
+
+- **Review ID [Required]**: `REVIEW-<review-slug>`
+- **Audit Status [Required]**: `draft | complete | superseded`
+- **Resolved Diff Reference [Required]**: `[fixed-point revision or link]`
+- **Audit Result [Required]**: `Candidate(s) recorded | No Simplification Candidates found`
+- **Authority [Required]**: `pk:review`; the report remains the sole home for findings and recommendations
+
+Inspect the resolved diff for behavior-preserving opportunities supported by concrete evidence. Record only candidates classified as one of:
+
+- `deletion`
+- `consolidation`
+- `inlining`
+- `control-flow reduction`
+
+Do not duplicate the existing review axes or Fowler smell baseline. An unsupported cleanup idea, a speculative refactor, or an item without preservation evidence and a verification path is not a Simplification Candidate.
+
+### Simplification Candidate Record
+
+For each defensible candidate, expose the exact immutable ID as an anchor immediately before the candidate heading:
+
+<a id="SIMPLIFICATION-REVIEW-<review-slug>-001"></a>
+#### Simplification Candidate: `SIMPLIFICATION-REVIEW-<review-slug>-001`
+
+- **Candidate ID [Required]**: `SIMPLIFICATION-REVIEW-<review-slug>-<nnn>`
+- **Classification [Required]**: `deletion | consolidation | inlining | control-flow reduction`
+- **Affected Location [Required]**: `[File path and symbol, section, or line range]`
+- **Diff Evidence [Required]**: `[Specific fixed-point diff hunk or linked review evidence]`
+- **Behavior-Preservation Condition [Required]**: `[Observable behavior, contract, invariant, or compatibility condition that must remain true]`
+- **Risk [Required]**: `[Risk if the recommendation is applied]`
+- **Verification Action [Required]**: `[Test, check, review, or other evidence required before accepting the recommendation]`
+- **Recommendation [Required]**: `[Behavior-preserving simplification recommendation for a human owner to consider]`
+
+A candidate is valid only when every required field is supported by the resolved diff and has a verification action. The audit records a recommendation only: it does not edit, delete, stage, commit, approve, change review severity, trigger cleanup work, or authorize merge, release, deployment, rollback, or another remote action.
+
+### No-Candidate Result
+
+When the resolved, non-empty diff contains no defensible candidate, record exactly:
+
+`No Simplification Candidates found`
+
+Candidate-only fields are `N/A - no defensible candidate` only with that explicit result. Do not invent cleanup ideas to populate the section. A passing audit, validator, checkpoint, or CI result is evidence only and does not approve an implementation change.
+
+---
+
 ## Socratic Debrief & Next Steps
 1. Guide the author on resolving `🚨 [BLOCKING]` items first.
 2. Confirm all fixes pass the Quality Gate in `.promptkit/protocols/code-quality-gate.md`.
