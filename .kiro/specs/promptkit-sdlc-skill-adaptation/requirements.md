@@ -402,3 +402,5 @@ Task 14's language-only implementation scope is explicit: `templates/execution-t
 ### Friction Evaluation Ownership
 
 Formal friction measurement is lightweight and may remain optional for MVP, but if collected it is owned by the PromptKit maintainer and records representative Trivial, Minimal Controlled, Full Controlled, TDD-enabled, and CI-failure scenarios. It compares added questions/artifacts with assumptions found, rework avoided, and relative context overhead; it does not impose a universal token limit.
+
+For this MVP, the optional Task 15 friction evaluation is explicitly deferred. It is not required before Task 16 or implementation handoff and may be completed later by the PromptKit maintainer.

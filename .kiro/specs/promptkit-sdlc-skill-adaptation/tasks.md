@@ -284,7 +284,9 @@ Deferred tasks must not be required by MVP completion, active dependencies, or c
 
 ## Cross-Document Traceability
 
-| Requirement | Design coverage | Active task coverage |
+The table below records active, optional, and explicitly deferred task coverage. Task 15 is optional and explicitly deferred for this MVP; its deferral does not remove the measurable-success requirement or block Task 16.
+
+| Requirement | Design coverage | Task coverage (active, optional, or deferred) |
 |---|---|---|
 | 1. Adaptive Planning Depth | Planning Depth Model, Assumption Handling, Minimal Planning to Controlled Readiness | Tasks 1–2, 8, 10, 16 |
 | 2. Source-Grounded Decisions | Source-Grounded Decision Model, Canonical Artifact Contracts | Tasks 3, 8, 11, 14, 16 |
@@ -494,7 +496,7 @@ These tasks clarify and extend the active MVP sequence. They supersede any earli
 
 - [ ] **Task 15: Assign optional friction evaluation**
 
-  **MVP status:** Optional. It may be completed after its prerequisites or explicitly deferred; it cannot block MVP completion, Task 16, or implementation handoff.
+  **MVP status:** Optional and explicitly deferred for this MVP. It may be completed after its prerequisites, but it cannot block MVP completion, Task 16, or implementation handoff.
 
   **Objective:** Measure whether the Adaptation reduces rework more than it adds process overhead.
 
@@ -509,13 +511,13 @@ These tasks clarify and extend the active MVP sequence. They supersede any earli
   **Verification:**
   - The evaluation distinguishes added process cost from avoided rework.
   - Results can identify excessive friction.
-  - Formal measurement remains optional for MVP if explicitly deferred.
+  - Formal measurement remains optional for MVP and is explicitly deferred here.
 
   **Demoable result:** Maintainers can decide whether an overlay should be simplified after observing representative use.
 
   **Requirement coverage:** 9, 10.
 
-- [ ] **Task 16: Re-run final cross-document traceability**
+- [x] **Task 16: Re-run final cross-document traceability**
 
   **Objective:** Confirm the new authority, artifact, state, compatibility, and language contracts agree across all three spec files.
 
@@ -525,7 +527,7 @@ These tasks clarify and extend the active MVP sequence. They supersede any earli
   - Confirm MVP/deferred boundaries remain intact.
   - Confirm no active task requires adapters, network checks, or advanced property testing.
 
-  **Dependencies:** Tasks 1–14; Task 15 complete or explicitly deferred.
+  **Dependencies:** Tasks 1–14; Task 15 explicitly deferred for MVP.
 
   **Verification:**
   - Requirements-to-design-to-task traceability passes.
@@ -535,6 +537,12 @@ These tasks clarify and extend the active MVP sequence. They supersede any earli
   - Task 11 remains the CI contract definition boundary and Task 12 remains the implementation, declined-action, release-handoff, and fixture boundary.
   - Declined remote actions close only themselves and cannot produce `verified` or `linked_to_pk_ship`.
   - Legacy compatibility, disabled-Code-Work TDD N/A rules, and developer-language artifact scope agree everywhere.
+
+  **Final traceability gate result:** `Pass`.
+
+  **Recorded evidence:** The requirements, design, and task files use consistent authority, artifact, state, identity, compatibility, and language terms; Task 15 is explicitly deferred; deferred adapters, network checks, and advanced property testing remain outside the active MVP dependency graph.
+
+  **Scope boundary:** This result records specification consistency only. It does not create a second authority or authorize implementation, commit, release, deployment, rollback, or other remote action.
 
   **Demoable result:** The later implementation agent receives one deterministic, developer-friendly specification with no unresolved implementation-critical decisions.
 
