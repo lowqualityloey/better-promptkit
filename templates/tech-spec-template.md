@@ -82,6 +82,22 @@ Keep all records in this Planning Record. Do not create a parallel `docs/decisio
 - **Remaining Uncertainty [Required]**: `[UNCERTAINTY-DECISION-spec-slug-001-001](#UNCERTAINTY-DECISION-spec-slug-001-001)` or `None`
 - **Decision Owner [Required]**: [Named person or role accountable for the decision]
 - **Status [Required]**: `proposed | decided | deferred | superseded`
+
+##### Version Selection Fields
+
+Complete these fields when the material decision includes a technology, platform, framework, library, service, or tool version. Otherwise record `Not applicable` with a reason where a conditional field is shown.
+
+- **Version Selection Context [Required when versioned]**: `Greenfield/no preference | Existing project | Explicit upgrade request | Other recorded constraint`; `Not applicable - no version selected` when the decision does not include a version.
+- **AI Recommendation [Optional when versioned]**: [Recommended exact version or versions and supporting rationale]; `Not applicable - no AI recommendation` if none.
+- **Selected Exact Version(s) [Required when versioned]**: [Exact pinned version or versions; never use `latest`, an unbounded range, prerelease, nightly, or experimental value as the selected default]
+- **Release Channel [Required when versioned]**: `stable | LTS | prerelease | nightly | experimental`; explain any non-stable selection and do not use it as the default recommendation.
+- **Support/Lifecycle Status [Required when versioned]**: [Production support, active support, LTS, maintenance, or end-of-life status with evidence]
+- **Compatibility Constraints [Required when versioned]**: [Runtime, platform, dependency, API, deployment, and support constraints]
+- **Version Rationale [Required when versioned]**: [Why this exact version was selected, preserved, or explicitly upgraded]
+- **Exact-Version Evidence [Required when versioned]**: [Citation links, access dates, and source evidence supporting the exact version and its status]
+- **Existing Version Baseline [Required for existing project]**: [Current pinned version or versions and preservation/upgrade evidence]; `Not applicable - greenfield or no existing pin` when applicable.
+- **Decision Owner Approval or Accepted Assumption [Required]**: [Named owner, approval or acceptance state, and date/evidence. AI or PromptKit recommendation alone is not approval.]
+
 - **pk:spike or ADR Link [Optional]**: `[workflow or supporting record link]` or `None`
 
 <a id="CLAIM-DECISION-spec-slug-001-001"></a>

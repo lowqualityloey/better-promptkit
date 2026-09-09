@@ -179,6 +179,18 @@ The decision record contains:
 
 A citation contains publisher, title, canonical URL, access date, and the claim supported. Primary Documentation is preferred. If sources are unavailable or conflict, the record must choose defer, targeted `pk:spike`, or an explicitly accepted assumption. Merely naming an existing technology does not trigger a decision record.
 
+## Technology Version-Selection Policy
+
+When a material technology decision includes a version, the planning overlay uses a stable, support-aware, compatibility-first default:
+
+- For greenfield work with no user preference or existing pin, recommend the latest supported stable release compatible with project constraints. "Latest" means the latest supported stable compatible release, not the newest release regardless of channel or compatibility.
+- Stable means production-stable; prefer actively supported or LTS releases where applicable. Never default to prerelease, nightly, experimental, or unsupported channels.
+- For an existing project, preserve current pinned versions unless the developer requests an upgrade or security, support/lifecycle, compatibility, or other material evidence justifies one. Upgrades are not silent and record migration or rollback impact when relevant.
+- An older version requires an explicit rationale, a named decision owner, and support/lifecycle and compatibility evidence. Missing or conflicting evidence remains uncertainty.
+- The Decision Record captures the exact selected version or versions, release channel, support/lifecycle status, compatibility constraints, rationale, citations, citation access date, and exact-version evidence. `latest` or an unbounded range is not an exact selection.
+- AI or PromptKit provides a recommendation, not final approval. The named decision owner approves the recommendation, approves a deviation, or accepts the documented assumption. A user preference or project constraint may override the default when recorded.
+- Unclear, stale, inaccessible, or conflicting evidence leads to defer, a targeted `pk:spike`, or an explicitly accepted assumption owned by the decision maker. The planner must not guess.
+
 ## Optional TDD Evidence Model
 
 TDD Enforcement Mode is disabled by default. For Controlled Work, it is enabled only by the canonical Local Task Record field `TDD Enforcement Mode: disabled | enabled`. Planning and test-plan artifacts may propose or reference the setting, but the Task Record is authoritative if another artifact disagrees. An absent field means `disabled`.

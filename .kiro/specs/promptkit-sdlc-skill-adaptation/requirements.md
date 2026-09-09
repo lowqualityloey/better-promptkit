@@ -115,6 +115,18 @@ The adaptation preserves the following established ownership:
 6. THE Adaptation SHALL NOT require a new decision record for merely naming an existing technology without changing a material decision.
 7. `pk:spike` SHALL remain the owner of investigation method and comparison depth.
 
+### Normative Technology Version-Selection Policy
+
+For a material Technology or Vendor Decision that includes a version, THE Adaptation SHALL apply the following policy:
+
+1. **Greenfield/default selection:** When no existing project pin, user preference, or explicit constraint exists, recommend the latest supported stable version compatible with the project's runtime, platform, dependency, API, deployment, and support constraints. "Latest" SHALL mean the latest supported stable compatible release, not blindly the newest available release.
+2. **Stable/support default:** "Stable" SHALL mean production-stable; prefer an actively supported or LTS release where applicable. The Adaptation SHALL NOT default to prerelease, nightly, experimental, or otherwise unsupported channels.
+3. **Existing-project preservation:** For an existing project, preserve current pinned versions by default. Do not silently upgrade. An upgrade requires an explicit request or recorded security, support/lifecycle, compatibility, or other material evidence and SHALL record migration and rollback impact when relevant.
+4. **Older-version exception:** Selecting an older version requires an explicit rationale, a named decision owner, and evidence of support/lifecycle status and compatibility. If evidence is incomplete, record uncertainty rather than treating the version as verified.
+5. **Exact-version evidence:** The Decision Record SHALL record the exact selected version or versions, release channel, support/lifecycle status, compatibility constraints, rationale, citations, citation access date, and evidence supporting the exact version choice. An unbounded `latest`, prerelease, or guessed version is not an exact selection.
+6. **Human decision ownership:** AI or PromptKit MAY recommend a version and summarize evidence, but SHALL NOT silently finalize a material version decision. The named decision owner SHALL approve the recommendation, approve a deviation, or accept the documented assumption. A user preference or project constraint may override the default when recorded.
+7. **Uncertainty:** When evidence is unclear, stale, inaccessible, or conflicting, the record SHALL identify the uncertainty and choose defer, targeted `pk:spike`, or an explicitly accepted assumption owned by the named decision maker. It SHALL NOT guess or present the version as verified.
+
 ### Requirement 3: Opt-In Red-Green-Refactor Evidence
 
 **User Story:** As a developer, I want an enforceable test-first mode when it is useful, without imposing TDD on all work.

@@ -49,6 +49,18 @@ This section is the single Phase 3 contract for artifact locations, identities, 
 - Cross-record links use `[<stable-id>](<relative-path>#<stable-id>)`. A same-file link uses `[<stable-id>](#<stable-id>)`. Every target exposes its exact immutable ID as an explicit HTML anchor immediately before the record heading, for example `<a id="PLAN-checkout"></a>` for `PLAN-checkout`.
 - `Required`, `Optional`, and `Not applicable` are field statuses, not suggestions. `N/A — <reason>` is valid only where the matrix permits it. `None` means the field has no entries and is not the same as an omitted Required field.
 
+### Technology Version-Selection Policy
+
+This is the shared policy for material Technology or Vendor Decisions that include a version:
+
+- For greenfield work with no existing pin, user preference, or explicit constraint, recommend the latest supported stable version compatible with project runtime, platform, dependency, API, deployment, and support constraints. "Latest" means latest supported stable compatible release, not blindly the newest available release.
+- Stable means production-stable; prefer actively supported or LTS where applicable. Never default to prerelease, nightly, experimental, or otherwise unsupported channels.
+- For existing projects, preserve current pinned versions by default. Do not silently upgrade. An upgrade requires an explicit request or recorded security, support/lifecycle, compatibility, or other material evidence, with migration and rollback impact recorded when relevant.
+- An older version requires an explicit rationale, named decision owner, and support/lifecycle and compatibility evidence. Incomplete, stale, inaccessible, or conflicting evidence remains uncertainty.
+- The Planning Record must capture exact selected version or versions, release channel, support/lifecycle status, compatibility constraints, rationale, citations, citation access date, and exact-version evidence. `latest` or an unbounded range is not an exact selection.
+- AI or PromptKit may recommend and summarize evidence, but the named decision owner must approve the recommendation, approve a deviation, or accept the documented assumption. User preference or project constraints may override the default when recorded.
+- Unclear or conflicting evidence requires defer, a targeted `pk:spike`, or an explicitly accepted assumption owned by the decision maker. No workflow may guess or silently finalize the version.
+
 ### Canonical Artifact Matrix
 
 | Artifact | Canonical location and authority | Required fields | Optional fields | Not applicable fields | Allowed states |

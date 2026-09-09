@@ -80,6 +80,18 @@ Create Decision, Material Claim, Citation, and Uncertainty records only for a ma
 - `pk:spike` owns investigation method and comparison depth. The Planning Record owns the decision provenance and links to any spike or downstream ADR; neither a spike nor an ADR replaces the Planning Record decision record.
 - Do not perform automatic web research. Research is targeted to material decisions and must not add ceremony to Trivial Work or incidental technology mentions.
 
+#### Version Selection Policy
+
+For a material decision that includes a technology version:
+
+1. For greenfield work with no existing pin, user preference, or explicit constraint, recommend the latest supported stable version compatible with project constraints. "Latest" means latest supported stable compatible release, not the newest available release regardless of channel or compatibility.
+2. Treat production-stable, actively supported or LTS releases as the default where applicable. Never default to prerelease, nightly, experimental, or unsupported channels.
+3. For an existing project, preserve current pinned versions. Do not silently upgrade; upgrade only after an explicit request or recorded security, support/lifecycle, compatibility, or other material evidence, with migration and rollback impact recorded when relevant.
+4. Require an explicit rationale, named decision owner, and support/lifecycle and compatibility evidence for an older version. Record uncertainty when evidence is incomplete, stale, inaccessible, or conflicting.
+5. Record the exact selected version or versions, release channel, support/lifecycle status, compatibility constraints, rationale, citations, citation access date, and exact-version evidence. Do not record `latest` or an unbounded range as the selected version.
+6. Treat AI or PromptKit output as a recommendation only. The named decision owner approves the recommendation, approves a deviation, or accepts the documented assumption. User preference and project constraints may override the default when recorded.
+7. When evidence is unclear or conflicting, defer, run a targeted `pk:spike`, or proceed only with an explicitly accepted assumption; do not guess.
+
 ### Minimal-to-Controlled Readiness Mapping
 
 Minimal planning limits questions, not Controlled Work readiness. `pk:tasks` must still populate every existing Local Task Record readiness field with a concrete value or an explicit `None`/`N/A - <reason>` explanation where applicable:
