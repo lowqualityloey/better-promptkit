@@ -17,3 +17,7 @@ traceability-mismatch	1	traceability-mismatch.summary.txt	traceability-mismatch.
 revision-mismatch	1	revision-mismatch.summary.txt	revision-mismatch.diagnostics.txt
 state-projection-mismatch	1	state-projection-mismatch.summary.txt	state-projection-mismatch.diagnostics.txt
 timer-limitation	1	timer-limitation.summary.txt	timer-limitation.diagnostics.txt
+adaptation-valid	0	adaptation-valid.summary.txt	adaptation-valid.diagnostics.txt
+legacy-none-profile	0	legacy-none-profile.summary.txt	legacy-none-profile.diagnostics.txt
+adaptation-invalid-id	1	adaptation-invalid-id.summary.txt	adaptation-invalid-id.diagnostics.txt
+adaptation-invalid-fields	1	adaptation-invalid-fields.summary.txt	adaptation-invalid-fields.diagnostics.txt

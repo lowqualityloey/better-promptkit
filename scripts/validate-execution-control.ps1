@@ -113,8 +113,108 @@ function Require-Value {
 }
 
 function Test-TaskId {
-    param([string]$Value)
+    param([string]$Value, [string]$Profile = 'legacy')
+    if ($Profile -ceq 'sdlc-overlay-v1') {
+        return ($Value -cmatch '^TASK-[a-z0-9]+(-[a-z0-9]+)*$' -and $Value -cnotmatch '^TASK-\d{4}-\d{2}-\d{2}-')
+    }
     return $Value -match '^TASK-\d{4}-\d{2}-\d{2}-[a-z0-9][a-z0-9-]*$'
+}
+
+function Test-AdaptationLink {
+    param([string]$FilePath, [string]$RecordId, [string]$Link, [string]$Kind)
+    $path = Get-RelativePath $FilePath
+    $prefix = "$Kind-<slug>"
+    $remediation = "Use [$prefix](relative/path#$prefix) pointing to an existing explicit anchor"
+    $match = [regex]::Match($Link, '^\[([A-Za-z0-9._-]+)\]\(([^)#]+)#([A-Za-z0-9._-]+)\)$')
+    if (-not $match.Success) {
+        Add-Diagnostic 'INVALID_LINK' $RecordId $path "Invalid $Kind link: $Link" $remediation
+        return $false
+    }
+
+    $linkedId = $match.Groups[1].Value
+    $targetPath = $match.Groups[2].Value
+    $anchor = $match.Groups[3].Value
+    if ($linkedId -cne $anchor) {
+        Add-Diagnostic 'INVALID_LINK' $RecordId $path "Invalid $Kind link: displayed ID and anchor differ" $remediation
+        return $false
+    }
+    $validId = if ($Kind -eq 'PLAN') {
+        $linkedId -cmatch '^PLAN-[a-z0-9]+(-[a-z0-9]+)*$'
+    } elseif ($Kind -ceq 'ASSUMPTION') {
+        $linkedId -cmatch '^ASSUMPTION-[a-z0-9]+(-[a-z0-9]+)*-[0-9]{3}$'
+    } else {
+        $false
+    }
+    if (-not $validId) {
+        Add-Diagnostic 'INVALID_LINK' $RecordId $path "Invalid $Kind link ID: $linkedId" $remediation
+        return $false
+    }
+    if ([string]::IsNullOrWhiteSpace($targetPath) -or $targetPath -match '^(\\|/|[A-Za-z]:|[A-Za-z][A-Za-z0-9+.-]*://)') {
+        Add-Diagnostic 'INVALID_LINK' $RecordId $path "Invalid $Kind link target: $targetPath" $remediation
+        return $false
+    }
+
+    try {
+        $recordDirectory = Split-Path -Parent $FilePath
+        $targetFile = [System.IO.Path]::GetFullPath((Join-Path $recordDirectory $targetPath))
+    } catch {
+        Add-Diagnostic 'INVALID_LINK' $RecordId $path "Missing $Kind link target: $targetPath" $remediation
+        return $false
+    }
+    $rootPrefix = $RootPath.TrimEnd('\', '/') + [System.IO.Path]::DirectorySeparatorChar
+    if (-not $targetFile.StartsWith($rootPrefix, [System.StringComparison]::OrdinalIgnoreCase)) {
+        Add-Diagnostic 'INVALID_LINK' $RecordId $path "Invalid $Kind link target: $targetPath" $remediation
+        return $false
+    }
+    $anchorText = '<a id="' + $anchor + '"></a>'
+    if (-not (Test-Path -LiteralPath $targetFile -PathType Leaf) -or -not (Get-Content -LiteralPath $targetFile -Raw).Contains($anchorText, [System.StringComparison]::Ordinal)) {
+        Add-Diagnostic 'INVALID_LINK' $RecordId $path "Missing $Kind link target or anchor: $targetPath#$anchor" $remediation
+        return $false
+    }
+    return $true
+}
+
+function Test-AdaptationFields {
+    param([string]$FilePath, [string]$RecordId)
+    $path = Get-RelativePath $FilePath
+    if (Require-Value $FilePath $RecordId 'Work Type' 'ADAPTATION_FIELD') {
+        $workType = Get-FieldValue $FilePath 'Work Type'
+        if ($workType -cnotin @('Code Work', 'Documentation Work', 'Configuration Work', 'Research Work')) {
+            Add-Diagnostic 'ADAPTATION_FIELD' $RecordId $path "Invalid Work Type: $workType" 'Use Code Work, Documentation Work, Configuration Work, or Research Work'
+        }
+    }
+
+    [void](Require-Value $FilePath $RecordId 'Planning Record Link' 'ADAPTATION_FIELD')
+    $planningLink = Get-FieldValue $FilePath 'Planning Record Link'
+    if (-not (Test-Placeholder $planningLink)) { [void](Test-AdaptationLink $FilePath $RecordId $planningLink 'PLAN') }
+
+    if (Test-Label $FilePath 'Planning Depth Reference') {
+        $depth = Get-FieldValue $FilePath 'Planning Depth Reference'
+        if ($depth -cnotin @('Minimal', 'Full', 'N/A')) {
+            Add-Diagnostic 'ADAPTATION_FIELD' $RecordId $path "Invalid Planning Depth Reference: $depth" 'Use Minimal, Full, or N/A'
+        }
+    }
+
+    if (Test-Label $FilePath 'Assumption Record Links') {
+        $assumptions = Get-FieldValue $FilePath 'Assumption Record Links'
+        if ($assumptions -cnotin @('None', 'N/A')) {
+            foreach ($assumptionLink in ($assumptions -split ',')) {
+                $assumptionLink = Trim-Value $assumptionLink
+                if ([string]::IsNullOrWhiteSpace($assumptionLink)) {
+                    Add-Diagnostic 'INVALID_LINK' $RecordId $path "Invalid ASSUMPTION link collection: $assumptions" 'Use comma-separated [ASSUMPTION-<spec-slug>-<nnn>](relative/path#ASSUMPTION-<spec-slug>-<nnn>) links, None, or N/A'
+                    continue
+                }
+                [void](Test-AdaptationLink $FilePath $RecordId $assumptionLink 'ASSUMPTION')
+            }
+        }
+    }
+
+    if (Require-Value $FilePath $RecordId 'TDD Enforcement Mode' 'ADAPTATION_FIELD') {
+        $tddMode = Get-FieldValue $FilePath 'TDD Enforcement Mode'
+        if ($tddMode -cnotin @('disabled', 'enabled')) {
+            Add-Diagnostic 'ADAPTATION_FIELD' $RecordId $path "Invalid TDD Enforcement Mode: $tddMode" 'Use disabled or enabled'
+        }
+    }
 }
 
 function Test-ChildId {
@@ -194,14 +294,22 @@ function Test-Task {
     if ([string]::IsNullOrWhiteSpace($id)) { $id = 'UNKNOWN' }
     $script:RecordCount++
     $path = Get-RelativePath $FilePath
+    $profile = Get-FieldValue $FilePath 'PromptKit Adaptation Profile'
+    if (-not [string]::IsNullOrWhiteSpace($profile) -and $profile -cnotin @('none', 'sdlc-overlay-v1')) {
+        Add-Diagnostic 'INVALID_PROFILE' $id $path "Unknown PromptKit Adaptation Profile: $profile" 'Use none or sdlc-overlay-v1'
+    }
+    $idProfile = if ($profile -ceq 'sdlc-overlay-v1') { 'sdlc-overlay-v1' } else { 'legacy' }
 
-    if (-not (Test-TaskId $id)) {
-        Add-Diagnostic 'INVALID_ID' $id $path "Task ID is not stable: $id" 'Use TASK-YYYY-MM-DD-slug'
+    if (-not (Test-TaskId $id $idProfile)) {
+        $remediation = if ($idProfile -eq 'sdlc-overlay-v1') { 'Use TASK-<task-slug>' } else { 'Use TASK-YYYY-MM-DD-slug' }
+        Add-Diagnostic 'INVALID_ID' $id $path "Task ID is not stable: $id" $remediation
     } elseif ($TaskById.ContainsKey($id)) {
         Add-Diagnostic 'INVALID_ID' $id $path "Duplicate Task ID: $id" 'Keep one canonical Task Record per stable task identifier'
     } else {
         $TaskById[$id] = $FilePath
     }
+
+    if ($profile -ceq 'sdlc-overlay-v1') { Test-AdaptationFields $FilePath $id }
 
     $requiredLabels = @(
         'Record Type', 'Task ID', 'Specification', 'Owner / Actor', 'Execution Scope',
