@@ -80,15 +80,25 @@ A task cannot enter `ready` until its objective, scope, non-goals, acceptance cr
 - **Checkpoint Records**: `[docs/tasks/[task-id].checkpoint-[sequence].md or None]`
 - **Handoff Records**: `[docs/tasks/[task-id].handoff-[sequence].md or None]`
 - **Verification Evidence**: `[Commands and results]`
-- **Behavior IDs**: `[BEHAVIOR-<task-slug>-<nnn> links, or N/A - TDD disabled or non-Code Work]`
-- **TDD Execution Evidence**: `[TDD-EXEC-<task-slug>-<behavior-seq> entries with Red, Green, Refactor commands/results and status, or N/A - TDD Enforcement Mode disabled]`
-- **TDD Exception Verification**: `[Exception verification link and reason for Documentation, Configuration, or Research Work, or N/A - Code Work]`
+- **Behavior IDs [Required when enabled]**: `[BEHAVIOR-<task-slug>-<nnn> links]`, `N/A - TDD Enforcement Mode disabled` for disabled Code Work, or `N/A - exception work type` for Documentation, Configuration, or Research Work
+- **TDD Intent Register [Required when enabled]**: `[TDD-INTENT-<task-slug>-<nnn>](../tests/<test-plan>.md#TDD-INTENT-<task-slug>-<nnn>)`, `N/A - TDD Enforcement Mode disabled` for disabled Code Work, or `N/A - exception work type` for Documentation, Configuration, or Research Work
+- **TDD Execution Evidence [Required when enabled]**: `[TDD-EXEC-<task-slug>-<behavior-seq> entries]`, `N/A - TDD Enforcement Mode disabled` for disabled Code Work, or `N/A - exception work type` for Documentation, Configuration, or Research Work
+- **TDD Exception Verification [Required for Documentation, Configuration, or Research Work; Not applicable for Code Work]**: `[Exception verification link and reason]` or `N/A - Code Work`
 - **CI Evidence**: `[Provider, workflow/job, run, revision, result, or N/A]`
 - **Review Evidence**: `[REVIEW-<review-slug>](../reviews/<review-slug>.md#REVIEW-<review-slug>); reviewer; result; or N/A]`
 - **Commit Evidence**: `[Commit SHA and message, or N/A before commit]`
 - **Pull Request Evidence**: `[PR URL/number, or N/A before PR]`
 - **Release Evidence**: `[Release evaluation/tag/post-release link, or N/A]`
 - **Blocker and Resume Condition**: `[Blocker, owner, evidence, and precise resume condition, or None]`
+
+### TDD Mode Branches
+
+Select exactly one branch from the canonical Local Task Record fields:
+
+- **Enabled Code Work [Required]:** Create one intent and one execution block per Behavior ID. Link the test-plan intent to the Local Task Record and record Red, Green, and Refactor results there.
+- **Disabled Code Work [Required]:** Record both the TDD Intent Register and TDD Execution Evidence as `N/A - TDD Enforcement Mode disabled`. Do not use the exception path. Normal dependency-ordered milestones, acceptance criteria, test strategy, review, and verification remain required.
+- **Documentation, Configuration, or Research Work [Required]:** Record TDD fields as `N/A - exception work type` and provide the TDD Exception Verification link, reason, acceptance, evidence, review, and verification.
+- **Ambiguous Work [Required]:** Follow the Code Work branch until Work Type and TDD Enforcement Mode are clarified; do not record an automatic exception.
 
 ### TDD Execution Evidence Shape
 
@@ -101,12 +111,12 @@ Use one block per enabled Code Work behavior. The Local Task Record is authorita
 - **Execution ID [Required when enabled]**: `TDD-EXEC-<task-slug>-<behavior-seq>`
 - **Behavior ID [Required when enabled]**: `BEHAVIOR-<task-slug>-<nnn>`
 - **Task Record Link [Required]**: `[TASK-<task-slug>](#TASK-<task-slug>)`
-- **Red Result [Required when enabled]**: `[failing assertion, command, and result]`
-- **Green Result [Required when enabled]**: `[passing result for the same behavior]`
-- **Refactor Result [Required when enabled]**: `[passing result after refactor or explicit no-refactor reason]`
-- **Commands and Results [Required when enabled]**: `[exact commands and observable results]`
+- **Red Result [Required when enabled]**: `[Expected failing assertion, exact runnable command, and observed failing result]`
+- **Green Result [Required when enabled]**: `[Passing result from the same Red command for the same Behavior ID]`
+- **Refactor Result [Required when enabled]**: `[Passing result from the same Red command after refactor, or an explicit no-refactor reason]`
+- **Commands and Results [Required when enabled]**: `[Exact commands and observable results for Red, Green, and Refactor]`
 - **Execution Status [Required when enabled]**: `planned | red_recorded | green_recorded | refactor_recorded | exception | blocked | complete`
-- **Exception Verification [Not applicable for enabled Code Work]**: `[link and reason, or N/A - TDD Enforcement Mode disabled or exception work type]`
+- **Exception Verification [Not applicable for enabled Code Work]**: `N/A - Code Work`
 
 
 

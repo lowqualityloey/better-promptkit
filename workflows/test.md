@@ -133,9 +133,28 @@ In multi-package monorepos (Turborepo, pnpm workspaces, Nx), running full test s
 
 `pk:test` owns test strategy and the TDD intent register inside the existing `docs/tests/<test-plan>.md` artifact. It does not activate TDD, set execution state, or replace the Local Task Record. The test plan may propose or reference `TDD Enforcement Mode: disabled | enabled`; the canonical Task Record owns the actual mode, and an absent Task Record field defaults to `disabled`.
 
-For each enabled Code Work behavior, record a `BEHAVIOR-<task-slug>-<nnn>` identity, a `TDD-INTENT-<task-slug>-<nnn>` intent ID, the linked Task Record, the expected failing assertion, the runnable Red command, and the intent state `proposed | ready | superseded`. The same Behavior ID must be used by the Task Record's `TDD-EXEC-<task-slug>-<behavior-seq>` evidence through Red, Green, and Refactor.
+The test plan is a supporting intent view. It records the expected behavior and Red evidence before implementation, while the Local Task Record records Red, Green, and Refactor execution results and controls readiness or completion.
 
-A disagreement between the test plan, Planning Record, and Task Record blocks readiness until reconciled. After reconciliation, the Task Record value controls. With TDD disabled, record `N/A - TDD Enforcement Mode disabled` for the complete intent register. Documentation, Configuration, and Research Work use an explicit exception verification link. Ambiguous work follows the Code Work path until clarified.
+### Enabled Code Work Intent Contract
+
+For each enabled Code Work behavior, record all of the following before the intent becomes `ready`:
+
+- `BEHAVIOR-<task-slug>-<nnn>` stable behavior identity;
+- `TDD-INTENT-<task-slug>-<nnn>` intent identity;
+- the linked canonical Local Task Record;
+- the observable test and expected failing assertion;
+- the exact runnable Red command; and
+- intent state `proposed | ready | superseded`.
+
+The same Behavior ID must be used by the Task Record's `TDD-EXEC-<task-slug>-<behavior-seq>` evidence through Red, Green, and Refactor. Green and Refactor rerun the same Red command and retain the expected behavior without silently changing the acceptance condition.
+
+### Disabled Code Work and Exception Verification
+
+- **Disabled Code Work:** Record `N/A - TDD Enforcement Mode disabled` for the complete intent register and the Task Record's TDD execution evidence. Keep normal dependency-ordered milestones, acceptance criteria, test strategy, review, and verification; disabled Code Work is not an exception path.
+- **Documentation, Configuration, or Research Work:** Do not create TDD intent rows. Record `N/A - <reason>` and link an explicit exception verification task with acceptance, evidence, review, and verification.
+- **Ambiguous Work:** Follow the Code Work path until Work Type and TDD mode are clarified. Do not grant an automatic TDD exception.
+
+A disagreement between the test plan, Planning Record, and Task Record blocks readiness until reconciled. After reconciliation, the Task Record value controls. `pk:test` preserves the existing test-pyramid, seam, framework, runner, factory, and flake-prevention ownership.
 
 ---
 
