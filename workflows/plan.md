@@ -47,6 +47,12 @@ Transform ambiguous product or technical requirements into clear technical speci
 └──────────────────────────────────┴───────────────────────────────┘
 ```
 
+## PromptKit Adaptation Compatibility Note
+
+For the PromptKit SDLC Adaptation, use `pk:route` to classify `Trivial` versus `Controlled` Work before selecting planning depth. `Minimal` and `Full` Planning Interrogation are planning-depth choices for Controlled Work, not alternate execution classifications or routing branches. Trivial Work keeps the existing fast path with no mandatory Adaptation artifact or interrogation. Controlled Work still requires the existing Local Task Record readiness gate before implementation.
+
+The planner may map a Minimal or Full result into the existing architecture, contract, migration, FMEA, milestone, and task inputs, but planning does not change execution state or approve implementation, commits, pull requests, releases, deployment, or rollback. Existing workflow ownership and approval boundaries remain authoritative; the shared matrix is maintained in [`docs/WORKFLOW-MAP.md`](../docs/WORKFLOW-MAP.md). Future Adaptation fields are additive, and this note does not yet implement Assumption Records, canonical Adaptation schemas, or validator-profile behavior.
+
 ---
 
 ## Workflow Steps
