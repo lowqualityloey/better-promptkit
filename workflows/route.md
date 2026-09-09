@@ -37,6 +37,19 @@ Before selecting a workflow for a substantive request, classify the work:
 
 The Local Task Record remains authoritative throughout. `docs/STATE.md` is a synchronized projection, and external issues or dated breakdowns are optional references.
 
+### PromptKit Adaptation Compatibility Contract
+
+The PromptKit SDLC Adaptation is an additive evidence layer over this router:
+
+- `pk:route` remains the sole authority for `Trivial` versus `Controlled` Work classification.
+- After classification, `Minimal` or `Full` Planning Interrogation may describe planning depth for Controlled Work; neither is a new execution class or routing branch.
+- Trivial Work keeps its existing Fast-Path and receives no mandatory Adaptation artifact or interrogation solely because the Adaptation exists.
+- Controlled Work keeps the existing Local Task Record readiness, state, active-ownership, and completion gates before implementation.
+- Existing workflow owners and human approval boundaries remain unchanged. Planning supplies inputs; it does not approve implementation, commits, pull requests, releases, deployment, or rollback.
+- Future Adaptation fields and sections are additive. Existing records remain valid without retroactive migration, and no new execution-control trigger is introduced here.
+
+The shared authority matrix and compatibility boundaries are maintained in [`docs/WORKFLOW-MAP.md`](../docs/WORKFLOW-MAP.md). Scope expansion or a Trivial-to-Controlled change follows the existing classification and readiness rules above.
+
 ---
 
 ## The Engineering Lifecycle Decision Matrix

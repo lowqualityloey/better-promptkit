@@ -8,10 +8,34 @@ Visual guide to help you quickly find the right workflow for your current task.
 
 Before selecting a workflow, classify the request:
 
-- **Trivial Work** is short, bounded, and single-concern. Use the existing fast path without creating unnecessary execution records.
+- **Trivial Work** is short, bounded, and single-concern. Use the existing fast path without creating unnecessary execution records or mandatory Adaptation artifacts/questions.
 - **Controlled Work** changes durable files, task state, project configuration, commits, pull requests, release artifacts, or multiple independent concerns. Route it through readiness and create the canonical Local Task Source at `docs/tasks/<task-id>.md` before implementation.
+- `pk:route` remains the sole authority for `Trivial` versus `Controlled` classification. `Minimal` and `Full` Planning Interrogation are planning-depth choices after routing, not a second classification or execution branch.
+- The Task Record is authoritative for Controlled Work. `docs/STATE.md` is a synchronized projection owned by `pk:checkpoint`; external issues, dated breakdowns, board statuses, and conversation claims are supporting references.
+- Existing records, workflow triggers, owners, approval boundaries, release protections, and rollback boundaries remain valid. Adaptation fields and sections are additive and do not require retroactive migration.
 
-The Task Record is authoritative for Controlled Work. `docs/STATE.md` is a synchronized projection owned by `pk:checkpoint`; external issues, dated breakdowns, board statuses, and conversation claims are supporting references. This follow-up is additive to the immutable published `v1.0.0` baseline and is not an approved `v1.1.0` release.
+## Adaptation Authority Matrix
+
+The Adaptation adds evidence and planning guidance without creating a competing lifecycle or execution authority:
+
+| Evidence or decision | Primary owner | Boundary |
+| :--- | :--- | :--- |
+| Work classification and lifecycle navigation | `pk:route` | Solely classifies Trivial/Controlled Work and routes to existing workflows; planning depth cannot override it. |
+| Planning depth, planning inputs, assumptions, and material decision provenance | `pk:plan` | Supplies architecture and planning evidence; does not set execution state or approve implementation/release. |
+| Task decomposition, acceptance criteria, and stable task identity | `pk:tasks` | Creates task inputs and links; does not replace the Local Task Record’s readiness or completion authority. |
+| Controlled readiness, execution state, active ownership, and completion | Canonical Local Task Record | Sole execution authority for Controlled Work; external trackers and projections cannot override it. |
+| Checkpoints, handoffs, and state projection | `pk:checkpoint` | Preserves and projects evidence; does not approve, commit, release, deploy, or roll back. |
+| Test strategy and test intent | `pk:test` | Defines seams, test intent, and verification approach; does not control execution state. |
+| TDD execution evidence | Canonical Local Task Record | Owns Red/Green/Refactor execution evidence when the later TDD overlay is enabled; test-plan records remain supporting references. |
+| In-scope implementation | Engineer through the selected workflow | Changes only the approved scope and records evidence in the Local Task Record. |
+| Review findings and simplification recommendations | `pk:review` | Reports findings and recommendations; does not edit source or approve release/external actions. |
+| Commit evidence | `pk:commit` | Prepares atomic, reviewable commit evidence; human confirmation remains required for repository changes. |
+| Pull request evidence | `pk:pr` | Prepares the PR description and verification evidence; does not merge or approve on behalf of a human. |
+| CI failure evidence and remediation linkage | CI triage owner, when the later overlay is implemented | Records evidence and bounded plans; does not retry, mutate remote configuration, deploy, or approve. |
+| Release readiness and evaluation | `pk:ship` | Evaluates release readiness and preserves the existing release record and rollback boundaries. |
+| External-action approval | Human Release Coordinator | Separately decides tag, publication, remote operation, deployment, and rollback; no workflow or validator authorizes these automatically. |
+
+This matrix is the shared authority reference for `pk:route`, `pk:plan`, and later Adaptation overlays. It records ownership without requiring the later artifact schemas or validator profile. This follow-up is additive to the immutable published `v1.0.0` baseline and is not an approved `v1.1.0` release.
 
 ---
 
