@@ -69,7 +69,7 @@ Find your current engineering context below and activate the corresponding workf
 | **Unproven Tech or Benchmark** | `pk:spike` | `docs/spikes/` | Sharpest-risk test, baseline comparison, ADR |
 | **Defect, Bug or Regression** | `pk:debug` | `docs/rca/` | Red loop first, tagged probes, 5-Whys post-mortem |
 | **Performance, Latency & Profiling** | `pk:perf` | `docs/perf/` | Baseline metrics, flamegraphs, EXPLAIN ANALYZE, delta audit |
-| **Pre-Merge Pull Request Audit**| `pk:review` | Review report | Two-axis review: Spec Fidelity vs Technical Standards |
+| **Pre-Merge Pull Request Audit**| `pk:review` | `docs/reviews/<review-slug>.md` | Two-axis review: Spec Fidelity vs Technical Standards |
 | **Atomic Git Staging & Commit** | `pk:commit` | Git History | Conventional Commits, single-concern staging, secret leak check |
 | **Pull Request Description**   | `pk:pr`     | PR Body / `gh pr`    | Verification evidence, migration safety check, rollback plan |
 | **Context Bloat & Handover**    | `pk:checkpoint`| `docs/STATE.md` & Notes | Session state compaction, invariant locking, docs/STATE.md sync |

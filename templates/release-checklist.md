@@ -1,5 +1,16 @@
 # Production Release Checklist: [Version / Release Name]
 
+<!-- Replace the example anchor with the immutable Release ID, for example: <a id="RELEASE-2026-09-release"></a> -->
+<a id="RELEASE-release-slug"></a>
+
+- **Release ID [Required]**: `RELEASE-<release-slug>`
+- **Canonical Release Record Path [Required]**: `docs/releases/<release>.md`
+- **Release Linkage State [Required]**: `pending | blocked | verified | linked_to_pk_ship`
+- **CI Triage Link [Required when a CI failure exists]**: `[CI-<provider>-<run-id>](ci-triage/<ci-failure-id>.md#CI-<provider>-<run-id>)` or `N/A - no CI failure`
+- **Verification Link [Required]**: `[<stable-id>](<relative-path>#<stable-id>)`
+- **Verified Result [Required]**: `[Pass | Fail | Pending]`
+- **Resume Condition [Required]**: `[Condition for the next release state or N/A]`
+
 - **Release Version / Tag**: `v[X.Y.Z]`
 - **Deploy Lead**: [Your Name / Team]
 - **Target Environment**: [Production / Staging]

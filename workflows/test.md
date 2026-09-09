@@ -129,6 +129,16 @@ In multi-package monorepos (Turborepo, pnpm workspaces, Nx), running full test s
 
 ---
 
+## TDD Intent and Task Record Boundary
+
+`pk:test` owns test strategy and the TDD intent register inside the existing `docs/tests/<test-plan>.md` artifact. It does not activate TDD, set execution state, or replace the Local Task Record. The test plan may propose or reference `TDD Enforcement Mode: disabled | enabled`; the canonical Task Record owns the actual mode, and an absent Task Record field defaults to `disabled`.
+
+For each enabled Code Work behavior, record a `BEHAVIOR-<task-slug>-<nnn>` identity, a `TDD-INTENT-<task-slug>-<nnn>` intent ID, the linked Task Record, the expected failing assertion, the runnable Red command, and the intent state `proposed | ready | superseded`. The same Behavior ID must be used by the Task Record's `TDD-EXEC-<task-slug>-<behavior-seq>` evidence through Red, Green, and Refactor.
+
+A disagreement between the test plan, Planning Record, and Task Record blocks readiness until reconciled. After reconciliation, the Task Record value controls. With TDD disabled, record `N/A - TDD Enforcement Mode disabled` for the complete intent register. Documentation, Configuration, and Research Work use an explicit exception verification link. Ambiguous work follows the Code Work path until clarified.
+
+---
+
 ## Workflow Steps
 
 ### Step 1: Analyze Feature Risk and Surface Area

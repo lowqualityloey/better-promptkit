@@ -9,6 +9,9 @@
 
 ## Planning Record (PromptKit Adaptation)
 
+<!-- Replace the example anchor with the immutable planning ID, for example: <a id="PLAN-checkout"></a> -->
+<a id="PLAN-spec-slug"></a>
+
 > **Use this section for Controlled Work only.** Trivial Work keeps the existing fast path and does not require a Planning Record or Assumption Record. This section is the canonical planning location; do not create a parallel `docs/plans/` artifact.
 
 ### Planning Record Metadata
@@ -17,14 +20,15 @@
 - **Planning Depth [Required]**: `Minimal | Full`
 - **Owner [Required]**: [Person, role, or team]
 - **Record Status [Required]**: `draft | ready | blocked | superseded`
-- **Local Task Record Link [Required for Controlled Work]**: [Relative link to `docs/tasks/<task-id>.md`]
-- **Workflow Links [Optional]**: [Links to `pk:plan`, `pk:tasks`, or affected workflow records]
+- **Local Task Record Link [Required for Controlled Work]**: `[TASK-<task-slug>](../tasks/<task-id>.md#TASK-<task-slug>)`
+- **Workflow Links [Optional]**: `[workflow anchor links]`
 
 ### Planning Inputs
 
 - **Requested Outcome [Required]**: [What observable result is requested?]
 - **Observable Completion Condition [Required]**: [What will show that the outcome is complete?]
 - **Scope Boundary [Required]**: [Files, behaviors, interfaces, or components in scope and excluded]
+- **TDD Enforcement Proposal (Reference Only) [Optional]**: `disabled | enabled | None`; this proposal cannot activate TDD. The canonical Local Task Record owns `TDD Enforcement Mode`, and an absent Task Record field defaults to `disabled`.
 
 ### Minimal Planning
 
@@ -46,7 +50,7 @@ After Full inputs are recorded, continue through the existing architecture, cont
 
 If a required planning input is unanswered, record an owned provisional assumption before handing inputs to `pk:tasks`. If no unanswered required input exists, write `None` instead of leaving this section blank. An Assumption Record is not a confirmed decision and remains in this Planning Record; it does not create a second authority.
 
-For each assumption:
+For each assumption, expose the exact immutable ID as an anchor immediately before the assumption heading or record block, for example `<a id="ASSUMPTION-checkout-001"></a>`:
 
 - **Assumption ID [Required]**: `ASSUMPTION-<spec-slug>-<nnn>`
 - **Unanswered Decision [Required]**: [What must be decided?]
@@ -55,8 +59,8 @@ For each assumption:
 - **Validation Action [Required]**: [How and when will this be checked?]
 - **Decision Owner [Required]**: [Named person or role]
 - **Status [Required]**: `open | validated | accepted | rejected | superseded`
-- **Supporting Evidence [Optional]**: [Link or `None`]
-- **Resolution Evidence [Not applicable until resolved]**: [Link or `N/A - unresolved`]
+- **Supporting Evidence [Optional]**: `[<stable-id>](<relative-path>#<stable-id>)` or `None`
+- **Resolution Evidence [Not applicable until resolved]**: `[<stable-id>](<relative-path>#<stable-id>)` or `N/A - unresolved`
 
 Do not repeat a completed planning question unless scope changes, an assumption is invalidated, or new evidence changes the decision. Record the changed scope, assumption, or evidence when asking it again.
 
@@ -170,21 +174,35 @@ export type SendInviteResponse = z.infer<typeof SendInviteResponseSchema>;
 
 ---
 
-## 6. Phased Implementation Milestones (TDD Red-Green-Refactor)
+## 6. Conditional Implementation Milestones
 
-- [ ] **Milestone 1 (Contracts & Seams - RED)**:
-  - Add schema migration (Expand phase).
-  - Define Zod schemas and TypeScript domain contracts.
-  - Write failing integration tests asserting public contract behavior. (PR #1)
-- [ ] **Milestone 2 (Core Domain Engine - GREEN)**:
-  - Implement business logic, repository methods, and state machines to satisfy tests.
-  - Verify all red tests turn green. (PR #2)
-- [ ] **Milestone 3 (Presentation & Client Integration)**:
-  - Implement UI dialogs, keyboard navigation, focus management, and loading/error states.
-  - Audit against WCAG 2.2 AA accessibility. (PR #3)
-- [ ] **Milestone 4 (Hardening, Telemetry & Contract Phase)**:
-  - Structured logs, APM alerts, synthetic monitors.
-  - Complete Contract phase of database migration (drop obsolete fields). (PR #4)
+The canonical Local Task Record owns `TDD Enforcement Mode: disabled | enabled`; an absent field defaults to `disabled`. This technical specification may propose a mode, but the proposal is reference-only. If the proposal or test plan disagrees with the Task Record, readiness is blocked until reconciled, and the Task Record controls execution.
+
+### Code Work with TDD Enforcement Mode `enabled`
+
+Use the Red -> Green -> Refactor sequence. Every behavior keeps the same `BEHAVIOR-<task-slug>-<nnn>` identity from the test-plan intent through Task Record execution evidence.
+
+- [ ] **Milestone 1 - Red: Contracts and Seams**:
+  - Define schema, API, domain, or interface contracts and the observable behavior.
+  - Record the expected failing assertion and runnable Red command in the test plan.
+- [ ] **Milestone 2 - Green: Smallest Satisfying Implementation**:
+  - Implement the minimum code that satisfies the recorded Red behavior.
+  - Record Green results without changing the Behavior ID or acceptance meaning.
+- [ ] **Milestone 3 - Refactor: Hardening and Verification**:
+  - Improve structure, presentation, telemetry, migration safety, and test quality without changing the behavior contract.
+  - Record Refactor results, acceptance, review, and final verification evidence.
+
+### Code Work with TDD Enforcement Mode `disabled`
+
+Use normal dependency-ordered milestones. Include contracts or seams, implementation, presentation or integration as applicable, hardening, acceptance criteria, test strategy, review, and verification. Do not require Red, Green, or Refactor evidence when the Task Record mode is disabled.
+
+### Documentation, Configuration, or Research Work
+
+Use an exception verification path with explicit acceptance, evidence, review, and verification. TDD execution fields are `N/A - <reason>` when this work type does not have Code Work behavior to exercise.
+
+### Sign-off Readiness
+
+The selected milestone branch, Task Record link, test-plan reference, acceptance criteria, review path, and verification condition are recorded before implementation. A proposal or test-plan intent never authorizes implementation by itself.
 
 ---
 
@@ -192,4 +210,4 @@ export type SendInviteResponse = z.infer<typeof SendInviteResponseSchema>;
 - [ ] Architecture challenged via `pk:grill`.
 - [ ] Zero-downtime database evolution verified.
 - [ ] Non-goals agreed upon with stakeholders.
-- [ ] Ready for Milestone 1 execution.
+- [ ] Ready for the selected Task Record milestone path: enabled TDD, disabled Code Work, or an exception verification path.

@@ -26,9 +26,9 @@ The Adaptation adds evidence and planning guidance without creating a competing 
 | Controlled readiness, execution state, active ownership, and completion | Canonical Local Task Record | Sole execution authority for Controlled Work; external trackers and projections cannot override it. |
 | Checkpoints, handoffs, and state projection | `pk:checkpoint` | Preserves and projects evidence; does not approve, commit, release, deploy, or roll back. |
 | Test strategy and test intent | `pk:test` | Defines seams, test intent, and verification approach; does not control execution state. |
-| TDD execution evidence | Canonical Local Task Record | Owns Red/Green/Refactor execution evidence when the later TDD overlay is enabled; test-plan records remain supporting references. |
+| TDD execution evidence | Canonical Local Task Record | Owns Red/Green/Refactor execution evidence when the Task Record's TDD Enforcement Mode is enabled for Code Work; test-plan records remain supporting references. |
 | In-scope implementation | Engineer through the selected workflow | Changes only the approved scope and records evidence in the Local Task Record. |
-| Review findings and simplification recommendations | `pk:review` | Reports findings and recommendations; does not edit source or approve release/external actions. |
+| Review findings and simplification recommendations | `pk:review` | Reports findings and recommendations in the canonical `docs/reviews/<review-slug>.md` report; does not edit source or approve release/external actions. |
 | Commit evidence | `pk:commit` | Prepares atomic, reviewable commit evidence; human confirmation remains required for repository changes. |
 | Pull request evidence | `pk:pr` | Prepares the PR description and verification evidence; does not merge or approve on behalf of a human. |
 | CI failure evidence and remediation linkage | CI triage owner, when the later overlay is implemented | Records evidence and bounded plans; does not retry, mutate remote configuration, deploy, or approve. |
@@ -36,6 +36,48 @@ The Adaptation adds evidence and planning guidance without creating a competing 
 | External-action approval | Human Release Coordinator | Separately decides tag, publication, remote operation, deployment, and rollback; no workflow or validator authorizes these automatically. |
 
 This matrix is the shared authority reference for `pk:route`, `pk:plan`, and later Adaptation overlays. It records ownership without requiring the later artifact schemas or validator profile. This follow-up is additive to the immutable published `v1.0.0` baseline and is not an approved `v1.1.0` release.
+
+<a id="canonical-artifact-contract"></a>
+## Canonical Artifact Contract
+
+This section is the single Phase 3 contract for artifact locations, identities, fields, lifecycle states, links, ownership, and validator boundaries. Workflows and templates may explain the contract, but they must not create a competing schema or authority.
+
+### Identity and Link Rules
+
+- All Adaptation artifact IDs are immutable. Slugs use lowercase kebab-case. `<nnn>` is a zero-padded three-digit sequence. `behavior-seq` is the corresponding zero-padded Behavior ID sequence.
+- The canonical identity formats are: `PLAN-<spec-slug>`, `ASSUMPTION-<spec-slug>-<nnn>`, `DECISION-<spec-slug>-<nnn>`, `CLAIM-<decision-id>-<nnn>`, `CITATION-<decision-id>-<nnn>`, `UNCERTAINTY-<decision-id>-<nnn>`, `TASK-<task-slug>`, `BEHAVIOR-<task-slug>-<nnn>`, `TDD-INTENT-<task-slug>-<nnn>`, `TDD-EXEC-<task-slug>-<behavior-seq>`, `REVIEW-<review-slug>`, `SIMPLIFICATION-<review-id>-<nnn>`, `CI-<provider>-<run-id>`, `ACTION-<ci-id>-<nnn>`, and `RELEASE-<release-slug>`.
+- Cross-record links use `[<stable-id>](<relative-path>#<stable-id>)`. A same-file link uses `[<stable-id>](#<stable-id>)`. Every target exposes its exact immutable ID as an explicit HTML anchor immediately before the record heading, for example `<a id="PLAN-checkout"></a>` for `PLAN-checkout`.
+- `Required`, `Optional`, and `Not applicable` are field statuses, not suggestions. `N/A — <reason>` is valid only where the matrix permits it. `None` means the field has no entries and is not the same as an omitted Required field.
+
+### Canonical Artifact Matrix
+
+| Artifact | Canonical location and authority | Required fields | Optional fields | Not applicable fields | Allowed states |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| Planning Record | Section in `docs/specs/<specification>.md`, owned by `pk:plan` | ID, Planning Depth, Requested Outcome, Observable Completion Condition, Scope Boundary, Owner, Record Status; Full mode also requires Explicit Non-Goals, Affected Behavioral Components, Externally Visible Contracts, Failure or Rollback Considerations, and Verification Approach | Local Task Record link and workflow links | Full-only fields in Minimal mode with an explicit `N/A — Minimal depth` reason | `draft`, `ready`, `blocked`, `superseded` |
+| Assumption Record | Section in the Planning Record, owned by `pk:plan` | ID, Unanswered Decision, Provisional Answer, Impact if Wrong, Validation Action, Decision Owner, Status | Supporting Evidence and Resolved-Decision Link | Resolution Evidence while unresolved, recorded as `N/A — unresolved` | `open`, `validated`, `accepted`, `rejected`, `superseded` |
+| Decision, Claim, Citation, and Uncertainty records | Sections in the Planning Record, owned by `pk:plan` | Decision: Decision ID, Statement, Options, Selected or Rejected Options, Claims, Owner, Status. Claim: Claim ID and link to a Citation or Uncertainty. Citation: Citation ID, Publisher, Title, Canonical URL, Access Date, Supported Claim. Uncertainty: Uncertainty ID, Impact, Resolution Action, Owner, Status | `pk:spike` link and additional source notes | Uncertainty when a decision has no unresolved claim, recorded as `None` | Decision: `proposed`, `decided`, `deferred`, `superseded`; Citation: `candidate`, `verified`, `stale`, `inaccessible`, `conflicting`, `superseded`; Uncertainty: `open`, `resolved`, `accepted`, `deferred`, `superseded` |
+| Local Task Record | `docs/tasks/<task-id>.md`, owned by the Local Task Record for execution | Task ID, Specification, Work Type, Objective, In Scope, Explicit Non-Goals, Acceptance Criteria, Verification Condition, Execution Policy, TDD Enforcement Mode, Execution State, active ownership, and completion evidence applicable to the state | Planning, Assumption, Test, Review, CI, Commit, Pull Request, Checkpoint, Handoff, and Release links | TDD intent and execution evidence when disabled, or an exception verification link and reason for Documentation, Configuration, or Research Work | Existing execution states: `planned`, `ready`, `in_progress`, `checkpoint_due`, `blocked`, `paused`, `handoff_ready`, `awaiting_review`, `completed`, `aborted` |
+| TDD intent register | Existing `docs/tests/<test-plan>.md`, owned by `pk:test` for intent only | Intent ID, Task Record Link, Behavior ID, Mode Reference, Test, Expected Failing Assertion, Runnable Command, Status | Seam and framework notes | Complete intent register when disabled, recorded as `N/A — TDD Enforcement Mode disabled` | `proposed`, `ready`, `superseded` |
+| TDD execution evidence | `docs/tasks/<task-id>.md`, owned by the Local Task Record | Execution ID, Behavior ID, Task Record Link, Red Result, Green Result, Refactor Result, Commands and Results, Status | Test-plan link and notes | Red, Green, and Refactor fields for Documentation, Configuration, or Research Work only when an exception verification link and reason are recorded | `planned`, `red_recorded`, `green_recorded`, `refactor_recorded`, `exception`, `blocked`, `complete` |
+| Simplification Audit | Existing `pk:review` report at `docs/reviews/<review-slug>.md`, owned by `pk:review` | Review ID, resolved non-empty diff reference, candidate ID or explicit `No Simplification Candidates found`; candidates require Location, Diff Evidence, Preservation Condition, Risk, Verification, and Recommendation | Baseline and related review links | Candidate fields when the explicit no-candidate result is recorded | `draft`, `complete`, `superseded` |
+| CI Triage Record | `docs/releases/ci-triage/<ci-failure-id>.md`, owned by the CI triage owner in the later overlay | CI ID, Evidence, Owner, State, Classification when sufficient, Remediation Plan when supported, Verification Evidence, Resume Condition, and `pk:ship` link for release candidates; one action block per proposed remote action | Authenticated read-only retrieval metadata and `pk:debug` link | Classification and remediation before evidence is sufficient; action-confirmation block when no remote action is proposed | `evidence_requested`, `evidence_sufficient`, `classified`, `remediation_planned`, `awaiting_confirmation`, `local_reproduction_or_fix`, `verification_pending`, `verified`, `linked_to_pk_ship`, `blocked` |
+| CI action block | Within the owning CI Triage Record, one block for each action | Action ID, Proposed Action, Confirmation State, Approver, Confirmation Timestamp, Bounded Scope, Reversal or Rollback Action, Resume Condition | Read-only evidence reference | Approver and timestamp are `N/A — awaiting confirmation` only while confirmation is `pending`; the action collection is `N/A — no remote action proposed` when no action is planned | Confirmation state: `pending`, `confirmed`, `declined` |
+| Release linkage | Existing `docs/releases/<release>.md`, owned by `pk:ship` | Release ID, CI Triage Link, Verification Link, Verified Result, Resume Condition | Review and Task Record links | CI Triage Link when the release has no CI failure | Existing `pk:ship` release states; linkage recognizes only `pending`, `blocked`, `verified`, and `linked_to_pk_ship` evidence states |
+
+### Cross-Record Invariants
+
+- Each stable ID is unique, immutable, and exposed by the target record's explicit anchor. No record is both embedded and standalone unless this matrix explicitly says so.
+- Every link uses the declared relative-path and anchor syntax and resolves to the target's same stable ID. Broken links, duplicate IDs, and conflicting authorities are invalid.
+- The Local Task Record owns TDD Enforcement Mode and TDD execution state. TDD intent is owned by `pk:test` for planning only. TDD intent and execution must use the same Behavior ID.
+- Material claims link to a Citation or Uncertainty. A planning proposal or test-plan value never overrides the Task Record.
+- Each proposed remote action has exactly one independent confirmation block. Confirming or declining one action never authorizes or decides another, and recording confirmation never executes the action.
+- Release resumption requires CI state `verified` followed by `linked_to_pk_ship`; classification, a passing unrelated check, or a proposed remediation is insufficient.
+
+### Validator Boundary and Deferred Scope
+
+The future Adaptation validator boundary is deterministic and network-free. It may validate paths, IDs, field labels, explicit anchors, links, allowed states, required-field conditions, ownership, invariants, and deferred-scope rules. It must not verify external URLs, execute commands, retrieve remote evidence, or authorize remote, release, deployment, publication, tag, or rollback actions.
+
+Phase 3 does not change `scripts/validate-execution-control.ps1` or `scripts/validate-execution-control.sh`. Those validators continue to validate legacy Task, Scope Change, Checkpoint, and Handoff records with their existing labels and date-based ID rules. The later Task 13 boundary may use `PromptKit Adaptation Profile: none | sdlc-overlay-v1`; absent or `none` records remain on legacy validation, and new fields are not globally required. Future profile fixtures should cover valid, missing-required-field, invalid-state, broken-link, duplicate-ID, conflicting-authority, and illegal-`N/A` cases without authorizing external actions.
 
 ---
 
