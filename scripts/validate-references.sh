@@ -153,6 +153,7 @@ EXPECTED_TEMPLATES=(
     "code-review-checklist.md"
     "design-tokens-spec.md"
     "spike-template.md"
+    "ci-triage-template.md"
 )
 
 for template in "${EXPECTED_TEMPLATES[@]}"; do

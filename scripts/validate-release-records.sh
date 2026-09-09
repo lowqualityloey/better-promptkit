@@ -658,7 +658,7 @@ else
         validate_record "$index"
         [ "$canonical" = 'Release Evaluation' ] && EVALUATION_INDICES+=("$index")
         index=$((index + 1))
-    done < <(find "$RELEASE_DIR" -type f -name '*.md' -print | LC_ALL=C sort)
+    done < <(find "$RELEASE_DIR" -type f -name '*.md' ! -path "$RELEASE_DIR/ci-triage/*" -print | LC_ALL=C sort)
 fi
 
 [ "${#EVALUATION_INDICES[@]}" -gt 0 ] && validate_cross_records
