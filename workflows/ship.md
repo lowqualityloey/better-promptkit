@@ -126,6 +126,46 @@ Trigger an immediate rollback if within 15 minutes of deployment:
    - If Expand phase: Execute migrations *before* deploying application code.
    - If Contract phase: Verify application code is deployed and verified *before* executing cleanup migrations.
 
+### Evidence-First CI Failure Triage and Release Linkage
+
+When a CI Failure is reported for a release candidate or a candidate under evaluation, use the shared [`Canonical Artifact Contract`](../docs/WORKFLOW-MAP.md#canonical-artifact-contract) and create or link the canonical CI Triage Record at `docs/releases/ci-triage/<ci-failure-id>.md`. The record exposes the immutable identity `CI-<provider>-<run-id>` and is owned by the CI triage owner. This section adds evidence and release linkage guidance to `pk:ship`; it does not create a second release authority or replace `pk:debug`, the Local Task Record, human approval, or existing rollback ownership.
+
+#### 1. Collect evidence before classification or remediation
+
+- Start the record in `evidence_requested` when the failure is reported. Collect evidence before classifying the failure or recommending a source change.
+- The evidence bundle must identify the check, failed job or command, failure output, revision identifier, execution time, and relevant configuration context. Link the provider run or record the copied output and its source in the CI Triage Record.
+- GitHub CLI retrieval is conditional and read-only: use it only when it is available and authenticated for the relevant repository, and only to retrieve run metadata or logs. Do not use it to retry a run, change repository configuration, deploy, roll back, or perform any other remote action.
+- If GitHub CLI is unavailable, unauthenticated, inaccessible, or insufficient, request the provider run URL or copied output. Platform-neutral collection may use the provider's run page or export facility, the failed check and job names, the command and relevant log excerpt, the revision and execution time, and the configuration or environment context needed to interpret the failure. Never request or record secrets.
+- If the evidence bundle is incomplete, keep the record in `evidence_requested`, record the missing evidence and its owner, and produce an evidence request only. Do not classify the failure or recommend a source-code change.
+
+#### 2. Classify only sufficient evidence and bound remediation
+
+- After the required evidence is recorded, set the record to `evidence_sufficient` and classify it as `test`, `static analysis`, `build`, `dependency or environment`, `infrastructure or transient`, `deployment`, or `unknown`.
+- `unknown` is valid when the complete evidence bundle is present but the cause remains unresolved. It is not a substitute for missing logs or an inaccessible run.
+- A Remediation Plan may be recorded only when the evidence supports one. It must state the classification, suspected cause, affected scope, minimal change, verification command, and rollback or reversal action. A plan is bounded evidence, not approval to execute it.
+- Route local reproduction or debugging needs to `pk:debug`. An engineer records any in-scope source fix and its verification in the canonical Local Task Record; `pk:ship` does not edit source or replace the execution authority.
+
+#### 3. Record each remote action as a separate human-confirmation block
+
+For every proposed remote retry, repository configuration change, deployment, or rollback, add one independent action block in the CI Triage Record with identity `ACTION-<ci-id>-<nnn>`. Each block must record:
+
+- Proposed Action.
+- Confirmation State: `pending`, `confirmed`, or `declined`.
+- Approver and Confirmation Timestamp. For a pending block, use `N/A - awaiting confirmation` for each field rather than implying approval.
+- Bounded Scope.
+- Reversal or Rollback Action.
+- Resume Condition.
+
+A pending action remains blocked until the human approver records a separate confirmation. Recording a confirmation never executes the action, and confirming or declining one action never authorizes or decides another. A declined action closes only that action; the parent CI Triage Record must receive a new bounded plan or become `blocked` with an owner and precise resume condition. No workflow, validator, or CI result may perform the remote action automatically.
+
+#### 4. Link successful verification before release resumption
+
+- Use the canonical CI states `evidence_requested`, `evidence_sufficient`, `classified`, `remediation_planned`, `awaiting_confirmation`, `local_reproduction_or_fix`, `verification_pending`, `verified`, `linked_to_pk_ship`, and `blocked` as defined by the shared contract. A record may become `blocked` from any state when it has an owner and precise resume condition.
+- For a release candidate, link the Remediation Plan and successful Verification Evidence to the existing `pk:ship` pre-release record. Keep `pk:ship` release readiness blocked until the CI Triage Record contains Verification Evidence and reaches `verified`, then link `CI-<provider>-<run-id>` from `docs/releases/<release>.md` and record the release's Verification Link, Verified Result, and Resume Condition. The release linkage state is `linked_to_pk_ship` only after the verified result is linked.
+- A classification, proposed remediation, empty blocker list, passing unrelated validator, or successful check that is not the recorded verification does not permit release resumption. A CI Triage Record never becomes release approval; Release Coordinator approval and external-action decisions remain separate.
+
+Task 6 defines this evidence-first entry path, bounded linkage, and action-confirmation boundary. Task 12 owns the later state-transition implementation, declined-action lifecycle, release handoff behavior, and valid or invalid fixtures. Do not implement those deferred mechanics here.
+
 ### Execution-Control Release Evidence Gate
 
 Before Step 3, record the execution evidence needed by the release evaluation:
@@ -142,7 +182,7 @@ Use the optional **Execution-Control Evidence** section in `templates/release-ch
 
 ### Canonical Artifact Linkage
 
-Use the shared [`Canonical Artifact Contract`](../docs/WORKFLOW-MAP.md#canonical-artifact-contract) for release linkage. Save the existing release record at `docs/releases/<release>.md`, expose `RELEASE-<release-slug>` as an explicit anchor, and link the verified result and resume condition there. When the later CI overlay exists, link `CI-<provider>-<run-id>` from the release record only after CI state is `verified` and then `linked_to_pk_ship`; a CI record never becomes release approval.
+Use the shared [`Canonical Artifact Contract`](../docs/WORKFLOW-MAP.md#canonical-artifact-contract) for release linkage. Save the existing release record at `docs/releases/<release>.md`, expose `RELEASE-<release-slug>` as an explicit anchor, and link the verified result and resume condition there. For a CI failure, link the canonical `CI-<provider>-<run-id>` record from `docs/releases/ci-triage/<ci-failure-id>.md#CI-<provider>-<run-id>` only after the CI record is `verified`; the release record then reaches `linked_to_pk_ship` only after that verified result and its Verification Link, Verified Result, and Resume Condition are recorded. A CI record never becomes release approval. Task 12 owns the future state-transition and release-handoff implementation.
 
 ### Better-PromptKit Internal Release Evaluation
 
