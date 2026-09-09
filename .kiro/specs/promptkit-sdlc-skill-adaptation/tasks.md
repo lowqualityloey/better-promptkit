@@ -117,13 +117,19 @@ Tasks may run in parallel only after their listed prerequisites are complete and
   - Record unavailable, stale, inaccessible, or conflicting sources as uncertainty.
   - Route investigation depth to `pk:spike`.
   - Do not create a decision record for simply naming an existing technology.
+  - Apply the version-selection policy: for greenfield work with no preference or existing pin, recommend the latest supported stable version compatible with project constraints; for existing projects, preserve current pinned versions unless an upgrade is requested or justified by recorded evidence.
+  - Never default to prerelease, nightly, experimental, or unsupported versions. Selecting an older version requires an explicit rationale, named decision owner, and support/lifecycle and compatibility evidence.
+  - Record the exact selected version or versions, release channel, support/lifecycle status, compatibility constraints, rationale, citations, citation access date, and exact-version evidence. AI recommendations do not replace decision-owner approval or accepted-assumption ownership.
+  - If version evidence is unclear, stale, inaccessible, or conflicting, record uncertainty and choose defer, a targeted `pk:spike`, or an explicitly accepted assumption; do not guess.
 
   **Dependencies:** Tasks 1 and 2.
 
   **Verification:**
   - Complete citation, missing citation, conflicting source, and non-decision mention scenarios are covered.
+  - Greenfield/no-preference, existing pinned-version, explicit upgrade, older-version, and unclear/conflicting evidence scenarios are covered.
   - Every concluded material decision has selected/rejected options and remaining uncertainty status.
-  - No source claim is presented as verified without citation or an explicit accepted assumption.
+  - Every versioned decision records an exact version, channel, support/lifecycle status, compatibility constraints, rationale, exact-version evidence, and named decision-owner approval or accepted assumption.
+  - No source claim is presented as verified without citation or an explicit accepted assumption, and no AI recommendation is treated as silent final approval.
 
   **Demoable result:** A reviewer can trace a material dependency choice from decision to claim to primary source or documented uncertainty.
 
