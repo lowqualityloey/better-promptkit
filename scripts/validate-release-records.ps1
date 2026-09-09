@@ -579,7 +579,8 @@ if (-not (Test-Path -LiteralPath (Join-Path $RootPath 'docs/releases') -PathType
 }
 else {
     $releaseDirectory = Join-Path $RootPath 'docs/releases'
-    $files = @(Get-ChildItem -LiteralPath $releaseDirectory -Filter '*.md' -File -Recurse | Where-Object { -not ($_.Attributes -band [System.IO.FileAttributes]::ReparsePoint) } | Sort-Object FullName)
+    $ciTriageDirectory = (Join-Path $releaseDirectory 'ci-triage').TrimEnd('\', '/')
+    $files = @(Get-ChildItem -LiteralPath $releaseDirectory -Filter '*.md' -File -Recurse | Where-Object { (-not ($_.Attributes -band [System.IO.FileAttributes]::ReparsePoint)) -and (-not $_.FullName.StartsWith($ciTriageDirectory + [System.IO.Path]::DirectorySeparatorChar, [System.StringComparison]::OrdinalIgnoreCase)) } | Sort-Object FullName)
     foreach ($file in $files) {
         try {
             $parsed = Get-ParsedRecord $file.FullName

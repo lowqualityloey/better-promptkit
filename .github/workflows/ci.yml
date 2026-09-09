@@ -22,10 +22,15 @@ jobs:
           bash -n scripts/validate-execution-control.sh
           bash -n scripts/tests/run-execution-control-fixtures.sh
           bash -n scripts/validate-release-records.sh
+          bash -n scripts/validate-ci-triage.sh
+          bash -n scripts/tests/run-ci-triage-fixtures.sh
           echo "Bash scripts parsed with 0 syntax errors."
 
       - name: Run Agent Execution Control Fixture Harness (Bash)
         run: bash scripts/tests/run-execution-control-fixtures.sh
+
+      - name: Run CI Triage Fixture Harness (Bash)
+        run: bash scripts/tests/run-ci-triage-fixtures.sh
 
       - name: Run Release-Record Validator (Bash)
         run: |
@@ -112,6 +117,7 @@ jobs:
             "templates/code-review-checklist.md"
             "templates/design-tokens-spec.md"
             "templates/spike-template.md"
+            "templates/ci-triage-template.md"
           )
           for f in "${FILES[@]}"; do
             if [ ! -f "$f" ]; then
@@ -119,7 +125,7 @@ jobs:
               exit 1
             fi
           done
-          echo "All 40 referenced files exist on disk."
+          echo "All 41 referenced files exist on disk."
 
   validate-windows:
     name: Lint & Validate (Windows)
@@ -137,7 +143,9 @@ jobs:
             "init.ps1",
             "scripts/validate-execution-control.ps1",
             "scripts/tests/run-execution-control-fixtures.ps1",
-            "scripts/validate-release-records.ps1"
+            "scripts/validate-release-records.ps1",
+            "scripts/validate-ci-triage.ps1",
+            "scripts/tests/run-ci-triage-fixtures.ps1"
           )
           foreach ($file in $syntaxFiles) {
             $errors = @()
@@ -152,6 +160,10 @@ jobs:
       - name: Run Agent Execution Control Fixture Harness (PowerShell)
         shell: pwsh
         run: pwsh -NoProfile -File .\scripts\tests\run-execution-control-fixtures.ps1
+
+      - name: Run CI Triage Fixture Harness (PowerShell)
+        shell: pwsh
+        run: pwsh -NoProfile -File .\scripts\tests\run-ci-triage-fixtures.ps1
 
       - name: Run Release-Record Validator (PowerShell)
         shell: pwsh

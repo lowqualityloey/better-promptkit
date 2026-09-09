@@ -181,7 +181,8 @@ $ExpectedTemplates = @(
     "rca-postmortem-template.md",
     "code-review-checklist.md",
     "design-tokens-spec.md",
-    "spike-template.md"
+    "spike-template.md",
+    "ci-triage-template.md"
 )
 
 foreach ($template in $ExpectedTemplates) {
