@@ -3,6 +3,12 @@
 <!-- Replace the example anchor with the immutable Task ID. For an Adaptation record use the `TASK-<task-slug>` form; for a legacy or `none`-profile record preserve `TASK-YYYY-MM-DD-<slug>`. Derived IDs use the same full task slug. -->
 <a id="TASK-YYYY-MM-DD-task-slug"></a>
 
+> **Developer-friendly fill-in guide:** A **Required** field must contain a concrete value before the record can move forward. An **Optional** field may be omitted or set to the stated `N/A` value. **Not applicable** means the field does not apply to this work and must include the template's stated reason when one is requested. Keep values short and observable: for example, `Verification Condition: bash scripts/tests/run-fixtures.sh exits 0` is more useful than `Verification Condition: tested`.
+>
+> **Field status summary:** `Record Type`, `Task ID`, `Specification`, `Owner / Actor`, `Execution Scope`, `Approval Boundary`, `Created`, the objective and boundary fields, execution policy, state and ownership, and completion evidence are **Required**. `External Reference (Optional)` and `Batch Authorization` are **Optional** unless the selected execution mode requires them. Release, checkpoint, handoff, and TDD exception fields are **Required when applicable** and otherwise **Not applicable** with the exact permitted value. Use `None` only when there is genuinely nothing to record, never to hide an unanswered decision.
+>
+> **TDD (Test-Driven Development) reminder:** The Local Task Record owns `TDD Enforcement Mode`. For disabled Code Work, keep the exact value `N/A - TDD Enforcement Mode disabled`; for Documentation, Configuration, or Research Work, keep `N/A - exception work type`. The test plan is supporting intent only and cannot turn TDD on.
+
 ## 1. Identity and Authority
 
 - **Record Type**: `Task Record`

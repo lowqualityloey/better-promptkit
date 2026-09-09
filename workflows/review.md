@@ -1,5 +1,9 @@
 # Review Workflow (Two-Axis Senior Code & Architecture Review)
 
+> **Developer-friendly review guide:** A **Required** field or report section must be completed before the review can be considered complete. **Optional** evidence may be recorded when it exists; **Not applicable** means the concern does not apply and should say why. A **fixed point** is the exact baseline revision used for the comparison, and the two axes are independent: **Spec Fidelity** asks whether the requested behavior was implemented, while **Standards & Code Quality** asks whether it was implemented safely and maintainably. Keep findings concise and reproducible by naming the file/section, observed risk, and next action. **Example:** `src/auth.ts:42 - [IMPORTANT] missing authorization check - add the role guard and rerun the focused test`.
+>
+> **Acronym guide:** `PR` means Pull Request; `OWASP` means the Open Worldwide Application Security Project; `a11y` means accessibility; and `YAGNI` means You Aren't Gonna Need It. These terms explain the existing review language and do not create approval, merge, release, deployment, or rollback authority.
+
 ## Fast Shorthand
 Trigger anytime with: `pk:review` (or `/pk-review`)
 

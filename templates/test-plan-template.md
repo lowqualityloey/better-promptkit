@@ -1,5 +1,9 @@
 # Test Plan Specification: [Feature / Subsystem Name]
 
+> **Developer-friendly fill-in guide:** `Author`, `Status`, `Created`, and `Test Frameworks` are **Required**. The intent register and test matrices are **Required for the applicable work type**; use the exact `N/A` value shown when a mode or work type makes a section Not applicable. A short entry names the behavior, seam, command, and expected result, for example: `Red command: pnpm test:run -- invite; expected: assertion fails because the invite is not persisted`.
+>
+> **Acronym guide:** `TDD` means Test-Driven Development; `API` means Application Programming Interface; `RLS` means Row-Level Security; `E2E` means End-to-End; `MSW` means Mock Service Worker; and `CI` means Continuous Integration. These explanations make the existing test-planning terms easier to scan without changing test ownership or TDD authority.
+>
 - **Author**: [Your Name / Team]
 - **Status**: [Draft | In Review | Approved | Implemented]
 - **Created**: [YYYY-MM-DD]

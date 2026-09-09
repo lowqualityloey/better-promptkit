@@ -1,4 +1,10 @@
-# Technical Design Document (RFC): [Feature / System Name]
+# Technical Design Document (RFC, Request for Comments): [Feature / System Name]
+
+> **Developer-friendly fill-in guide:** Mark each prompt **Required**, **Optional**, or **Not applicable** in your working copy. Required prompts should be specific enough for another developer to act on; Optional prompts add useful context when available; Not applicable prompts should say why they do not apply. Prefer concise, observable values such as `Target Release: Milestone 3`, `Verification Approach: run the API contract and migration checks`, or `Externally Visible Contracts: None - internal refactor`.
+>
+> **Status map:** `Author`, `Status`, `Created`, and `Target Release` are **Required**. The Planning Record fields already show their conditional status. Architecture, contracts, security, failure-mode, milestone, and sign-off prompts are **Required when the corresponding concern is in scope**; otherwise record **Not applicable** with a short reason. Material technology decisions require their decision, claim, citation, and uncertainty records; when no material decision exists, record `None` as instructed.
+>
+> **Acronym guide:** `RFC` means Request for Comments; `TDD` means Test-Driven Development; `API` means Application Programming Interface; `FMEA` means Failure Mode and Effects Analysis; `RBAC` means Role-Based Access Control; `RPO/RTO` mean Recovery Point Objective/Recovery Time Objective; and `SLA` means Service-Level Agreement. These terms describe the same existing fields and do not add new approval or execution authority.
 
 - **Author**: [Your Name / Team]
 - **Status**: [Draft | In Review | Approved | Implemented]

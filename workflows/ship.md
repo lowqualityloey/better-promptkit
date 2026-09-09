@@ -8,6 +8,8 @@ Guide the developer through safe, reliable production releases, deployment seque
 
 Eliminate production deployment outages: missing or invalid environment variables at runtime, race conditions between database migrations and application code deployments, unverified releases, and panicked rollbacks.
 
+> **Developer-friendly ship guide:** Treat each release step as a recordable decision, not an implicit action. **Required** evidence identifies the exact revision, environment, command or probe, result, and accountable owner. Use **Not applicable** only with a reason, and use `None` only when there is genuinely no item to record. `CI` means Continuous Integration, `QA` means Quality Assurance, `PII` means Personally Identifiable Information, and `SemVer` means Semantic Versioning. **Example:** `Verification: GET /api/health returned HTTP 200 at the release revision` is clearer than `smoke test passed`. These explanations clarify the workflow without changing its human-only approval boundaries.
+>
 ---
 
 ## Preconditions

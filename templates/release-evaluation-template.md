@@ -3,6 +3,12 @@
 <!-- Replace the example anchor ID with the immutable Release ID before saving the record. -->
 <a id="RELEASE-release-slug"></a>
 
+> **Developer-friendly fill-in guide:** Mark each record field **Required**, **Optional**, or **Not applicable** in the evaluation you create. Required fields establish reproducible evidence; Optional fields add context when available; Not applicable fields need the permitted `N/A` value and a reason when the prompt requests one. Use concise evidence such as an exact commit, stable record link, reviewer/date, or one-line decision. Example: `Candidate-Inclusive Membership Result: Pass` with the ordered range link is clearer than `checked`.
+>
+> **Status map:** Evaluation identity, bounded range, normalized history, preliminary candidate, QA review, release-note coverage, approval decision, consistency results, blockers, and the next action are **Required when this evaluation reaches that section**. Consumer Repository Applicability is **Not applicable** by design. Candidate and approval values remain separate: a preliminary candidate is not an approved release, and a pending or failed check must remain visible.
+>
+> **Acronym guide:** `SemVer` means Semantic Versioning; `QA` means Quality Assurance; and `N/A` means Not applicable. These explanations improve readability only; the evaluation remains documentation-first and never creates tags, publishes notes, performs remote operations, deploys, or rolls back.
+
 <!-- This is a documentation-first internal evaluation record. It records a bounded range, normalized evidence, a preliminary SemVer Candidate, QA review, and a separate approval decision. It does not invoke Git, remote services, tag creation, hosted-release creation, changelog publication, deployment, or rollback. -->
 
 <!-- This evaluation supplies candidate and QA evidence; the canonical release linkage fields live in the existing `docs/releases/<release>.md` release checklist. -->

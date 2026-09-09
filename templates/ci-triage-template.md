@@ -1,5 +1,9 @@
-# CI Triage Record: [Provider / Run]
+# CI (Continuous Integration) Triage Record: [Provider / Run]
 
+> **Developer-friendly fill-in guide:** A **Required** field must be filled when its condition applies; an **Optional** field may use the stated `N/A` value; **Not applicable** means the condition does not apply, such as `N/A - not a release candidate`. Use `None` only when the record genuinely has no item of that type and the field permits it. Keep evidence concise but reproducible: name the check, job or command, exact revision, UTC time, relevant configuration, and a short failure excerpt. Example: `State: evidence_requested`, `Missing Evidence: provider run URL`, `Evidence Request Owner: CI triage owner`.
+>
+> **State and authority reminder:** Record evidence before classification, and classification before a bounded remediation plan. `verified` means the recorded verification passed; `linked_to_pk_ship` means that verified result has been linked to the existing release record. A CI record never retries a job, changes remote configuration, deploys, rolls back, or approves a release.
+>
 <!-- Replace the example anchor with the immutable CI ID, for example: <a id="CI-github-12345"></a> -->
 <a id="CI-<provider>-<run-id>"></a>
 
