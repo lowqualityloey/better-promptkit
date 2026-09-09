@@ -68,6 +68,18 @@ After `pk:route` classifies the request:
 
 A lightweight request cannot override Full Planning when the work affects public or external contracts, persistent data or schema, authentication or authorization, external integrations, release configuration or release risk, multiple Behavioral Components, serious safety/rollback/data-loss risk, or an explicitly requested architecture plan. These triggers select planning depth only; they do not create a new route or execution class.
 
+### Source-Grounded Technology and Vendor Decisions
+
+Create Decision, Material Claim, Citation, and Uncertainty records only for a material Technology or Vendor Decision. A decision is material when the work adopts, replaces, configures, versions, or materially depends on an external technology, service, platform, framework, library, or managed service and the decision affects compatibility, security behavior, supported limits, pricing, availability, lifecycle, or integration behavior.
+
+- A technology mention that does not change a material decision does not require a Decision Record, source research, or a new planning question. For example, naming an existing database in an architecture description is not a decision by itself.
+- Record the decision statement, considered options, selected option, rejected options, Material Claim links, remaining uncertainty, decision owner, and status in the existing Planning Record. Use the canonical `DECISION-<spec-slug>-<nnn>`, `CLAIM-<decision-id>-<nnn>`, `CITATION-<decision-id>-<nnn>`, and `UNCERTAINTY-<decision-id>-<nnn>` identities and same-file links defined by `docs/WORKFLOW-MAP.md`.
+- Record only claims that affect the decision. Every Material Claim must link to a Citation Record or an Uncertainty Record; do not present unsupported prose as a verified fact.
+- Use primary documentation controlled by the technology, vendor, standards body, or owning project where available. A Citation Record must identify the publisher, document title, canonical URL, access date, and supported Material Claim.
+- If primary documentation is unavailable, inaccessible, stale, or conflicting, do not mark the affected claim verified. Choose only one of these dispositions: defer the decision, run a targeted `pk:spike`, or proceed with an explicitly accepted assumption owned by a named decision maker. Record the impact, resolution action, owner, and status in an Uncertainty Record.
+- `pk:spike` owns investigation method and comparison depth. The Planning Record owns the decision provenance and links to any spike or downstream ADR; neither a spike nor an ADR replaces the Planning Record decision record.
+- Do not perform automatic web research. Research is targeted to material decisions and must not add ceremony to Trivial Work or incidental technology mentions.
+
 ### Minimal-to-Controlled Readiness Mapping
 
 Minimal planning limits questions, not Controlled Work readiness. `pk:tasks` must still populate every existing Local Task Record readiness field with a concrete value or an explicit `None`/`N/A - <reason>` explanation where applicable:
