@@ -71,6 +71,19 @@ The canonical Local Task Record owns the separate fields `Work Type: Code Work |
 - Documentation, Configuration, and Research Work use an exception verification path with an explicit reason and evidence link. They do not acquire hidden TDD requirements.
 - Ambiguous work follows the Code Work path until the Task Record clarifies the work type and mode.
 
+### TDD Milestone and Evidence Handoff
+
+After the Task Record is ready, `pk:tasks` decomposes the work from the authoritative TDD mode without changing execution state or creating a second authority:
+
+| Task Record branch | Task decomposition | Required evidence handoff |
+| :--- | :--- | :--- |
+| Code Work with `enabled` | Red -> Green -> Refactor milestones for each stable Behavior ID | `pk:test` intent link plus Local Task Record `TDD-EXEC` results using the same Behavior ID and Red command |
+| Code Work with `disabled` | Complete dependency-ordered milestones for contracts or seams, implementation, integration, hardening, acceptance, test strategy, review, and verification | TDD intent register and TDD execution evidence are each `N/A - TDD Enforcement Mode disabled`; normal milestone evidence remains required |
+| Documentation, Configuration, or Research Work | Exception verification task with explicit acceptance, evidence, review, and verification | TDD fields are `N/A - exception work type`; link the exception verification and reason |
+| Ambiguous Work | Follow the Code Work path until Work Type and TDD mode are clarified | No automatic TDD exception; readiness remains blocked or follows the clarified Code Work branch |
+
+For enabled Code Work, the Red milestone records the expected failing assertion and exact runnable command from the test plan. Green and Refactor retain the same Behavior ID, rerun the same Red command, and cannot silently change the acceptance condition. `pk:tasks` creates the milestone order and evidence links, but only the Local Task Record records execution results and controls readiness or completion. One behavior does not require three separate issues.
+
 The execution states `planned`, `ready`, `in_progress`, `checkpoint_due`, `blocked`, `paused`, `handoff_ready`, `awaiting_review`, `completed`, and `aborted` map onto the existing Kanban statuses without replacing them:
 
 | Execution states | Existing Kanban status |

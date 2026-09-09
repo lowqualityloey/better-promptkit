@@ -7,14 +7,19 @@
 
 ---
 
-## 1. TDD Intent Register (Task Record-Owned)
+## 1. TDD Intent Register (Supporting Test-Plan View)
+
+`pk:test` owns intent planning; the canonical Local Task Record owns TDD mode, readiness, execution state, and execution evidence. This section is a supporting reference and cannot activate TDD or replace the Local Task Record.
 
 - **Task Record Link [Required for Controlled Work]**: `[TASK-<task-slug>](../tasks/<task-id>.md#TASK-<task-slug>)`
+- **Work Type Reference [Required for Controlled Work]**: `Code Work | Documentation Work | Configuration Work | Research Work`; ambiguous work follows Code Work until clarified
 - **TDD Enforcement Mode Reference [Optional]**: `disabled | enabled | N/A - no Task Record or Trivial Work`; an absent Task Record field is effective `disabled`
 - **Mode Authority [Required]**: `Canonical Local Task Record`; this test plan is a supporting reference and cannot activate TDD.
 - **Mode Reconciliation [Required]**: `[Matches Task Record | Disagreement blocks readiness | N/A]`
 
-When the Task Record mode is `enabled` for Code Work, create one row per behavior. Keep the same Behavior ID in the Task Record's Red, Green, and Refactor evidence. The expected Red assertion and runnable command must be concrete before the intent becomes `ready`.
+### Enabled Code Work Intent
+
+When the Task Record mode is `enabled` for Code Work, create one row per behavior before implementation. The expected Red assertion and runnable command must be concrete before the intent becomes `ready`. Keep the same Behavior ID in the Task Record's Red, Green, and Refactor evidence; Green and Refactor rerun the same Red command and retain the acceptance condition.
 
 <!-- Replace the example anchor with each immutable intent ID. -->
 <a id="TDD-INTENT-task-slug-001"></a>
@@ -23,7 +28,12 @@ When the Task Record mode is `enabled` for Code Work, create one row per behavio
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `TDD-INTENT-<task-slug>-<nnn>` | `BEHAVIOR-<task-slug>-<nnn>` | `[TASK-<task-slug>](../tasks/<task-id>.md#TASK-<task-slug>)` | `[observable behavior and failing assertion]` | `[exact command]` | `proposed | ready | superseded` |
 
-When TDD is disabled, record `N/A - TDD Enforcement Mode disabled` for this register instead of inventing intent rows. Documentation, Configuration, and Research Work use `N/A - <reason>` plus the exception verification link. `None` means there are no entries only after the applicable mode and work type are recorded.
+### Disabled Code Work and Exception Verification
+
+- **Disabled Code Work:** Record `N/A - TDD Enforcement Mode disabled` for the complete intent register instead of inventing rows. The Local Task Record still requires normal dependency-ordered milestones, acceptance criteria, test strategy, review, and verification.
+- **Documentation, Configuration, or Research Work:** Record `N/A - <reason>` for the intent register and link the explicit exception verification task. Do not create a hidden TDD chain.
+- **Ambiguous Work:** Follow the Code Work path until Work Type and TDD Enforcement Mode are clarified; do not grant an automatic exception.
+- `None` means there are no entries only after the applicable mode and work type are recorded.
 
 ---
 
