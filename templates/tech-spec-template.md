@@ -64,6 +64,58 @@ For each assumption, expose the exact immutable ID as an anchor immediately befo
 
 Do not repeat a completed planning question unless scope changes, an assumption is invalidated, or new evidence changes the decision. Record the changed scope, assumption, or evidence when asking it again.
 
+### Technology and Vendor Decision Records
+
+Create the following records only when the Planning Record contains a material Technology or Vendor Decision. This includes adopting, replacing, configuring, versioning, or materially depending on an external technology, service, platform, framework, library, or managed service when the choice affects compatibility, security behavior, supported limits, pricing, availability, lifecycle, or integration behavior. If no material decision exists, write `None`. Merely naming an existing technology in an architecture description does not create a decision record or require research.
+
+Keep all records in this Planning Record. Do not create a parallel `docs/decisions/` directory. Use the exact stable ID as an HTML anchor immediately before each record heading. A Material Claim must link to a Citation Record or an Uncertainty Record. Use primary documentation where available, and do not mark a claim verified when the source is unavailable, inaccessible, stale, or conflicting.
+
+<a id="DECISION-spec-slug-001"></a>
+#### Decision Record: `DECISION-spec-slug-001`
+
+- **Decision ID [Required]**: `DECISION-spec-slug-001`
+- **Decision Statement [Required]**: [What material technology or vendor decision must be made?]
+- **Considered Options [Required]**: [Options compared and the relevant decision criteria]
+- **Selected Option(s) [Required]**: [Selected option(s); use `None` while status is `proposed` or `deferred`]
+- **Rejected Option(s) [Required]**: [Rejected option(s) and reasons; use `None` while status is `proposed` or `deferred`]
+- **Material Claim Links [Required]**: `[CLAIM-DECISION-spec-slug-001-001](#CLAIM-DECISION-spec-slug-001-001)` or `None` with an explanation
+- **Remaining Uncertainty [Required]**: `[UNCERTAINTY-DECISION-spec-slug-001-001](#UNCERTAINTY-DECISION-spec-slug-001-001)` or `None`
+- **Decision Owner [Required]**: [Named person or role accountable for the decision]
+- **Status [Required]**: `proposed | decided | deferred | superseded`
+- **pk:spike or ADR Link [Optional]**: `[workflow or supporting record link]` or `None`
+
+<a id="CLAIM-DECISION-spec-slug-001-001"></a>
+#### Material Claim Record: `CLAIM-DECISION-spec-slug-001-001`
+
+- **Claim ID [Required]**: `CLAIM-DECISION-spec-slug-001-001`
+- **Decision Link [Required]**: `[DECISION-spec-slug-001](#DECISION-spec-slug-001)`
+- **Material Claim [Required]**: [The concrete factual claim that affects the decision]
+- **Citation or Uncertainty Link [Required]**: `[CITATION-DECISION-spec-slug-001-001](#CITATION-DECISION-spec-slug-001-001)` or `[UNCERTAINTY-DECISION-spec-slug-001-001](#UNCERTAINTY-DECISION-spec-slug-001-001)`
+
+<a id="CITATION-DECISION-spec-slug-001-001"></a>
+#### Citation Record: `CITATION-DECISION-spec-slug-001-001`
+
+- **Citation ID [Required]**: `CITATION-DECISION-spec-slug-001-001`
+- **Publisher [Required]**: [Technology, vendor, standards body, or project publisher]
+- **Document Title [Required]**: [Title of the primary document]
+- **Canonical URL [Required]**: [Canonical source URL]
+- **Access Date [Required]**: `[YYYY-MM-DD]`
+- **Supported Claim Link [Required]**: `[CLAIM-DECISION-spec-slug-001-001](#CLAIM-DECISION-spec-slug-001-001)`
+- **Citation Status [Required]**: `candidate | verified | stale | inaccessible | conflicting | superseded`
+
+<a id="UNCERTAINTY-DECISION-spec-slug-001-001"></a>
+#### Uncertainty Record: `UNCERTAINTY-DECISION-spec-slug-001-001`
+
+- **Uncertainty ID [Required]**: `UNCERTAINTY-DECISION-spec-slug-001-001`
+- **Affected Claim or Context [Required]**: [Claim or decision context that remains unverified]
+- **Impact [Required]**: [What could change or be harmed if the uncertainty is wrong?]
+- **Resolution Action [Required]**: `Defer the decision | Run a targeted pk:spike | Proceed with an explicitly accepted assumption`
+- **Decision Owner [Required]**: [Named person or role]
+- **Status [Required]**: `open | resolved | accepted | deferred | superseded`
+- **Supporting Evidence [Optional]**: `[<stable-id>](<relative-path>#<stable-id>)` or `None`
+
+When a source is unavailable, inaccessible, stale, or conflicting, keep the affected Citation at its corresponding non-verified status and record the impact and permitted resolution action in the Uncertainty Record. `pk:spike` owns investigation method and comparison depth; the Planning Record remains the authority for decision provenance. The Local Task Record may link to a concluded decision as planning context or a locked invariant, but it does not own the decision, source status, or research method.
+
 ---
 
 ## 1. Executive Summary & Problem Statement
