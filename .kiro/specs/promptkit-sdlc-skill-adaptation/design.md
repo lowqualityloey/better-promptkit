@@ -384,11 +384,11 @@ The validator boundary is deterministic and network-free. It validates paths, ID
 
 ## Implementation Sequencing Contract
 
-The dependency graph in `tasks.md` is the single authoritative implementation sequence. It places authority, TDD mode ownership, Minimal readiness mapping, and canonical schemas before affected overlays and places legacy/profile-aware validation after those schemas. It has one final traceability gate. Optional friction evaluation may be explicitly deferred and must not block the final gate.
+The dependency graph in `tasks.md` is the single authoritative implementation sequence. It places authority, TDD mode ownership, Minimal readiness mapping, and canonical schemas before affected overlays and places legacy/profile-aware validation after those schemas. It has one final traceability gate. Empirical friction measurement may remain optional follow-up work and must not block the final gate.
 
 The CI contract/implementation boundary is explicit: Task 11 defines the canonical CI triage path, identities, required fields, states, links, and ownership. Task 12 implements the state transitions, action-block lifecycle, declined-action handling, release handoff, and valid/invalid fixtures from that contract.
 
-For this MVP sequence, Task 15 friction measurement is explicitly deferred. It may be completed later by the PromptKit maintainer and does not block Task 16 or implementation handoff.
+Task 15 is complete for the current MVP through the static evaluation record at `docs/adaptation-friction-evaluation.md`, using the reusable shape at `templates/friction-evaluation-template.md`. The record measures contract-level friction without becoming an execution or approval authority; empirical developer-session measurement remains optional follow-up work.
 
 Task 14's developer-friendly language contract remains a language-only pass over fill-in artifacts. It preserves canonical labels, ownership, TDD semantics, identity forms, and validator behavior.
 

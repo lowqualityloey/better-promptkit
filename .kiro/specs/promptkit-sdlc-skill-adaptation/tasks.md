@@ -284,7 +284,7 @@ Deferred tasks must not be required by MVP completion, active dependencies, or c
 
 ## Cross-Document Traceability
 
-The table below records active, optional, and explicitly deferred task coverage. Task 15 is optional and explicitly deferred for this MVP; its deferral does not remove the measurable-success requirement or block Task 16.
+The table below records active, optional, and deferred task coverage. Task 15 is optional but now has a completed static evaluation; empirical follow-up remains optional and does not block MVP.
 
 | Requirement | Design coverage | Task coverage (active, optional, or deferred) |
 |---|---|---|
@@ -494,9 +494,9 @@ These tasks clarify and extend the active MVP sequence. They supersede any earli
 
   **Requirement coverage:** 1, 2, 3, 5, 9, 10.
 
-- [ ] **Task 15: Assign optional friction evaluation**
+- [x] **Task 15: Assign optional friction evaluation**
 
-  **MVP status:** Optional and explicitly deferred for this MVP. It may be completed after its prerequisites, but it cannot block MVP completion, Task 16, or implementation handoff.
+  **MVP status:** Optional and complete for the current MVP through a static, network-free contract evaluation. Empirical developer-session measurement remains optional follow-up work and cannot block MVP completion or implementation handoff.
 
   **Objective:** Measure whether the Adaptation reduces rework more than it adds process overhead.
 
@@ -505,15 +505,19 @@ These tasks clarify and extend the active MVP sequence. They supersede any earli
   - Use network-free representative Trivial, Minimal Controlled, Full Controlled, TDD-enabled, and CI-failure scenarios.
   - Compare added questions/artifacts with assumptions found, rework avoided, classification quality, false positives, and relative context overhead.
   - Do not impose a universal token budget.
+  - Use `templates/friction-evaluation-template.md` for the reusable record shape.
+  - Keep completed evidence in `docs/adaptation-friction-evaluation.md` or a later explicitly linked evaluation record.
 
   **Dependencies:** Tasks 2, 9, 10, 12, and 14.
 
   **Verification:**
-  - The evaluation distinguishes added process cost from avoided rework.
-  - Results can identify excessive friction.
-  - Formal measurement remains optional for MVP and is explicitly deferred here.
+  - The completed static evaluation distinguishes added process cost from avoided rework and records unavailable empirical measures as `Not measured`.
+  - Results identify excessive contract friction using the Trivial, Minimal, conditional-control, duplication, bypass, and false-positive rules.
+  - Empirical measurement remains optional follow-up work and is not represented as completed evidence.
 
-  **Demoable result:** Maintainers can decide whether an overlay should be simplified after observing representative use.
+  **Demoable result:** Maintainers can review a bounded friction evaluation and decide whether an overlay should be simplified after observing representative use.
+
+  **Evaluation Evidence:** [`FRICTION-adaptation-task-15`](../../../docs/adaptation-friction-evaluation.md#FRICTION-adaptation-task-15)
 
   **Requirement coverage:** 9, 10.
 
@@ -527,7 +531,7 @@ These tasks clarify and extend the active MVP sequence. They supersede any earli
   - Confirm MVP/deferred boundaries remain intact.
   - Confirm no active task requires adapters, network checks, or advanced property testing.
 
-  **Dependencies:** Tasks 1–14; Task 15 explicitly deferred for MVP.
+  **Dependencies:** Tasks 1–15; Task 15 static evaluation complete for MVP, with empirical follow-up remaining optional.
 
   **Verification:**
   - Requirements-to-design-to-task traceability passes.
@@ -540,7 +544,7 @@ These tasks clarify and extend the active MVP sequence. They supersede any earli
 
   **Final traceability gate result:** `Pass`.
 
-  **Recorded evidence:** The requirements, design, and task files use consistent authority, artifact, state, identity, compatibility, and language terms; Task 15 is explicitly deferred; deferred adapters, network checks, and advanced property testing remain outside the active MVP dependency graph.
+  **Recorded evidence:** The requirements, design, and task files use consistent authority, artifact, state, identity, compatibility, language, and friction-evaluation terms; Task 15's static evaluation is complete; empirical follow-up, deferred adapters, network checks, and advanced property testing remain outside required MVP work.
 
   **Scope boundary:** This result records specification consistency only. It does not create a second authority or authorize implementation, commit, release, deployment, rollback, or other remote action.
 
