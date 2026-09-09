@@ -135,17 +135,18 @@ Tasks may run in parallel only after their listed prerequisites are complete and
 
   **Implementation guidance:**
   - Keep TDD disabled by default.
+  - For disabled Code Work, record both the TDD intent register and TDD execution evidence as `N/A — TDD Enforcement Mode disabled`; retain normal dependency-ordered milestones, acceptance criteria, test strategy, review, and verification evidence.
   - Define one authoritative TDD mode field in the canonical Local Task Record; planning and test-plan artifacts may propose or reference it but cannot activate it independently.
   - Use one expected-behavior identifier across Red, Green, and Refactor.
   - Record execution evidence in or linked from the Local Task Record.
   - Keep issue and test-plan artifacts as supporting views.
-  - Permit exceptions only for Documentation, Configuration, and Research Work.
+  - Permit the exception verification path only for Documentation, Configuration, and Research Work; disabled Code Work follows the normal milestone path and is not a TDD exception.
   - Preserve existing `pk:test` seams and `pk:tasks` sizing and acceptance criteria.
 
   **Dependencies:** Tasks 1, 9, and 11.
 
   **Verification:**
-  - TDD-disabled Code Work preserves current behavior.
+  - TDD-disabled Code Work records both TDD evidence fields as `N/A — TDD Enforcement Mode disabled` while retaining normal milestones, acceptance criteria, test strategy, review, and verification.
   - TDD-enabled Code Work has Red-before-Green-before-Refactor evidence.
   - Green and Refactor use the same Red test.
   - Documentation, Configuration, Research, and ambiguous work scenarios are covered.
@@ -332,6 +333,7 @@ These tasks clarify and extend the active MVP sequence. They supersede any earli
   - Default an absent field to `disabled`.
   - Make planning and test-plan fields references/proposals rather than independent activation points.
   - Add explicit enabled and disabled branches to `pk:plan`, `pk:tasks`, and the technical-spec integration.
+  - In the disabled Code Work branch, set both TDD intent and execution evidence to `N/A — TDD Enforcement Mode disabled`; retain normal dependency-ordered milestones, acceptance criteria, test strategy, review, and verification.
   - Keep acceptance criteria, test strategy, review, and verification in both branches.
 
   **Dependencies:** Task 1.
@@ -373,8 +375,9 @@ These tasks clarify and extend the active MVP sequence. They supersede any earli
   **Implementation guidance:**
   - Define one canonical artifact matrix for Planning, Assumption, Decision/Citation/Uncertainty, TDD, Simplification, CI, and release linkage records.
   - Use the existing technical spec, test plan, Local Task Record, review report, and release record where they already provide an owner; only CI triage is a new standalone evidence record.
-  - Use immutable IDs with lowercase kebab-case slugs and a zero-padded three-digit sequence (`<nnn>`):
-    `PLAN-<spec-slug>`, `ASSUMPTION-<spec-slug>-<nnn>`, `DECISION-<spec-slug>-<nnn>`, `CLAIM-<decision-id>-<nnn>`, `CITATION-<decision-id>-<nnn>`, `UNCERTAINTY-<decision-id>-<nnn>`, `TASK-<task-slug>`, `BEHAVIOR-<task-slug>-<nnn>`, `TDD-INTENT-<task-slug>-<nnn>`, `TDD-EXEC-<task-slug>-<behavior-seq>`, `REVIEW-<review-slug>`, `SIMPLIFICATION-<review-id>-<nnn>`, `CI-<provider>-<run-id>`, `ACTION-<ci-id>-<nnn>`, and `RELEASE-<release-slug>`.
+  - Define the CI Triage Record path `docs/releases/ci-triage/<ci-failure-id>.md`, `CI-<provider>-<run-id>` and `ACTION-<ci-id>-<nnn>` identities, required fields, allowed states, cross-record links, and ownership boundaries. Task 11 defines these CI contracts only; it does not implement state transitions, action handling, release handoff, or fixtures.
+  - For `PromptKit Adaptation Profile: sdlc-overlay-v1`, use immutable Adaptation IDs with lowercase kebab-case slugs and a zero-padded three-digit sequence (`<nnn>`): `PLAN-<spec-slug>`, `ASSUMPTION-<spec-slug>-<nnn>`, `DECISION-<spec-slug>-<nnn>`, `CLAIM-<decision-id>-<nnn>`, `CITATION-<decision-id>-<nnn>`, `UNCERTAINTY-<decision-id>-<nnn>`, `TASK-<task-slug>`, `BEHAVIOR-<task-slug>-<nnn>`, `TDD-INTENT-<task-slug>-<nnn>`, `TDD-EXEC-<task-slug>-<behavior-seq>`, `REVIEW-<review-slug>`, `SIMPLIFICATION-<review-id>-<nnn>`, `CI-<provider>-<run-id>`, `ACTION-<ci-id>-<nnn>`, and `RELEASE-<release-slug>`.
+  - For an absent or `none` profile, preserve the legacy `TASK-YYYY-MM-DD-<slug>` identity. Legacy templates and validators remain dated, existing records and links require no retroactive migration, and no validator migration is part of this task.
   - Use the link syntax `[<stable-id>](<relative-path>#<stable-id>)`; use `[<stable-id>](#<stable-id>)` for a record in the same file. Every linked record exposes the same ID as an explicit anchor target.
   - Mark every field Required, Optional, or Not applicable. In the matrix below, `(R)`, `(O)`, and `(N/A)` are shorthand for those full labels; implementation templates must render the full words. `N/A — <reason>` is valid only where the matrix permits it; `None` means the field has no entries and is not the same as an omitted required field. Record metadata does not count toward Minimal Planning’s three interrogation inputs.
   - Define the following canonical matrix before validator implementation:
@@ -384,8 +387,8 @@ These tasks clarify and extend the active MVP sequence. They supersede any earli
     | Planning Record | Section in `docs/specs/<specification>.md`, owned by `pk:plan` | (R) ID, planning depth, requested outcome, observable completion condition, scope boundary, owner, status; Full mode also requires non-goals, affected components, external contracts, failure/rollback considerations, and verification approach | (O) Local Task Record and workflow links; (N/A) Full-only fields in Minimal mode with an explicit reason | `draft`, `ready`, `blocked`, `superseded` |
     | Assumption Record | Planning Record section, owned by `pk:plan` | (R) ID, unanswered decision, provisional answer, impact if wrong, validation action, decision owner, status | (O) supporting evidence and resolved-decision link; (N/A) resolution evidence while not resolved | `open`, `validated`, `accepted`, `rejected`, `superseded` |
     | Decision, Claim, Citation, and Uncertainty records | Planning Record sections, owned by `pk:plan` | (R) Decision ID, statement, options, selected/rejected options, claims, owner, status; each Claim links to a Citation or Uncertainty; each Citation has publisher, title, canonical URL, access date, and supported claim; each Uncertainty has impact, resolution action, owner, and status | (O) `pk:spike` link and additional source notes; (N/A) uncertainty only when the decision has no unresolved claim, recorded as `None` | Decision: `proposed`, `decided`, `deferred`, `superseded`; Citation: `candidate`, `verified`, `stale`, `inaccessible`, `conflicting`, `superseded`; Uncertainty: `open`, `resolved`, `accepted`, `deferred`, `superseded` |
-    | TDD intent register | Existing `docs/tests/<test-plan>.md`, owned by `pk:test` for intent | (R) intent ID, Task Record link, behavior ID, mode reference, test, expected failing assertion, runnable command, status | (O) seam/framework notes; (N/A) complete intent register when mode is disabled, recorded as `N/A — TDD Enforcement Mode disabled` | `proposed`, `ready`, `superseded` |
-    | TDD execution evidence | `docs/tasks/<task-id>.md`, owned by the Local Task Record | (R) execution ID, behavior ID, Task Record link, Red result, Green result, Refactor result, commands/results, status | (O) test-plan link and notes; (N/A) Red/Green/Refactor fields only for Documentation, Configuration, or Research Work with an exception verification link | `planned`, `red_recorded`, `green_recorded`, `refactor_recorded`, `exception`, `blocked`, `complete` |
+    | TDD intent register | Existing `docs/tests/<test-plan>.md`, owned by `pk:test` for intent | (R) intent ID, Task Record link, behavior ID, mode reference, test, expected failing assertion, runnable command, status | (O) seam/framework notes; (N/A) complete intent register when Code Work mode is disabled, recorded as `N/A — TDD Enforcement Mode disabled`; disabled Code Work execution evidence uses the same N/A value while normal milestones, acceptance criteria, test strategy, review, and verification remain required | `proposed`, `ready`, `superseded` |
+    | TDD execution evidence | `docs/tasks/<task-id>.md`, owned by the Local Task Record | (R) execution ID, behavior ID, Task Record link, Red result, Green result, Refactor result, commands/results, status | (O) test-plan link and notes; (N/A) Red/Green/Refactor fields for disabled Code Work, recorded as `N/A — TDD Enforcement Mode disabled` while normal milestones, acceptance criteria, test strategy, review, and verification remain required; Documentation, Configuration, or Research Work use an exception verification link | `planned`, `red_recorded`, `green_recorded`, `refactor_recorded`, `exception`, `blocked`, `complete` |
     | Simplification Audit | Existing `pk:review` report, owned by `pk:review` | (R) review ID, resolved non-empty diff reference, candidate ID or explicit `No Simplification Candidates found`; candidates require location, diff evidence, preservation condition, risk, verification, and recommendation | (O) baseline and related review links; (N/A) candidate fields when the explicit no-candidate result is recorded | `draft`, `complete`, `superseded` |
     | CI Triage Record | `docs/releases/ci-triage/<ci-failure-id>.md`, owned by the CI triage owner | (R) CI ID, evidence, owner, state, classification when sufficient, remediation plan when supported, verification evidence, resume condition, and `pk:ship` link for release candidates; one action block per proposed remote action | (O) authenticated read-only retrieval metadata and `pk:debug` link; (N/A) classification/remediation before evidence is sufficient and action-confirmation block when no remote action is proposed | `evidence_requested`, `evidence_sufficient`, `classified`, `remediation_planned`, `awaiting_confirmation`, `local_reproduction_or_fix`, `verification_pending`, `verified`, `linked_to_pk_ship`, `blocked` |
     | Release linkage | Existing `docs/releases/<release>.md`, owned by `pk:ship` | (R) release ID, CI Triage link, verification link, verified result, and resume condition | (O) review and Task Record links; (N/A) triage link when the release has no CI failure | Existing `pk:ship` release states; the linkage validator recognizes only `pending`, `blocked`, `verified`, and `linked_to_pk_ship` evidence states |
@@ -407,16 +410,18 @@ These tasks clarify and extend the active MVP sequence. They supersede any earli
 
   **Requirement coverage:** 2, 3, 4, 5, 7, 8, 10.
 
-- [ ] **Task 12: Define CI triage states and release handoff**
+- [ ] **Task 12: Implement CI triage state transitions and release handoff**
 
-  **Objective:** Make CI failure recovery stateful from evidence collection through verified release resumption.
+  **Objective:** Implement the Task 11 CI contract from evidence collection through verified release resumption, including action-block behavior and fixtures.
 
   **Implementation guidance:**
-  - Implement the state flow: `evidence_requested`, `evidence_sufficient`, `classified`, `remediation_planned`, `awaiting_confirmation`, `local_reproduction_or_fix`, `verification_pending`, `verified`, and `linked_to_pk_ship`.
+  - Implement the state flow defined by Task 11: `evidence_requested`, `evidence_sufficient`, `classified`, `remediation_planned`, `awaiting_confirmation`, `local_reproduction_or_fix`, `verification_pending`, `verified`, and `linked_to_pk_ship`.
+  - Implement valid and invalid fixtures for the state transitions, action confirmation states, declined-action handling, blocked/resume behavior, and release handoff.
   - Permit `blocked` from any state with an owner and precise resume condition.
   - Define ownership for CI triage, `pk:debug`, engineer remediation, verification, `pk:ship`, and human approval.
   - Create one `ACTION-<ci-id>-<nnn>` confirmation block for each proposed remote retry, repository configuration change, deployment, or rollback. Each block must contain the proposed action, `pending | confirmed | declined` state, approver, confirmation timestamp, bounded scope, reversal or rollback action, and resume condition.
   - Keep action blocks independent: confirming or declining one action does not authorize or decide another, and recording confirmation does not execute the action.
+  - When a remote action is declined, close only that action. Require the parent CI Triage Record to receive a new bounded remediation plan or become `blocked` with an owner and precise resume condition. A declined action cannot produce `verified` or `linked_to_pk_ship`.
   - Allow `N/A — no remote action proposed` for the action-confirmation collection only when no remote action is in the plan; an action block may use `N/A — awaiting confirmation` for approver and timestamp only while pending.
   - Require `verified` plus `linked_to_pk_ship` before release resumption; a passing unrelated validator, classification, or proposed remediation is insufficient.
 
@@ -425,8 +430,10 @@ These tasks clarify and extend the active MVP sequence. They supersede any earli
   **Verification:**
   - Insufficient evidence remains blocked from remediation.
   - Remote-action plans require human confirmation.
+  - A declined action closes only itself and forces a bounded remediation plan or a blocked record with owner/resume condition; it cannot yield `verified` or `linked_to_pk_ship`.
   - Local reproduction returns evidence to the triage record.
   - Release cannot resume from classification or proposed remediation alone.
+  - Valid and invalid fixtures cover every defined state transition, action state, declined-action path, blocked/resume path, and release handoff.
 
   **Demoable result:** A failed release check moves through explicit states and cannot become release approval accidentally.
 
@@ -438,7 +445,7 @@ These tasks clarify and extend the active MVP sequence. They supersede any earli
 
   **Implementation guidance:**
   - Define the optional `PromptKit Adaptation Profile: none | sdlc-overlay-v1` marker.
-  - Keep absent/`none` records under current execution-control validation.
+  - Keep absent/`none` records under current execution-control validation with dated `TASK-YYYY-MM-DD-<slug>` identities; validate `sdlc-overlay-v1` records with Adaptation `TASK-<task-slug>` identities.
   - Validate new fields only for `sdlc-overlay-v1` records.
   - Add equivalent PowerShell and Bash behavior requirements.
   - Do not require retroactive record migration.
@@ -465,7 +472,8 @@ These tasks clarify and extend the active MVP sequence. They supersede any earli
   - Mark Required, Optional, and Not applicable fields.
   - Add examples for unfamiliar planning, evidence, TDD, CI, and verification fields.
   - Allow concise answers and explain when `None`/`N/A` is valid.
-  - Do not change validator-facing canonical labels.
+  - Apply the language pass to these exact artifacts: `templates/execution-task-record-template.md`, `templates/tech-spec-template.md`, `templates/test-plan-template.md`, the CI triage template created by Task 12, `workflows/review.md` and the review report format, and release linkage/release checklist artifacts.
+  - Keep this a language-focused task; do not change validator-facing canonical labels, ownership, TDD semantics, identity forms, or validator behavior.
 
   **Dependencies:** Tasks 2, 3, and 11.
 
@@ -517,8 +525,10 @@ These tasks clarify and extend the active MVP sequence. They supersede any earli
   - Requirements-to-design-to-task traceability passes.
   - TDD authority and default agree everywhere.
   - Minimal/readiness rules agree everywhere.
-  - Artifact paths and CI states agree everywhere.
-  - Legacy compatibility and developer-language rules agree everywhere.
+  - Artifact paths, profile-scoped Task IDs, and CI states agree everywhere.
+  - Task 11 remains the CI contract definition boundary and Task 12 remains the implementation, declined-action, release-handoff, and fixture boundary.
+  - Declined remote actions close only themselves and cannot produce `verified` or `linked_to_pk_ship`.
+  - Legacy compatibility, disabled-Code-Work TDD N/A rules, and developer-language artifact scope agree everywhere.
 
   **Demoable result:** The later implementation agent receives one deterministic, developer-friendly specification with no unresolved implementation-critical decisions.
 

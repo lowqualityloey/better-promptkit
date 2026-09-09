@@ -129,6 +129,8 @@ The adaptation preserves the following established ownership:
 8. Ambiguous work SHALL NOT receive an automatic TDD exception; it shall be clarified or follow the Code Work path.
 9. TDD mode SHALL preserve existing test-pyramid, seam, framework, runner, and task-sizing ownership.
 
+When `TDD Enforcement Mode` is disabled for Code Work, both the TDD intent register and TDD execution evidence SHALL be recorded as `N/A — TDD Enforcement Mode disabled`. Normal dependency-ordered milestones, acceptance criteria, test strategy, review, and verification evidence remain required. The TDD exception verification path applies only to Documentation Work, Configuration Work, and Research Work; it does not replace the normal Code Work path.
+
 ### Requirement 4: Simplification and Deletion Audit
 
 **User Story:** As a reviewer, I want a focused simplification check so that changes remove unnecessary complexity where the diff provides evidence for doing so.
@@ -325,6 +327,8 @@ ACTION-<ci-id>-<nnn>
 RELEASE-<release-slug>
 ```
 
+Task Record identity is profile-scoped. For `PromptKit Adaptation Profile: sdlc-overlay-v1`, the canonical form is `TASK-<task-slug>`. For an absent or `none` profile, preserve the legacy form `TASK-YYYY-MM-DD-<slug>`. Legacy templates and validators remain dated, and existing records and links require no retroactive migration. Other Adaptation IDs that contain `<task-slug>` use the Adaptation Task Record slug; legacy records retain their existing dated identity.
+
 Cross-record links SHALL use `[<stable-id>](<relative-path>#<stable-id>)`; links to records in the same file SHALL use `[<stable-id>](#<stable-id>)`. Every linked record SHALL expose the same stable ID as its explicit anchor target. Every fill-in field SHALL be labeled `Required`, `Optional`, or `Not applicable`. `N/A — <reason>` is permitted only where the artifact contract allows it, while `None` records that a valid collection has no entries. Record metadata does not count as one of Minimal Planning’s three interrogation inputs.
 
 The artifact contract SHALL require, at minimum:
@@ -332,12 +336,14 @@ The artifact contract SHALL require, at minimum:
 - Planning Records: ID, depth, outcome, completion condition, scope boundary, owner, status, and Full-mode fields for non-goals, affected components, external contracts, failure/rollback considerations, and verification approach.
 - Assumption Records: unanswered decision, provisional answer, impact, validation action, owner, and status.
 - Decision/Citation/Uncertainty records: decision options and disposition; claim-to-citation or claim-to-uncertainty links; citation publisher, title, canonical URL, access date, and supported claim; and uncertainty impact, resolution action, owner, and status.
-- TDD intent and execution records: Task Record link, behavior ID, mode reference, test and expected failure command for intent, and Red/Green/Refactor results for execution. When `TDD Enforcement Mode` is disabled, the intent register is `N/A — TDD Enforcement Mode disabled`; Documentation, Configuration, and Research Work use an exception verification link instead of a TDD chain.
+- TDD intent and execution records: Task Record link, behavior ID, mode reference, test and expected failure command for intent, and Red/Green/Refactor results for execution. When `TDD Enforcement Mode` is disabled for Code Work, both the intent register and execution evidence are `N/A — TDD Enforcement Mode disabled`; normal milestones, acceptance criteria, test strategy, review, and verification remain required. Documentation, Configuration, and Research Work use an exception verification link instead of a TDD chain.
 - Simplification Audits: review/diff reference, candidate ID or `No Simplification Candidates found`; candidates include location, diff evidence, behavior-preservation condition, risk, verification, and recommendation.
 - CI Triage Records: CI evidence, owner, state, sufficient-evidence classification, supported remediation, verification evidence, resume condition, and `pk:ship` link for release candidates. CI states SHALL be `evidence_requested`, `evidence_sufficient`, `classified`, `remediation_planned`, `awaiting_confirmation`, `local_reproduction_or_fix`, `verification_pending`, `verified`, `linked_to_pk_ship`, or `blocked`.
 - Release linkage: release ID, CI Triage link, verification link, verified result, and resume condition; `pk:ship` remains the authority for release state.
 
-Each proposed remote retry, repository configuration change, deployment, or rollback SHALL have its own `ACTION-<ci-id>-<nnn>` block containing the proposed action, `pending | confirmed | declined` confirmation state, approver, confirmation timestamp, bounded scope, reversal or rollback action, and resume condition. Approver and timestamp MAY be `N/A — awaiting confirmation` only while the action is pending; confirmed or declined actions require both. One action’s confirmation SHALL never authorize another action, and recording confirmation SHALL not execute the action. A release candidate SHALL not resume unless its CI Triage Record reaches `verified` and then `linked_to_pk_ship`.
+Each proposed remote retry, repository configuration change, deployment, or rollback SHALL have its own `ACTION-<ci-id>-<nnn>` block containing the proposed action, `pending | confirmed | declined` confirmation state, approver, confirmation timestamp, bounded scope, reversal or rollback action, and resume condition. Approver and timestamp MAY be `N/A — awaiting confirmation` only while the action is pending; confirmed or declined actions require both. One action’s confirmation SHALL never authorize another action, and recording confirmation SHALL not execute the action. A declined remote action closes only that action. The parent CI Triage Record SHALL receive a new bounded remediation plan or become `blocked` with an owner and precise resume condition; the decline event SHALL NOT transition the record to `verified` or `linked_to_pk_ship`. A release candidate SHALL not resume unless its CI Triage Record reaches `verified` and then `linked_to_pk_ship`.
+
+The Task 11/Task 12 boundary is normative: Task 11 defines the CI triage path, identities, required fields, states, links, and ownership contracts. Task 12 implements the defined CI state transitions, action-block behavior, release handoff, and valid/invalid fixtures.
 
 The validator boundary is deterministic and network-free: it SHALL check IDs, locations, labels, links, states, required-field conditions, ownership, cross-record invariants, and deferred-scope boundaries. It SHALL not verify external URLs, execute commands, or authorize remote or release actions.
 
@@ -378,6 +384,8 @@ Canonical field names remain stable for agents and validators, but every develop
 ```
 
 Acronyms must be expanded on first use. Technical definitions remain in the glossary, but developers should not need to read the glossary to complete a normal Minimal record. Required fields must accept concise answers and explicitly explain when `None` or `N/A` is valid.
+
+Task 14's language-only implementation scope is explicit: `templates/execution-task-record-template.md`, `templates/tech-spec-template.md`, `templates/test-plan-template.md`, the CI triage template created by Task 12, `workflows/review.md` and the review report format, and release linkage/release checklist artifacts. Task 14 SHALL not change canonical labels, ownership, TDD semantics, identity forms, or validator behavior.
 
 ### Friction Evaluation Ownership
 
