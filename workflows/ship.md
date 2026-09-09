@@ -140,6 +140,10 @@ Before Step 3, record the execution evidence needed by the release evaluation:
 
 Use the optional **Execution-Control Evidence** section in `templates/release-checklist.md` for the Task Record path and ID, specification, state, owner/approval boundary, acceptance and changed-file evidence, candidate revision, verification/CI/review/commit/PR links, checkpoint/handoff, scope or exception records, blockers, host/timer limitation, and release-impact evaluation. `N/A` is valid for Trivial Work or consumers that do not adopt the optional protocol. This evidence evaluates a candidate against the approved immutable `v1.0.0` baseline; it does not rewrite that baseline or authorize tag, push, publication, deployment, or rollback.
 
+### Canonical Artifact Linkage
+
+Use the shared [`Canonical Artifact Contract`](../docs/WORKFLOW-MAP.md#canonical-artifact-contract) for release linkage. Save the existing release record at `docs/releases/<release>.md`, expose `RELEASE-<release-slug>` as an explicit anchor, and link the verified result and resume condition there. When the later CI overlay exists, link `CI-<provider>-<run-id>` from the release record only after CI state is `verified` and then `linked_to_pk_ship`; a CI record never becomes release approval.
+
 ### Better-PromptKit Internal Release Evaluation
 
 This evaluation applies only to the Better-PromptKit repository. It is a documentation record for deriving and reviewing a release candidate from Better-PromptKit evidence. It does not impose Conventional Commit, SemVer, release-note, tag, remote, publication, deployment, or rollback requirements on repositories that consume Better-PromptKit.

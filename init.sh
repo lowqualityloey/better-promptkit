@@ -28,9 +28,11 @@ DOC_DIRS=(
     "docs/auth"
     "docs/api"
     "docs/tests"
+    "docs/reviews"
     "docs/perf"
     "docs/tasks"
     "docs/releases"
+    "docs/releases/ci-triage"
 )
 for dir in "${DOC_DIRS[@]}"; do
     if [[ ! -d "$PROJECT_ROOT/$dir" ]]; then
@@ -188,8 +190,10 @@ All generated project documentation must be saved to the host project:
 - Auth Specs: docs/auth/
 - API Contracts: docs/api/
 - Test Plans: docs/tests/
+- Review Reports: docs/reviews/
 - Performance Audits: docs/perf/
 - Releases: docs/releases/
+- CI Triage Evidence: docs/releases/ci-triage/
 <!-- PROMPTKIT_END -->
 EOF
 )

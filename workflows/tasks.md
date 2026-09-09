@@ -41,12 +41,10 @@ An issue is only ready for implementation when its completion can be objectively
    - Inspect `docs/specs/` for the latest technical specification.
    - If no spec exists, ask the user or run `pk:plan` first for substantive features.
 2. **Define Phasing Strategy**:
-   - **Full-Stack / Multi-Layer Features**: Group tasks into **TDD Phased Milestones** aligned with `pk:plan`:
-     - **Milestone 1 (Contracts & Schema - RED)**: Database migrations, types, API contracts, failing integration tests.
-     - **Milestone 2 (Core Domain Logic - GREEN)**: Service layer, domain logic, repository queries making tests pass.
-     - **Milestone 3 (Presentation & A11y)**: Accessible UI components, forms, client state, loading/error boundaries.
-     - **Milestone 4 (Hardening & Telemetry)**: End-to-end tests, telemetry logging, Contract migration cleanup.
-   - **Localized Features (e.g. pure UI or single script)**: Use an adaptive flat list ordered strictly by dependency (Task 1 -> Task 2 -> Task 3).
+   - **Code Work, including Full-Stack or Multi-Layer Features**: First read the canonical Local Task Record's `TDD Enforcement Mode`. When it is `enabled`, order the work as Red -> Green -> Refactor with a stable Behavior ID and linked execution evidence. When it is `disabled`, use normal dependency-ordered milestones covering contracts or seams, implementation, presentation or integration as applicable, hardening, acceptance, test strategy, review, and verification. Do not require a Red-Green-Refactor chain in the disabled branch.
+   - **Documentation, Configuration, and Research Work**: Use an exception verification path with explicit acceptance, evidence, review, and verification rather than Code Work TDD milestones.
+   - **Ambiguous Work**: Follow the Code Work path until the work type and TDD mode are clarified in the Task Record.
+   - **Localized Code Work**: Use an adaptive flat list ordered strictly by dependency (Task 1 -> Task 2 -> Task 3), applying the same enabled or disabled TDD branch.
 
 ### Controlled Work Execution Overlay
 
@@ -61,6 +59,17 @@ When Phase 1 classifies work as Controlled Work, create the canonical Local Task
 - Keep external GitHub/Jira/Linear references optional. A dated breakdown document or external issue may index the work, but the per-task Local Task Record remains authoritative for Controlled Work.
 - Do not move the record to `in_progress` until readiness is complete, the start time and execution scope are recorded, and the active-task pointer is owned by exactly one task in the current scope.
 - If the task expands its objective, files, acceptance criteria, dependencies, non-goals, risk, or verification, create a Scope Change Record before implementation. Independent discoveries become separate Task Records.
+
+### Task Record TDD Enforcement Contract
+
+The canonical Local Task Record owns the separate fields `Work Type: Code Work | Documentation Work | Configuration Work | Research Work` and `TDD Enforcement Mode: disabled | enabled`. An absent TDD field is interpreted as `disabled` for legacy records. Ambiguous Work Type follows Code Work until clarified. Do not overload the existing execution-policy field `Mode: Gated Mode`; `Mode` continues to control execution authorization and batch policy.
+
+- A planning record or test plan may contain a `TDD Enforcement Mode` proposal/reference and TDD intent entries, but those values do not activate TDD or control task state.
+- If planning, test-plan, and Task Record values disagree, readiness is blocked until the disagreement is reconciled. After reconciliation, the Task Record value is authoritative.
+- For Code Work with `enabled`, create Red -> Green -> Refactor milestones. Keep one `BEHAVIOR-<task-slug>-<nnn>` identity through the `TDD-INTENT-<task-slug>-<nnn>` intent and `TDD-EXEC-<task-slug>-<behavior-seq>` execution evidence. Red records the expected failing assertion and runnable command; Green and Refactor retain that same behavior identity.
+- For Code Work with `disabled`, create complete dependency-ordered milestones with acceptance criteria, test strategy, review, and verification. Red-Green-Refactor evidence is not mandatory.
+- Documentation, Configuration, and Research Work use an exception verification path with an explicit reason and evidence link. They do not acquire hidden TDD requirements.
+- Ambiguous work follows the Code Work path until the Task Record clarifies the work type and mode.
 
 The execution states `planned`, `ready`, `in_progress`, `checkpoint_due`, `blocked`, `paused`, `handoff_ready`, `awaiting_review`, `completed`, and `aborted` map onto the existing Kanban statuses without replacing them:
 
@@ -144,7 +153,7 @@ For each decomposed task, fill out `.promptkit/templates/issue-task-template.md`
 
 ### Engineer Handoff
 
-Before implementation, the Engineer validates the Task ID, scope, acceptance criteria, revision context, blockers, invariants, and exactly one prioritized next action. Scope expansion requires a Scope Change Record before changing the objective, files, acceptance criteria, dependencies, non-goals, risk, or verification condition.
+Before implementation, the Engineer validates the Task ID, scope, acceptance criteria, revision context, blockers, invariants, and exactly one prioritized next action. The Engineer also confirms the Task Record's `TDD Enforcement Mode`, checks that any planning or test-plan proposal agrees with it, and follows the enabled, disabled, or exception path recorded there. Scope expansion requires a Scope Change Record before changing the objective, files, acceptance criteria, dependencies, non-goals, risk, or verification condition.
 
 ---
 

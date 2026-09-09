@@ -1,10 +1,17 @@
 # Better-PromptKit Release Evaluation: [Evaluation ID]
 
+<!-- Replace the example anchor ID with the immutable Release ID before saving the record. -->
+<a id="RELEASE-release-slug"></a>
+
 <!-- This is a documentation-first internal evaluation record. It records a bounded range, normalized evidence, a preliminary SemVer Candidate, QA review, and a separate approval decision. It does not invoke Git, remote services, tag creation, hosted-release creation, changelog publication, deployment, or rollback. -->
+
+<!-- This evaluation supplies candidate and QA evidence; the canonical release linkage fields live in the existing `docs/releases/<release>.md` release checklist. -->
 
 ## 1. Evaluation Identity and Scope
 
 - **Record Type**: `Release Evaluation`
+- **Release ID [Required]**: `RELEASE-<release-slug>`
+- **Canonical Release Record Path [Required]**: `docs/releases/<release>.md`
 - **Evaluation ID**: `[EVAL-YYYY-MM-DD-slug]`
 - **Repository Scope**: `Better-PromptKit only`
 - **Evaluation Owner / Role**: `[Release Coordinator, Planner/Architect, or QA/Reviewer]`

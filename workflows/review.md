@@ -10,6 +10,20 @@ Review across **two orthogonal axes**:
 1. **Spec Fidelity**: Does the change faithfully implement what the issue, PR, or user spec requested without scope creep or missed constraints?
 2. **Standards & Code Quality**: Does the change adhere to documented project standards, Martin Fowler's code smell baseline, OWASP security, performance, accessibility, and zero accidental data loss?
 
+## Canonical Review Report
+
+`pk:review` owns one durable two-axis report at `docs/reviews/<review-slug>.md`. The report has the immutable identity `REVIEW-<review-slug>` and exposes that identity as an explicit `<a id="REVIEW-<review-slug>"></a>` anchor immediately before its heading.
+
+### Review Record Metadata
+
+- **Review ID [Required]**: `REVIEW-<review-slug>`
+- **Review Status [Required]**: `draft | complete | superseded`
+- **Resolved Diff Reference [Required]**: `[non-empty fixed-point diff link or revision]`
+
+The report remains the sole home for review findings and the recommendation-only Simplification Audit; keep that audit inside the existing two-axis report and write the exact result `No Simplification Candidates found` when no defensible candidate exists. Do not create a separate simplification authority or use the untracked `semantic-review/` directory as a canonical path.
+
+From a Task Record, link the report with `[REVIEW-<review-slug>](../reviews/<review-slug>.md#REVIEW-<review-slug>)`; from another directory, use the relative path to `docs/reviews/<review-slug>.md`. A same-file link uses `[REVIEW-<review-slug>](#REVIEW-<review-slug>)`. Link the report to the canonical Task Record when reviewing Controlled Work. A review report records findings and recommendations only; it does not edit source or authorize commit, merge, release, deployment, rollback, or other remote actions.
+
 ---
 
 ## Why Two Axes?
@@ -192,6 +206,7 @@ Audit the diff against documented project standards (`PROMPTKIT.md`, `CODING_STA
 
 ## Completion Criteria
 - Dual-axis evaluation completed (Spec Fidelity vs. Technical Standards).
+- Durable report saved to `docs/reviews/<review-slug>.md` with a `REVIEW-<review-slug>` anchor.
 - Zero unaddressed `🚨 [BLOCKING]` data loss or security issues.
 - All code smells linked to actionable refactoring remedies.
 - Verification tests pass against `.promptkit/protocols/code-quality-gate.md`.

@@ -39,7 +39,7 @@ jobs:
           mkdir -p "$TEST_DIR"
           ./init.sh "$TEST_DIR"
 
-          for d in adrs specs rca spikes design data auth api tests perf tasks releases; do
+          for d in adrs specs rca spikes design data auth api tests reviews perf tasks releases releases/ci-triage; do
             if [ ! -d "$TEST_DIR/docs/$d" ]; then
               echo "Error: Missing directory docs/$d"
               exit 1
@@ -165,7 +165,7 @@ jobs:
           $testDir = New-Item -ItemType Directory -Path "$env:RUNNER_TEMP\test-project" -Force
           .\init.ps1 -ProjectRoot $testDir.FullName
 
-          $docDirs = @("adrs", "specs", "rca", "spikes", "design", "data", "auth", "api", "tests", "perf", "tasks", "releases")
+          $docDirs = @("adrs", "specs", "rca", "spikes", "design", "data", "auth", "api", "tests", "reviews", "perf", "tasks", "releases", "releases\ci-triage")
           foreach ($d in $docDirs) {
             $p = Join-Path $testDir.FullName "docs\$d"
             if (-not (Test-Path $p)) {

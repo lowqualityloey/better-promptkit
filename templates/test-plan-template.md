@@ -7,7 +7,27 @@
 
 ---
 
-## 1. Feature Risk Assessment & Critical Invariants
+## 1. TDD Intent Register (Task Record-Owned)
+
+- **Task Record Link [Required for Controlled Work]**: `[TASK-<task-slug>](../tasks/<task-id>.md#TASK-<task-slug>)`
+- **TDD Enforcement Mode Reference [Optional]**: `disabled | enabled | N/A - no Task Record or Trivial Work`; an absent Task Record field is effective `disabled`
+- **Mode Authority [Required]**: `Canonical Local Task Record`; this test plan is a supporting reference and cannot activate TDD.
+- **Mode Reconciliation [Required]**: `[Matches Task Record | Disagreement blocks readiness | N/A]`
+
+When the Task Record mode is `enabled` for Code Work, create one row per behavior. Keep the same Behavior ID in the Task Record's Red, Green, and Refactor evidence. The expected Red assertion and runnable command must be concrete before the intent becomes `ready`.
+
+<!-- Replace the example anchor with each immutable intent ID. -->
+<a id="TDD-INTENT-task-slug-001"></a>
+
+| Intent ID [Required] | Behavior ID [Required] | Task Record Link [Required] | Test / Expected Failing Assertion [Required] | Runnable Red Command [Required] | Status [Required] |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `TDD-INTENT-<task-slug>-<nnn>` | `BEHAVIOR-<task-slug>-<nnn>` | `[TASK-<task-slug>](../tasks/<task-id>.md#TASK-<task-slug>)` | `[observable behavior and failing assertion]` | `[exact command]` | `proposed | ready | superseded` |
+
+When TDD is disabled, record `N/A - TDD Enforcement Mode disabled` for this register instead of inventing intent rows. Documentation, Configuration, and Research Work use `N/A - <reason>` plus the exception verification link. `None` means there are no entries only after the applicable mode and work type are recorded.
+
+---
+
+## 2. Feature Risk Assessment & Critical Invariants
 
 | Risk / Invariant Description | Severity | Target Test Seam | Protection Mechanism |
 | :--- | :--- | :--- | :--- |
@@ -18,7 +38,7 @@
 
 ---
 
-## 2. Test Seam Allocation Matrix
+## 3. Test Seam Allocation Matrix
 
 ### Unit Tests (Pure Logic, <1ms execution)
 | Test Target | File / Function | Scenarios Tested |
@@ -43,7 +63,7 @@
 
 ---
 
-## 3. External Mock Boundaries
+## 4. External Mock Boundaries
 
 *Rule: Never mock internal database or ORM; mock only external networks.*
 
@@ -55,7 +75,7 @@
 
 ---
 
-## 4. Test Data Factories
+## 5. Test Data Factories
 
 ```typescript
 // tests/factories/workspace.factory.ts
@@ -74,7 +94,7 @@ export function buildWorkspace(overrides: Partial<Workspace> = {}): Workspace {
 
 ---
 
-## 5. Anti-Flakiness & Timing Checklist
+## 6. Anti-Flakiness & Timing Checklist
 - [ ] Zero arbitrary `sleep()` or `setTimeout()` calls in test suites.
 - [ ] Time-dependent tests use `vi.useFakeTimers()`.
 - [ ] Database tests use isolated tenant IDs or per-test transaction rollbacks.
@@ -82,7 +102,7 @@ export function buildWorkspace(overrides: Partial<Workspace> = {}): Workspace {
 
 ---
 
-## 6. CI Pipeline & Coverage Targets
+## 7. CI Pipeline & Coverage Targets
 - **Unit & Integration Suite Execution**: `pnpm test:run` (Target runtime: < 30 seconds)
 - **E2E Suite Execution**: `pnpm test:e2e` (Target runtime: < 2 minutes)
 - **Core Domain Coverage Target**: [e.g., 90%+ path coverage on billing and auth state machines]

@@ -6,7 +6,7 @@ Trigger anytime with: `pk:plan` (or `/pk-plan`)
 ## Mission
 Guide the developer through **Spec-Driven Development (SDD)**, robust architectural planning, and zero-downtime system design before writing production code.
 
-Transform ambiguous product or technical requirements into clear technical specifications, deep modular architectures, strict interface contracts, empirical failure mode analyses (FMEA), zero-downtime database evolution plans, and test-first (TDD) implementation milestones.
+Transform ambiguous product or technical requirements into clear technical specifications, deep modular architectures, strict interface contracts, empirical failure mode analyses (FMEA), zero-downtime database evolution plans, and implementation milestones selected by the canonical Local Task Record's TDD Enforcement Mode.
 
 ---
 
@@ -42,8 +42,8 @@ Transform ambiguous product or technical requirements into clear technical speci
 │ 3. Data Contracts & Evolution    │ 4. FMEA Failure Analysis      │
 │    Types, Expand-Contract schema │    Threats, race guards, DLQs │
 ├──────────────────────────────────┼───────────────────────────────┤
-│ 5. TDD Phased Milestones         │ 6. Spec Artifact & Grilling   │
-│    Red-Green-Refactor PR breakdown│   docs/specs/ + pk:grill prep │
+│ 5. Conditional Milestones         │ 6. Spec Artifact & Grilling   │
+│    Task Record mode branch        │   docs/specs/ + pk:grill prep │
 └──────────────────────────────────┴───────────────────────────────┘
 ```
 
@@ -51,7 +51,7 @@ Transform ambiguous product or technical requirements into clear technical speci
 
 For the PromptKit SDLC Adaptation, use `pk:route` to classify `Trivial` versus `Controlled` Work before selecting planning depth. `Minimal` and `Full` Planning Interrogation are planning-depth choices for Controlled Work, not alternate execution classifications or routing branches. Trivial Work keeps the existing fast path with no mandatory Adaptation artifact or interrogation. Controlled Work still requires the existing Local Task Record readiness gate before implementation.
 
-The planner may map a Minimal or Full result into the existing architecture, contract, migration, FMEA, milestone, and task inputs, but planning does not change execution state or approve implementation, commits, pull requests, releases, deployment, or rollback. Existing workflow ownership and approval boundaries remain authoritative; the shared matrix is maintained in [`docs/WORKFLOW-MAP.md`](../docs/WORKFLOW-MAP.md). This phase adds the Planning Record and Assumption Record path below; canonical cross-artifact schemas and validator-profile behavior remain later work.
+The planner may map a Minimal or Full result into the existing architecture, contract, migration, FMEA, milestone, and task inputs, but planning does not change execution state or approve implementation, commits, pull requests, releases, deployment, or rollback. Existing workflow ownership and approval boundaries remain authoritative; the shared matrix is maintained in [`docs/WORKFLOW-MAP.md`](../docs/WORKFLOW-MAP.md). This phase adds the Planning Record, Assumption Record, and canonical artifact contract paths below; validator-profile behavior remains later work.
 
 ### Planning Depth and Assumption Branch
 
@@ -125,21 +125,18 @@ Analyze system failure modes systematically before coding:
    | Concurrent Double-Submit | High / Medium | Unique constraint violation | Client idempotency key + row lock | Return existing transaction status |
    | Cache Cluster Eviction | Low / High | Cache miss rate spike | Degraded fallback to DB replica | Throttled cache repopulation |
 
-### Step 5: Phased Implementation Milestones (TDD Breakdown)
-Decompose the implementation into bite-sized, independently reviewable PRs following **Test-Driven Development (Red-Green-Refactor)**:
+### Step 5: Conditional Implementation Milestones (Task Record TDD Mode)
+Select the milestone shape from the canonical Local Task Record. `pk:plan` and `pk:test` may record a TDD proposal or intent reference, but neither can activate TDD. The Task Record field `TDD Enforcement Mode: disabled | enabled` is authoritative; an absent field is `disabled`. If a planning or test-plan value disagrees with the Task Record, readiness is blocked until the records are reconciled, and the Task Record value controls execution.
 
-- **Milestone 1 (Contracts & Seams - RED)**:
-  - Add database schema migrations (Expand phase).
-  - Define API contracts and schemas.
-  - Write automated failing integration tests asserting expected behavior against the interface.
-- **Milestone 2 (Core Domain Engine - GREEN)**:
-  - Implement business logic, repository methods, and state machines to satisfy the tests.
-  - Verify all red tests transition to green.
-- **Milestone 3 (Presentation & Client Integration)**:
-  - UI components, form validation, accessible design tokens (WCAG 2.2 AA), loading/error boundaries.
-- **Milestone 4 (Hardening, Telemetry & Contract Phase)**:
-  - Structured logging with correlation IDs, alerting dashboards, E2E user flows.
-  - Finalize the Contract phase of schema migration (remove deprecated legacy fields).
+- **Code Work with `TDD Enforcement Mode: enabled`**: Use an explicit **Red -> Green -> Refactor** sequence. Each behavior has a stable Behavior ID, a test-plan intent, an expected failing assertion and runnable Red command, then linked Green and Refactor evidence in the Task Record. Keep acceptance criteria, test strategy, review, and verification in the sequence.
+  - **Red - Contracts and Seams**: Define the observable behavior, contracts, seams, and failing test assertion.
+  - **Green - Implementation**: Implement the smallest change that satisfies the recorded Red behavior and preserve the same Behavior ID.
+  - **Refactor - Hardening and Verification**: Improve structure, presentation, telemetry, or migration safety without changing the behavior contract; record final test, review, and verification evidence.
+- **Code Work with `TDD Enforcement Mode: disabled`**: Use normal dependency-ordered milestones. Include contracts or seams, implementation, presentation or integration as applicable, hardening, acceptance, test strategy, review, and verification, but do not require a Red-Green-Refactor chain.
+- **Documentation, Configuration, or Research Work**: Use the appropriate exception verification path with explicit acceptance, evidence, review, and verification. TDD Red/Green/Refactor evidence is `N/A - <reason>` and does not become a hidden requirement.
+- **Ambiguous Work**: Treat the work as Code Work until its type and TDD mode are clarified in the Task Record.
+
+The milestone plan must link to the canonical Task Record and test plan, preserve one behavior identity through enabled TDD execution, and never treat a test-plan entry as execution approval.
 
 ### Controlled Work Task-Record Handoff
 
@@ -150,6 +147,7 @@ After the selected planning depth is complete, provide the execution inputs for 
 - **Dependencies and Risk**: Record dependencies with owners or `None`, risk, mitigation, and any approval boundary.
 - **Acceptance and Verification Inputs**: Provide stable `AC-*` criteria inputs and one command, check, artifact assertion, or explicit not-applicable verification condition.
 - **Execution Policy**: Identify `Gated Mode` or an explicitly approved finite batch, checkpoint intervals, stop conditions, and host timer limitations.
+- **TDD Enforcement Mode**: Carry the Task Record-owned `disabled | enabled` value and any Behavior ID or TDD intent links as references. An absent value defaults to `disabled`; a planning or test-plan disagreement blocks readiness.
 - **Locked Invariants**: Carry forward architectural decisions and non-negotiable constraints for the Task Record and later handoff.
 
 `pk:plan` supplies architecture and planning inputs. `pk:tasks` creates the stable Task ID and canonical `docs/tasks/<task-id>.md` Task Record; planning does not start implementation, change task state to `in_progress`, or approve commits, pull requests, releases, or deployments.
@@ -169,7 +167,8 @@ The Planner / Architect hands the objective, bounded files or behaviors, accepta
 - Deep module boundaries and test surfaces clearly mapped.
 - Zero-downtime Expand-Contract migration plan detailed for all database changes.
 - FMEA failure modes and mitigation fallbacks explicitly documented.
-- Phased implementation broken down into test-first (TDD) milestones.
+- Implementation milestones follow the Task Record's TDD Enforcement Mode: enabled Code Work has Red -> Green -> Refactor evidence; disabled Code Work has complete dependency-ordered milestones without mandatory TDD.
+- Documentation, Configuration, and Research Work use an explicit exception verification path, and ambiguous work remains on the Code Work path until clarified.
 
 
 ---

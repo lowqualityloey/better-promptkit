@@ -1,13 +1,17 @@
 # Task Record: [Short controlled-work objective]
 
+<!-- Replace the example anchor with the immutable Task ID. For an Adaptation record use the `TASK-<task-slug>` form; for a legacy record preserve `TASK-YYYY-MM-DD-<slug>`. Derived IDs use the same full task slug. -->
+<a id="TASK-task-slug"></a>
+
 ## 1. Identity and Authority
 
 - **Record Type**: `Task Record`
-- **Task ID**: `TASK-[YYYY-MM-DD]-[slug]`
+- **Task ID**: `TASK-<task-slug>` for `sdlc-overlay-v1`; preserve `TASK-YYYY-MM-DD-<slug>` for legacy/no-profile records
+- **Work Type**: `Code Work | Documentation Work | Configuration Work | Research Work`; ambiguous work follows Code Work until clarified
 - **Specification**: `docs/specs/[specification].md` or `.kiro/specs/[specification]/`
-- **Planning Record Link**: `[Canonical PLAN-<spec-slug> link; required for new Adaptation Controlled Work, or N/A for legacy/no-adaptation record]`
+- **Planning Record Link**: `[PLAN-<spec-slug>](../specs/<specification>.md#PLAN-<spec-slug>)`; required for new Adaptation Controlled Work, or `N/A` for legacy/no-adaptation records
 - **Planning Depth Reference (Optional)**: `[Minimal | Full | N/A]`
-- **Assumption Record Links (Optional)**: `[ASSUMPTION-* links, None, or N/A]`
+- **Assumption Record Links (Optional)**: `[ASSUMPTION-<spec-slug>-<nnn>](../specs/<specification>.md#ASSUMPTION-<spec-slug>-<nnn>)`, `None`, or `N/A`
 - **External Reference (Optional)**: `[Issue, ticket, or N/A]`
 - **Owner / Actor**: `[Person, role, or agent]`
 - **Execution Scope**: `[Repository, workspace, package, or session boundary]`
@@ -15,6 +19,8 @@
 - **Created**: `[YYYY-MM-DD HH:MM UTC]`
 
 > This Local Task Source is authoritative for Controlled Work. Planning Record and Assumption Record links provide context only; they do not control readiness, execution state, active ownership, completion, or approval. Existing records remain valid when these optional traceability fields are absent.
+>
+> The optional `PromptKit Adaptation Profile: none | sdlc-overlay-v1` validator boundary is deferred to the later Adaptation validator work. Do not require it for legacy records or use it to reinterpret the execution-policy `Mode`.
 
 ## 2. Objective and Boundaries
 
@@ -40,7 +46,8 @@
 
 ## 4. Execution Policy
 
-- **Mode**: `Gated Mode` <!-- Use Approved Batch Mode only with a linked Batch Authorization. -->
+- **Mode**: `Gated Mode` <!-- Use Approved Batch Mode only with a linked Batch Authorization. This is execution policy, not TDD mode. -->
+- **TDD Enforcement Mode**: `disabled` <!-- enabled is opt-in for Code Work; an absent field defaults to disabled. The Task Record owns this field. -->
 - **Batch Authorization**: `[docs/tasks/batch-[batch-id].md or N/A]`
 - **Soft Checkpoint**: `[Around 60 minutes, configured alternative, or N/A with reason]`
 - **Hard Checkpoint**: `[At or before 90 minutes, configured alternative, or N/A with reason]`
@@ -73,14 +80,35 @@ A task cannot enter `ready` until its objective, scope, non-goals, acceptance cr
 - **Checkpoint Records**: `[docs/tasks/[task-id].checkpoint-[sequence].md or None]`
 - **Handoff Records**: `[docs/tasks/[task-id].handoff-[sequence].md or None]`
 - **Verification Evidence**: `[Commands and results]`
+- **Behavior IDs**: `[BEHAVIOR-<task-slug>-<nnn> links, or N/A - TDD disabled or non-Code Work]`
+- **TDD Execution Evidence**: `[TDD-EXEC-<task-slug>-<behavior-seq> entries with Red, Green, Refactor commands/results and status, or N/A - TDD Enforcement Mode disabled]`
+- **TDD Exception Verification**: `[Exception verification link and reason for Documentation, Configuration, or Research Work, or N/A - Code Work]`
 - **CI Evidence**: `[Provider, workflow/job, run, revision, result, or N/A]`
-- **Review Evidence**: `[Review report, reviewer, result, or N/A]`
+- **Review Evidence**: `[REVIEW-<review-slug>](../reviews/<review-slug>.md#REVIEW-<review-slug>); reviewer; result; or N/A]`
 - **Commit Evidence**: `[Commit SHA and message, or N/A before commit]`
 - **Pull Request Evidence**: `[PR URL/number, or N/A before PR]`
 - **Release Evidence**: `[Release evaluation/tag/post-release link, or N/A]`
 - **Blocker and Resume Condition**: `[Blocker, owner, evidence, and precise resume condition, or None]`
 
-### Completion Decision
+### TDD Execution Evidence Shape
+
+Use one block per enabled Code Work behavior. The Local Task Record is authoritative for execution evidence; the test plan is a supporting intent reference.
+
+<!-- Replace the example anchors with each immutable execution and behavior ID. -->
+<a id="TDD-EXEC-task-slug-001"></a>
+<a id="BEHAVIOR-task-slug-001"></a>
+
+- **Execution ID [Required when enabled]**: `TDD-EXEC-<task-slug>-<behavior-seq>`
+- **Behavior ID [Required when enabled]**: `BEHAVIOR-<task-slug>-<nnn>`
+- **Task Record Link [Required]**: `[TASK-<task-slug>](#TASK-<task-slug>)`
+- **Red Result [Required when enabled]**: `[failing assertion, command, and result]`
+- **Green Result [Required when enabled]**: `[passing result for the same behavior]`
+- **Refactor Result [Required when enabled]**: `[passing result after refactor or explicit no-refactor reason]`
+- **Commands and Results [Required when enabled]**: `[exact commands and observable results]`
+- **Execution Status [Required when enabled]**: `planned | red_recorded | green_recorded | refactor_recorded | exception | blocked | complete`
+- **Exception Verification [Not applicable for enabled Code Work]**: `[link and reason, or N/A - TDD Enforcement Mode disabled or exception work type]`
+
+
 
 - **Completion State**: `[awaiting_review | completed | blocked | paused | aborted]`
 - **Acceptance Results**: `[AC-1 result; AC-2 result; ...]`
