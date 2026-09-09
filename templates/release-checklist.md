@@ -3,6 +3,12 @@
 <!-- Replace the example anchor with the immutable Release ID, for example: <a id="RELEASE-2026-09-release"></a> -->
 <a id="RELEASE-release-slug"></a>
 
+> **Developer-friendly fill-in guide:** **Required** means the release record cannot be complete without a concrete value. **Optional** means record it when the condition applies and use the stated `N/A` value otherwise. **Not applicable** means the release or appendix does not use that concern, such as `N/A` for Trivial Work or a consumer repository. Prefer short evidence with a stable link, exact revision, command, result, and owner. For example, `Verification Link: [CHECK-123](../tests/checks.md#CHECK-123)` and `Verified Result: Pass` are stronger than `verified` alone.
+>
+> **Field status summary:** Release identity, version/tag, deploy lead, target environment, date, commit, linkage state, verification result, and resume condition are **Required**. Execution-control evidence is **Required when Controlled Work applies** and **Not applicable** otherwise. Internal release-evaluation fields are **Required when the Better-PromptKit appendix applies**, **Optional** when conditional, and **Not applicable** for consumers. Environment, migration, smoke-test, observation, and rollback entries are **Required when that release concern exists**; record `None` or `N/A` only where the surrounding prompt permits it.
+>
+> **Acronym guide:** `CI` means Continuous Integration; `TDD` means Test-Driven Development; `QA` means Quality Assurance; `SemVer` means Semantic Versioning; `RPO/RTO` mean Recovery Point Objective/Recovery Time Objective; and `PII` means Personally Identifiable Information. The explanations are guidance only and do not change release, deployment, rollback, or approval ownership.
+
 - **Release ID [Required]**: `RELEASE-<release-slug>`
 - **Canonical Release Record Path [Required]**: `docs/releases/<release>.md`
 - **Release Linkage State [Required]**: `pending | blocked | verified | linked_to_pk_ship`
