@@ -28,7 +28,7 @@
 
 ### Minimal Planning
 
-When **Planning Depth** is `Minimal`, the three Planning Inputs above are the only required planning questions. They seed the Local Task Record but do not satisfy its full readiness contract. Full-only fields below are `N/A — Minimal depth` when genuinely not required in this planning record; the Local Task Record still requires explicit non-goals, dependencies, owner/approval boundary, verification, and execution-policy values.
+When **Planning Depth** is `Minimal`, the three Planning Inputs above are the only required planning questions. They seed the Local Task Record but do not satisfy its full readiness contract. Full-only fields below are `N/A - Minimal depth` when genuinely not required in this planning record; the Local Task Record still requires explicit non-goals, dependencies, owner/approval boundary, verification, and execution-policy values.
 
 ### Full Planning
 
@@ -56,7 +56,7 @@ For each assumption:
 - **Decision Owner [Required]**: [Named person or role]
 - **Status [Required]**: `open | validated | accepted | rejected | superseded`
 - **Supporting Evidence [Optional]**: [Link or `None`]
-- **Resolution Evidence [Not applicable until resolved]**: [Link or `N/A — unresolved`]
+- **Resolution Evidence [Not applicable until resolved]**: [Link or `N/A - unresolved`]
 
 Do not repeat a completed planning question unless scope changes, an assumption is invalidated, or new evidence changes the decision. Record the changed scope, assumption, or evidence when asking it again.
 

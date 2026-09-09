@@ -70,7 +70,7 @@ A lightweight request cannot override Full Planning when the work affects public
 
 ### Minimal-to-Controlled Readiness Mapping
 
-Minimal planning limits questions, not Controlled Work readiness. `pk:tasks` must still populate every existing Local Task Record readiness field with a concrete value or an explicit `None`/`N/A — <reason>` explanation where applicable:
+Minimal planning limits questions, not Controlled Work readiness. `pk:tasks` must still populate every existing Local Task Record readiness field with a concrete value or an explicit `None`/`N/A - <reason>` explanation where applicable:
 
 | Minimal planning input | Local Task Record contribution |
 |---|---|
