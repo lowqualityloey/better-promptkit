@@ -5,15 +5,20 @@
 - **Record Type**: `Task Record`
 - **Task ID**: `TASK-[YYYY-MM-DD]-[slug]`
 - **Specification**: `docs/specs/[specification].md` or `.kiro/specs/[specification]/`
+- **Planning Record Link**: `[Canonical PLAN-<spec-slug> link; required for new Adaptation Controlled Work, or N/A for legacy/no-adaptation record]`
+- **Planning Depth Reference (Optional)**: `[Minimal | Full | N/A]`
+- **Assumption Record Links (Optional)**: `[ASSUMPTION-* links, None, or N/A]`
 - **External Reference (Optional)**: `[Issue, ticket, or N/A]`
 - **Owner / Actor**: `[Person, role, or agent]`
 - **Execution Scope**: `[Repository, workspace, package, or session boundary]`
 - **Approval Boundary**: `[Actions requiring explicit human confirmation]`
 - **Created**: `[YYYY-MM-DD HH:MM UTC]`
 
-> This Local Task Source is authoritative for Controlled Work. External trackers and `docs/STATE.md` are references or synchronized projections, not alternate task authority.
+> This Local Task Source is authoritative for Controlled Work. Planning Record and Assumption Record links provide context only; they do not control readiness, execution state, active ownership, completion, or approval. Existing records remain valid when these optional traceability fields are absent.
 
 ## 2. Objective and Boundaries
+
+> When a linked Planning Record uses `Minimal`, map Requested Outcome to **Objective**, Observable Completion Condition to **Acceptance Criteria** and **Verification Condition**, and Scope Boundary to **In Scope** and **Explicit Non-Goals**. These mappings seed the record; every readiness field below remains required before `ready` or `in_progress`.
 
 - **Objective**: `[One observable objective]`
 - **In Scope**:

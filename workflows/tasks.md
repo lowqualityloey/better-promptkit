@@ -53,7 +53,10 @@ An issue is only ready for implementation when its completion can be objectively
 When Phase 1 classifies work as Controlled Work, create the canonical Local Task Source before active coding:
 
 - Assign a stable `Task ID` and create `docs/tasks/<task-id>.md` from the execution task-record template.
-- Carry forward the objective, in-scope files/work, explicit non-goals, dependencies or `None`, owner/approval boundary, risk, verification condition, and execution policy.
+- Consume the canonical Planning Record produced by `pk:plan`. In Minimal mode, map requested outcome to `Objective`, observable completion condition to `Acceptance Criteria` and `Verification Condition`, and scope boundary to `In Scope` and `Explicit Non-Goals`.
+- Treat Minimal Planning as a question limit only. Populate every existing Local Task Record readiness field; use concrete `None` or `N/A — <reason>` explanations where a field is genuinely not applicable. A Minimal Planning Record alone does not make the task ready.
+- Reject or escalate a Minimal request when a Full trigger applies: public/external contract, persistent data, auth/authorization, external integration, release configuration or risk, multiple components, serious safety/rollback/data-loss risk, or explicit architecture planning. Full planning must complete before task decomposition continues.
+- Carry forward the objective, in-scope files/work, explicit non-goals, dependencies or `None`, owner/approval boundary, risk, verification condition, and execution policy. Any unanswered required planning input must link to its owned Assumption Record; an assumption is not a confirmed decision.
 - Give every acceptance condition a stable `AC-*` identifier and link it to the issue-facing Gherkin scenario or checklist result.
 - Keep external GitHub/Jira/Linear references optional. A dated breakdown document or external issue may index the work, but the per-task Local Task Record remains authoritative for Controlled Work.
 - Do not move the record to `in_progress` until readiness is complete, the start time and execution scope are recorded, and the active-task pointer is owned by exactly one task in the current scope.

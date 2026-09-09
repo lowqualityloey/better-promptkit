@@ -7,6 +7,61 @@
 
 ---
 
+## Planning Record (PromptKit Adaptation)
+
+> **Use this section for Controlled Work only.** Trivial Work keeps the existing fast path and does not require a Planning Record or Assumption Record. This section is the canonical planning location; do not create a parallel `docs/plans/` artifact.
+
+### Planning Record Metadata
+
+- **Planning Record ID [Required]**: `PLAN-<spec-slug>`
+- **Planning Depth [Required]**: `Minimal | Full`
+- **Owner [Required]**: [Person, role, or team]
+- **Record Status [Required]**: `draft | ready | blocked | superseded`
+- **Local Task Record Link [Required for Controlled Work]**: [Relative link to `docs/tasks/<task-id>.md`]
+- **Workflow Links [Optional]**: [Links to `pk:plan`, `pk:tasks`, or affected workflow records]
+
+### Planning Inputs
+
+- **Requested Outcome [Required]**: [What observable result is requested?]
+- **Observable Completion Condition [Required]**: [What will show that the outcome is complete?]
+- **Scope Boundary [Required]**: [Files, behaviors, interfaces, or components in scope and excluded]
+
+### Minimal Planning
+
+When **Planning Depth** is `Minimal`, the three Planning Inputs above are the only required planning questions. They seed the Local Task Record but do not satisfy its full readiness contract. Full-only fields below are `N/A — Minimal depth` when genuinely not required in this planning record; the Local Task Record still requires explicit non-goals, dependencies, owner/approval boundary, verification, and execution-policy values.
+
+### Full Planning
+
+Select `Full` when work affects a public or external contract, persistent data or schema, authentication or authorization, an external integration, release configuration or release risk, multiple Behavioral Components, serious safety/rollback/data-loss risk, or an explicitly requested architecture plan. A lightweight request cannot override these triggers.
+
+- **Explicit Non-Goals [Required in Full; Not applicable in Minimal]**: [What is deliberately excluded?]
+- **Affected Behavioral Components [Required in Full; Not applicable in Minimal]**: [Screens, APIs, jobs, commands, libraries, data areas, or deployment behaviors]
+- **Externally Visible Contracts [Required in Full; Not applicable in Minimal]**: [APIs, data formats, commands, integrations, or user-visible behavior; write `None` if not applicable]
+- **Failure or Rollback Considerations [Required in Full; Not applicable in Minimal]**: [Failure modes, data-loss risk, rollback or recovery considerations]
+- **Verification Approach [Required in Full; Not applicable in Minimal]**: [How the design and implementation will be verified]
+
+After Full inputs are recorded, continue through the existing architecture, contracts, migration, FMEA, milestone, and grilling sections below. Do not repeat those workflow sections in this Planning Record.
+
+### Assumption Records
+
+If a required planning input is unanswered, record an owned provisional assumption before handing inputs to `pk:tasks`. If no unanswered required input exists, write `None` instead of leaving this section blank. An Assumption Record is not a confirmed decision and remains in this Planning Record; it does not create a second authority.
+
+For each assumption:
+
+- **Assumption ID [Required]**: `ASSUMPTION-<spec-slug>-<nnn>`
+- **Unanswered Decision [Required]**: [What must be decided?]
+- **Provisional Answer [Required]**: [Current working answer]
+- **Impact if Wrong [Required]**: [What could change or be harmed?]
+- **Validation Action [Required]**: [How and when will this be checked?]
+- **Decision Owner [Required]**: [Named person or role]
+- **Status [Required]**: `open | validated | accepted | rejected | superseded`
+- **Supporting Evidence [Optional]**: [Link or `None`]
+- **Resolution Evidence [Not applicable until resolved]**: [Link or `N/A — unresolved`]
+
+Do not repeat a completed planning question unless scope changes, an assumption is invalidated, or new evidence changes the decision. Record the changed scope, assumption, or evidence when asking it again.
+
+---
+
 ## 1. Executive Summary & Problem Statement
 [A 1-2 paragraph high-level overview of what this project accomplishes, who it is for, why it is necessary now, and the primary business/engineering outcome it delivers.]
 
