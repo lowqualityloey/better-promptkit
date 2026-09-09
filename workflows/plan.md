@@ -51,7 +51,34 @@ Transform ambiguous product or technical requirements into clear technical speci
 
 For the PromptKit SDLC Adaptation, use `pk:route` to classify `Trivial` versus `Controlled` Work before selecting planning depth. `Minimal` and `Full` Planning Interrogation are planning-depth choices for Controlled Work, not alternate execution classifications or routing branches. Trivial Work keeps the existing fast path with no mandatory Adaptation artifact or interrogation. Controlled Work still requires the existing Local Task Record readiness gate before implementation.
 
-The planner may map a Minimal or Full result into the existing architecture, contract, migration, FMEA, milestone, and task inputs, but planning does not change execution state or approve implementation, commits, pull requests, releases, deployment, or rollback. Existing workflow ownership and approval boundaries remain authoritative; the shared matrix is maintained in [`docs/WORKFLOW-MAP.md`](../docs/WORKFLOW-MAP.md). Future Adaptation fields are additive, and this note does not yet implement Assumption Records, canonical Adaptation schemas, or validator-profile behavior.
+The planner may map a Minimal or Full result into the existing architecture, contract, migration, FMEA, milestone, and task inputs, but planning does not change execution state or approve implementation, commits, pull requests, releases, deployment, or rollback. Existing workflow ownership and approval boundaries remain authoritative; the shared matrix is maintained in [`docs/WORKFLOW-MAP.md`](../docs/WORKFLOW-MAP.md). This phase adds the Planning Record and Assumption Record path below; canonical cross-artifact schemas and validator-profile behavior remain later work.
+
+### Planning Depth and Assumption Branch
+
+After `pk:route` classifies the request:
+
+1. **Trivial Work:** Keep the existing fast path. Do not create a Planning Record, Assumption Record, or other Adaptation artifact solely because the Adaptation exists.
+2. **Controlled Work:** Select `Minimal` by default when no Full trigger applies. Select `Full` when a mandatory trigger or an explicit architecture-planning request applies. This choice changes planning depth, not the `Trivial`/`Controlled` classification or the execution workflow.
+3. **Minimal Planning:** Record only these three planning inputs: requested outcome, observable completion condition, and scope boundary. These are the only required planning questions in Minimal mode. Map them into the existing Local Task Record as described below, then stop the planning interrogation; Minimal must not silently continue into the full RFC.
+4. **Full Planning:** Record requested outcome, explicit non-goals, affected Behavioral Components, externally visible contracts, failure or rollback considerations, and verification approach. Then continue through the existing `pk:plan` architecture, contracts, migrations, FMEA, milestones, and grilling steps; do not duplicate those workflow sections here.
+5. **Missing inputs:** If a required planning input is unanswered, add an Assumption Record in the same Planning Record before implementation inputs are handed to `pk:tasks`. The assumption must remain provisional and include an owner, impact, validation action, and status.
+6. **Question retention:** Do not ask a completed planning question again unless scope changes, an assumption is invalidated, or new evidence changes the decision. Record the changed scope, assumption, or evidence when re-interrogation is necessary.
+
+### Mandatory Full Planning Triggers
+
+A lightweight request cannot override Full Planning when the work affects public or external contracts, persistent data or schema, authentication or authorization, external integrations, release configuration or release risk, multiple Behavioral Components, serious safety/rollback/data-loss risk, or an explicitly requested architecture plan. These triggers select planning depth only; they do not create a new route or execution class.
+
+### Minimal-to-Controlled Readiness Mapping
+
+Minimal planning limits questions, not Controlled Work readiness. `pk:tasks` must still populate every existing Local Task Record readiness field with a concrete value or an explicit `None`/`N/A - <reason>` explanation where applicable:
+
+| Minimal planning input | Local Task Record contribution |
+|---|---|
+| Requested outcome | `Objective` |
+| Observable completion condition | `Acceptance Criteria` input and `Verification Condition` |
+| Scope boundary | `In Scope` files/behaviors and `Explicit Non-Goals` |
+
+Dependencies, risk, owner/approval boundary, execution policy, stop conditions, execution scope, active ownership, state, and all existing completion evidence remain governed by the canonical Local Task Record. A Minimal Planning Record alone never makes Controlled Work ready or permits implementation.
 
 ---
 
@@ -116,7 +143,7 @@ Decompose the implementation into bite-sized, independently reviewable PRs follo
 
 ### Controlled Work Task-Record Handoff
 
-After architectural context, contracts, failure analysis, and TDD milestones are defined, provide the execution inputs for Controlled Work:
+After the selected planning depth is complete, provide the execution inputs for Controlled Work. Minimal Planning hands off its three mapped inputs plus any owned Assumption Records and still fills every Local Task Record readiness field. Full Planning hands off its complete planning inputs after the existing architecture, contracts, migration, FMEA, milestone, and grilling steps. Neither mode changes the Local Task Record’s authority or approval boundaries:
 
 - **Objective and Scope**: State the observable objective and the files, artifacts, interfaces, or behaviors in scope.
 - **Explicit Non-Goals**: List excluded behavior, release actions, and independent concerns.
