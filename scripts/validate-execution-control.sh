@@ -140,8 +140,131 @@ require_value() {
     return 0
 }
 
+has_uppercase() {
+    printf '%s' "$1" | LC_ALL=C grep -q '[A-Z]'
+}
+
 is_valid_task_id() {
-    [[ "$1" =~ ^TASK-[0-9]{4}-[0-9]{2}-[0-9]{2}-[a-z0-9][a-z0-9-]*$ ]]
+    local value="$1" profile="${2:-legacy}"
+    if [ "$profile" = "sdlc-overlay-v1" ]; then
+        if has_uppercase "${value#TASK-}"; then return 1; fi
+        local legacy_prefix='^TASK-[0-9]{4}-[0-9]{2}-[0-9]{2}-'
+        [[ "$value" =~ ^TASK-[a-z0-9]+(-[a-z0-9]+)*$ ]] && [[ ! "$value" =~ $legacy_prefix ]]
+    else
+        [[ "$value" =~ ^TASK-[0-9]{4}-[0-9]{2}-[0-9]{2}-[a-z0-9][a-z0-9-]*$ ]]
+    fi
+}
+
+is_valid_adaptation_link_id() {
+    local kind="$1" value="$2" slug
+    case "$kind" in
+        PLAN) slug="${value#PLAN-}" ;;
+        ASSUMPTION) slug="${value#ASSUMPTION-}" ;;
+        *) return 1 ;;
+    esac
+    if has_uppercase "$slug"; then return 1; fi
+    case "$kind" in
+        PLAN) [[ "$value" =~ ^PLAN-[a-z0-9]+(-[a-z0-9]+)*$ ]] ;;
+        ASSUMPTION) [[ "$value" =~ ^ASSUMPTION-[a-z0-9]+(-[a-z0-9]+)*-[0-9]{3}$ ]] ;;
+        *) return 1 ;;
+    esac
+}
+
+validate_adaptation_link() {
+    local file="$1" id="$2" link="$3" kind="$4" path="$5"
+    local expected_prefix remediation link_pattern
+    expected_prefix="$kind-<slug>"
+    remediation="Use [$expected_prefix](relative/path#$expected_prefix) pointing to an existing explicit anchor"
+    link_pattern='^\[([A-Za-z0-9._-]+)\]\(([^)#]+)#([A-Za-z0-9._-]+)\)$'
+    if [[ ! "$link" =~ $link_pattern ]]; then
+        diagnostic INVALID_LINK "$id" "$path" "Invalid $kind link: $link" "$remediation"
+        return 1
+    fi
+
+    local linked_id="${BASH_REMATCH[1]}" target_path="${BASH_REMATCH[2]}" anchor="${BASH_REMATCH[3]}"
+    if [ "$linked_id" != "$anchor" ]; then
+        diagnostic INVALID_LINK "$id" "$path" "Invalid $kind link: displayed ID and anchor differ" "$remediation"
+        return 1
+    fi
+    if ! is_valid_adaptation_link_id "$kind" "$linked_id"; then
+        diagnostic INVALID_LINK "$id" "$path" "Invalid $kind link ID: $linked_id" "$remediation"
+        return 1
+    fi
+    case "$target_path" in
+        ""|/*|\\*|[A-Za-z]:/*|[A-Za-z]:\\*|*://*)
+            diagnostic INVALID_LINK "$id" "$path" "Invalid $kind link target: $target_path" "$remediation"
+            return 1
+            ;;
+    esac
+
+    local target_dir canonical_dir target_file
+    target_dir="$(dirname "$file")/$(dirname "$target_path")"
+    canonical_dir="$(cd "$target_dir" 2>/dev/null && pwd)" || {
+        diagnostic INVALID_LINK "$id" "$path" "Missing $kind link target: $target_path" "$remediation"
+        return 1
+    }
+    target_file="$canonical_dir/$(basename "$target_path")"
+    case "$target_file" in
+        "$ROOT"/*) ;;
+        *)
+            diagnostic INVALID_LINK "$id" "$path" "Invalid $kind link target: $target_path" "$remediation"
+            return 1
+            ;;
+    esac
+    if [ ! -f "$target_file" ] || ! grep -Fq "<a id=\"$anchor\"></a>" "$target_file"; then
+        diagnostic INVALID_LINK "$id" "$path" "Missing $kind link target or anchor: $target_path#$anchor" "$remediation"
+        return 1
+    fi
+    return 0
+}
+
+validate_adaptation_fields() {
+    local file="$1" id="$2" path="$3"
+    local work_type planning_link planning_depth assumptions tdd_mode
+    if require_value "$file" "$id" "Work Type" "ADAPTATION_FIELD"; then
+        work_type="$(field_value "$file" "Work Type")"
+        case "$work_type" in
+            "Code Work"|"Documentation Work"|"Configuration Work"|"Research Work") ;;
+            *) diagnostic ADAPTATION_FIELD "$id" "$path" "Invalid Work Type: $work_type" "Use Code Work, Documentation Work, Configuration Work, or Research Work" ;;
+        esac
+    fi
+
+    require_value "$file" "$id" "Planning Record Link" "ADAPTATION_FIELD"
+    planning_link="$(field_value "$file" "Planning Record Link")"
+    if ! is_placeholder "$planning_link"; then
+        validate_adaptation_link "$file" "$id" "$planning_link" "PLAN" "$path"
+    fi
+
+    if field_exists "$file" "Planning Depth Reference"; then
+        planning_depth="$(field_value "$file" "Planning Depth Reference")"
+        case "$planning_depth" in
+            Minimal|Full|N/A) ;;
+            *) diagnostic ADAPTATION_FIELD "$id" "$path" "Invalid Planning Depth Reference: $planning_depth" "Use Minimal, Full, or N/A" ;;
+        esac
+    fi
+
+    if field_exists "$file" "Assumption Record Links"; then
+        assumptions="$(field_value "$file" "Assumption Record Links")"
+        if [ "$assumptions" != "None" ] && [ "$assumptions" != "N/A" ]; then
+            local assumption_link
+            while IFS= read -r assumption_link; do
+                assumption_link="$(trim "$assumption_link")"
+                if [ -z "$assumption_link" ]; then
+                    diagnostic INVALID_LINK "$id" "$path" "Invalid ASSUMPTION link collection: $assumptions" "Use comma-separated [ASSUMPTION-<spec-slug>-<nnn>](relative/path#ASSUMPTION-<spec-slug>-<nnn>) links, None, or N/A"
+                    continue
+                fi
+                validate_adaptation_link "$file" "$id" "$assumption_link" "ASSUMPTION" "$path"
+            done < <(printf '%s\n' "$assumptions" | tr ',' '\n')
+        fi
+    fi
+
+    if require_value "$file" "$id" "TDD Enforcement Mode" "ADAPTATION_FIELD"; then
+        tdd_mode="$(field_value "$file" "TDD Enforcement Mode")"
+        case "$tdd_mode" in
+            disabled|enabled) ;;
+            *) diagnostic ADAPTATION_FIELD "$id" "$path" "Invalid TDD Enforcement Mode: $tdd_mode" "Use disabled or enabled" ;;
+        esac
+    fi
 }
 
 is_valid_child_id() {
@@ -207,18 +330,29 @@ validate_transitions() {
 }
 
 validate_task() {
-    local file="$1" id="$(field_value "$1" "Task ID")" path
+    local file="$1" id="$(field_value "$1" "Task ID")" path profile id_profile="legacy" profile_remediation
     path="$(relative_path "$file")"
+    profile="$(field_value "$file" "PromptKit Adaptation Profile")"
     [ -z "$id" ] && id="UNKNOWN"
     RECORD_COUNT=$((RECORD_COUNT + 1))
 
-    if ! is_valid_task_id "$id"; then
-        diagnostic INVALID_ID "$id" "$path" "Task ID is not stable: $id" "Use TASK-YYYY-MM-DD-slug"
+    if [ -n "$profile" ] && [ "$profile" != "none" ] && [ "$profile" != "sdlc-overlay-v1" ]; then
+        diagnostic INVALID_PROFILE "$id" "$path" "Unknown PromptKit Adaptation Profile: $profile" "Use none or sdlc-overlay-v1"
+    fi
+    [ "$profile" = "sdlc-overlay-v1" ] && id_profile="sdlc-overlay-v1"
+    if ! is_valid_task_id "$id" "$id_profile"; then
+        profile_remediation="Use TASK-YYYY-MM-DD-slug"
+        [ "$id_profile" = "sdlc-overlay-v1" ] && profile_remediation="Use TASK-<task-slug>"
+        diagnostic INVALID_ID "$id" "$path" "Task ID is not stable: $id" "$profile_remediation"
     elif [ -n "${TASK_FILE_BY_ID[$id]+set}" ]; then
         diagnostic INVALID_ID "$id" "$path" "Duplicate Task ID: $id" "Keep one canonical Task Record per stable task identifier"
     else
         TASK_FILE_BY_ID["$id"]="$file"
         TASK_IDS+=("$id")
+    fi
+
+    if [ "$profile" = "sdlc-overlay-v1" ]; then
+        validate_adaptation_fields "$file" "$id" "$path"
     fi
 
     local required_labels=(

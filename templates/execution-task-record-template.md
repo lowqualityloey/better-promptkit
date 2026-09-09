@@ -1,17 +1,18 @@
 # Task Record: [Short controlled-work objective]
 
-<!-- Replace the example anchor with the immutable Task ID. For an Adaptation record use the `TASK-<task-slug>` form; for a legacy record preserve `TASK-YYYY-MM-DD-<slug>`. Derived IDs use the same full task slug. -->
-<a id="TASK-task-slug"></a>
+<!-- Replace the example anchor with the immutable Task ID. For an Adaptation record use the `TASK-<task-slug>` form; for a legacy or `none`-profile record preserve `TASK-YYYY-MM-DD-<slug>`. Derived IDs use the same full task slug. -->
+<a id="TASK-YYYY-MM-DD-task-slug"></a>
 
 ## 1. Identity and Authority
 
 - **Record Type**: `Task Record`
 - **Task ID**: `TASK-<task-slug>` for `sdlc-overlay-v1`; preserve `TASK-YYYY-MM-DD-<slug>` for legacy/no-profile records
-- **Work Type**: `Code Work | Documentation Work | Configuration Work | Research Work`; ambiguous work follows Code Work until clarified
+- **PromptKit Adaptation Profile** *(Optional; choose `none` for the legacy contract or `sdlc-overlay-v1` to validate the Adaptation fields below)*: `none`
+- **Work Type** *(Required for `sdlc-overlay-v1`; choose Code Work, Documentation Work, Configuration Work, or Research Work)*: `Code Work`
+- **Planning Record Link** *(Required for `sdlc-overlay-v1`; use the stable planning ID and matching explicit anchor)*: `N/A`
+- **Planning Depth Reference** *(Optional for `sdlc-overlay-v1`; use Minimal, Full, or N/A)*: `N/A`
+- **Assumption Record Links** *(Optional for `sdlc-overlay-v1`; use comma-separated stable links, None, or N/A)*: `N/A`
 - **Specification**: `docs/specs/[specification].md` or `.kiro/specs/[specification]/`
-- **Planning Record Link**: `[PLAN-<spec-slug>](../specs/<specification>.md#PLAN-<spec-slug>)`; required for new Adaptation Controlled Work, or `N/A` for legacy/no-adaptation records
-- **Planning Depth Reference (Optional)**: `[Minimal | Full | N/A]`
-- **Assumption Record Links (Optional)**: `[ASSUMPTION-<spec-slug>-<nnn>](../specs/<specification>.md#ASSUMPTION-<spec-slug>-<nnn>)`, `None`, or `N/A`
 - **External Reference (Optional)**: `[Issue, ticket, or N/A]`
 - **Owner / Actor**: `[Person, role, or agent]`
 - **Execution Scope**: `[Repository, workspace, package, or session boundary]`
@@ -20,7 +21,7 @@
 
 > This Local Task Source is authoritative for Controlled Work. Planning Record and Assumption Record links provide context only; they do not control readiness, execution state, active ownership, completion, or approval. Existing records remain valid when these optional traceability fields are absent.
 >
-> The optional `PromptKit Adaptation Profile: none | sdlc-overlay-v1` validator boundary is deferred to the later Adaptation validator work. Do not require it for legacy records or use it to reinterpret the execution-policy `Mode`.
+> The optional `PromptKit Adaptation Profile` selects validation scope: absent or `none` preserves the legacy dated Task ID and existing contract; `sdlc-overlay-v1` requires the Adaptation fields and link targets shown above. The validator checks local evidence only and never authorizes remote, release, deployment, commit, or rollback actions.
 
 ## 2. Objective and Boundaries
 
@@ -47,7 +48,7 @@
 ## 4. Execution Policy
 
 - **Mode**: `Gated Mode` <!-- Use Approved Batch Mode only with a linked Batch Authorization. This is execution policy, not TDD mode. -->
-- **TDD Enforcement Mode**: `disabled` <!-- enabled is opt-in for Code Work; an absent field defaults to disabled. The Task Record owns this field. -->
+- **TDD Enforcement Mode** *(Required for `sdlc-overlay-v1`; choose disabled or enabled. An absent field defaults to disabled only for legacy records)*: `disabled` <!-- The Task Record owns this field. -->
 - **Batch Authorization**: `[docs/tasks/batch-[batch-id].md or N/A]`
 - **Soft Checkpoint**: `[Around 60 minutes, configured alternative, or N/A with reason]`
 - **Hard Checkpoint**: `[At or before 90 minutes, configured alternative, or N/A with reason]`

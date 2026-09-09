@@ -1,0 +1,1 @@
+INVALID_ID|TASK-2026-09-08-adaptation-validator|docs/tasks/TASK-2026-09-08-adaptation-validator.md|Task ID is not stable: TASK-2026-09-08-adaptation-validator|Use TASK-<task-slug>

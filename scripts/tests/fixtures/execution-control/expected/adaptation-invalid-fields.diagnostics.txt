@@ -1,0 +1,5 @@
+ADAPTATION_FIELD|TASK-adaptation-invalid-fields|docs/tasks/TASK-adaptation-invalid-fields.md|Invalid Work Type: Unknown Work|Use Code Work, Documentation Work, Configuration Work, or Research Work
+ADAPTATION_FIELD|TASK-adaptation-invalid-fields|docs/tasks/TASK-adaptation-invalid-fields.md|Invalid Planning Depth Reference: Extended|Use Minimal, Full, or N/A
+ADAPTATION_FIELD|TASK-adaptation-invalid-fields|docs/tasks/TASK-adaptation-invalid-fields.md|Invalid TDD Enforcement Mode: strict|Use disabled or enabled
+INVALID_LINK|TASK-adaptation-invalid-fields|docs/tasks/TASK-adaptation-invalid-fields.md|Invalid PLAN link target: C:/outside.md|Use [PLAN-<slug>](relative/path#PLAN-<slug>) pointing to an existing explicit anchor
+INVALID_LINK|TASK-adaptation-invalid-fields|docs/tasks/TASK-adaptation-invalid-fields.md|Missing ASSUMPTION link target or anchor: ../specs/missing.md#ASSUMPTION-adaptation-invalid-fields-001|Use [ASSUMPTION-<slug>](relative/path#ASSUMPTION-<slug>) pointing to an existing explicit anchor
