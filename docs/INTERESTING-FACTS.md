@@ -247,7 +247,6 @@ From `workflows/debug.md`:
 ---
 
 ### 13. **"Artifacts Over Conversation"**
-From `docs/TOKEN-EFFICIENCY.md`:
 > "Generate `docs/specs/*.md` once. Reference it forever (0 additional tokens)."
 
 **The Insight**:
@@ -501,36 +500,17 @@ Main Agent: Synthesize comparison
 
 ---
 
-## 📊 Metrics & Evidence
+## 📊 Illustrative Examples
 
-### 28. **58% Higher Success Rate**
-From `docs/TOKEN-EFFICIENCY.md`:
-
-**Without PromptKit**: 60% fixed on first attempt  
-**With PromptKit**: 95% fixed on first attempt  
-**Improvement**: +58% (almost 2× better)
-
----
-
-### 29. **36-Minute Payback Period**
-From `docs/TOKEN-EFFICIENCY.md`:
-
-**Setup Time**: 2.5 hours (learning curve)  
-**Monthly Benefit**: $258 (token savings + time savings)  
-**Break-Even**: 0.6 hours = **36 minutes**
-
----
-
-### 30. **Real Example Metrics**
+### 28. **Illustrative Benchmark: saas-dashboard Example**
 From `examples/saas-dashboard/docs/STATE.md`:
 
-**Actual Production Numbers**:
-- 68% invitation acceptance rate
-- 3m 20s median onboarding time
-- 99.2% email deliverability
-- 180ms P95 API latency
+The `saas-dashboard` is a fictional illustrative example project (not a real production system) that demonstrates PromptKit workflows in a realistic B2B SaaS context. Metrics captured in its `STATE.md` represent the example project's staging environment:
 
-**Not Hypothetical**: These are real measurements tracked through PromptKit workflows.
+- 180ms P95 API latency (target: <200ms)
+- 99.8% uptime (1 incident: database connection pool exhaustion)
+
+These are example figures from a fictional project used to show what a PromptKit-tracked `STATE.md` looks like in practice.
 
 ---
 
@@ -577,7 +557,7 @@ From `examples/saas-dashboard/docs/STATE.md`:
 2. ✅ Production-ready patterns (Stripe/Shopify level)
 3. ✅ Evidence-based (metrics, not opinions)
 4. ✅ Zero lock-in (pure markdown)
-5. ✅ Token-efficient (60-70% reduction)
+5. ✅ Structured workflows designed to reduce redundant back-and-forth
 6. ✅ Universally compatible (all AI assistants)
 7. ✅ Continuously validated (git-tracked state)
 8. ✅ Teaching-focused (Socratic, not code dumps)
@@ -587,7 +567,6 @@ From `examples/saas-dashboard/docs/STATE.md`:
 ---
 
 **Want more?** Explore:
-- `workflows/` - 20+ detailed workflow protocols
-- `examples/saas-dashboard/` - Complete production example
-- `docs/TOKEN-EFFICIENCY.md` - ROI analysis
+- `workflows/` - 19 workflow files
+- `examples/saas-dashboard/` - Illustrative B2B SaaS example
 - `docs/ADOPTION-GUIDE.md` - How to start using it

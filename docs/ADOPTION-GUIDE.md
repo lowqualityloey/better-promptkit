@@ -89,7 +89,10 @@ Better-PromptKit is designed for **gradual adoption**. You don't need to:
    ```bash
    git submodule add https://github.com/lowqualityloey/better-promptkit .promptkit
    ./.promptkit/init.sh  # or init.ps1 on Windows
-   git add .promptkit/ PROMPTKIT.md AGENTS.md
+   git add .promptkit/ PROMPTKIT.md
+   # Also stage whichever agent config file init created or updated:
+   # AGENTS.md (fallback), CLAUDE.md, GEMINI.md, .cursorrules,
+   # .windsurfrules, or .github/copilot-instructions.md
    git commit -m "chore: add better-promptkit for engineering standards"
    ```
 

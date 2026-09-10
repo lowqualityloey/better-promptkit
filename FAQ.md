@@ -49,7 +49,6 @@ Think of it as: Linux is to commands what PromptKit is to AI prompts.
 **Time Investment**:
 - Setup: 10 minutes (run init script)
 - Learning curve: 2-3 hours (first week)
-- **Payback period: 36 minutes** (token + time savings)
 
 **What feels slower initially**:
 - Planning upfront (pk:plan) vs coding immediately
@@ -57,22 +56,20 @@ Think of it as: Linux is to commands what PromptKit is to AI prompts.
 - Building test loop before debugging
 
 **What's actually faster long-term**:
-- **56% faster bug fixes** (systematic vs trial-and-error)
-- **58% higher first-attempt success** (plan first)
+- Fewer debugging cycles (systematic hypothesis testing vs trial-and-error)
+- Higher first-attempt success (spec-first planning reduces rework)
 - **Zero context loss** (pk:checkpoint preserves state)
 - **No more "what was I doing?"** (STATE.md tracks everything)
 
-**Real numbers**:
+**Why the tradeoff pays off**:
 
-| Activity | Without PromptKit | With PromptKit | Improvement |
-|:---------|:------------------|:---------------|:------------|
-| **Bug fix time** | 45 min avg | 20 min avg | **56% faster** |
-| **Feature planning** | 3 hours scattered | 1 hour structured | **67% faster** |
-| **Code review cycle** | 2 days avg | 4 hours avg | **75% faster** |
+| Activity | Without PromptKit | With PromptKit |
+|:---------|:------------------|:---------------|
+| **Bug fixing** | Guess-and-patch loops | Hypothesis-driven, one pass |
+| **Feature planning** | Scattered conversation | Structured spec artifact |
+| **Code review cycle** | Multiple back-and-forth rounds | Two-axis audit upfront |
 
 **The "zero overhead" escape hatch**: Simple questions still get direct answers (no workflow ceremony).
-
-**Related**: [docs/TOKEN-EFFICIENCY.md](docs/TOKEN-EFFICIENCY.md) for detailed analysis
 
 ---
 
@@ -245,9 +242,9 @@ You: [Reviews, edits, commits]
 
 **Short Answer**: These are modeled scenario estimates, not telemetry from a production dashboard. The methodology and assumptions are transparent and verifiable.
 
-**How the numbers are derived**: We compared typical developer-AI interaction patterns (guess-and-patch debugging loops, scattered planning conversations, repeated context re-explanations) against the structured workflow equivalents. The full breakdown with assumptions is in [TOKEN-EFFICIENCY.md](docs/TOKEN-EFFICIENCY.md).
+**How the numbers are derived**: These are modeled scenario estimates that compare typical developer-AI interaction patterns (guess-and-patch debugging loops, scattered planning conversations, repeated context re-explanations) against the structured workflow equivalents. They are not telemetry from a production dashboard.
 
-**Modeled Token Reduction** (from [TOKEN-EFFICIENCY.md](docs/TOKEN-EFFICIENCY.md)):
+**Modeled Token Reduction** (scenario estimates, not measured telemetry):
 
 | Scenario | Without PromptKit | With PromptKit | Modeled Savings |
 |:---------|:------------------|:---------------|:----------------|
@@ -298,9 +295,7 @@ For 50-person team: $5,040/year saved
 # Expected: 50-70% reduction
 ```
 
-**Not marketing. Measured results.**
-
-**Related**: [docs/TOKEN-EFFICIENCY.md](docs/TOKEN-EFFICIENCY.md) for full analysis
+**Not marketing. Modeled estimates based on workflow design principles.**
 
 ---
 
@@ -497,7 +492,6 @@ Remember: **AI assistants aren't perfect**. PromptKit structures their reasoning
 **More detailed documentation**:
 - [QUICKSTART.md](QUICKSTART.md) - 5-minute introduction
 - [docs/ADOPTION-GUIDE.md](docs/ADOPTION-GUIDE.md) - Incremental adoption strategy
-- [docs/TOKEN-EFFICIENCY.md](docs/TOKEN-EFFICIENCY.md) - Detailed cost analysis
 - [docs/WORKFLOW-MAP.md](docs/WORKFLOW-MAP.md) - Visual workflow decision trees
 - [docs/DESIGN-MD-FAQ.md](docs/DESIGN-MD-FAQ.md) - DESIGN.md safety guarantees
 - [docs/INTERESTING-FACTS.md](docs/INTERESTING-FACTS.md) - Deep insights

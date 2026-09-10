@@ -19,3 +19,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+
+# Preserved untracked local artifacts (not for publication)
+semantic-review/
+.kiro/specs/comprehensive-faq/
+.kiro/specs/conventional-commit-versioning/
+.kiro/specs/promptkit-sdlc-skill-adaptation/
+.kiro/specs/readme-refresh/

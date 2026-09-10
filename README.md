@@ -17,9 +17,8 @@ Better-PromptKit equips your coding assistant with disciplined engineering workf
 | **What is it?** | A modular, instruction-based engineering operating system that lives in your repository as `.promptkit/`. |
 | **Who it is for** | Developers pairing with AI coding agents who want structured specs, living project state, non-breaking schema migrations, and clean git history. |
 | **Who it is NOT for** | Developers looking for an autocomplete inline plugin, a CLI binary, or an npm dependency. Better-PromptKit is pure markdown protocols and prompts. |
-| **Why it is better** | Replaces unguided "vibe coding" and token-wasting guess-and-patch loops with systematic, hypothesis-driven development workflows. Modeled to reduce AI token costs by 60-70% on complex engineering tasks (see [TOKEN-EFFICIENCY.md](./docs/TOKEN-EFFICIENCY.md) for assumptions and formulas). |
+| **Why it is better** | Replaces unguided "vibe coding" and token-wasting guess-and-patch loops with systematic, hypothesis-driven development workflows. Structured workflows are designed to reduce redundant back-and-forth by enforcing one-pass planning, artifact reuse, and surgical fixes over guess-and-patch loops. |
 | **Key differences** | Zero slash command collisions (`pk:` prefix), zero destructive database drops (Expand-Contract only), zero unsolicited code dumps (Socratic guidance), and monorepo workspace isolation (scoped `--filter` commands). |
-| **Modeled impact** | \$8.40/month saved per developer in AI token costs (modeled on Claude Sonnet pricing), 5 hours/month in reduced debugging and planning loops, and measurably higher first-attempt success through spec-first planning. See [methodology](./docs/TOKEN-EFFICIENCY.md). |
 
 ---
 
@@ -124,8 +123,6 @@ The initialization script is transparent and idempotent:
 - **`./docs/STATE.md`**: The living project tracker recording active milestones, tasks in flight, and locked architectural invariants.
 - **Agent Directives**: Injects or updates an idempotent directive block in `AGENTS.md` (or `CLAUDE.md`, `.cursorrules`, `.windsurfrules`, `.github/copilot-instructions.md`).
 - **Zero Lock-In**: Installs zero binaries, adds zero npm dependencies, and runs zero background daemons.
-
-**💡 Bonus**: See **[TOKEN-EFFICIENCY.md](./docs/TOKEN-EFFICIENCY.md)** for the modeled scenario analysis behind PromptKit's token and cost savings.
 
 ---
 
@@ -302,7 +299,6 @@ better-promptkit/
 ├── docs/
 │   ├── WORKFLOW-MAP.md          # 🌟 NEW: Visual decision trees and Mermaid diagrams
 │   ├── ADOPTION-GUIDE.md        # 🌟 NEW: Incremental adoption for existing projects
-│   ├── TOKEN-EFFICIENCY.md      # 🌟 NEW: How PromptKit reduces AI costs 60-70%
 │   ├── INTERESTING-FACTS.md     # 🌟 NEW: Unique insights and design principles
 │   └── DESIGN-MD-FAQ.md         # 🌟 NEW: FAQ on custom DESIGN.md usage & safety
 ├── protocols/                   # Non-negotiable AI rules & operating standards
