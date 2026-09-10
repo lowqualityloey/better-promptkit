@@ -26,7 +26,7 @@ Review across **two orthogonal axes**:
 
 The report remains the sole home for review findings and the recommendation-only Simplification Audit; keep that audit inside the existing two-axis report and write the exact result `No Simplification Candidates found` when no defensible candidate exists. Do not create a separate simplification authority or use the untracked `semantic-review/` directory as a canonical path.
 
-From a Task Record, link the report with `[REVIEW-<review-slug>](../reviews/<review-slug>.md#REVIEW-<review-slug>)`; from another directory, use the relative path to `docs/reviews/<review-slug>.md`. A same-file link uses `[REVIEW-<review-slug>](#REVIEW-<review-slug>)`. Link the report to the canonical Task Record when reviewing Controlled Work. A review report records findings and recommendations only; it does not edit source or authorize commit, merge, release, deployment, rollback, or other remote actions.
+From a Task Record, link the report with `[REVIEW-<review-slug>](../reviews/<review-slug>.md#REVIEW-<review-slug>)`; from another directory, use the relative path to `docs/reviews/<review-slug>.md`. A same-file link uses `[REVIEW-<review-slug>](#REVIEW-<review-slug>)`. Link the report to the canonical Task Record when reviewing Level 2 (Controlled) or Level 3 (Release-Critical) Work. Level 0 and Level 1 reviews do not require a formal Task Record link. A review report records findings and recommendations only; it does not edit source or authorize commit, merge, release, deployment, rollback, or other remote actions.
 
 ---
 
@@ -60,9 +60,9 @@ If the diff is empty or the reference fails to resolve, halt and resolve the bas
 > - **Filesystem & Cloud Storage Destruction**: Un-versioned object deletions (`rm -rf`, bucket purge scripts) without backup confirmation.
 > - **Hard Resets**: In-code process automation running destructive Git resets or database purges.
 
-### Controlled Work Traceability Preflight
+### Controlled & Release-Critical Work Traceability Preflight
 
-Before applying the two-axis review, validate the Controlled Work evidence without creating or repairing it:
+Before applying the two-axis review for Level 2 (Controlled) or Level 3 (Release-Critical) Work, validate the evidence without creating or repairing it:
 
 - Confirm the Task ID/specification and canonical `docs/tasks/<task-id>.md` record match the reviewed branch and execution scope.
 - Confirm the Task Record state, active-task ownership, allowed transitions, changed-file scope, stable `AC-*` results, verification/CI evidence, and current revision.

@@ -4,13 +4,14 @@ Visual guide to help you quickly find the right workflow for your current task.
 
 ---
 
-## Work Classification First
+## Work Classification First (Task Ceremony Levels)
 
-Before selecting a workflow, classify the request:
+Before selecting a workflow, classify the request using the composable 4-level ceremony model:
 
-- **Trivial Work** is short, bounded, and single-concern. Use the existing fast path without creating unnecessary execution records or mandatory Adaptation artifacts/questions.
-- **Controlled Work** changes durable files, task state, project configuration, commits, pull requests, release artifacts, or multiple independent concerns. Route it through readiness and create the canonical Local Task Source at `docs/tasks/<task-id>.md` before implementation.
-- `pk:route` remains the sole authority for `Trivial` versus `Controlled` classification. `Minimal` and `Full` Planning Interrogation are planning-depth choices after routing, not a second classification or execution branch.
+- **Level 0 — Direct (Trivial Work)**: Questions, explanations, doc typos, syntax lookups, formatting, or tiny single-line tweaks. `understand → change → verify` with zero workflow ceremony or task record creation.
+- **Level 1 — Standard (Lightweight Work)**: Localized bug fixes, small self-contained feature tweaks, or single-component enhancements modifying source files without schema/auth/breaking contract risks. Uses natural workflow routing (`pk:debug`, `pk:test`) with lightweight inline planning; does NOT require a formal Task Record file (`docs/tasks/<task-id>.md`).
+- **Level 2 — Controlled (Controlled Work)**: Relational schema/data migrations, auth, permissions, breaking API contracts, or multi-component architectural changes. Requires a canonical Local Task Source at `docs/tasks/<task-id>.md` and RFC specification (`pk:plan`, `pk:data`, `pk:auth`) before implementation.
+- **Level 3 — Release-Critical (Release Work)**: Production releases, deployments, tag creation, or high-impact contract changes. Uses Level 2 evidence plus full candidate evaluation (`pk:ship`), QA review, contract evidence, and explicit human authorization. A Level 3 downgrade requires a documented reason, confirmation that no release actions remain in scope, Release Coordinator approval, and evidence preservation.
 - The Task Record is authoritative for Controlled Work. `docs/STATE.md` is a synchronized projection owned by `pk:checkpoint`; external issues, dated breakdowns, board statuses, and conversation claims are supporting references.
 - Existing records, workflow triggers, owners, approval boundaries, release protections, and rollback boundaries remain valid. Adaptation fields and sections are additive and do not require retroactive migration.
 
@@ -20,7 +21,7 @@ The Adaptation adds evidence and planning guidance without creating a competing 
 
 | Evidence or decision | Primary owner | Boundary |
 | :--- | :--- | :--- |
-| Work classification and lifecycle navigation | `pk:route` | Solely classifies Trivial/Controlled Work and routes to existing workflows; planning depth cannot override it. |
+| Work classification and lifecycle navigation | `pk:route` | Solely classifies requests into the canonical 4-level task ceremony model (Level 0 Direct, Level 1 Standard, Level 2 Controlled, Level 3 Release-Critical) and routes to existing workflows; planning depth cannot override it. |
 | Planning depth, planning inputs, assumptions, and material decision provenance | `pk:plan` | Supplies architecture and planning evidence; does not set execution state or approve implementation/release. |
 | Task decomposition, acceptance criteria, and stable task identity | `pk:tasks` | Creates task inputs and links; does not replace the Local Task Record’s readiness or completion authority. |
 | Controlled readiness, execution state, active ownership, and completion | Canonical Local Task Record | Sole execution authority for Controlled Work; external trackers and projections cannot override it. |

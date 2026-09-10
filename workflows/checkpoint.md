@@ -59,9 +59,9 @@ Extract and structure the 5 vital signals of the session:
 
 ---
 
-### Controlled Work Checkpoint and Stop-State Contract
+### Controlled & Release-Critical Work Checkpoint Contract
 
-For Controlled Work, checkpointing is a durable execution gate in addition to the existing workspace audit and handover prompt:
+For Level 2 (Controlled) and Level 3 (Release-Critical) Work, checkpointing is a durable execution gate linking `docs/tasks/<task-id>.md` in addition to the existing workspace audit and handover prompt. Level 0 (Direct) and Level 1 (Standard) work update `docs/STATE.md` or session notes directly without requiring a Task Record file:
 
 - Request a **Soft Checkpoint** around 60 minutes after the active task starts and require a **Hard Checkpoint** at or before 90 minutes, unless the Task Record documents a different policy.
 - Require event-driven checkpoints at major milestones, task switches, scope expansion, handoff, context compaction, or detected context drift.

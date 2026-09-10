@@ -40,6 +40,19 @@ $AllMarkdownFiles += Get-ChildItem -Path (Join-Path $PromptKitRoot "*.md") -Erro
 
 Write-Host "📄 Found $($AllMarkdownFiles.Count) markdown files to validate`n" -ForegroundColor Cyan
 
+# Anti-typo check for setup script commands
+Write-Host "🔍 Checking for setup script typos..." -ForegroundColor Cyan
+$typoPattern = 'i' + ' nit\.ps1'
+$typoFiles = Get-ChildItem -Path $PromptKitRoot -Recurse -Filter "*.md" -ErrorAction SilentlyContinue | Select-String -Pattern $typoPattern
+if ($typoFiles) {
+    Write-Host "  ❌ BROKEN: Setup typo found in repository:" -ForegroundColor Red
+    $typoFiles | ForEach-Object { Write-Host "     $($_.Path):$($_.LineNumber)" -ForegroundColor Red }
+    $script:ErrorCount++
+} else {
+    Write-Host "  ✅ No setup script typos found" -ForegroundColor Green
+}
+Write-Host ""
+
 # Validation patterns
 $Patterns = @{
     "Template Reference" = '\.promptkit/templates/([a-zA-Z0-9_-]+\.md)'

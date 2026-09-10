@@ -42,6 +42,19 @@ done < <(find "$WORKFLOWS_DIR" "$PROTOCOLS_DIR" "$ACTIVITIES_DIR" "$PROMPTKIT_RO
 echo "📄 Found ${#ALL_MD_FILES[@]} markdown files to validate"
 echo ""
 
+# Anti-typo check for setup script commands
+echo "🔍 Checking for setup script typos..."
+TYPO_PATTERN="i"" ""nit.ps1"
+TYPO_FILES=$(grep -rn "$TYPO_PATTERN" "$PROMPTKIT_ROOT" 2>/dev/null | grep -v "validate-references")
+if [ -n "$TYPO_FILES" ]; then
+    echo "  ❌ BROKEN: Setup typo found in repository:"
+    echo "$TYPO_FILES"
+    ((ERROR_COUNT++))
+else
+    echo "  ✅ No setup script typos found"
+fi
+echo ""
+
 # Function to check file existence
 check_file_reference() {
     local source_file="$1"

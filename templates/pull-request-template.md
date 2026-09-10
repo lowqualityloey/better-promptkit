@@ -40,7 +40,7 @@ Use this section for Controlled Work. Enter `N/A` for Trivial Work or for a cons
 <!-- If this PR touches database schemas, migrations, or data models, complete this section. -->
 - [ ] **No Database Changes**: This PR does not touch schemas, tables, or queries.
 - [ ] **Expand-Contract Pattern**: All schema alterations are additive (non-breaking for rolling deploys).
-- [ ] **Zero Destructive Drops**: No `DROP TABLE`, `DROP COLUMN`, or `TRUNCATE` operations in this phase.
+- [ ] **No Destructive Drops**: No unauthorized `DROP TABLE`, `DROP COLUMN`, or `TRUNCATE` operations in this phase.
 - [ ] **Row-Level Security (RLS)**: Policies verified for tenant/organization boundary enforcement.
 - [ ] **Query Efficiency**: Composite indexes added for high-cardinality filters and sorted queries.
 

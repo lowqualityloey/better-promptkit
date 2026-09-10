@@ -14,16 +14,63 @@ Eliminate decision fatigue and guesswork by mapping every software development s
 - Developer is starting a new task, facing an architectural dilemma, debugging an issue, or preparing a pull request.
 - Can be activated at any point during a pairing session to pivot into the proper workflow.
 
-## Controlled Work Classification and Readiness Routing
+## Task Ceremony Levels & Classification
 
-Before selecting a workflow for a substantive request, classify the work:
+Before executing any request, classify the work using Better-PromptKit's 4-level task ceremony model to balance developer velocity with engineering rigor:
 
-- **Trivial Work** is bounded, short, single-concern work that does not change a public contract, persistent data, authorization behavior, external integration, release configuration, or multiple independent concerns. Keep the existing Fast-Path and do not create unnecessary execution records.
-- **Controlled Work** can change files, task state, project configuration, commits, pull requests, release artifacts, or other durable project state. Route it through a Local Task Source at `docs/tasks/<task-id>.md` before implementation.
-- The Local Task Record is authoritative for Controlled Work. External issues, dated task breakdowns, and `docs/STATE.md` are supporting references or synchronized projections, not alternate execution authority.
-- Before implementation, the Controlled Work record must contain an objective, in-scope work, explicit non-goals, dependencies or `None`, acceptance criteria, owner/approval boundary, verification condition, and execution policy. If any readiness field is missing, remain blocked and route to `pk:plan` or `pk:tasks` rather than starting implementation.
-- When ready, route architecture inputs to `pk:plan`, stable task IDs and acceptance criteria to `pk:tasks`, and then the selected implementation workflow. Do not introduce a new execution-control trigger or make the router own task decomposition.
-- If Trivial Work expands into a public-contract, persistent-data, authorization, integration, release, or multi-concern change, reclassify it as Controlled Work before further implementation.
+### Level 0 — Direct (Zero Overhead)
+- **Applicability**: Conceptual questions, explanations, documentation typos, formatting, syntax lookups, and tiny non-risky single-line tweaks.
+- **Expected Behavior**: `understand → change → verify`
+- **Ceremony**: Direct execution. No task record, formal planning, or state tracking unless requested.
+
+### Level 1 — Standard (Lightweight Workflow)
+- **Applicability**: Ordinary localized bug fixes, small self-contained features, or localized refactoring without schema, auth, or breaking contract risks.
+- **Expected Behavior**: `understand → plan → implement → test → review`
+- **Ceremony**: Uses natural workflow routing (`pk:debug`, `pk:test`) with lightweight inline planning. Normal task tracking in `docs/STATE.md` or task list where appropriate without requiring formal Task Record files.
+
+### Level 2 — Controlled (Durable State & Readiness)
+- **Applicability**: Work involving meaningful risk, architecture, relational schema/data migrations, authentication, authorization, public contracts, multiple components, or significant uncertainty.
+- **Expected Behavior**: `task record → plan → implement → checkpoints → verification → review`
+- **Ceremony**: Requires a Local Task Record at `docs/tasks/<task-id>.md` and formal specification (`pk:plan`, `pk:data`, `pk:auth`, `pk:api`). The Task Record is authoritative for scope, acceptance criteria, dependencies, non-goals, and verification conditions before implementation begins.
+
+### Level 3 — Release-Critical (Full Provenance & Evaluation)
+- **Applicability**: Release candidates, production deployments, high-impact public contract/API changes, tag generation, or critical security updates.
+- **Expected Behavior**: `provenance → authorization → evaluation → release notes → evidence → human approval`
+- **Ceremony**: Uses full release candidate evaluation, contract impact evidence (`pk:ship`), QA review, and explicit human authorization boundaries before tagging, publishing, or deploying.
+
+### Canonical Mapping & Legacy Compatibility
+
+The 4-level ceremony model refines and clarifies the system's execution boundaries:
+
+| Level | Ceremony Class | Scope & File Impact | Required Task Record? |
+| :--- | :--- | :--- | :--- |
+| **Level 0** | **Direct (Trivial Work)** | Conceptual queries, syntax lookups, doc typos, formatting | **No** (Fast-path direct execution) |
+| **Level 1** | **Standard (Lightweight Work)** | Localized bug fixes, small self-contained feature tweaks, or single-component changes modifying source files without schema/auth/breaking contract risks | **No** (Natural workflow `pk:debug`/`pk:test` with inline/`STATE.md` tracking) |
+| **Level 2** | **Controlled Work** | Relational schema/data migrations, auth, permissions, breaking API contracts, or multi-component architectural changes | **Yes** (Canonical Task Record at `docs/tasks/<task-id>.md`) |
+| **Level 3** | **Release-Critical Work** | Release candidates, deployments, tag generation, or high-impact contract changes | **Yes** (Level 2 evidence plus release candidate evaluation `pk:ship` & human approval) |
+
+**Important Rule**: Modifying durable source files during an ordinary bug fix or small localized tweak is classified as **Level 1 (Standard)** and does **not** trigger Level 2 Controlled Work requirements or mandate creating `docs/tasks/<task-id>.md`. Where protocols or templates refer to "Controlled Work", those requirements apply specifically to **Level 2 (Controlled)** and **Level 3 (Release-Critical)** tasks.
+
+### Level Decision, Escalation, Upgrade, and Downgrade Rules
+
+1. **How an Agent Decides Which Level Applies**:
+   - Assess incoming prompts for risk indicators: database schema changes, authentication/security logic, public API contract changes, multi-component scope, or release/tagging commands.
+   - If no risk indicators and request is trivial or informational → **Level 0 (Direct)**.
+   - Localized bug fix or small single-component feature → **Level 1 (Standard)**.
+   - Schema, auth, public contract, or multi-component changes → **Level 2 (Controlled)**.
+   - Release, tag, publication, or production deployment → **Level 3 (Release-Critical)**.
+
+2. **Task Escalation / Upgrade**:
+   - If work initiated at Level 0 or Level 1 expands to affect persistent data, authorization, public contracts, or multiple components, the agent **must escalate** the task to Level 2 (Controlled) or Level 3 (Release-Critical) before writing further code.
+   - Announce the escalation briefly: `[Better-PromptKit: Escalating to Level 2 (Controlled) due to schema/auth impact]`.
+
+3. **Task Downgrade & Safety Boundaries**:
+   - **Level 2 Downgrade**: If analysis reveals a proposed Level 2 task can be simplified into a localized, non-breaking single-file fix without schema/auth/breaking contract impact, it may be downgraded to Level 1 or Level 0.
+   - **Level 3 Downgrade Guardrails**: Downgrading a Level 3 (Release-Critical) task requires ALL of the following:
+     1. A documented reason and revised task scope;
+     2. Confirmation that no tag creation, release publication, production deployment, or other release-critical action remains in scope;
+     3. Explicit human Release Coordinator approval if release evaluation or evidence creation (`pk:ship`) has already begun;
+     4. Preservation or an explicit closure record for any existing release evidence. A downgrade must never be used to bypass release provenance, QA review, or human authorization boundaries.
 
 ### Controlled Work Ownership Handoff
 
@@ -41,7 +88,7 @@ The Local Task Record remains authoritative throughout. `docs/STATE.md` is a syn
 
 The PromptKit SDLC Adaptation is an additive evidence layer over this router:
 
-- `pk:route` remains the sole authority for `Trivial` versus `Controlled` Work classification.
+- `pk:route` remains the sole authority for Level 0–3 task ceremony classification (Level 0 Direct, Level 1 Standard, Level 2 Controlled, Level 3 Release-Critical).
 - After classification, `Minimal` or `Full` Planning Interrogation may describe planning depth for Controlled Work; neither is a new execution class or routing branch.
 - Trivial Work keeps its existing Fast-Path and receives no mandatory Adaptation artifact or interrogation solely because the Adaptation exists.
 - Controlled Work keeps the existing Local Task Record readiness, state, active-ownership, and completion gates before implementation.

@@ -234,7 +234,7 @@ export type SendInviteResponse = z.infer<typeof SendInviteResponseSchema>;
 ## 5. Security, Privacy & Failure Modes (FMEA)
 
 ### Security & Multi-Tenancy Audit
-- **Tenancy Boundary**: How do we guarantee Tenant A cannot read or mutate Tenant B's data?
+- **Tenancy Boundary**: How do we ensure Tenant A cannot read or mutate Tenant B's data?
 - **Authentication & RBAC**: Required permissions to invoke this endpoint (`MANAGE_MEMBERS`).
 - **Input Sanitization**: Runtime validation schemas (Zod) on all inputs; parameterized database queries.
 - **Secrets & PII**: Ensure email addresses and tokens are omitted from public client payloads and unredacted logs.

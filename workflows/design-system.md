@@ -72,7 +72,7 @@ Guide the developer in designing, engineering, and auditing production-grade, hu
 ### Step 2: Headless Accessibility & Interaction Parity
 
 1. **Headless Primitives (Radix UI / React Aria / Ark UI)**:
-   - Always build composite widgets (modals, dropdowns, comboboxes, tabs, tooltips) on top of battle-tested headless primitives to guarantee correct focus trapping, screen reader announcements, and portal rendering.
+   - Always build composite widgets (modals, dropdowns, comboboxes, tabs, tooltips) on top of battle-tested headless primitives to help maintain correct focus trapping, screen reader announcements, and portal rendering.
 
 2. **Focus State Discipline**:
    - **Never use `outline-none` without an immediate replacement**: Always pair with `:focus-visible:ring-2` (e.g., `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary`).

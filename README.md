@@ -18,7 +18,7 @@ Better-PromptKit equips your coding assistant with disciplined engineering workf
 | **Who it is for** | Developers pairing with AI coding agents who want structured specs, living project state, non-breaking schema migrations, and clean git history. |
 | **Who it is NOT for** | Developers looking for an autocomplete inline plugin, a CLI binary, or an npm dependency. Better-PromptKit is pure markdown protocols and prompts. |
 | **Why it is better** | Replaces unguided "vibe coding" and token-wasting guess-and-patch loops with systematic, hypothesis-driven development workflows. Structured workflows are designed to reduce redundant back-and-forth by enforcing one-pass planning, artifact reuse, and surgical fixes over guess-and-patch loops. |
-| **Key differences** | Zero slash command collisions (`pk:` prefix), zero destructive database drops (Expand-Contract only), zero unsolicited code dumps (Socratic guidance), and monorepo workspace isolation (scoped `--filter` commands). |
+| **Key differences** | Namespaced triggers (`pk:` prefix), guardrails against destructive schema drops (Expand-Contract policy), Socratic guidance that avoids unsolicited code dumps, and monorepo workspace isolation (scoped `--filter` commands). |
 
 ---
 
@@ -26,11 +26,14 @@ Better-PromptKit equips your coding assistant with disciplined engineering workf
 
 Agent Execution Control is an additive follow-up to the published and immutable `v1.0.0` baseline. It is not an approved `v1.1.0` release and does not authorize a tag, publication, deployment, rollback, or other remote action.
 
-### Trivial vs Controlled Work
+### Task Ceremony Levels (Level 0 to Level 3)
 
-- **Trivial Work** is short, bounded, and single-concern. Keep the fast path and avoid unnecessary execution records.
-- **Controlled Work** changes durable files, task state, project configuration, commits, pull requests, release artifacts, or multiple independent concerns. Create the canonical Local Task Source at `docs/tasks/<task-id>.md` before implementation.
-- A dated task breakdown, external issue, conversation, board status, or `docs/STATE.md` may support the work, but the Task Record remains authoritative. `docs/STATE.md` is a synchronized projection owned by `pk:checkpoint`.
+Better-PromptKit adapts its ceremony level to match task risk and developer needs:
+
+- **Level 0 — Direct (Trivial Work / Fast-Path)**: Questions, explanations, doc typos, formatting, or syntax lookups. Executed directly (`understand → change → verify`) with zero process overhead or task record creation.
+- **Level 1 — Standard (Lightweight Work)**: Ordinary localized bug fixes, small self-contained features, or single-component changes. Modifies source files using natural workflow routing (`pk:debug`, `pk:test`) with lightweight inline planning; does NOT require a formal Task Record file (`docs/tasks/<task-id>.md`).
+- **Level 2 — Controlled (Controlled Work)**: Work involving relational schema/data migrations, authentication, authorization, breaking public contracts, multiple components, or meaningful architectural risk. Requires a canonical Local Task Record at `docs/tasks/<task-id>.md` and specification (`pk:plan`, `pk:data`, `pk:auth`) before implementation.
+- **Level 3 — Release-Critical (Release Work)**: Production releases, deployments, tag creation, or high-impact contract changes. Requires Level 2 evidence plus candidate evaluation (`pk:ship`), contract evidence, QA review, and explicit human authorization. A Level 3 downgrade requires a documented reason, confirmation that no release actions remain in scope, explicit Release Coordinator approval, and evidence preservation.
 
 ### Controlled Work Lifecycle and Roles
 

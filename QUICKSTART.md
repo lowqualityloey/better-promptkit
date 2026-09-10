@@ -153,6 +153,19 @@ Severity: 🚨 [BLOCKING] | ⚠️ [IMPORTANT] | 💡 [SUGGEST] | 👏 [PRAISE]
 
 ---
 
+## Task Ceremony Levels
+
+Better-PromptKit automatically adjusts ceremony to match task risk:
+
+| Level | Scope & Examples | Expected Flow | Required Ceremony |
+|:---|:---|:---|:---|
+| **Level 0 — Direct** | Questions, explanations, README typos, syntax lookups | `understand → change → verify` | Direct execution; no task record |
+| **Level 1 — Standard** | Ordinary bug fixes, localized component changes | `understand → plan → implement → test → review` | Natural workflow (`pk:debug`); inline planning |
+| **Level 2 — Controlled** | Relational schemas, auth, breaking contracts, risk | `task record → plan → implement → verify` | Task Record (`docs/tasks/`), spec (`pk:plan`) |
+| **Level 3 — Release-Critical** | Releases, production deploys, tag generation | `provenance → evaluation → QA → approval` | Candidate evaluation (`pk:ship`), human approval |
+
+---
+
 ## Pro Tips
 
 ### 1. **You Don't Need to Memorize Commands**
@@ -185,7 +198,7 @@ Create `DESIGN.md` for UI projects:
 - WCAG accessibility requirements
 - Component design patterns
 
-AI will enforce these automatically in `pk:design` and `pk:review`.
+AI assistants are instructed to check these in `pk:design` and `pk:review`.
 
 ---
 

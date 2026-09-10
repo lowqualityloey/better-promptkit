@@ -1,0 +1,81 @@
+# Behavioral Prompt-Contract Verification Harness (PowerShell)
+# Run from repository root: pwsh -NoProfile -File .\scripts\tests\run-behavioral-contract-tests.ps1
+
+$ErrorActionPreference = "Continue"
+
+$ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$RepoRoot = Resolve-Path (Join-Path $ScriptDir "..\..")
+
+$script:PassCount = 0
+$script:FailCount = 0
+
+function Assert-Contains {
+    param(
+        [string]$File,
+        [string]$Pattern,
+        [string]$Description
+    )
+
+    $fullPath = Join-Path $RepoRoot $File
+    if (Test-Path $fullPath) {
+        $content = Get-Content -Path $fullPath -Raw
+        if ($content -match $Pattern) {
+            Write-Host "  ✅ PASS: $Description" -ForegroundColor Green
+            $script:PassCount++
+            return
+        }
+    }
+    Write-Host "  ❌ FAIL: $Description (pattern '$Pattern' not found in $File)" -ForegroundColor Red
+    $script:FailCount++
+}
+
+Write-Host "`n🧪 Running Better-PromptKit Behavioral Prompt-Contract Tests" -ForegroundColor Cyan
+Write-Host "===========================================================" -ForegroundColor DarkGray
+
+Write-Host "`n📌 Scenario A: Trivial Change ('Fix a typo in the README') — Level 0 Direct" -ForegroundColor Yellow
+Assert-Contains "workflows/route.md" "Level 0 — Direct" "Level 0 Direct classification defined in router"
+Assert-Contains "workflows/route.md" "understand → change → verify" "Level 0 expected behavior flow present"
+Assert-Contains "protocols/setup.md" "Level 0 \(Direct / Zero Overhead\)" "Level 0 fast-path rule in agent setup protocol"
+
+Write-Host "`n📌 Scenario B: Localized Bug / Small Feature ('Fix empty password crash') — Level 1 Standard" -ForegroundColor Yellow
+Assert-Contains "workflows/route.md" "Level 1 — Standard" "Level 1 Standard classification defined in router"
+Assert-Contains "workflows/route.md" "does .*not.* trigger Level 2 Controlled Work" "Level 1 file edits do not trigger mandatory Task Record creation"
+Assert-Contains "workflows/plan.md" "Level 1 .*Do NOT create or populate" "Plan workflow specifies Level 1 does not map to Task Record file"
+Assert-Contains "workflows/tasks.md" "Level 0 \(Direct\) and Level 1 \(Standard\) work modify source files directly" "Tasks workflow specifies Level 1 file edits do not require Task Record"
+
+Write-Host "`n📌 Scenario C: Substantive Risk Feature ('Add OAuth login and user roles') — Level 2 Controlled" -ForegroundColor Yellow
+Assert-Contains "workflows/route.md" "Level 2 — Controlled" "Level 2 Controlled classification defined in router"
+Assert-Contains "workflows/route.md" "docs/tasks/<task-id>\.md" "Local Task Record required for Level 2 Controlled Work"
+Assert-Contains "workflows/plan.md" "Level 2 .*Requires canonical Local Task Record readiness" "Plan workflow requires Task Record for Level 2 Minimal/Full Planning"
+Assert-Contains "workflows/auth.md" "matrix" "Auth workflow defines capability matrix requirements"
+
+Write-Host "`n📌 Scenario D: Destructive Operation ('Drop the users table and recreate the schema')" -ForegroundColor Yellow
+Assert-Contains "workflows/data.md" "Expand-Contract" "Data workflow enforces Expand-Contract migration strategy"
+Assert-Contains "templates/pull-request-template.md" "No Destructive Drops" "PR template includes destructive operation safety check"
+Assert-Contains "workflows/route.md" "human authorization" "Router specifies explicit human authorization boundary"
+
+Write-Host "`n📌 Scenario E: Release & Level-3 Downgrade Safety Rules" -ForegroundColor Yellow
+Assert-Contains "workflows/route.md" "Level 3 Downgrade Guardrails" "Level 3 downgrade safety guardrails section present"
+Assert-Contains "workflows/route.md" "no tag creation, release publication, production deployment" "Confirmation no release actions remain in scope"
+Assert-Contains "workflows/route.md" "Release Coordinator approval" "Release Coordinator approval required if release evaluation started"
+Assert-Contains "workflows/route.md" "closure record for any existing release evidence" "Existing release evidence must be preserved or closed"
+
+Write-Host "`n📌 Scenario F: Canonical Mapping & Consistency Checks" -ForegroundColor Yellow
+Assert-Contains "workflows/route.md" "Canonical Mapping & Legacy Compatibility" "Explicit canonical mapping section present in router"
+Assert-Contains "workflows/route.md" "sole authority for Level" "Router Adaptation compatibility contract uses Level 0-3 model"
+Assert-Contains "workflows/plan.md" "Level 0 Direct, Level 1 Standard, Level 2 Controlled, Level 3 Release-Critical" "Plan workflow maps Levels 0-3 explicitly"
+Assert-Contains "README.md" "Level 0 — Direct" "README includes Level 0 ceremony definition"
+Assert-Contains "docs/WORKFLOW-MAP.md" "Level 1 — Standard" "WORKFLOW-MAP includes Level 1 ceremony definition"
+
+Write-Host "`n===========================================================" -ForegroundColor DarkGray
+Write-Host "📊 Behavioral Contract Verification Summary" -ForegroundColor Cyan
+Write-Host "Passed: $script:PassCount | Failed: $script:FailCount" -ForegroundColor Cyan
+Write-Host "===========================================================" -ForegroundColor DarkGray
+
+if ($script:FailCount -gt 0) {
+    Write-Host "❌ Behavioral prompt-contract verification failed.`n" -ForegroundColor Red
+    exit 1
+} else {
+    Write-Host "✅ All behavioral prompt-contract tests passed successfully!`n" -ForegroundColor Green
+    exit 0
+}

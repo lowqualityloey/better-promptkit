@@ -66,7 +66,7 @@ Better-PromptKit is active in this workspace (`./.promptkit` or `./promptkit`). 
 ### Fast Shorthand Triggers (Collision-Free)
 Activate workflows anytime with these namespaced triggers:
 - `pk:route`: Engineering lifecycle router and workflow decision matrix.
-- `pk:tutor` (or `pk:tutor beginner`, `pk:tutor architect`): Socratic mentorship & 3-tier progressive hints (never dump unsolicited code).
+- `pk:tutor` (or `pk:tutor beginner`, `pk:tutor architect`): Socratic mentorship & 3-tier progressive hints (avoids unsolicited code dumps).
 - `pk:grill`: Intensive Staff Engineer architecture interview and defense drill.
 - `pk:plan`: Spec-Driven Architecture & feature planning (domain models, API contracts, failure modes).
 - `pk:onboard`: Brownfield codebase intake: scan repository, extract scripts, and auto-populate PROMPTKIT.md.
@@ -86,10 +86,14 @@ Activate workflows anytime with these namespaced triggers:
 - `pk:retro` (or `pk:reflect`): Retrospective log, ADR extraction, and skill matrix alignment.
 - `pk:checkpoint` (or `pk:handoff`): Session state compaction, invariant locking, docs/STATE.md update, and fresh chat handover prompt.
 
-### Smart Auto-Route & Guardrails (Triggers Are Optional)
-You do not need to memorize triggers. If a prompt lacks an explicit `pk:` trigger, apply this triage:
-- **Fast-Path (Zero Overhead)**: For simple questions, syntax lookups, quick explanations, formatting, or single-line tweaks, answer directly and concisely. Do NOT invoke heavy workflow ceremonies or produce unnecessary documents.
-- **Protocol Auto-Route (Substantive Tasks)**: For multi-file changes, architecture, broken code, or production ops, automatically adopt the matching workflow:
+### Task Ceremony Levels & Smart Auto-Route
+Better-PromptKit adapts ceremony based on task risk and impact:
+- **Level 0 (Direct / Zero Overhead)**: Trivial documentation fixes, syntax lookups, formatting, or single-line tweaks. Direct execution (`understand → change → verify`) with zero ceremony.
+- **Level 1 (Standard)**: Localized bug fixes or small self-contained features. Standard workflow execution (`pk:debug`, `pk:test`) with lightweight inline planning; no formal task record file required.
+- **Level 2 (Controlled)**: Architecture, relational data/schema migrations, auth, permissions, breaking public API contracts, or multi-component changes. Requires formal Task Record (`docs/tasks/<task-id>.md`) and spec (`pk:plan`, `pk:data`, `pk:auth`, `pk:api`).
+- **Level 3 (Release-Critical)**: Production releases, deployments, high-impact contract changes, or tag generation. Requires full candidate evaluation (`pk:ship`), QA review, and explicit human authorization.
+
+When auto-routing:
   - Defects, bugs, crashes, or test failures -> `pk:debug` (reproduce before patching)
   - Performance regressions, slow queries, or latency -> `pk:perf` (measure baseline first)
   - New features, redesigns, or multi-component additions -> `pk:plan` (spec and risk analysis first)
