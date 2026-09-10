@@ -101,7 +101,7 @@ When auto-routing:
   - New features, redesigns, or multi-component additions -> `pk:plan` (spec and risk analysis first)
   - Existing repo intake, setup, or codebase audit -> `pk:onboard` (scan repo and scaffold PROMPTKIT.md)
   - Task breakdowns, issue creation, or Kanban cards -> `pk:tasks` (atomic issues and Gherkin AC)
-  - Database schema, indexing, or migrations -> `pk:data` (Expand-Contract ordering)
+  - Database schema, indexing, or migrations -> `pk:data` (Expand-Contract phased ordering)
   - Auth, sessions, cookies, or RBAC -> `pk:auth` (threat model and capability matrix)
   - Endpoints, contracts, or client types -> `pk:api` (envelope and schemas)
   - Test suites, seam allocation, or mocking -> `pk:test` (pyramid seam allocation)

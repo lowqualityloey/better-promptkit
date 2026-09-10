@@ -18,7 +18,7 @@
 - **Planning Record Link** *(Required for `sdlc-overlay-v1`; use the stable planning ID and matching explicit anchor)*: `N/A`
 - **Planning Depth Reference** *(Optional for `sdlc-overlay-v1`; use Minimal, Full, or N/A)*: `N/A`
 - **Assumption Record Links** *(Optional for `sdlc-overlay-v1`; use comma-separated stable links, None, or N/A)*: `N/A`
-- **Specification**: `docs/specs/[specification].md` or `.kiro/specs/[specification]/`
+- **Specification**: `docs/specs/[specification].md`
 - **External Reference (Optional)**: `[Issue, ticket, or N/A]`
 - **Owner / Actor**: `[Person, role, or agent]`
 - **Execution Scope**: `[Repository, workspace, package, or session boundary]`

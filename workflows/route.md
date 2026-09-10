@@ -259,7 +259,7 @@ If the request involves non-trivial engineering changes (new features, crashes, 
    - **New features, cross-component additions, new pages**: Auto-route to `pk:plan`. Create the RFC spec before writing code.
    - **Existing codebase intake, repo analysis, setup**: Auto-route to `pk:onboard`. Scan repository manifests and populate PROMPTKIT.md.
    - **Task breakdowns, issue creation, acceptance criteria, Kanban cards**: Auto-route to `pk:tasks`. Structure atomic 1-4 hour issues with Gherkin AC.
-   - **Database tables, migrations, RLS policies, indexing**: Auto-route to `pk:data`. Enforce Expand-Contract sequencing.
+   - **Database tables, migrations, RLS policies, indexing**: Auto-route to `pk:data`. Enforce Expand-Contract phased sequencing.
    - **Login, session tokens, cookies, permissions**: Auto-route to `pk:auth`. Establish the capability matrix first.
    - **API routes, endpoints, contracts, error envelopes**: Auto-route to `pk:api`. Define schema types and envelope formats first.
    - **Test suites, unit/integration splits, mock boundaries**: Auto-route to `pk:test`. Allocate pyramid seams before code.

@@ -474,9 +474,9 @@ Remember: **AI assistants aren't perfect**. PromptKit structures their reasoning
 
 | Dimension | `.cursorrules` / `CLAUDE.md` | Prompt Packs (spec-kit, BMad) | **Better-PromptKit** |
 |:----------|:-----------------------------|:------------------------------|:---------------------|
-| **Scope** | Single instruction file for one tool | Workflow templates for one tool | 19 workflow files plus named aliases across all tools |
+| **Scope** | Single instruction file for one tool | Workflow templates for one tool | 20 workflow files plus named aliases across all tools |
 | **Persistence** | Dies with the chat session | Dies with the chat session | `docs/STATE.md` survives context resets |
-| **Database safety** | No schema guardrails | Varies | Expand-Contract only (zero `DROP TABLE`) |
+| **Database safety** | No schema guardrails | Varies | Expand-Contract only (phased migration) |
 | **Multi-agent** | Single agent | Single agent | Subagent delegation with compact synthesis |
 | **Enforcement** | Trust the model | Trust the model | Artifact gates + CI + human review |
 | **Lock-in** | Tool-specific format | Tool-specific format | Pure markdown, works with any AI assistant |

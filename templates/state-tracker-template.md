@@ -53,7 +53,7 @@ Track tasks using atomic checklists (`[x]` Done, `[/]` In Progress, `[ ]` Queued
 - **Local Task Source**: `docs/tasks/<task-id>.md`
 - **Task ID**: `TASK-[YYYY-MM-DD]-[slug]`
 - **Task Record**: `docs/tasks/<task-id>.md`
-- **Specification**: `docs/specs/[specification].md` or `.kiro/specs/[specification]/`
+- **Specification**: `docs/specs/[specification].md`
 - **Execution Scope**: `[Repository, workspace, package, or session boundary]`
 - **Execution State**: `[planned | ready | in_progress | checkpoint_due | blocked | paused | handoff_ready | awaiting_review | completed | aborted]`
 - **Mapped `pk:tasks` Status**: `[To Do | In Progress | In Review | Done]`

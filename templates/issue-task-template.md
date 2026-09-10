@@ -66,7 +66,7 @@
 - **Work Classification**: `[Trivial | Controlled]`
 - **Task ID**: `TASK-[YYYY-MM-DD]-[slug]`
 - **Local Task Record**: `docs/tasks/<task-id>.md`
-- **Specification**: `docs/specs/[specification].md` or `.kiro/specs/[specification]/`
+- **Specification**: `docs/specs/[specification].md`
 - **Execution Scope**: `[Repository, workspace, package, or session boundary]`
 - **Owner / Actor**: `[Person, role, or agent]`
 - **Approval Boundary**: `[Actions requiring explicit human confirmation]`

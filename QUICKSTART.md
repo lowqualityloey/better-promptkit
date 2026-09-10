@@ -31,11 +31,12 @@ You: pk:route
 AI: [Shows decision matrix]
     - New feature? → pk:plan
     - Bug/crash? → pk:debug
+    - Remediation of review finding? → pk:fix
     - Need guidance? → pk:tutor
     - Code review? → pk:review
 ```
 
-**What it does**: Acts as your workflow GPS, routing you to the right protocol based on your current task.
+**What it does**: Acts as your workflow GPS, routing you to the right protocol based on your current task. External skills (such as `skills.sh` skills or host `/skill` commands) act as subordinate helpers; Better-PromptKit remains authoritative for task routing, evidence rules, safety boundaries, and human authorization.
 
 ---
 
@@ -226,7 +227,7 @@ Pick one:
 
 ### 2. **Explore More Workflows**
 ```
-pk:route          # See all 19 workflow files and their named aliases
+pk:route          # See all 20 workflow files and their named aliases
 pk:data           # Database design & migrations
 pk:auth           # Authentication & RBAC
 pk:api            # API contracts & types

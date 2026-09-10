@@ -5,7 +5,7 @@
 - **Record Type**: `Scope Change Record`
 - **Scope Change ID**: `SCOPE-[YYYY-MM-DD]-[task-id]-[sequence]`
 - **Task ID**: `TASK-[YYYY-MM-DD]-[slug]`
-- **Specification**: `docs/specs/[specification].md` or `.kiro/specs/[specification]/`
+- **Specification**: `docs/specs/[specification].md`
 - **Proposer / Actor**: `[Person, role, or agent]`
 - **Created**: `[YYYY-MM-DD HH:MM UTC]`
 - **Approval Boundary**: `[Human approval required, separate task required, or within existing scope]`

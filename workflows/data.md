@@ -174,7 +174,7 @@ For applications using PostgreSQL or Supabase, enforce tenancy guarantees at the
 
 ### Step 5: Document Rollback and Seeding Strategy
 1. Provide deterministic seed data for local development.
-2. Detail Expand-Contract rollback procedures in the event of failure.
+2. Detail Expand-Contract rollback procedures in the event of failure following the phased policy: Expand → migrate/backfill → compatibility period → verify consumers → Contract (where removal of deprecated columns or tables occurs only after verified consumer migration and rollback assessment).
 
 ### Step 6: Generate Data Specification Artifact
 1. Use `.promptkit/templates/data-model-spec.md`.

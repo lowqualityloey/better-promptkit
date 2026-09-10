@@ -5,7 +5,7 @@
 - **Record Type**: `Handoff Record`
 - **Handoff ID**: `HANDOFF-[YYYY-MM-DD]-[task-id]-[sequence]`
 - **Task ID**: `TASK-[YYYY-MM-DD]-[slug]`
-- **Specification**: `docs/specs/[specification].md` or `.kiro/specs/[specification]/`
+- **Specification**: `docs/specs/[specification].md`
 - **Created**: `[YYYY-MM-DD HH:MM UTC]`
 - **Sender / Current Owner**: `[Person, role, agent, or session]`
 - **Intended Receiver**: `[Person, role, agent, or fresh session]`
