@@ -40,11 +40,13 @@ Assert-Contains "protocols/setup.md" "Level 0 \(Direct / Zero Overhead\)" "Level
 Write-Host "`n📌 Scenario B: Localized Bug / Small Feature ('Fix empty password crash') — Level 1 Standard" -ForegroundColor Yellow
 Assert-Contains "workflows/route.md" "Level 1 — Standard" "Level 1 Standard classification defined in router"
 Assert-Contains "workflows/route.md" "does .*not.* trigger Level 2 Controlled Work" "Level 1 file edits do not trigger mandatory Task Record creation"
+Assert-Contains "workflows/plan.md" "Level 1 .*Do NOT create or populate" "Plan workflow specifies Level 1 does not map to Task Record file"
 Assert-Contains "workflows/tasks.md" "Level 0 \(Direct\) and Level 1 \(Standard\) work modify source files directly" "Tasks workflow specifies Level 1 file edits do not require Task Record"
 
 Write-Host "`n📌 Scenario C: Substantive Risk Feature ('Add OAuth login and user roles') — Level 2 Controlled" -ForegroundColor Yellow
 Assert-Contains "workflows/route.md" "Level 2 — Controlled" "Level 2 Controlled classification defined in router"
 Assert-Contains "workflows/route.md" "docs/tasks/<task-id>\.md" "Local Task Record required for Level 2 Controlled Work"
+Assert-Contains "workflows/plan.md" "Level 2 .*Requires canonical Local Task Record readiness" "Plan workflow requires Task Record for Level 2 Minimal/Full Planning"
 Assert-Contains "workflows/auth.md" "matrix" "Auth workflow defines capability matrix requirements"
 
 Write-Host "`n📌 Scenario D: Destructive Operation ('Drop the users table and recreate the schema')" -ForegroundColor Yellow

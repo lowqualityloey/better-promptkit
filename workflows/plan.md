@@ -62,14 +62,14 @@ The planner maps Minimal or Full results into existing architecture, contract, m
 
 After `pk:route` classifies the request into Levels 0–3:
 
-1. **Level 0 (Direct / Trivial Work):** Keep the existing fast path. Do not create a Planning Record, Assumption Record, or Adaptation artifact.
-2. **Level 1 (Standard / Lightweight Work):** Use lightweight inline planning (outcome, completion condition, scope boundary) directly in conversation or `docs/STATE.md`. No formal Task Record file is required.
-3. **Level 2 (Controlled Work):** Select `Minimal` planning depth by default when no Full trigger applies. Select `Full` when a mandatory trigger or explicit RFC request applies. Requires canonical Local Task Record readiness at `docs/tasks/<task-id>.md`.
-4. **Level 3 (Release-Critical Work):** Requires Level 2 planning and Task Record readiness plus release-critical provenance, candidate evaluation (`pk:ship`), QA review, and explicit human Release Coordinator authorization.
-3. **Minimal Planning:** Record only these three planning inputs: requested outcome, observable completion condition, and scope boundary. These are the only required planning questions in Minimal mode. Map them into the existing Local Task Record as described below, then stop the planning interrogation; Minimal must not silently continue into the full RFC.
-4. **Full Planning:** Record requested outcome, explicit non-goals, affected Behavioral Components, externally visible contracts, failure or rollback considerations, and verification approach. Then continue through the existing `pk:plan` architecture, contracts, migrations, FMEA, milestones, and grilling steps; do not duplicate those workflow sections here.
-5. **Missing inputs:** If a required planning input is unanswered, add an Assumption Record in the same Planning Record before implementation inputs are handed to `pk:tasks`. The assumption must remain provisional and include an owner, impact, validation action, and status.
-6. **Question retention:** Do not ask a completed planning question again unless scope changes, an assumption is invalidated, or new evidence changes the decision. Record the changed scope, assumption, or evidence when re-interrogation is necessary.
+1. **Level 0 (Direct / Trivial Work):** Direct execution (`understand → change → verify`). Do not create a Planning Record, Assumption Record, or Adaptation artifact.
+2. **Level 1 (Standard / Lightweight Work):** Lightweight inline planning only (outcome, completion condition, scope boundary) directly in conversation or `docs/STATE.md`. Do NOT create or populate `docs/tasks/<task-id>.md`.
+3. **Level 2 (Controlled Work):** Requires canonical Local Task Record readiness at `docs/tasks/<task-id>.md`. Select `Minimal` or `Full` planning depth:
+   - **Minimal Planning (Level 2 default):** Record only requested outcome, observable completion condition, and scope boundary. Map them into the canonical Task Record at `docs/tasks/<task-id>.md` via `pk:tasks`, then stop the planning interrogation without continuing into the full RFC.
+   - **Full Planning (Level 2 triggering work):** Record requested outcome, explicit non-goals, affected Behavioral Components, externally visible contracts, failure/rollback considerations, and verification approach. Continue through the full RFC architecture, contracts, Expand-Contract migrations, FMEA matrix, milestones, and grilling steps.
+4. **Level 3 (Release-Critical Work):** Requires Level 2 planning and Task Record readiness (`docs/tasks/<task-id>.md`), plus release-critical provenance, candidate evaluation (`pk:ship`), QA review, and explicit human Release Coordinator authorization.
+5. **Level 2–3 Missing Inputs:** For Level 2 or Level 3 Work, if a required planning input is unanswered, add an Assumption Record in the same Planning Record before implementation inputs are handed to `pk:tasks`. The assumption remains provisional and includes an owner, impact, validation action, and status.
+6. **Question Retention:** Do not ask a completed planning question again unless scope changes, an assumption is invalidated, or new evidence changes the decision. Record the changed scope, assumption, or evidence when re-interrogation is necessary.
 
 ### Mandatory Full Planning Triggers
 
