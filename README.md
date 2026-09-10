@@ -180,27 +180,29 @@ All triggers use the `pk:` prefix to avoid collisions with native slash commands
 
 | Command | Workflow File | Status | Output Target | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| `pk:route` | [`workflows/route.md`](./workflows/route.md) | Core (CI validated) | Conversation | Interactive lifecycle decision matrix and workflow triage. |
-| `pk:tutor` | [`workflows/tutor.md`](./workflows/tutor.md) | Core (CI validated) | Conversation | Socratic mentorship using 3-tier hints; guides without dumping code. |
-| `pk:grill` | [`workflows/tutor.md`](./workflows/tutor.md) (alias) | Core (CI validated) | Conversation | Architecture defense drill implemented via `tutor.md`. |
-| `pk:plan` | [`workflows/plan.md`](./workflows/plan.md) | Core (CI validated) | `docs/specs/` | Spec-driven architecture, module depth, and zero-downtime migrations. |
-| `pk:onboard` | [`workflows/onboard.md`](./workflows/onboard.md) | Core (CI validated) | `PROMPTKIT.md`, `docs/STATE.md` | Brownfield intake: scans manifests, workspaces, and scaffolds guardrails. |
-| `pk:tasks` | [`workflows/tasks.md`](./workflows/tasks.md) | Core (CI validated) | `docs/tasks/` or `gh` | Decomposes specs into atomic 1-4h tasks with Gherkin AC. |
-| `pk:data` | [`workflows/data.md`](./workflows/data.md) | Core (CI validated) | `docs/data/` | Schema design, composite indexing, RLS policies, and migrations. |
-| `pk:auth` | [`workflows/auth.md`](./workflows/auth.md) | Core (CI validated) | `docs/auth/` | Cookie security flags, OAuth PKCE flows, and RBAC/ABAC capability matrix. |
-| `pk:api` | [`workflows/api.md`](./workflows/api.md) | Core (CI validated) | `docs/api/` | Contract envelopes, cursor pagination, and mutation idempotency. |
-| `pk:test` | [`workflows/test.md`](./workflows/test.md) | Core (CI validated) | `docs/tests/` | Testing pyramid seam allocation, data factories, and monorepo `--filter`. |
-| `pk:design` | [`workflows/design-system.md`](./workflows/design-system.md) | Core (CI validated) | `docs/design/` | Anti-slop UI tokens, WCAG 2.2 AA accessibility, and mobile ergonomics. |
-| `pk:spike` | [`workflows/research.md`](./workflows/research.md) | Core (CI validated) | `docs/spikes/` | Technical risk spikes comparing options against a boring baseline. |
-| `pk:debug` | [`workflows/debug.md`](./workflows/debug.md) | Core (CI validated) | `docs/rca/` | Scientific debugging: fast reproduction loop, tagged logs, and 5-Whys. |
-| `pk:fix` | [`workflows/fix.md`](./workflows/fix.md) | New (CI validated) | Code repair | Surgical remediation of known findings with security-first ordering. |
-| `pk:perf` | [`workflows/perf.md`](./workflows/perf.md) | Core (CI validated) | `docs/perf/` | Baseline quantification, EXPLAIN ANALYZE, flamegraphs, and deltas. |
-| `pk:review` | [`workflows/review.md`](./workflows/review.md) | Core (CI validated) | Review report | Two-axis review: Spec Fidelity vs Technical Standards (Fowler's smells). |
-| `pk:commit` | [`workflows/commit.md`](./workflows/commit.md) | Core (CI validated) | Git history | Atomic Conventional Commits, single-concern staging, and secret scanning. |
-| `pk:pr` | [`workflows/pr.md`](./workflows/pr.md) | Core (CI validated) | PR body / `gh pr` | Pull request descriptions with test evidence and rollback procedures. |
-| `pk:ship` | [`workflows/ship.md`](./workflows/ship.md) | Core (CI validated) | `docs/releases/` | Runtime env validation (Zod/T3), migration ordering, and smoke tests. |
-| `pk:checkpoint` | [`workflows/checkpoint.md`](./workflows/checkpoint.md) | Core (CI validated) | `docs/STATE.md` | Session compaction, invariant locking, and fresh chat handover prompt. |
-| `pk:retro` | [`workflows/reflect.md`](./workflows/reflect.md) | Core (CI validated) | `docs/adrs/` & journal | Post-feature retrospective: extracts decisions into standard MADRs. |
+| `pk:route` | [`workflows/route.md`](./workflows/route.md) | Core 🧪 | Conversation | Interactive lifecycle decision matrix and workflow triage. |
+| `pk:tutor` | [`workflows/tutor.md`](./workflows/tutor.md) | Core 🧪 | Conversation | Socratic mentorship using 3-tier hints; guides without dumping code. |
+| `pk:grill` | [`workflows/tutor.md`](./workflows/tutor.md) (alias) | Core 🧪 | Conversation | Architecture defense drill implemented via `tutor.md`. |
+| `pk:plan` | [`workflows/plan.md`](./workflows/plan.md) | Core 🧪 | `docs/specs/` | Spec-driven architecture, module depth, and zero-downtime migrations. |
+| `pk:onboard` | [`workflows/onboard.md`](./workflows/onboard.md) | Core | `PROMPTKIT.md`, `docs/STATE.md` | Brownfield intake: scans manifests, workspaces, and scaffolds guardrails. |
+| `pk:tasks` | [`workflows/tasks.md`](./workflows/tasks.md) | Core 🧪 | `docs/tasks/` or `gh` | Decomposes specs into atomic 1-4h tasks with Gherkin AC. |
+| `pk:data` | [`workflows/data.md`](./workflows/data.md) | Core 🧪 | `docs/data/` | Schema design, composite indexing, RLS policies, and migrations. |
+| `pk:auth` | [`workflows/auth.md`](./workflows/auth.md) | Core 🧪 | `docs/auth/` | Cookie security flags, OAuth PKCE flows, and RBAC/ABAC capability matrix. |
+| `pk:api` | [`workflows/api.md`](./workflows/api.md) | Core | `docs/api/` | Contract envelopes, cursor pagination, and mutation idempotency. |
+| `pk:test` | [`workflows/test.md`](./workflows/test.md) | Core | `docs/tests/` | Testing pyramid seam allocation, data factories, and monorepo `--filter`. |
+| `pk:design` | [`workflows/design-system.md`](./workflows/design-system.md) | Core | `docs/design/` | Anti-slop UI tokens, WCAG 2.2 AA accessibility, and mobile ergonomics. |
+| `pk:spike` | [`workflows/research.md`](./workflows/research.md) | Core | `docs/spikes/` | Technical risk spikes comparing options against a boring baseline. |
+| `pk:debug` | [`workflows/debug.md`](./workflows/debug.md) | Core 🧪 | `docs/rca/` | Scientific debugging: fast reproduction loop, tagged logs, and 5-Whys. |
+| `pk:fix` | [`workflows/fix.md`](./workflows/fix.md) | New 🧪 | Code repair | Surgical remediation of known findings with security-first ordering. |
+| `pk:perf` | [`workflows/perf.md`](./workflows/perf.md) | Core | `docs/perf/` | Baseline quantification, EXPLAIN ANALYZE, flamegraphs, and deltas. |
+| `pk:review` | [`workflows/review.md`](./workflows/review.md) | Core | Review report | Two-axis review: Spec Fidelity vs Technical Standards (Fowler's smells). |
+| `pk:commit` | [`workflows/commit.md`](./workflows/commit.md) | Core | Git history | Atomic Conventional Commits, single-concern staging, and secret scanning. |
+| `pk:pr` | [`workflows/pr.md`](./workflows/pr.md) | Core | PR body / `gh pr` | Pull request descriptions with test evidence and rollback procedures. |
+| `pk:ship` | [`workflows/ship.md`](./workflows/ship.md) | Core 🧪 | `docs/releases/` | Runtime env validation (Zod/T3), migration ordering, and smoke tests. |
+| `pk:checkpoint` | [`workflows/checkpoint.md`](./workflows/checkpoint.md) | Core | `docs/STATE.md` | Session compaction, invariant locking, and fresh chat handover prompt. |
+| `pk:retro` | [`workflows/reflect.md`](./workflows/reflect.md) | Core | `docs/adrs/` & journal | Post-feature retrospective: extracts decisions into standard MADRs. |
+
+*Status Legend: All 20 workflows pass CI structural link validation (`validate-references.sh`). Workflows marked with 🧪 also undergo automated behavioral prompt-contract testing (`run-behavioral-contract-tests.sh`).*
 
 ---
 

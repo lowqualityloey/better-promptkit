@@ -17,6 +17,7 @@ When contributing to Better-PromptKit, adhere to the following core principles:
 3. **Atomic Conventional Commits**: Every change set must be staged as single-concern atomic commits following Conventional Commits format (`feat:`, `fix:`, `docs:`, `test:`, `refactor:`, `perf:`, `chore:`). See [`workflows/commit.md`](./workflows/commit.md).
 4. **Behavioral Contract & Parity**: Script fixes must maintain full behavioral parity between Linux/macOS (`init.sh`, Bash scripts) and Windows (`init.ps1`, PowerShell scripts).
 5. **Non-Destructive Safety**: Setup scripts and workflows must preserve existing user content, fail loudly on malformed or duplicate marker blocks, and leave original files byte-for-byte unchanged on failure.
+6. **Internal Specification Hygiene**: Public templates and onboarding documentation point strictly to `docs/specs/[specification].md`. Historical specifications under `.kiro/specs/agent-execution-control-handoff/` are retained exclusively for internal release-evaluation evidence and validator fixture compatibility.
 
 ---
 
