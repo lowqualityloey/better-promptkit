@@ -51,10 +51,11 @@ Keep this content too.
         throw "Failed Test 1: New directive content was not injected."
     }
 
-    $startMatches = [regex]::Matches($updatedContent, "^<!-- PROMPTKIT_START -->$", [System.Text.RegularExpressions.RegexOptions]::Multiline)
-    $endMatches = [regex]::Matches($updatedContent, "^<!-- PROMPTKIT_END -->$", [System.Text.RegularExpressions.RegexOptions]::Multiline)
-    if ($startMatches.Count -ne 1 -or $endMatches.Count -ne 1) {
-        throw "Failed Test 1: Directive block marker counts are invalid (start: $($startMatches.Count), end: $($endMatches.Count))."
+    $lines = $updatedContent -split "\r?\n"
+    $startMatchesCount = @($lines | Where-Object { $_ -eq '<!-- PROMPTKIT_START -->' }).Count
+    $endMatchesCount = @($lines | Where-Object { $_ -eq '<!-- PROMPTKIT_END -->' }).Count
+    if ($startMatchesCount -ne 1 -or $endMatchesCount -ne 1) {
+        throw "Failed Test 1: Directive block marker counts are invalid (start: ${startMatchesCount}, end: ${endMatchesCount})."
     }
 
     # Test 4: Literal $ inside injected directive check
@@ -65,9 +66,10 @@ Keep this content too.
     # Test 6: Idempotency re-run
     & pwsh -NoProfile -File $initScriptPath -ProjectRoot $ProjectRoot | Out-Null
     $reRunContent = [System.IO.File]::ReadAllText($agentsPath, [System.Text.Encoding]::UTF8)
-    $reRunStartMatches = [regex]::Matches($reRunContent, "^<!-- PROMPTKIT_START -->$", [System.Text.RegularExpressions.RegexOptions]::Multiline)
-    if ($reRunStartMatches.Count -ne 1) {
-        throw "Failed Test 6 (Idempotency): Expected 1 PROMPTKIT_START after re-run, found $($reRunStartMatches.Count)."
+    $reRunLines = $reRunContent -split "\r?\n"
+    $reRunStartCount = @($reRunLines | Where-Object { $_ -eq '<!-- PROMPTKIT_START -->' }).Count
+    if ($reRunStartCount -ne 1) {
+        throw "Failed Test 6 (Idempotency): Expected 1 PROMPTKIT_START after re-run, found ${reRunStartCount}."
     }
 
     # Test 2: Reject duplicate start/end markers and keep file byte-for-byte unchanged
