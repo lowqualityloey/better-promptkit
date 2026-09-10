@@ -124,7 +124,7 @@ The initialization script is transparent and idempotent:
 - **`./docs/` directories**: Scaffolds standard artifact folders (`specs/`, `adrs/`, `tasks/`, `data/`, `auth/`, `api/`, `tests/`, `perf/`, `rca/`, `releases/`).
 - **`./PROMPTKIT.md`**: Project architectural profile containing your active commands, stack constraints, and monorepo workspace topology.
 - **`./docs/STATE.md`**: The living project tracker recording active milestones, tasks in flight, and locked architectural invariants.
-- **Agent Directives**: Injects or updates an idempotent directive block in `AGENTS.md` (or `CLAUDE.md`, `.cursorrules`, `.windsurfrules`, `.github/copilot-instructions.md`).
+- **Agent Directives**: Injects or updates an idempotent directive block in `AGENTS.md` (or `CLAUDE.md`, `GEMINI.md`, `.cursorrules`, `.windsurfrules`, `.github/copilot-instructions.md`).
 - **Zero Lock-In**: Installs zero binaries, adds zero npm dependencies, and runs zero background daemons.
 
 ---
@@ -242,10 +242,12 @@ All triggers use the `pk:` prefix to avoid collisions with native slash commands
 
 You do not need to memorize commands. You can prompt naturally (e.g., *"This checkout endpoint throws 500 errors"* or *"Design a multi-tenant user table"*), and the assistant auto-routes to the proper workflow.
 
-### 1. Trivial vs Controlled Execution
+### 1. Task Ceremony Levels (Level 0–3 Execution)
 
-- **Fast-Path (Trivial Work)**: Quick syntax questions, single-line adjustments, or bounded formatting requests execute directly with zero workflow ceremony.
-- **Controlled Work**: Non-trivial changes that affect durable project state route through `pk:route`, readiness, and a canonical `docs/tasks/<task-id>.md` Task Record before implementation. The record carries scope, non-goals, acceptance, dependencies, owner/approval boundary, verification, execution policy, state, and next action.
+- **Level 0 — Direct**: Questions, explanations, doc typos, formatting, or syntax lookups. Executed directly with zero workflow ceremony or Task Record creation.
+- **Level 1 — Standard**: Ordinary localized bug fixes, small self-contained features, or single-component changes modifying source files without schema/data, auth, authorization, public contract, or multi-component risks. Uses natural workflow routing (`pk:debug`, `pk:test`) with lightweight inline/`STATE.md` tracking; does NOT require a Task Record file (`docs/tasks/<task-id>.md`).
+- **Level 2 — Controlled**: Work involving relational schema/data migrations, authentication, authorization, breaking public contracts, multiple components, or meaningful architectural risk. Requires a canonical Local Task Record at `docs/tasks/<task-id>.md` and formal specification (`pk:plan`, `pk:data`, `pk:auth`) before implementation.
+- **Level 3 — Release-Critical**: Production releases, deployments, tag creation, or high-impact contract changes. Requires Level 2 evidence plus candidate evaluation (`pk:ship`), contract evidence, QA review, and explicit human authorization.
 - External issues and board statuses remain optional references or mappings. They do not replace the Local Task Source, and a passing validator does not approve a remote action.
 
 ### 2. Subagent Delegation (Parallel Fan-Out)
@@ -293,7 +295,7 @@ A passing validator or CI job proves only that the recorded evidence is internal
 better-promptkit/
 ├── .github/
 │   └── workflows/
-│       └── ci.yml               # Maintainer CI (syntax, dry-run & anti-slop checks)
+│       └── ci.yml               # Maintainer CI (script syntax, initialization dry-run/idempotency, workflow structure, reference validation, fixture harnesses, and behavioral-contract tests)
 ├── FAQ.md                       # 🌟 NEW: The 11 questions every developer asks before adopting
 ├── QUICKSTART.md                # 🌟 NEW: 5-minute introduction with 4 core workflows
 ├── init.ps1                     # Setup script for Windows (PowerShell)

@@ -65,6 +65,12 @@ Assert-Contains "workflows/route.md" "Canonical Mapping & Legacy Compatibility" 
 Assert-Contains "workflows/route.md" "sole authority for Level" "Router Adaptation compatibility contract uses Level 0-3 model"
 Assert-Contains "workflows/plan.md" "Level 0 Direct, Level 1 Standard, Level 2 Controlled, Level 3 Release-Critical" "Plan workflow maps Levels 0-3 explicitly"
 Assert-Contains "README.md" "Level 0 — Direct" "README includes Level 0 ceremony definition"
+Assert-Contains "README.md" "Task Ceremony Levels \(Level 0–3 Execution\)" "README contains Level 0-3 execution model"
+Assert-Contains "README.md" "Level 1 .*does NOT require a Task Record" "README explicitly says Level 1 does not require a Task Record"
+Assert-Contains "README.md" "Level 2 .*Requires a canonical Local Task Record" "README specifies Level 2 requires a Task Record"
+Assert-Contains "README.md" "Level 3 .*Requires Level 2 evidence" "README specifies Level 3 requires Level 2 evidence and Task Record"
+Assert-Contains "workflows/route.md" "treat release and evidence work as Level 3" "Router release-evidence routing uses Level-3 terminology"
+Assert-Contains "README.md" "Maintainer CI \(script syntax, initialization dry-run/idempotency" "README CI description refers to current validation"
 Assert-Contains "docs/WORKFLOW-MAP.md" "Level 1 — Standard" "WORKFLOW-MAP includes Level 1 ceremony definition"
 
 Write-Host "`n===========================================================" -ForegroundColor DarkGray
