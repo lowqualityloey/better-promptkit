@@ -4,13 +4,14 @@ Visual guide to help you quickly find the right workflow for your current task.
 
 ---
 
-## Work Classification First
+## Work Classification First (Task Ceremony Levels)
 
-Before selecting a workflow, classify the request:
+Before selecting a workflow, classify the request using the composable 4-level ceremony model:
 
-- **Trivial Work** is short, bounded, and single-concern. Use the existing fast path without creating unnecessary execution records or mandatory Adaptation artifacts/questions.
-- **Controlled Work** changes durable files, task state, project configuration, commits, pull requests, release artifacts, or multiple independent concerns. Route it through readiness and create the canonical Local Task Source at `docs/tasks/<task-id>.md` before implementation.
-- `pk:route` remains the sole authority for `Trivial` versus `Controlled` classification. `Minimal` and `Full` Planning Interrogation are planning-depth choices after routing, not a second classification or execution branch.
+- **Level 0 — Direct**: Questions, explanations, doc typos, syntax lookups, formatting, or tiny single-line tweaks. `understand → change → verify` with zero workflow ceremony or task record creation.
+- **Level 1 — Standard**: Localized bug fixes, small self-contained feature tweaks, or single-component enhancements. `understand → plan → implement → test → review` using natural workflow routing (`pk:debug`, `pk:test`) with lightweight inline planning.
+- **Level 2 — Controlled**: Relational schema/data migrations, auth, permissions, breaking API contracts, or multi-component architectural changes. Requires a canonical Local Task Source at `docs/tasks/<task-id>.md` and RFC specification (`pk:plan`, `pk:data`, `pk:auth`) before implementation.
+- **Level 3 — Release-Critical**: Production releases, deployments, tag creation, or high-impact contract changes. Uses full candidate evaluation (`pk:ship`), QA review, contract evidence, and explicit human authorization.
 - The Task Record is authoritative for Controlled Work. `docs/STATE.md` is a synchronized projection owned by `pk:checkpoint`; external issues, dated breakdowns, board statuses, and conversation claims are supporting references.
 - Existing records, workflow triggers, owners, approval boundaries, release protections, and rollback boundaries remain valid. Adaptation fields and sections are additive and do not require retroactive migration.
 

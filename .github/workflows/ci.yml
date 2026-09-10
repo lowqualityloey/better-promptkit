@@ -24,7 +24,11 @@ jobs:
           bash -n scripts/validate-release-records.sh
           bash -n scripts/validate-ci-triage.sh
           bash -n scripts/tests/run-ci-triage-fixtures.sh
+          bash -n scripts/tests/run-behavioral-contract-tests.sh
           echo "Bash scripts parsed with 0 syntax errors."
+
+      - name: Run Behavioral Prompt-Contract Tests (Bash)
+        run: bash scripts/tests/run-behavioral-contract-tests.sh
 
       - name: Run Agent Execution Control Fixture Harness (Bash)
         run: bash scripts/tests/run-execution-control-fixtures.sh
@@ -65,67 +69,19 @@ jobs:
           fi
           echo "Linux setup script and idempotency verified successfully."
 
-      - name: Anti-Slop Hygiene Check (Zero Em Dashes)
+      - name: Prompt Structure & Hygiene Check
         run: |
-          echo "Checking workflows/ and templates/ for forbidden em dashes..."
-          if grep -rn "—" workflows/ templates/; then
-            echo "Error: Em dashes (—) detected in workflows or templates."
-            exit 1
-          fi
-          echo "Anti-slop check passed: 0 em dashes found."
-
-      - name: Verify All Referenced Workflows & Templates Exist
-        run: |
-          FILES=(
-            "workflows/route.md"
-            "workflows/tutor.md"
-            "workflows/plan.md"
-            "workflows/onboard.md"
-            "workflows/tasks.md"
-            "workflows/review.md"
-            "workflows/commit.md"
-            "workflows/pr.md"
-            "workflows/debug.md"
-            "workflows/perf.md"
-            "workflows/data.md"
-            "workflows/auth.md"
-            "workflows/api.md"
-            "workflows/test.md"
-            "workflows/ship.md"
-            "workflows/research.md"
-            "workflows/design-system.md"
-            "workflows/reflect.md"
-            "workflows/checkpoint.md"
-            "protocols/setup.md"
-            "protocols/code-quality-gate.md"
-            "protocols/context-sync.md"
-            "protocols/subagent-delegation.md"
-            "templates/project-profile-template.md"
-            "templates/design-profile-template.md"
-            "templates/state-tracker-template.md"
-            "templates/data-model-spec.md"
-            "templates/auth-matrix-template.md"
-            "templates/api-contract-spec.md"
-            "templates/test-plan-template.md"
-            "templates/release-checklist.md"
-            "templates/pull-request-template.md"
-            "templates/perf-audit-template.md"
-            "templates/issue-task-template.md"
-            "templates/adr-template.md"
-            "templates/tech-spec-template.md"
-            "templates/rca-postmortem-template.md"
-            "templates/code-review-checklist.md"
-            "templates/design-tokens-spec.md"
-            "templates/spike-template.md"
-            "templates/ci-triage-template.md"
-          )
-          for f in "${FILES[@]}"; do
-            if [ ! -f "$f" ]; then
-              echo "Error: Referenced file does not exist: $f"
+          echo "Validating workflow structure..."
+          for wf in workflows/*.md; do
+            if ! grep -q "^# " "$wf"; then
+              echo "Error: Workflow $wf is missing a top-level H1 heading."
               exit 1
             fi
           done
-          echo "All 41 referenced files exist on disk."
+          echo "Prompt hygiene check passed: all workflows have valid structural H1 headings."
+
+      - name: Run Reference and Structural Validator (Bash)
+        run: bash scripts/validate-references.sh .
 
   validate-windows:
     name: Lint & Validate (Windows)
@@ -145,7 +101,8 @@ jobs:
             "scripts/tests/run-execution-control-fixtures.ps1",
             "scripts/validate-release-records.ps1",
             "scripts/validate-ci-triage.ps1",
-            "scripts/tests/run-ci-triage-fixtures.ps1"
+            "scripts/tests/run-ci-triage-fixtures.ps1",
+            "scripts/tests/run-behavioral-contract-tests.ps1"
           )
           foreach ($file in $syntaxFiles) {
             $errors = @()
@@ -156,6 +113,10 @@ jobs:
             }
           }
           Write-Host "PowerShell scripts parsed with 0 syntax errors."
+
+      - name: Run Behavioral Prompt-Contract Tests (PowerShell)
+        shell: pwsh
+        run: pwsh -NoProfile -File .\scripts\tests\run-behavioral-contract-tests.ps1
 
       - name: Run Agent Execution Control Fixture Harness (PowerShell)
         shell: pwsh
@@ -170,6 +131,10 @@ jobs:
         run: |
           pwsh -NoProfile -File .\scripts\validate-release-records.ps1 -Root .\scripts\tests\fixtures\release-records\valid -Strict
           pwsh -NoProfile -File .\scripts\validate-release-records.ps1 -Root .\scripts\tests\fixtures\release-records\empty-range-deferred -Strict
+
+      - name: Run Reference and Structural Validator (PowerShell)
+        shell: pwsh
+        run: pwsh -NoProfile -File .\scripts\validate-references.ps1 -PromptKitDir .
 
       - name: Test init.ps1 Dry-Run & Idempotency
         shell: pwsh

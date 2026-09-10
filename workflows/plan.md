@@ -139,7 +139,7 @@ Dependencies, risk, owner/approval boundary, execution policy, stop conditions, 
 Analyze system failure modes systematically before coding:
 
 1. **Security & Authorization Audit**:
-   - Multi-tenant data isolation: How do we guarantee Tenant A cannot access Tenant B's data?
+   - Multi-tenant data isolation: How do we isolate multi-tenant data so Tenant A cannot access Tenant B's data?
    - Input validation: Runtime schema boundaries (Zod/Valibot) for all external inputs.
    - Rate limiting, CSRF protection, and secret/PII redaction.
 2. **FMEA Matrix (Resilience & Degradation)**:
