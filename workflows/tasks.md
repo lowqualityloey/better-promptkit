@@ -46,9 +46,9 @@ An issue is only ready for implementation when its completion can be objectively
    - **Ambiguous Work**: Follow the Code Work path until the work type and TDD mode are clarified in the Task Record.
    - **Localized Code Work**: Use an adaptive flat list ordered strictly by dependency (Task 1 -> Task 2 -> Task 3), applying the same enabled or disabled TDD branch.
 
-### Controlled Work Execution Overlay
+### Controlled & Release-Critical Work Execution Overlay
 
-When Phase 1 classifies work as Controlled Work, create the canonical Local Task Source before active coding:
+When Phase 1 classifies work as Level 2 (Controlled) or Level 3 (Release-Critical) Work, create the canonical Local Task Source at `docs/tasks/<task-id>.md` before active coding. Level 0 (Direct) and Level 1 (Standard) work modify source files directly or with inline planning without requiring a formal Task Record file:
 
 - Assign a stable `Task ID` and create `docs/tasks/<task-id>.md` from the execution task-record template.
 - Consume the canonical Planning Record produced by `pk:plan`. In Minimal mode, map requested outcome to `Objective`, observable completion condition to `Acceptance Criteria` and `Verification Condition`, and scope boundary to `In Scope` and `Explicit Non-Goals`.

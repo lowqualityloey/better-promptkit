@@ -46,9 +46,9 @@ Before staging any file, run these 4 safety checks:
    ```
    If temporary probes remain, remove them before committing.
 
-### Controlled Work Commit Gate
+### Controlled & Release-Critical Work Commit Gate
 
-After the existing hygiene checks and before staging, Controlled Work must pass this evidence gate:
+After the existing hygiene checks and before staging, Level 2 (Controlled) and Level 3 (Release-Critical) Work must pass this evidence gate linking `docs/tasks/<task-id>.md`. Level 0 (Direct) and Level 1 (Standard) work require clean Conventional Commit syntax and hygiene without mandatory Task Record links:
 
 - Confirm the active `docs/tasks/<task-id>.md` Task Record exists, is in an editable state, and owns the current execution scope. `checkpoint_due`, `blocked`, `paused`, `handoff_ready`, and `aborted` tasks cannot proceed to commit.
 - Confirm changed files remain within the recorded scope and every scope expansion has a linked Scope Change Record and required approval or separate Task Record.

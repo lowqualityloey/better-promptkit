@@ -60,9 +60,9 @@ Before writing the PR body, collect verifiable evidence:
 3. **Secret & Probe Check**:
    Confirm that zero secrets or temporary debug probes (`[DEBUG-xxxx]`) exist across the branch diff.
 
-### Controlled Work Traceability and PR Gate
+### Controlled & Release-Critical Work PR Gate
 
-Before generating a PR body for Controlled Work, include and verify:
+Before generating a PR body for Level 2 (Controlled) or Level 3 (Release-Critical) Work, include and verify:
 
 - **Task Identity**: Task ID, canonical `docs/tasks/<task-id>.md` path, specification, execution scope, and current state (normally `awaiting_review`).
 - **Scope and Acceptance**: Changed-file summary, stable `AC-*` results, verification commands/results, review findings, blockers, and linked Scope Change or Exception Records.
@@ -76,7 +76,7 @@ A consistent Task Record or validator result proves durable evidence consistency
 
 ### Execution-Control PR Evidence Template
 
-For Controlled Work, use the optional **Execution-Control Traceability** section in `templates/pull-request-template.md` to link the Task ID and canonical record, `awaiting_review` state, acceptance results, exact revision, checkpoint/handoff, CI, blockers, scope changes, and exceptions. For Trivial Work, record `N/A`. Keep `gh pr create` optional and explicitly developer-approved; a passing validator or CI job supports traceability only and does not approve opening, merging, shipping, or deploying the PR.
+For Level 2 (Controlled) and Level 3 (Release-Critical) Work, use the optional **Execution-Control Traceability** section in `templates/pull-request-template.md` to link the Task ID and canonical record, `awaiting_review` state, acceptance results, exact revision, checkpoint/handoff, CI, blockers, scope changes, and exceptions. For Level 0 (Direct) and Level 1 (Standard) Work, record `N/A`. Keep `gh pr create` optional and explicitly developer-approved; a passing validator or CI job supports traceability only and does not approve opening, merging, shipping, or deploying the PR.
 
 ---
 

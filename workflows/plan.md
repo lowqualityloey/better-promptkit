@@ -162,9 +162,9 @@ Select the milestone shape from the canonical Local Task Record. `pk:plan` and `
 
 The milestone plan must link to the canonical Task Record and test plan, preserve one behavior identity through enabled TDD execution, and never treat a test-plan entry as execution approval.
 
-### Controlled Work Task-Record Handoff
+### Controlled & Release-Critical Work Task-Record Handoff
 
-After the selected planning depth is complete, provide the execution inputs for Controlled Work. Minimal Planning hands off its three mapped inputs plus any owned Assumption Records and still fills every Local Task Record readiness field. Full Planning hands off its complete planning inputs after the existing architecture, contracts, migration, FMEA, milestone, and grilling steps. Neither mode changes the Local Task Record’s authority or approval boundaries:
+After the selected planning depth is complete, provide execution inputs for Level 2 (Controlled) and Level 3 (Release-Critical) Work. Minimal Planning hands off its three mapped inputs plus any owned Assumption Records and fills the required Local Task Record readiness fields at `docs/tasks/<task-id>.md`. Full Planning hands off its complete planning inputs after architecture, contracts, migration, FMEA, milestone, and grilling steps. Neither mode changes Local Task Record authority or approval boundaries. Level 0 (Direct) and Level 1 (Standard) work do not require a formal Task Record file.
 
 - **Objective and Scope**: State the observable objective and the files, artifacts, interfaces, or behaviors in scope.
 - **Explicit Non-Goals**: List excluded behavior, release actions, and independent concerns.

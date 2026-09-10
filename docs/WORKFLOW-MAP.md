@@ -8,10 +8,10 @@ Visual guide to help you quickly find the right workflow for your current task.
 
 Before selecting a workflow, classify the request using the composable 4-level ceremony model:
 
-- **Level 0 — Direct**: Questions, explanations, doc typos, syntax lookups, formatting, or tiny single-line tweaks. `understand → change → verify` with zero workflow ceremony or task record creation.
-- **Level 1 — Standard**: Localized bug fixes, small self-contained feature tweaks, or single-component enhancements. `understand → plan → implement → test → review` using natural workflow routing (`pk:debug`, `pk:test`) with lightweight inline planning.
-- **Level 2 — Controlled**: Relational schema/data migrations, auth, permissions, breaking API contracts, or multi-component architectural changes. Requires a canonical Local Task Source at `docs/tasks/<task-id>.md` and RFC specification (`pk:plan`, `pk:data`, `pk:auth`) before implementation.
-- **Level 3 — Release-Critical**: Production releases, deployments, tag creation, or high-impact contract changes. Uses full candidate evaluation (`pk:ship`), QA review, contract evidence, and explicit human authorization.
+- **Level 0 — Direct (Trivial Work)**: Questions, explanations, doc typos, syntax lookups, formatting, or tiny single-line tweaks. `understand → change → verify` with zero workflow ceremony or task record creation.
+- **Level 1 — Standard (Lightweight Work)**: Localized bug fixes, small self-contained feature tweaks, or single-component enhancements modifying source files without schema/auth/breaking contract risks. Uses natural workflow routing (`pk:debug`, `pk:test`) with lightweight inline planning; does NOT require a formal Task Record file (`docs/tasks/<task-id>.md`).
+- **Level 2 — Controlled (Controlled Work)**: Relational schema/data migrations, auth, permissions, breaking API contracts, or multi-component architectural changes. Requires a canonical Local Task Source at `docs/tasks/<task-id>.md` and RFC specification (`pk:plan`, `pk:data`, `pk:auth`) before implementation.
+- **Level 3 — Release-Critical (Release Work)**: Production releases, deployments, tag creation, or high-impact contract changes. Uses Level 2 evidence plus full candidate evaluation (`pk:ship`), QA review, contract evidence, and explicit human authorization. A Level 3 downgrade requires a documented reason, confirmation that no release actions remain in scope, Release Coordinator approval, and evidence preservation.
 - The Task Record is authoritative for Controlled Work. `docs/STATE.md` is a synchronized projection owned by `pk:checkpoint`; external issues, dated breakdowns, board statuses, and conversation claims are supporting references.
 - Existing records, workflow triggers, owners, approval boundaries, release protections, and rollback boundaries remain valid. Adaptation fields and sections are additive and do not require retroactive migration.
 

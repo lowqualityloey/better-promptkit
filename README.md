@@ -30,10 +30,10 @@ Agent Execution Control is an additive follow-up to the published and immutable 
 
 Better-PromptKit adapts its ceremony level to match task risk and developer needs:
 
-- **Level 0 — Direct (Zero Overhead)**: Questions, explanations, doc typos, formatting, syntax lookups, or tiny non-risky single-line tweaks. Executed directly (`understand → change → verify`) with zero process overhead.
-- **Level 1 — Standard (Lightweight Workflow)**: Ordinary localized bug fixes, small self-contained features, or single-component changes. Uses natural workflow routing (`pk:debug`, `pk:test`) with lightweight inline planning; no formal Task Record file required.
-- **Level 2 — Controlled (Durable State & Readiness)**: Work involving relational schema/data migrations, authentication, authorization, breaking public contracts, multiple components, or meaningful architectural risk. Requires a canonical Local Task Record at `docs/tasks/<task-id>.md` and specification (`pk:plan`, `pk:data`, `pk:auth`) before implementation.
-- **Level 3 — Release-Critical (Full Provenance & Evaluation)**: Production releases, deployments, tag creation, or high-impact contract changes. Uses full candidate evaluation (`pk:ship`), contract impact evidence, QA review, and explicit human authorization.
+- **Level 0 — Direct (Trivial Work / Fast-Path)**: Questions, explanations, doc typos, formatting, or syntax lookups. Executed directly (`understand → change → verify`) with zero process overhead or task record creation.
+- **Level 1 — Standard (Lightweight Work)**: Ordinary localized bug fixes, small self-contained features, or single-component changes. Modifies source files using natural workflow routing (`pk:debug`, `pk:test`) with lightweight inline planning; does NOT require a formal Task Record file (`docs/tasks/<task-id>.md`).
+- **Level 2 — Controlled (Controlled Work)**: Work involving relational schema/data migrations, authentication, authorization, breaking public contracts, multiple components, or meaningful architectural risk. Requires a canonical Local Task Record at `docs/tasks/<task-id>.md` and specification (`pk:plan`, `pk:data`, `pk:auth`) before implementation.
+- **Level 3 — Release-Critical (Release Work)**: Production releases, deployments, tag creation, or high-impact contract changes. Requires Level 2 evidence plus candidate evaluation (`pk:ship`), contract evidence, QA review, and explicit human authorization. A Level 3 downgrade requires a documented reason, confirmation that no release actions remain in scope, explicit Release Coordinator approval, and evidence preservation.
 
 ### Controlled Work Lifecycle and Roles
 
