@@ -88,7 +88,7 @@ The Local Task Record remains authoritative throughout. `docs/STATE.md` is a syn
 
 The PromptKit SDLC Adaptation is an additive evidence layer over this router:
 
-- `pk:route` remains the sole authority for `Trivial` versus `Controlled` Work classification.
+- `pk:route` remains the sole authority for Level 0–3 task ceremony classification (Level 0 Direct, Level 1 Standard, Level 2 Controlled, Level 3 Release-Critical).
 - After classification, `Minimal` or `Full` Planning Interrogation may describe planning depth for Controlled Work; neither is a new execution class or routing branch.
 - Trivial Work keeps its existing Fast-Path and receives no mandatory Adaptation artifact or interrogation solely because the Adaptation exists.
 - Controlled Work keeps the existing Local Task Record readiness, state, active-ownership, and completion gates before implementation.

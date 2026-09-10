@@ -62,6 +62,8 @@ assert_contains "workflows/route.md" "closure record for any existing release ev
 echo ""
 echo "📌 Scenario F: Canonical Mapping & Consistency Checks"
 assert_contains "workflows/route.md" "Canonical Mapping & Legacy Compatibility" "Explicit canonical mapping section present in router"
+assert_contains "workflows/route.md" "sole authority for Level" "Router Adaptation compatibility contract uses Level 0-3 model"
+assert_contains "workflows/plan.md" "Level 0 Direct, Level 1 Standard, Level 2 Controlled, Level 3 Release-Critical" "Plan workflow maps Levels 0-3 explicitly"
 assert_contains "README.md" "Level 0 — Direct" "README includes Level 0 ceremony definition"
 assert_contains "docs/WORKFLOW-MAP.md" "Level 1 — Standard" "WORKFLOW-MAP includes Level 1 ceremony definition"
 
