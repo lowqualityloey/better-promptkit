@@ -399,7 +399,7 @@ When you're stuck and need immediate help:
 
 How workflows feed into each other:
 
-- **`pk:route`** classifies Trivial versus Controlled Work and routes readiness without creating a new trigger.
+- **`pk:route`** classifies requests using the Level 0–3 ceremony model and routes readiness without creating a new trigger.
 - **`pk:plan`** generates architecture/spec inputs that **`pk:tasks`** turns into a canonical `docs/tasks/<task-id>.md` Task Record.
 - **`pk:tasks`** maps the Task Record to existing board statuses; issues and dated breakdowns are optional indexes, not alternate authority.
 - **`pk:checkpoint`** preserves checkpoints, handoffs, and the synchronized `docs/STATE.md` projection; the Task Record remains authoritative.

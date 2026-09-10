@@ -95,7 +95,7 @@ The PromptKit SDLC Adaptation is an additive evidence layer over this router:
 - Existing workflow owners and human approval boundaries remain unchanged. Planning supplies inputs; it does not approve implementation, commits, pull requests, releases, deployment, or rollback.
 - Future Adaptation fields and sections are additive. Existing records remain valid without retroactive migration, and no new execution-control trigger is introduced here.
 
-The shared authority matrix and compatibility boundaries are maintained in [`docs/WORKFLOW-MAP.md`](../docs/WORKFLOW-MAP.md). Scope expansion or a Trivial-to-Controlled change follows the existing classification and readiness rules above.
+The shared authority matrix and compatibility boundaries are maintained in [`docs/WORKFLOW-MAP.md`](../docs/WORKFLOW-MAP.md). Scope expansion or escalation across Levels 0–3 follows the existing classification and readiness rules above.
 
 ---
 
@@ -129,7 +129,7 @@ Find your current engineering context below and activate the corresponding workf
 
 ### Better-PromptKit Release-Evidence Routing Overlay
 
-This overlay extends the existing lifecycle router without adding a new trigger. Continue to classify Trivial versus Controlled Work first, preserve the Local Task Source readiness gate for durable changes, and use the existing workflows:
+This overlay extends the existing lifecycle router without adding a new trigger. Classify requests using the Level 0–3 ceremony model, treat release and evidence work as Level 3 (retaining Task Record, pk:ship, QA review, and human-approval boundaries), and use the existing workflows:
 
 | Request shape | Route | Required result |
 | :--- | :--- | :--- |
