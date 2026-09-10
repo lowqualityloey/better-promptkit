@@ -93,6 +93,8 @@ Better-PromptKit adapts ceremony based on task risk and impact:
 - **Level 2 (Controlled)**: Architecture, relational data/schema migrations, auth, permissions, breaking public API contracts, or multi-component changes. Requires formal Task Record (`docs/tasks/<task-id>.md`) and spec (`pk:plan`, `pk:data`, `pk:auth`, `pk:api`).
 - **Level 3 (Release-Critical)**: Production releases, deployments, high-impact contract changes, or tag generation. Requires full candidate evaluation (`pk:ship`), QA review, and explicit human authorization.
 
+For authoritative Level 0–3 classification, escalation, downgrade, and Task Record rules, see [`workflows/route.md`](.promptkit/workflows/route.md).
+
 When auto-routing:
   - Defects, bugs, crashes, or test failures -> `pk:debug` (reproduce before patching)
   - Performance regressions, slow queries, or latency -> `pk:perf` (measure baseline first)
@@ -109,6 +111,20 @@ When auto-routing:
   - Context bloat, chat lag, session handover, or pausing -> `pk:checkpoint` (sync docs/STATE.md & zero-loss handover)
   - Deployments, env validation, or releases -> `pk:ship` (pre-flight checks and rollback)
   When auto-routing a substantive task, announce it briefly in one sentence (e.g., "[Better-PromptKit: Auto-routed to pk:plan]") and enforce its quality gate.
+
+### Progressive Loading Policy
+To optimize context window efficiency and minimize token overhead, agents must follow this progressive loading sequence:
+1. **Initial context**: Load setup/entry guidance and `.promptkit/workflows/route.md`.
+2. **After routing**: Load only the workflow or workflows relevant to the routed task.
+3. **Artifact-on-demand**: Load templates only when required by the routed level or workflow.
+4. **Level-specific behavior**:
+   - **Level 0 (Direct)**: Direct execution and verification; do not load formal planning, release, CI, or artifact templates.
+   - **Level 1 (Standard)**: Minimal loading path. Load relevant implementation/test/debug workflow; use inline planning; do not load Task Record (`docs/tasks/<task-id>.md`) or release material.
+   - **Level 2 (Controlled)**: Load relevant planning/risk workflows and required Task Record/template material.
+   - **Level 3 (Release-Critical)**: Load Level-2 material plus release-evidence and `pk:ship` guidance.
+5. **Explicit request exception**: Load additional material when the developer explicitly asks for it.
+
+Progressive loading is an instruction-efficiency policy to conserve context, not a runtime guarantee or hidden enforcement mechanism.
 
 ### Workflows & Protocols Reference
 - **Route**: `.promptkit/workflows/route.md`

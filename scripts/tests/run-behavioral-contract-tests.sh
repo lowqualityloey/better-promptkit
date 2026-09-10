@@ -76,6 +76,14 @@ assert_contains "README.md" "Maintainer CI \(script syntax, initialization dry-r
 assert_contains "docs/WORKFLOW-MAP.md" "Level 1 — Standard" "WORKFLOW-MAP includes Level 1 ceremony definition"
 
 echo ""
+echo "📌 Scenario G: Progressive Loading & Canonical Authority"
+assert_contains "protocols/setup.md" "Progressive Loading Policy" "protocols/setup.md defines progressive loading policy"
+assert_contains "protocols/setup.md" "Level 1 \(Standard\).*Minimal loading path" "Level 1 defines minimal loading path without Task Record"
+assert_contains "README.md" "Start Here: Most Work Is Level 1" "README contains early Level-1 onboarding path"
+assert_contains "README.md" "For authoritative Level 0–3 classification.*workflows/route\.md" "README links to workflows/route.md as canonical guide"
+assert_contains "workflows/route.md" "workflows/route\.md.*is the canonical authority" "workflows/route.md declares canonical ownership of Levels 0-3"
+
+echo ""
 echo "==========================================================="
 echo "📊 Behavioral Contract Verification Summary"
 echo "Passed: $PASS_COUNT | Failed: $FAIL_COUNT"
