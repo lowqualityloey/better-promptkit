@@ -73,6 +73,13 @@ Assert-Contains "workflows/route.md" "treat release and evidence work as Level 3
 Assert-Contains "README.md" "Maintainer CI \(script syntax, initialization dry-run/idempotency" "README CI description refers to current validation"
 Assert-Contains "docs/WORKFLOW-MAP.md" "Level 1 — Standard" "WORKFLOW-MAP includes Level 1 ceremony definition"
 
+Write-Host "`n📌 Scenario G: Progressive Loading & Canonical Authority" -ForegroundColor Yellow
+Assert-Contains "protocols/setup.md" "Progressive Loading Policy" "protocols/setup.md defines progressive loading policy"
+Assert-Contains "protocols/setup.md" "Level 1 \(Standard\).*Minimal loading path" "Level 1 defines minimal loading path without Task Record"
+Assert-Contains "README.md" "Start Here: Most Work Is Level 1" "README contains early Level-1 onboarding path"
+Assert-Contains "README.md" "For authoritative Level 0–3 classification.*workflows/route\.md" "README links to workflows/route.md as canonical guide"
+Assert-Contains "workflows/route.md" "workflows/route\.md.*is the canonical authority" "workflows/route.md declares canonical ownership of Levels 0-3"
+
 Write-Host "`n===========================================================" -ForegroundColor DarkGray
 Write-Host "📊 Behavioral Contract Verification Summary" -ForegroundColor Cyan
 Write-Host "Passed: $script:PassCount | Failed: $script:FailCount" -ForegroundColor Cyan

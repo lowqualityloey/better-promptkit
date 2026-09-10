@@ -22,30 +22,21 @@ Better-PromptKit equips your coding assistant with disciplined engineering workf
 
 ---
 
-## Agent Execution Control v1.1 Follow-Up
+## Start Here: Most Work Is Level 1
 
-Agent Execution Control is an additive follow-up to the published and immutable `v1.0.0` baseline. It is not an approved `v1.1.0` release and does not authorize a tag, publication, deployment, rollback, or other remote action.
+Most everyday engineering tasks — such as fixing bugs, tweaking isolated components, or adding small self-contained features — fall into **Level 1 (Standard)**. You do not need formal ceremony or task record files to get started.
 
-### Task Ceremony Levels (Level 0 to Level 3)
+- **Example**: "Fix the empty-password login crash"
+- **Minimal Flow**: `describe task → route → lightweight inline plan → implement → test/review`
+- **Zero Overhead**: Level 1 work modifies source files using natural workflow routing (like [`pk:debug`](./workflows/debug.md) or [`pk:test`](./workflows/test.md)) and does **not** require a formal Task Record file (`docs/tasks/<task-id>.md`).
 
-Better-PromptKit adapts its ceremony level to match task risk and developer needs:
-
-- **Level 0 — Direct (Trivial Work / Fast-Path)**: Questions, explanations, doc typos, formatting, or syntax lookups. Executed directly (`understand → change → verify`) with zero process overhead or task record creation.
-- **Level 1 — Standard (Lightweight Work)**: Ordinary localized bug fixes, small self-contained features, or single-component changes. Modifies source files using natural workflow routing (`pk:debug`, `pk:test`) with lightweight inline planning; does NOT require a formal Task Record file (`docs/tasks/<task-id>.md`).
-- **Level 2 — Controlled (Controlled Work)**: Work involving relational schema/data migrations, authentication, authorization, breaking public contracts, multiple components, or meaningful architectural risk. Requires a canonical Local Task Record at `docs/tasks/<task-id>.md` and specification (`pk:plan`, `pk:data`, `pk:auth`) before implementation.
-- **Level 3 — Release-Critical (Release Work)**: Production releases, deployments, tag creation, or high-impact contract changes. Requires Level 2 evidence plus candidate evaluation (`pk:ship`), contract evidence, QA review, and explicit human authorization. A Level 3 downgrade requires a documented reason, confirmation that no release actions remain in scope, explicit Release Coordinator approval, and evidence preservation.
-
-### Controlled Work Lifecycle and Roles
-
-`pk:route` classifies the request; `pk:plan` supplies architecture and verification inputs; `pk:tasks` creates the stable Task ID and canonical record; the Engineer implements within the recorded scope; `pk:checkpoint` preserves checkpoints and handoffs; QA/Reviewer records findings through `pk:review`; `pk:commit` and `pk:pr` preserve evidence; and the Release Coordinator evaluates release impact through `pk:ship`. Human approval remains required for scope exceptions, commits, pull requests, tags, releases, deployments, and rollback.
-
-The current repository includes three execution-control record templates, paired read-only validators, and paired fixture harnesses. They make durable evidence reviewable but do not create a runtime orchestrator or a mechanical live-generation timer. Consumer adoption remains optional and does not impose Better-PromptKit release policy on consuming repositories.
+For authoritative Level 0–3 classification, escalation, downgrade, and Task Record rules, see [`workflows/route.md`](./workflows/route.md). To get up and running in 5 minutes, see [Quick Start](#quick-start-60-seconds) or [`QUICKSTART.md`](./QUICKSTART.md).
 
 ---
 
-## Better-PromptKit Release-Evidence Lifecycle
+## Maintainer Guidance: Release-Evidence Lifecycle
 
-The release-evidence policy applies only to the Better-PromptKit repository. It documents how Better-PromptKit evaluates a candidate and records an approval decision; it does not impose Better-PromptKit Conventional Commit, SemVer, release-note, changelog, tag, remote, publication, deployment, or rollback requirements on repositories that consume Better-PromptKit.
+The release-evidence policy applies only to maintainers evaluating candidates for the Better-PromptKit repository. It documents how Better-PromptKit evaluates a candidate and records an approval decision; it does not impose Better-PromptKit Conventional Commit, SemVer, release-note, changelog, tag, remote, publication, deployment, or rollback requirements on repositories that consume Better-PromptKit.
 
 ### Accountable lifecycle and handoffs
 
@@ -249,6 +240,8 @@ You do not need to memorize commands. You can prompt naturally (e.g., *"This che
 - **Level 2 — Controlled**: Work involving relational schema/data migrations, authentication, authorization, breaking public contracts, multiple components, or meaningful architectural risk. Requires a canonical Local Task Record at `docs/tasks/<task-id>.md` and formal specification (`pk:plan`, `pk:data`, `pk:auth`) before implementation.
 - **Level 3 — Release-Critical**: Production releases, deployments, tag creation, or high-impact contract changes. Requires Level 2 evidence plus candidate evaluation (`pk:ship`), contract evidence, QA review, and explicit human authorization.
 - External issues and board statuses remain optional references or mappings. They do not replace the Local Task Source, and a passing validator does not approve a remote action.
+
+For authoritative Level 0–3 classification, escalation, downgrade, and Task Record rules, see [`workflows/route.md`](./workflows/route.md).
 
 ### 2. Subagent Delegation (Parallel Fan-Out)
 

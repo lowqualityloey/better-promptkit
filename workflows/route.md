@@ -16,6 +16,8 @@ Eliminate decision fatigue and guesswork by mapping every software development s
 
 ## Task Ceremony Levels & Classification
 
+`workflows/route.md` is the canonical authority for Level 0–3 task ceremony classification, level-selection criteria, escalation, downgrade, and Task Record rules.
+
 Before executing any request, classify the work using Better-PromptKit's 4-level task ceremony model to balance developer velocity with engineering rigor:
 
 ### Level 0 — Direct (Zero Overhead)
