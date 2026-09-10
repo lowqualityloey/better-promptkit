@@ -93,7 +93,7 @@ Better-PromptKit adapts ceremony based on task risk and impact:
 - **Level 2 (Controlled)**: Architecture, relational data/schema migrations, auth, permissions, breaking public API contracts, or multi-component changes. Requires formal Task Record (`docs/tasks/<task-id>.md`) and spec (`pk:plan`, `pk:data`, `pk:auth`, `pk:api`).
 - **Level 3 (Release-Critical)**: Production releases, deployments, high-impact contract changes, or tag generation. Requires full candidate evaluation (`pk:ship`), QA review, and explicit human authorization.
 
-For authoritative Level 0–3 classification, escalation, downgrade, and Task Record rules, see [`workflows/route.md`](.promptkit/workflows/route.md).
+For authoritative Level 0–3 classification, escalation, downgrade, and Task Record rules, see [`workflows/route.md`](../workflows/route.md).
 
 When auto-routing:
   - Defects, bugs, crashes, or test failures -> `pk:debug` (reproduce before patching)
