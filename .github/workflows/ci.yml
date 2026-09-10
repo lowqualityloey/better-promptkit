@@ -25,10 +25,14 @@ jobs:
           bash -n scripts/validate-ci-triage.sh
           bash -n scripts/tests/run-ci-triage-fixtures.sh
           bash -n scripts/tests/run-behavioral-contract-tests.sh
+          bash -n scripts/tests/run-init-safety-tests.sh
           echo "Bash scripts parsed with 0 syntax errors."
 
       - name: Run Behavioral Prompt-Contract Tests (Bash)
         run: bash scripts/tests/run-behavioral-contract-tests.sh
+
+      - name: Run init.sh Safety Regression Tests (Bash)
+        run: bash scripts/tests/run-init-safety-tests.sh
 
       - name: Run Agent Execution Control Fixture Harness (Bash)
         run: bash scripts/tests/run-execution-control-fixtures.sh

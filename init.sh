@@ -202,10 +202,51 @@ EOF
 for target in "${TARGETS_FOUND[@]}"; do
     REL_TARGET="${target#$PROJECT_ROOT/}"
     if grep -q "<!-- PROMPTKIT_START -->" "$target" 2>/dev/null; then
-        # Replace existing block using perl / awk
-        perl -i -0777 -pe "s/<!-- PROMPTKIT_START -->.*?<!-- PROMPTKIT_END -->/\Q$DIRECTIVE\E/s" "$target" 2>/dev/null || {
-            echo "$DIRECTIVE" > "$target"
+        start_count="$(grep -c '^<!-- PROMPTKIT_START -->$' "$target" 2>/dev/null || true)"
+        end_count="$(grep -c '^<!-- PROMPTKIT_END -->$' "$target" 2>/dev/null || true)"
+        if [[ "$start_count" -ne 1 || "$end_count" -ne 1 ]]; then
+            echo "Error: Cannot safely update $REL_TARGET: expected exactly one complete PromptKit directive block." >&2
+            exit 1
+        fi
+
+        directive_file="$(mktemp "${target}.directive.XXXXXX")"
+        updated_file="$(mktemp "${target}.updated.XXXXXX")"
+        cleanup_update_files() {
+            rm -f "$directive_file" "$updated_file" "${updated_file}.content"
         }
+        trap cleanup_update_files EXIT
+        printf '%s\n' "$DIRECTIVE" > "$directive_file"
+
+        cp -p "$target" "$updated_file"
+        if ! awk -v directive_file="$directive_file" '
+            BEGIN {
+                while ((getline line < directive_file) > 0) {
+                    directive = directive line ORS
+                }
+                close(directive_file)
+            }
+            /^<!-- PROMPTKIT_START -->$/ {
+                print directive
+                inside = 1
+                next
+            }
+            /^<!-- PROMPTKIT_END -->$/ && inside {
+                inside = 0
+                next
+            }
+            !inside { print }
+            END {
+                if (inside) exit 1
+            }
+        ' "$target" > "${updated_file}.content"; then
+            rm -f "${updated_file}.content"
+            echo "Error: Unable to safely update $REL_TARGET; the original file was preserved. Update it manually." >&2
+            exit 1
+        fi
+        mv "${updated_file}.content" "$updated_file"
+        mv "$updated_file" "$target"
+        trap - EXIT
+        rm -f "$directive_file"
         echo -e "  \033[0;33m[✓]\033[0m Updated Better-PromptKit directives in: $REL_TARGET"
     else
         printf "\n\n%s\n" "$DIRECTIVE" >> "$target"
