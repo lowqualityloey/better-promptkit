@@ -331,6 +331,7 @@ better-promptkit/
 │   ├── design-profile-template.md  # Scaffolds DESIGN.md for brand identity & visual tokens
 │   ├── state-tracker-template.md   # Scaffolds docs/STATE.md as a synchronized projection
 │   ├── execution-task-record-template.md # Canonical Controlled Work Task Record
+│   ├── friction-evaluation-template.md    # Adaptation friction evaluation & improvement
 │   ├── execution-scope-change-template.md # Approved scope expansion/change record
 │   ├── execution-handoff-template.md # Receiver-validated session or role handoff
 │   ├── data-model-spec.md          # Relational schema & RLS specification
@@ -338,6 +339,9 @@ better-promptkit/
 │   ├── api-contract-spec.md        # API endpoint contract & error code catalog
 │   ├── test-plan-template.md       # Upfront test strategy & pyramid seam specification
 │   ├── release-checklist.md        # Release engineering & zero-downtime deploy checklist
+│   ├── release-evaluation-template.md # Release candidate evaluation & approval
+│   ├── ci-triage-template.md       # CI classification & remediation tracking
+│   ├── contract-impact-evidence-template.md # Contract impact evidence & breaking guidance
 │   ├── pull-request-template.md    # High-signal Pull Request description & safety checklist
 │   ├── perf-audit-template.md      # Performance audit report & before/after delta spec
 │   ├── issue-task-template.md      # Staff-level GitHub Issue template with Gherkin AC
@@ -368,13 +372,18 @@ better-promptkit/
 │   ├── validate-references.ps1         # PowerShell: Check all workflow→template references
 │   ├── validate-execution-control.sh   # Bash: Read-only Task/STATE evidence validator
 │   ├── validate-execution-control.ps1  # PowerShell: Read-only Task/STATE evidence validator
+│   ├── validate-ci-triage.sh           # Bash: CI classification record validator
+│   ├── validate-ci-triage.ps1          # PowerShell: CI classification record validator
+│   ├── validate-release-records.sh     # Bash: Release evaluation & approval validator
+│   ├── validate-release-records.ps1    # PowerShell: Release evaluation & approval validator
 │   └── tests/run-execution-control-fixtures.* # Paired regression and isolated fixture harnesses
 └── activities/                  # Interactive simulation katas & system design drills
     ├── README.md                   # Interactive simulation catalog
     ├── 01-system-design-spike.md         # High-throughput webhook engine design
     ├── 02-refactoring-clean-arch.md      # Refactoring monolith to Clean Architecture
     ├── 03-async-concurrency-debug.md     # Concurrency race conditions & memory leaks
-    └── 04-accessible-design-system.md    # Accessible, tokenized component library
+    ├── 04-accessible-design-system.md    # Accessible, tokenized component library
+    └── create-research-workflow.md       # Create custom research workflow templates
 ```
 
 ---
