@@ -195,6 +195,7 @@ CORE_WORKFLOWS=(
     "design-system.md"
     "research.md"
     "debug.md"
+    "fix.md"
     "perf.md"
     "review.md"
     "commit.md"

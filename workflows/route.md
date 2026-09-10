@@ -117,6 +117,7 @@ Find your current engineering context below and activate the corresponding workf
 | **UI, Styling & Design System**| `pk:design` | `docs/design/` | WCAG 2.2 AA contrast, design tokens, anti-slop UI |
 | **Unproven Tech or Benchmark** | `pk:spike` | `docs/spikes/` | Sharpest-risk test, baseline comparison, ADR |
 | **Defect, Bug or Regression** | `pk:debug` | `docs/rca/` | Red loop first, tagged probes, 5-Whys post-mortem |
+| **Remediation & Known Findings** | `pk:fix` | Code repair | Surgical remediation of known findings, security-first ordering |
 | **Performance, Latency & Profiling** | `pk:perf` | `docs/perf/` | Baseline metrics, flamegraphs, EXPLAIN ANALYZE, delta audit |
 | **Pre-Merge Pull Request Audit**| `pk:review` | `docs/reviews/<review-slug>.md` | Two-axis review: Spec Fidelity vs Technical Standards |
 | **Atomic Git Staging & Commit** | `pk:commit` | Git History | Conventional Commits, single-concern staging, secret leak check |
@@ -252,7 +253,8 @@ If the request involves non-trivial engineering changes (new features, crashes, 
 1. Announce the active workflow in a single brief line:
    `[Better-PromptKit: Auto-routed to pk:<workflow>]`
 2. Automatically adhere to that workflow's quality gates, pre-conditions, and artifact outputs:
-   - **Bugs, errors, broken tests, unexpected behavior**: Auto-route to `pk:debug`. Establish the reproduction loop before proposing any fix.
+   - **Bugs, errors, broken tests, unexpected behavior (unknown cause)**: Auto-route to `pk:debug`. Establish the reproduction loop before proposing any fix.
+   - **Known defects, review findings, security patches, code smells**: Auto-route to `pk:fix`. Enforce security-first ordering, reproduction/measurement, and single-concern scope.
    - **Performance regressions, slow queries, latency, memory leaks, bundle bloat**: Auto-route to `pk:perf`. Capture baseline metrics before modifying code.
    - **New features, cross-component additions, new pages**: Auto-route to `pk:plan`. Create the RFC spec before writing code.
    - **Existing codebase intake, repo analysis, setup**: Auto-route to `pk:onboard`. Scan repository manifests and populate PROMPTKIT.md.

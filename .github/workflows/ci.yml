@@ -106,7 +106,8 @@ jobs:
             "scripts/validate-release-records.ps1",
             "scripts/validate-ci-triage.ps1",
             "scripts/tests/run-ci-triage-fixtures.ps1",
-            "scripts/tests/run-behavioral-contract-tests.ps1"
+            "scripts/tests/run-behavioral-contract-tests.ps1",
+            "scripts/tests/run-init-safety-tests.ps1"
           )
           foreach ($file in $syntaxFiles) {
             $errors = @()
@@ -121,6 +122,10 @@ jobs:
       - name: Run Behavioral Prompt-Contract Tests (PowerShell)
         shell: pwsh
         run: pwsh -NoProfile -File .\scripts\tests\run-behavioral-contract-tests.ps1
+
+      - name: Run init.ps1 Safety Regression Tests (PowerShell)
+        shell: pwsh
+        run: pwsh -NoProfile -File .\scripts\tests\run-init-safety-tests.ps1
 
       - name: Run Agent Execution Control Fixture Harness (PowerShell)
         shell: pwsh

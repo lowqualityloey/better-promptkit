@@ -80,6 +80,14 @@ Assert-Contains "README.md" "Start Here: Most Work Is Level 1" "README contains 
 Assert-Contains "README.md" "For authoritative Level 0–3 classification.*workflows/route\.md" "README links to workflows/route.md as canonical guide"
 Assert-Contains "workflows/route.md" "workflows/route\.md.*is the canonical authority" "workflows/route.md declares canonical ownership of Levels 0-3"
 
+Write-Host "`n📌 Scenario H: Remediation Workflow ('Fix a known review finding') — pk:fix" -ForegroundColor Yellow
+Assert-Contains "workflows/route.md" "pk:fix" "pk:fix trigger defined in lifecycle router"
+Assert-Contains "workflows/fix.md" "Remediation & Surgical Fix Workflow" "Remediation workflow present with title"
+Assert-Contains "workflows/fix.md" "pk:debug" "Remediation workflow distinguishes known cause from pk:debug"
+Assert-Contains "workflows/fix.md" "SECURITY & SAFETY ORDERING" "Remediation workflow enforces security-first ordering"
+Assert-Contains "workflows/fix.md" "Reproduction or Baseline Measurement" "Remediation workflow requires reproduction or baseline measurement"
+Assert-Contains "workflows/fix.md" "Level 1 — Standard Fix" "Remediation workflow aligns with Level 0-3 ceremony model"
+
 Write-Host "`n===========================================================" -ForegroundColor DarkGray
 Write-Host "📊 Behavioral Contract Verification Summary" -ForegroundColor Cyan
 Write-Host "Passed: $script:PassCount | Failed: $script:FailCount" -ForegroundColor Cyan
