@@ -247,7 +247,7 @@ foreach ($targetPath in $TargetsFound) {
             throw "Error: Cannot safely update ${relTarget}: expected exactly one complete PromptKit directive block."
         }
 
-        $pattern = '(?ms)^<!-- PROMPTKIT_START -->$.*?^<!-- PROMPTKIT_END -->$'
+        $pattern = '(?s)<!-- PROMPTKIT_START -->.*?<!-- PROMPTKIT_END -->'
         $escapedDirective = $Directive.Replace('$', '$$')
         $updated = [regex]::Replace($content, $pattern, $escapedDirective)
         [System.IO.File]::WriteAllText($targetPath, $updated, $utf8NoBom)
