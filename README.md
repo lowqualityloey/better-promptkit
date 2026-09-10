@@ -6,7 +6,7 @@
 
 The open-source Engineering Operating System for AI coding assistants (Claude Code, Antigravity, Cursor, Windsurf, GitHub Copilot, Gemini CLI, and Aider).
 
-Better-PromptKit equips your coding assistant with disciplined engineering workflows: spec-driven architecture, living session state, Expand-Contract zero-downtime database migrations, empirical debugging, and atomic Conventional Commits without colliding with IDE slash commands.
+Better-PromptKit equips your coding assistant with disciplined engineering workflows: spec-driven architecture, living session state, phased Expand-Contract zero-downtime database migrations, empirical debugging, and atomic Conventional Commits without colliding with IDE slash commands.
 
 ---
 
@@ -18,17 +18,23 @@ Better-PromptKit equips your coding assistant with disciplined engineering workf
 | **Who it is for** | Developers pairing with AI coding agents who want structured specs, living project state, non-breaking schema migrations, and clean git history. |
 | **Who it is NOT for** | Developers looking for an autocomplete inline plugin, a CLI binary, or an npm dependency. Better-PromptKit is pure markdown protocols and prompts. |
 | **Why it is better** | Replaces unguided "vibe coding" and token-wasting guess-and-patch loops with systematic, hypothesis-driven development workflows. Structured workflows are designed to reduce redundant back-and-forth by enforcing one-pass planning, artifact reuse, and surgical fixes over guess-and-patch loops. |
-| **Key differences** | Namespaced triggers (`pk:` prefix), guardrails against destructive schema drops (Expand-Contract policy), Socratic guidance that avoids unsolicited code dumps, and monorepo workspace isolation (scoped `--filter` commands). |
+| **Key differences** | Namespaced triggers (`pk:` prefix), guardrails against single-step destructive schema drops (phased Expand-Contract policy), Socratic guidance that avoids unsolicited code dumps, and monorepo workspace isolation (scoped `--filter` commands). |
 
 ---
 
 ## Start Here: Most Work Is Level 1
 
-Most everyday engineering tasks — such as fixing bugs, tweaking isolated components, or adding small self-contained features — fall into **Level 1 (Standard)**. You do not need formal ceremony or task record files to get started.
+Getting started with Better-PromptKit takes three simple steps:
 
-- **Example**: "Fix the empty-password login crash"
-- **Minimal Flow**: `describe task → route → lightweight inline plan → implement → test/review`
-- **Zero Overhead**: Level 1 work modifies source files using natural workflow routing (like [`pk:debug`](./workflows/debug.md) or [`pk:test`](./workflows/test.md)) and does **not** require a formal Task Record file (`docs/tasks/<task-id>.md`).
+1. **Install & Initialize**: Run `./.promptkit/init.sh` (or `.\.promptkit\init.ps1`) to scaffold `./docs/`, `./PROMPTKIT.md`, and host directives.
+2. **First Prompt**: Enter your task naturally or route explicitly with `pk:route`. When the workflow is unclear, [`pk:route`](./workflows/route.md) is your canonical entry point.
+3. **Keep It Simple**: Most ordinary engineering tasks (bug fixes, isolated component tweaks, small features) are **Level 1 (Standard)** and do **not** require a formal Task Record file (`docs/tasks/<task-id>.md`).
+
+### First Task Example
+
+Try pasting this copyable prompt into your AI assistant right after setup:
+
+> "Build a simple React calculator in the existing app. Keep this at Better-PromptKit Level 1 unless inspection finds schema, authentication, public-contract, or multi-component risk. Use only the minimum relevant workflow and run targeted verification."
 
 For authoritative Level 0–3 classification, escalation, downgrade, and Task Record rules, see [`workflows/route.md`](./workflows/route.md). To get up and running in 5 minutes, see [Quick Start](#quick-start-60-seconds) or [`QUICKSTART.md`](./QUICKSTART.md).
 
@@ -43,7 +49,7 @@ For authoritative Level 0–3 classification, escalation, downgrade, and Task Re
 **Want to know more?** → See **[INTERESTING-FACTS.md](./docs/INTERESTING-FACTS.md)** for unique insights and design principles
 
 > [!TIP]
-> **Start with just 2 workflows.** You do not need to learn all 19 commands. Use `pk:debug` (stops guess-and-patch loops) and `pk:checkpoint` (eliminates session amnesia) to get 80% of the value immediately. Everything else is modular and on-demand.
+> **Start with just 2 workflows.** You do not need to learn all 20 workflows. Use `pk:debug` (stops guess-and-patch loops) and `pk:checkpoint` (eliminates session amnesia) to get 80% of the value immediately. Everything else is modular and on-demand.
 
 ### 1. Add to Your Project
 
@@ -172,29 +178,31 @@ Trigger anytime with `pk:route`. Navigate across the entire engineering lifecycl
 
 All triggers use the `pk:` prefix to avoid collisions with native slash commands in Antigravity or Cursor:
 
-| Command | Workflow | Output Target | Description |
-| :--- | :--- | :--- | :--- |
-| `pk:route` | [`workflows/route.md`](./workflows/route.md) | Conversation | Interactive lifecycle decision matrix and workflow triage. |
-| `pk:tutor` | [`workflows/tutor.md`](./workflows/tutor.md) | Conversation | Socratic mentorship using 3-tier hints; guides without dumping code. |
-| `pk:grill` | [`workflows/tutor.md`](./workflows/tutor.md) | Conversation | Architecture defense drill challenging assumptions and edge cases. |
-| `pk:plan` | [`workflows/plan.md`](./workflows/plan.md) | `docs/specs/` | Spec-driven architecture, module depth, and zero-downtime migrations. |
-| `pk:onboard` | [`workflows/onboard.md`](./workflows/onboard.md) | `PROMPTKIT.md`, `docs/STATE.md` | Brownfield intake: scans manifests, workspaces, and scaffolds guardrails. |
-| `pk:tasks` | [`workflows/tasks.md`](./workflows/tasks.md) | `docs/tasks/` or `gh` | Decomposes specs into atomic 1-4h tasks with Gherkin AC. |
-| `pk:data` | [`workflows/data.md`](./workflows/data.md) | `docs/data/` | Schema design, composite indexing, RLS policies, and migrations. |
-| `pk:auth` | [`workflows/auth.md`](./workflows/auth.md) | `docs/auth/` | Cookie security flags, OAuth PKCE flows, and RBAC/ABAC capability matrix. |
-| `pk:api` | [`workflows/api.md`](./workflows/api.md) | `docs/api/` | Contract envelopes, cursor pagination, and mutation idempotency. |
-| `pk:test` | [`workflows/test.md`](./workflows/test.md) | `docs/tests/` | Testing pyramid seam allocation, data factories, and monorepo `--filter`. |
-| `pk:design` | [`workflows/design-system.md`](./workflows/design-system.md) | `docs/design/` | Anti-slop UI tokens, WCAG 2.2 AA accessibility, and mobile ergonomics. |
-| `pk:spike` | [`workflows/research.md`](./workflows/research.md) | `docs/spikes/` | Technical risk spikes comparing options against a boring baseline. |
-| `pk:debug` | [`workflows/debug.md`](./workflows/debug.md) | `docs/rca/` | Scientific debugging: fast reproduction loop, tagged logs, and 5-Whys. |
-| `pk:fix` | [`workflows/fix.md`](./workflows/fix.md) | Code repair | Surgical remediation of known findings with security-first ordering. |
-| `pk:perf` | [`workflows/perf.md`](./workflows/perf.md) | `docs/perf/` | Baseline quantification, EXPLAIN ANALYZE, flamegraphs, and deltas. |
-| `pk:review` | [`workflows/review.md`](./workflows/review.md) | Review report | Two-axis review: Spec Fidelity vs Technical Standards (Fowler's smells). |
-| `pk:commit` | [`workflows/commit.md`](./workflows/commit.md) | Git history | Atomic Conventional Commits, single-concern staging, and secret scanning. |
-| `pk:pr` | [`workflows/pr.md`](./workflows/pr.md) | PR body / `gh pr` | Pull request descriptions with test evidence and rollback procedures. |
-| `pk:ship` | [`workflows/ship.md`](./workflows/ship.md) | `docs/releases/` | Runtime env validation (Zod/T3), migration ordering, and smoke tests. |
-| `pk:checkpoint` | [`workflows/checkpoint.md`](./workflows/checkpoint.md) | `docs/STATE.md` | Session compaction, invariant locking, and fresh chat handover prompt. |
-| `pk:retro` | [`workflows/reflect.md`](./workflows/reflect.md) | `docs/adrs/` & journal | Post-feature retrospective: extracts decisions into standard MADRs. |
+| Command | Workflow File | Status | Output Target | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| `pk:route` | [`workflows/route.md`](./workflows/route.md) | Core 🧪 | Conversation | Interactive lifecycle decision matrix and workflow triage. |
+| `pk:tutor` | [`workflows/tutor.md`](./workflows/tutor.md) | Core 🧪 | Conversation | Socratic mentorship using 3-tier hints; guides without dumping code. |
+| `pk:grill` | [`workflows/tutor.md`](./workflows/tutor.md) (alias) | Core 🧪 | Conversation | Architecture defense drill implemented via `tutor.md`. |
+| `pk:plan` | [`workflows/plan.md`](./workflows/plan.md) | Core 🧪 | `docs/specs/` | Spec-driven architecture, module depth, and zero-downtime migrations. |
+| `pk:onboard` | [`workflows/onboard.md`](./workflows/onboard.md) | Core | `PROMPTKIT.md`, `docs/STATE.md` | Brownfield intake: scans manifests, workspaces, and scaffolds guardrails. |
+| `pk:tasks` | [`workflows/tasks.md`](./workflows/tasks.md) | Core 🧪 | `docs/tasks/` or `gh` | Decomposes specs into atomic 1-4h tasks with Gherkin AC. |
+| `pk:data` | [`workflows/data.md`](./workflows/data.md) | Core 🧪 | `docs/data/` | Schema design, composite indexing, RLS policies, and migrations. |
+| `pk:auth` | [`workflows/auth.md`](./workflows/auth.md) | Core 🧪 | `docs/auth/` | Cookie security flags, OAuth PKCE flows, and RBAC/ABAC capability matrix. |
+| `pk:api` | [`workflows/api.md`](./workflows/api.md) | Core | `docs/api/` | Contract envelopes, cursor pagination, and mutation idempotency. |
+| `pk:test` | [`workflows/test.md`](./workflows/test.md) | Core | `docs/tests/` | Testing pyramid seam allocation, data factories, and monorepo `--filter`. |
+| `pk:design` | [`workflows/design-system.md`](./workflows/design-system.md) | Core | `docs/design/` | Anti-slop UI tokens, WCAG 2.2 AA accessibility, and mobile ergonomics. |
+| `pk:spike` | [`workflows/research.md`](./workflows/research.md) | Core | `docs/spikes/` | Technical risk spikes comparing options against a boring baseline. |
+| `pk:debug` | [`workflows/debug.md`](./workflows/debug.md) | Core 🧪 | `docs/rca/` | Scientific debugging: fast reproduction loop, tagged logs, and 5-Whys. |
+| `pk:fix` | [`workflows/fix.md`](./workflows/fix.md) | New 🧪 | Code repair | Surgical remediation of known findings with security-first ordering. |
+| `pk:perf` | [`workflows/perf.md`](./workflows/perf.md) | Core | `docs/perf/` | Baseline quantification, EXPLAIN ANALYZE, flamegraphs, and deltas. |
+| `pk:review` | [`workflows/review.md`](./workflows/review.md) | Core | Review report | Two-axis review: Spec Fidelity vs Technical Standards (Fowler's smells). |
+| `pk:commit` | [`workflows/commit.md`](./workflows/commit.md) | Core | Git history | Atomic Conventional Commits, single-concern staging, and secret scanning. |
+| `pk:pr` | [`workflows/pr.md`](./workflows/pr.md) | Core | PR body / `gh pr` | Pull request descriptions with test evidence and rollback procedures. |
+| `pk:ship` | [`workflows/ship.md`](./workflows/ship.md) | Core 🧪 | `docs/releases/` | Runtime env validation (Zod/T3), migration ordering, and smoke tests. |
+| `pk:checkpoint` | [`workflows/checkpoint.md`](./workflows/checkpoint.md) | Core | `docs/STATE.md` | Session compaction, invariant locking, and fresh chat handover prompt. |
+| `pk:retro` | [`workflows/reflect.md`](./workflows/reflect.md) | Core | `docs/adrs/` & journal | Post-feature retrospective: extracts decisions into standard MADRs. |
+
+*Status Legend: All 20 workflows pass CI structural link validation (`validate-references.sh`). Workflows marked with 🧪 also undergo automated behavioral prompt-contract testing (`run-behavioral-contract-tests.sh`).*
 
 ---
 
@@ -236,15 +244,27 @@ A passing validator or CI job proves only that the recorded evidence is internal
 > [!NOTE]
 > PromptKit makes AI assistants **systematic and disciplined**, not mechanically deterministic. Think of it as engineering standards for a junior developer: they follow the playbook most of the time, but you still review their PRs.
 
+### Continuous Integration & Automated Validation
+
+Repository CI validates structural integrity and protocol compliance across Linux (Bash) and Windows (PowerShell) environments:
+
+- **Script Syntax & Quality**: Validates Bash (`bash -n`) and PowerShell syntax for setup and validation scripts.
+- **Initialization Safety & Idempotency**: Tests `init.sh` and `init.ps1` to ensure non-destructive directive updates and safe error handling on malformed markers.
+- **Behavioral Prompt-Contract Tests**: Executes scenario suites verifying Level 0–3 classification, fast-path rules, Expand-Contract policy, and router consistency.
+- **Execution-Control Fixtures**: Validates task and state tracker schema formatting, evidence references, and handoff contracts.
+- **CI-Triage Fixtures**: Tests failure classification, remediation tracking, and diagnostic record structures.
+- **Release Record Validation**: Ensures strict schema and evidence linkage compliance for release evaluation records.
+- **Reference & Structural Validation**: Scans all workflow files, templates, protocols, and activities for valid cross-document links and template completeness.
+
 ---
 
 ## How PromptKit Differs from Other Tools
 
 | Dimension | `.cursorrules` / `CLAUDE.md` | Prompt Packs (spec-kit, BMad) | **Better-PromptKit** |
 | :--- | :--- | :--- | :--- |
-| **Scope** | Tool-specific instruction endpoint | Workflow templates for one tool | Cross-tool engineering OS with 19 lifecycle workflows |
+| **Scope** | Tool-specific instruction endpoint | Workflow templates for one tool | Cross-tool engineering OS with 20 lifecycle workflows |
 | **Persistence** | Per-session only | Per-session only | Git-tracked `docs/STATE.md` survives context resets |
-| **Database Safety** | No schema guardrails | Varies | Expand-Contract only (zero `DROP TABLE`) |
+| **Database Safety** | No schema guardrails | Varies | Expand-Contract only (phased migration) |
 | **Multi-Agent** | Single agent | Single agent | Subagent delegation with compact synthesis |
 | **Enforcement** | Trust the model | Trust the model | Artifact gates + CI + human review |
 | **Lock-in** | Tool-specific format | Tool-specific format | Pure markdown, works with any AI assistant |
@@ -385,16 +405,28 @@ Scaffolded automatically during initialization from `templates/state-tracker-tem
 
 ---
 
-## Multi-Agent Compatibility
+## Host & External Tool Composition
 
-| Environment | Briefing File Configured | Trigger Syntax |
-| :--- | :--- | :--- |
-| **Antigravity / Gemini CLI** | `AGENTS.md` / `GEMINI.md` | `pk:tutor`, `pk:plan`, `pk:review` |
-| **Claude Code** | `CLAUDE.md` | Reads `CLAUDE.md` automatically |
-| **Cursor IDE** | `.cursorrules` / `.cursor/rules/` | Cursor Agent references rules automatically |
-| **Windsurf IDE** | `.windsurfrules` | Cascade auto-detects rules |
-| **GitHub Copilot** | `.github/copilot-instructions.md` | Copilot Chat references instructions |
-| **Aider** | `CONVENTIONS.md` | `aider --read .promptkit/workflows/tutor.md` |
+Better-PromptKit coexists cleanly with host-specific instruction files (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.cursorrules`, `.windsurfrules`, `.github/copilot-instructions.md`), external skill libraries (such as `skills.sh`), host `/skill` commands, and complementary specification systems (Spec Kit, BMad).
+
+### Authority & Governance Boundary
+
+- **Specialized Assistance**: External skills and host tools provide domain-specific knowledge, code generation assistance, or specialized refactoring helpers.
+- **PromptKit Authority**: Better-PromptKit remains authoritative for **Level 0–3 task classification**, lifecycle routing, required verification evidence, Task Record requirements, release boundaries, and human authorization.
+- **Non-Bypass Rule**: External skills must act as subordinate helpers. They must **never** silently commit, push, merge, tag, publish, deploy, or bypass required verification gates.
+- **Behavioral Variation**: Host agents enforce instructions with varying degrees of fidelity. Better-PromptKit provides protocol standards, but host enforcement depends on the AI agent host.
+
+### Host Compatibility Matrix
+
+| Environment / Tool | Configuration Integration | Repo / CI Validation | Actual Host Behavior Verification |
+| :--- | :---: | :---: | :---: |
+| **Claude Code** | ✅ `CLAUDE.md` | ✅ CI Syntax & Reference Checks | ⚠️ Dependent on Claude Code runtime |
+| **Antigravity / Gemini CLI** | ✅ `AGENTS.md` / `GEMINI.md` | ✅ CI Behavioral Contract Tests | ⚠️ Dependent on Gemini runtime |
+| **Cursor IDE** | ✅ `.cursorrules` / `.cursor/rules/` | ✅ CI Syntax & Reference Checks | ⚠️ Dependent on Cursor Agent runtime |
+| **Windsurf IDE** | ✅ `.windsurfrules` | ✅ CI Syntax & Reference Checks | ⚠️ Dependent on Cascade runtime |
+| **GitHub Copilot** | ✅ `.github/copilot-instructions.md` | ✅ CI Syntax & Reference Checks | ⚠️ Dependent on Copilot runtime |
+| **Aider** | ✅ `CONVENTIONS.md` | ✅ CI Syntax & Reference Checks | ⚠️ Dependent on Aider runtime |
+| **External Skills (skills.sh / `/skill`)** | ✅ Subordinate helper rules | ✅ Reference Checks | ⚠️ Execution varies by skill implementation |
 
 ---
 

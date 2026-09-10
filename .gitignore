@@ -22,7 +22,7 @@ pnpm-debug.log*
 
 # Preserved untracked local artifacts (not for publication)
 semantic-review/
-.kiro/specs/comprehensive-faq/
-.kiro/specs/conventional-commit-versioning/
-.kiro/specs/promptkit-sdlc-skill-adaptation/
-.kiro/specs/readme-refresh/
+
+# Local/internal Kiro specs (future specs ignored; historical agent-execution-control-handoff preserved for release evidence)
+.kiro/specs/*
+!.kiro/specs/agent-execution-control-handoff/
