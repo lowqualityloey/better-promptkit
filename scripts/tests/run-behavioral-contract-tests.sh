@@ -84,6 +84,15 @@ assert_contains "README.md" "For authoritative Level 0–3 classification.*workf
 assert_contains "workflows/route.md" "workflows/route\.md.*is the canonical authority" "workflows/route.md declares canonical ownership of Levels 0-3"
 
 echo ""
+echo "📌 Scenario H: Remediation Workflow ('Fix a known review finding') — pk:fix"
+assert_contains "workflows/route.md" "pk:fix" "pk:fix trigger defined in lifecycle router"
+assert_contains "workflows/fix.md" "Remediation & Surgical Fix Workflow" "Remediation workflow present with title"
+assert_contains "workflows/fix.md" "pk:debug" "Remediation workflow distinguishes known cause from pk:debug"
+assert_contains "workflows/fix.md" "SECURITY & SAFETY ORDERING" "Remediation workflow enforces security-first ordering"
+assert_contains "workflows/fix.md" "Reproduction or Baseline Measurement" "Remediation workflow requires reproduction or baseline measurement"
+assert_contains "workflows/fix.md" "Level 1 — Standard Fix" "Remediation workflow aligns with Level 0-3 ceremony model"
+
+echo ""
 echo "==========================================================="
 echo "📊 Behavioral Contract Verification Summary"
 echo "Passed: $PASS_COUNT | Failed: $FAIL_COUNT"

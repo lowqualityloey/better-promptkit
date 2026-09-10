@@ -28,6 +28,8 @@ if ($TargetDir -ne "") {
     $ProjectRoot = Resolve-Path "."
 }
 
+$ProjectRootPath = if ($ProjectRoot.Path) { $ProjectRoot.Path } else { $ProjectRoot.ToString() }
+
 Write-Host "`n🚀 Initializing Better-PromptKit..." -ForegroundColor Cyan
 Write-Host "   Host Project: $ProjectRoot" -ForegroundColor DarkGray
 Write-Host "   Engine Path:  $ScriptDir`n" -ForegroundColor DarkGray
@@ -115,8 +117,8 @@ if ($TargetsFound.Count -eq 0) {
 }
 
 # 4. Directive Block
-$KitDirRel = if ($ScriptDir.StartsWith($ProjectRoot.Path)) {
-    $ScriptDir.Substring($ProjectRoot.Path.Length).TrimStart("\", "/") -replace "\\", "/"
+$KitDirRel = if ($ScriptDir.StartsWith($ProjectRootPath)) {
+    $ScriptDir.Substring($ProjectRootPath.Length).TrimStart("\", "/") -replace "\\", "/"
 } else {
     ".promptkit"
 }
@@ -138,6 +140,7 @@ Activate workflows anytime with these namespaced triggers:
 - `pk:commit`: Atomic Conventional Commits, single-concern staging, and pre-commit secret leak scan.
 - `pk:pr`: High-signal PR descriptions, verification evidence compilation, data safety checklist, and GitHub CLI creation.
 - `pk:debug`: Hypothesis-driven scientific debugging & root cause analysis (5-Whys).
+- `pk:fix`: Surgical remediation for known findings, security-first ordering, and single-concern scope.
 - `pk:perf` (or `pk:profile`): Empirical performance profiling, latency SLAs, EXPLAIN ANALYZE, and delta verification.
 - `pk:data` (or `pk:db`): Relational database modeling, indexing strategies, RLS, and transaction boundaries.
 - `pk:auth`: Authentication flows, cookie security, session management, and RBAC/ABAC matrices.
@@ -153,7 +156,8 @@ Activate workflows anytime with these namespaced triggers:
 You do not need to memorize triggers. If a prompt lacks an explicit `pk:` trigger, apply this triage:
 - **Fast-Path (Zero Overhead)**: For simple questions, syntax lookups, quick explanations, formatting, or single-line tweaks, answer directly and concisely. Do NOT invoke heavy workflow ceremonies or produce unnecessary documents.
 - **Protocol Auto-Route (Substantive Tasks)**: For multi-file changes, architecture, broken code, or production ops, automatically adopt the matching workflow:
-  - Defects, bugs, crashes, or test failures -> `pk:debug` (reproduce before patching)
+  - Defects, bugs, crashes, or test failures (unknown cause) -> `pk:debug` (reproduce before patching)
+  - Known defects, review findings, or security patches -> `pk:fix` (remediate known root cause)
   - Performance regressions, slow queries, or latency -> `pk:perf` (measure baseline first)
   - New features, redesigns, or multi-component additions -> `pk:plan` (spec and risk analysis first)
   - Existing repo intake, setup, or codebase audit -> `pk:onboard` (scan repo and scaffold PROMPTKIT.md)
@@ -179,6 +183,7 @@ You do not need to memorize triggers. If a prompt lacks an explicit `pk:` trigge
 - **Commit**: $KitDirRel/workflows/commit.md
 - **Pull Request**: $KitDirRel/workflows/pr.md
 - **Debug**: $KitDirRel/workflows/debug.md
+- **Fix**: $KitDirRel/workflows/fix.md
 - **Performance**: $KitDirRel/workflows/perf.md
 - **Data**: $KitDirRel/workflows/data.md
 - **Auth**: $KitDirRel/workflows/auth.md
@@ -217,19 +222,40 @@ All generated project documentation must be saved to the host project:
 "@
 
 # 5. Inject or Replace Directives (Idempotent)
-foreach ($targetPath in $TargetsFound) {
-    $relTarget = $targetPath.Substring($ProjectRoot.Path.Length).TrimStart("\", "/")
-    $content = Get-Content -Path $targetPath -Raw -ErrorAction SilentlyContinue
-    if (-not $content) { $content = "" }
+$utf8NoBom = New-Object System.Text.UTF8Encoding($false)
 
-    $pattern = '(?s)<!-- PROMPTKIT_START -->.*?<!-- PROMPTKIT_END -->'
-    if ($content -match $pattern) {
-        $updated = [regex]::Replace($content, $pattern, $Directive)
-        Set-Content -Path $targetPath -Value $updated -NoNewline
+foreach ($targetPath in $TargetsFound) {
+    $relTarget = if ($targetPath.StartsWith($ProjectRootPath)) {
+        $targetPath.Substring($ProjectRootPath.Length).TrimStart("\", "/") -replace "\\", "/"
+    } else {
+        $targetPath -replace "\\", "/"
+    }
+
+    $content = if (Test-Path $targetPath) {
+        [System.IO.File]::ReadAllText($targetPath, [System.Text.Encoding]::UTF8)
+    } else {
+        ""
+    }
+
+    if ($content -match "<!-- PROMPTKIT_START -->") {
+        $lines = $content -split "\r?\n"
+        $startCount = @($lines | Where-Object { $_ -match '^<!-- PROMPTKIT_START -->$' }).Count
+        $endCount = @($lines | Where-Object { $_ -match '^<!-- PROMPTKIT_END -->$' }).Count
+
+        if ($startCount -ne 1 -or $endCount -ne 1) {
+            [System.Console]::Error.WriteLine("Error: Cannot safely update ${relTarget}: expected exactly one complete PromptKit directive block.")
+            throw "Error: Cannot safely update ${relTarget}: expected exactly one complete PromptKit directive block."
+        }
+
+        $pattern = '(?ms)^<!-- PROMPTKIT_START -->$.*?^<!-- PROMPTKIT_END -->$'
+        $escapedDirective = $Directive.Replace('$', '$$')
+        $updated = [regex]::Replace($content, $pattern, $escapedDirective)
+        [System.IO.File]::WriteAllText($targetPath, $updated, $utf8NoBom)
         Write-Host "  [✓] Updated Better-PromptKit directives in: $relTarget" -ForegroundColor Yellow
     } else {
         $prefix = if ($content.Trim().Length -gt 0) { "`n`n" } else { "" }
-        Add-Content -Path $targetPath -Value ($prefix + $Directive) -NoNewline
+        $updated = $content + $prefix + $Directive
+        [System.IO.File]::WriteAllText($targetPath, $updated, $utf8NoBom)
         Write-Host "  [+] Injected Better-PromptKit directives into: $relTarget" -ForegroundColor Green
     }
 }
