@@ -237,19 +237,37 @@ foreach ($targetPath in $TargetsFound) {
         ""
     }
 
-    if ($content -match "<!-- PROMPTKIT_START -->") {
-        $lines = $content -split "\r?\n"
-        $startCount = @($lines | Where-Object { $_ -match '^<!-- PROMPTKIT_START -->$' }).Count
-        $endCount = @($lines | Where-Object { $_ -match '^<!-- PROMPTKIT_END -->$' }).Count
+    $hasStart = $content -match "<!-- PROMPTKIT_START -->"
+    $hasEnd = $content -match "<!-- PROMPTKIT_END -->"
 
-        if ($startCount -ne 1 -or $endCount -ne 1) {
-            [System.Console]::Error.WriteLine("Error: Cannot safely update ${relTarget}: expected exactly one complete PromptKit directive block.")
-            throw "Error: Cannot safely update ${relTarget}: expected exactly one complete PromptKit directive block."
+    if ($hasStart -or $hasEnd) {
+        $lines = $content -split "\r?\n"
+        $startIndex = -1
+        $endIndex = -1
+        $startCount = 0
+        $endCount = 0
+
+        for ($i = 0; $i -lt $lines.Length; $i++) {
+            $trimmed = $lines[$i].Trim()
+            if ($trimmed -eq "<!-- PROMPTKIT_START -->") {
+                $startCount++
+                if ($startIndex -eq -1) { $startIndex = $i }
+            }
+            if ($trimmed -eq "<!-- PROMPTKIT_END -->") {
+                $endCount++
+                if ($endIndex -eq -1) { $endIndex = $i }
+            }
+        }
+
+        if ($startCount -ne 1 -or $endCount -ne 1 -or $startIndex -ge $endIndex) {
+            [System.Console]::Error.WriteLine("Error: Cannot safely update ${relTarget}: expected exactly one complete PromptKit directive block with START before END.")
+            throw "Error: Cannot safely update ${relTarget}: expected exactly one complete PromptKit directive block with START before END."
         }
 
         $pattern = '(?s)<!-- PROMPTKIT_START -->.*?<!-- PROMPTKIT_END -->'
-        $escapedDirective = $Directive.Replace('$', '$$')
-        $updated = [regex]::Replace($content, $pattern, $escapedDirective)
+        $evaluator = [System.Text.RegularExpressions.MatchEvaluator]{ param($m) $Directive }
+        $updated = [regex]::Replace($content, $pattern, $evaluator)
+
         [System.IO.File]::WriteAllText($targetPath, $updated, $utf8NoBom)
         Write-Host "  [✓] Updated Better-PromptKit directives in: $relTarget" -ForegroundColor Yellow
     } else {
