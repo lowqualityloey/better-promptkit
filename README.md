@@ -289,16 +289,16 @@ better-promptkit/
 ├── .github/
 │   └── workflows/
 │       └── ci.yml               # Maintainer CI (script syntax, initialization dry-run/idempotency, workflow structure, reference validation, fixture harnesses, and behavioral-contract tests)
-├── FAQ.md                       # 🌟 NEW: The 11 questions every developer asks before adopting
-├── QUICKSTART.md                # 🌟 NEW: 5-minute introduction with 4 core workflows
+├── FAQ.md                       # The 11 questions every developer asks before adopting
+├── QUICKSTART.md                # 5-minute introduction with 4 core workflows
 ├── init.ps1                     # Setup script for Windows (PowerShell)
 ├── init.sh                      # Setup script for Linux/macOS (Bash)
 ├── LICENSE                      # Open-source MIT License
 ├── docs/
-│   ├── WORKFLOW-MAP.md          # 🌟 NEW: Visual decision trees and Mermaid diagrams
-│   ├── ADOPTION-GUIDE.md        # 🌟 NEW: Incremental adoption for existing projects
-│   ├── INTERESTING-FACTS.md     # 🌟 NEW: Unique insights and design principles
-│   └── DESIGN-MD-FAQ.md         # 🌟 NEW: FAQ on custom DESIGN.md usage & safety
+│   ├── WORKFLOW-MAP.md          # Visual decision trees and Mermaid diagrams
+│   ├── ADOPTION-GUIDE.md        # Incremental adoption for existing projects
+│   ├── INTERESTING-FACTS.md     # Unique insights and design principles
+│   └── DESIGN-MD-FAQ.md         # FAQ on custom DESIGN.md usage & safety
 ├── protocols/                   # Non-negotiable AI rules & operating standards
 │   ├── setup.md                 # Universal multi-agent configuration protocol
 │   ├── context-sync.md          # Tech stack, monorepos, PROMPTKIT.md, DESIGN.md & git detection
@@ -349,7 +349,7 @@ better-promptkit/
 │   ├── code-review-checklist.md    # Senior Developer PR Review Checklist
 │   ├── design-tokens-spec.md       # Design System & Token Specification
 │   └── spike-template.md           # Technical Spike & Benchmark Evaluation Template
-├── examples/                    # 🌟 EXPANDED: Real-world production examples
+├── examples/                    # Real-world production examples
 │   ├── README.md                       # Example catalog and usage guide
 │   ├── saas-dashboard/                 # Complete B2B SaaS example (Next.js + Supabase)
 │   │   ├── PROMPTKIT.md               # Full project profile with monorepo config
@@ -365,7 +365,7 @@ better-promptkit/
 │   ├── skill-matrix.md             # Software Engineering Competency Matrix (L1 → L4)
 │   ├── adrs/                       # Local ADR directory (for standalone vault mode)
 │   └── spikes/                     # Local Spikes directory (for standalone vault mode)
-├── scripts/                     # 🌟 NEW: Validation and maintenance utilities
+├── scripts/                     # Validation and maintenance utilities
 │   ├── validate-references.sh          # Bash: Check all workflow→template references
 │   ├── validate-references.ps1         # PowerShell: Check all workflow→template references
 │   ├── validate-execution-control.sh   # Bash: Read-only Task/STATE evidence validator

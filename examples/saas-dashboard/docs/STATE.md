@@ -8,6 +8,8 @@
 - **Current Working Branch**: `feature/workspace-invitations`
 - **Last Updated**: 2026-09-08
 
+> **Authority note**: This file is the synchronized state projection maintained by `pk:checkpoint`. The canonical execution authority for the controlled invitation work is [`docs/tasks/2026-09-05-task-304-invitation-flow.md`](tasks/2026-09-05-task-304-invitation-flow.md).
+
 ---
 
 ## 2. Milestone & Task Progress
@@ -37,7 +39,7 @@
 ## 3. Active Working Set
 - **Target Workspace**: `apps/web` (Next.js frontend) + `packages/api` (tRPC procedures)
 - **Active RFC Spec**: `docs/specs/2026-08-25-spec-workspace-invitations.md`
-- **Active Task Spec**: `docs/tasks/2026-09-05-task-304-invitation-flow.md`
+- **Canonical Task Record**: `docs/tasks/2026-09-05-task-304-invitation-flow.md`
 - **Key Source Files in Flight**:
   - `packages/api/src/routers/workspace.ts`: Invitation procedures (createInvite, acceptInvite)
   - `packages/db/src/schema/workspaces.ts`: Workspace invitation table schema
@@ -111,10 +113,6 @@
 
 | Date | Title & Scope | Decision Summary | ADR File |
 | :--- | :--- | :--- | :--- |
-| 2026-07-10 | Primary Key Strategy | Adopted UUIDv7 over auto-increment IDs for distributed writes and time-ordered sorting | `docs/adrs/0001-uuidv7-primary-keys.md` |
-| 2026-07-15 | ORM Selection | Chose Drizzle ORM over Prisma for type-safe SQL and zero-cost abstractions | `docs/adrs/0002-drizzle-orm.md` |
-| 2026-08-01 | Session Storage | HttpOnly cookies over localStorage to prevent XSS token theft | `docs/adrs/0003-httponly-session-cookies.md` |
-| 2026-08-10 | RLS Enforcement | Mandatory PostgreSQL Row-Level Security for all workspace-scoped tables | `docs/adrs/0004-postgres-rls-tenancy.md` |
 | 2026-08-20 | Invitation Flow | Magic link email verification (not password-based signup) for frictionless onboarding | `docs/adrs/0005-magic-link-invitations.md` |
 
 ---

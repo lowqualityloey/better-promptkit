@@ -94,7 +94,7 @@ pnpm --filter @workhub/docs dev
 
 ### Testing & Quality
 ```bash
-# Run all tests (scoped to changed packages)
+# Run the full monorepo test suite
 pnpm test
 
 # Run tests for specific workspace
