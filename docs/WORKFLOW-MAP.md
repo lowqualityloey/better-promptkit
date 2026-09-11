@@ -442,4 +442,12 @@ How workflows feed into each other:
 
 ---
 
+## Related Documentation
+
+- [`BENCHMARKS.md`](./BENCHMARKS.md) — Factual token economics, architecture analysis, and context window preservation
+- [`ADOPTION-GUIDE.md`](./ADOPTION-GUIDE.md) — Gradual adoption strategies and ceremony level transitions
+- [`../FAQ.md`](../FAQ.md) — Frequently asked questions and adoption details
+
+---
+
 **Tip**: Bookmark this page or run `pk:route` anytime you're unsure which workflow to use!

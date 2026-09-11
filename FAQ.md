@@ -1,6 +1,6 @@
 # Better-PromptKit FAQ
 
-**The 11 questions every developer asks before adopting Better-PromptKit.**
+**The 12 questions every developer asks before adopting Better-PromptKit.**
 
 ---
 
@@ -485,6 +485,18 @@ Remember: **AI assistants aren't perfect**. PromptKit structures their reasoning
 
 **Related**: [README.md](README.md) "How PromptKit Differs from Other Tools" section
 
+## 12. Does Better-PromptKit waste tokens by loading all workflows into every prompt?
+
+**Short Answer**: No. Better-PromptKit uses a **Just-In-Time (JIT) Filesystem Architecture** with zero static token bloat.
+
+**How it works**:
+- **Baseline footprint**: Initialization scripts inject only a lightweight ~40-line router directive (~650 tokens) into your configuration file (`AGENTS.md`, `CLAUDE.md`, `.cursorrules`, etc.).
+- **On-demand loading**: The AI only reads specific workflow files (e.g. `workflows/debug.md`) from the local filesystem when that specific workflow is triggered or routed.
+- **Comparison to monolithic prompts**: Traditional prompt packs inline all rules, workflows, and templates directly into the prompt on every turn, consuming 18,000–22,000 tokens statically before work begins. PromptKit preserves >95% of initial context window overhead.
+- **Subagent context preservation**: Multi-file exploration is delegated to subagents whose results are synthesized into compact findings, reducing conversational bloat by up to 98%.
+
+For complete line-by-line token breakdowns and mathematical analysis, see [docs/BENCHMARKS.md](docs/BENCHMARKS.md).
+
 ---
 
 ## Still Have Questions?
@@ -492,6 +504,7 @@ Remember: **AI assistants aren't perfect**. PromptKit structures their reasoning
 **More detailed documentation**:
 - [QUICKSTART.md](QUICKSTART.md) - 5-minute introduction
 - [docs/ADOPTION-GUIDE.md](docs/ADOPTION-GUIDE.md) - Incremental adoption strategy
+- [docs/BENCHMARKS.md](docs/BENCHMARKS.md) - Token economics & architecture benchmarks
 - [docs/WORKFLOW-MAP.md](docs/WORKFLOW-MAP.md) - Visual workflow decision trees
 - [docs/DESIGN-MD-FAQ.md](docs/DESIGN-MD-FAQ.md) - DESIGN.md safety guarantees
 - [docs/INTERESTING-FACTS.md](docs/INTERESTING-FACTS.md) - Deep insights
