@@ -242,8 +242,9 @@ EOF
 for target in "${TARGETS_FOUND[@]}"; do
     REL_TARGET="${target#$PROJECT_ROOT/}"
     if grep -q "<!-- PROMPTKIT_START -->" "$target" 2>/dev/null; then
-        start_count="$(grep -c '^<!-- PROMPTKIT_START -->$' "$target" 2>/dev/null || true)"
-        end_count="$(grep -c '^<!-- PROMPTKIT_END -->$' "$target" 2>/dev/null || true)"
+        CR=$'\r'
+        start_count="$(grep -E -c "^<!-- PROMPTKIT_START -->${CR}?$" "$target" 2>/dev/null || true)"
+        end_count="$(grep -E -c "^<!-- PROMPTKIT_END -->${CR}?$" "$target" 2>/dev/null || true)"
         if [[ "$start_count" -ne 1 || "$end_count" -ne 1 ]]; then
             echo "Error: Cannot safely update $REL_TARGET: expected exactly one complete PromptKit directive block." >&2
             exit 1
@@ -265,12 +266,12 @@ for target in "${TARGETS_FOUND[@]}"; do
                 }
                 close(directive_file)
             }
-            /^<!-- PROMPTKIT_START -->$/ {
+            /^<!-- PROMPTKIT_START -->\r?$/ {
                 print directive
                 inside = 1
                 next
             }
-            /^<!-- PROMPTKIT_END -->$/ && inside {
+            /^<!-- PROMPTKIT_END -->\r?$/ && inside {
                 inside = 0
                 next
             }
