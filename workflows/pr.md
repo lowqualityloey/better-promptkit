@@ -86,14 +86,20 @@ Structure the PR description using `templates/pull-request-template.md`:
 
 1. **Title**: Follow Conventional Commits format (`type(scope): concise summary under 72 chars`).
 2. **Summary**: Group changes by architectural layer (Data, Backend, Frontend, Config).
-3. **Database Checklist**: State whether migrations are present and verify Expand-Contract safety.
-4. **Testing Evidence**: Paste test runner pass counts and provide numbered manual testing steps.
-5. **Rollback Strategy**: Document whether this PR is zero-state reversible or requires step-by-step database rollbacks.
-6. **Reviewer Focus**: Point reviewers to the most load-bearing lines or complex logic.
+3. **Acceptance Criteria Checklist**: Include a mandatory `### Acceptance Criteria Checklist` section containing verified Gherkin scenarios:
+   ```markdown
+   ### Acceptance Criteria Checklist
+   - [x] **AC-1**: [Given / When / Then scenario]
+   - [x] **AC-2**: [Given / When / Then scenario]
+   ```
+4. **Database Checklist**: State whether migrations are present and verify Expand-Contract safety.
+5. **Testing Evidence**: Paste test runner pass counts and provide numbered manual testing steps.
+6. **Rollback Strategy**: Document whether this PR is zero-state reversible or requires step-by-step database rollbacks.
+7. **Reviewer Focus**: Point reviewers to the most load-bearing lines or complex logic.
 
 ---
 
-### Phase 4: Submission or CLI Creation
+### Phase 4: Submission, CLI Creation & Handoff Boundary
 
 Provide the generated PR description to the developer in two formats:
 
@@ -104,3 +110,9 @@ Provide the generated PR description to the developer in two formats:
    gh pr create --title "<type>(<scope>): <summary>" --body-file pr-body.md
    ```
    *(Or interactive `gh pr create --web`)*.
+
+### Human Authority & Merge Boundary
+The AI assistant drafts the pull request and compiles verification evidence, but the human engineer retains sole authority over code review, approval, and merging to `main`. The AI assistant must **never** execute `git push origin main` or merge pull requests directly. 
+
+Upon presenting the PR draft, the assistant must halt and output:
+> "PR drafted. Awaiting your review and merge."

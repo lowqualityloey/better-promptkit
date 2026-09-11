@@ -95,6 +95,9 @@ Better-PromptKit adapts ceremony based on task risk and impact:
 
 For authoritative Level 0–3 classification, escalation, downgrade, and Task Record rules, see [`workflows/route.md`](../workflows/route.md).
 
+- **Anti-Slop Output**: Deliver all status updates, plans, and diff explanations in structured, scannable markdown (tables, checklists, short bullet points). Never output unstructured conversational essay walls.
+- **Absolute Secret Hygiene**: Never output, request, or paste raw secrets/keys in chat; mandate `.env.example` templates and local `.env`.
+
 When auto-routing:
   - Defects, bugs, crashes, or test failures -> `pk:debug` (reproduce before patching)
   - Performance regressions, slow queries, or latency -> `pk:perf` (measure baseline first)
@@ -195,7 +198,12 @@ After updating configuration:
    - `[pk:retro]`: Run a retro on completed work, capture insights, and generate ADRs.
    - `[pk:checkpoint]`: Compress active session context and generate a handover prompt for a fresh chat.
 
+---
 
+### Post-Setup Guidance: The 3-Step Day 1 Experience
+1. **Initialize**: Run `./.promptkit/init.sh` (or `.\.promptkit\init.ps1` on Windows) to scaffold `./docs/`, `./PROMPTKIT.md`, and inject root agent directives.
+2. **Inspect `PROMPTKIT.md`**: Review or customize project-specific commands, test runners, and architectural invariants in `./PROMPTKIT.md` (or run `pk:onboard` for passive stack discovery).
+3. **Prompt Task**: Start pairing by prompting your task naturally or invoking a workflow (`pk:route`, `pk:debug`, `pk:plan`). The assistant declares its ceremony level upfront and proceeds with lightweight or controlled execution.
 
 ---
 

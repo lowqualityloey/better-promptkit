@@ -36,6 +36,13 @@ Use this section for Controlled Work. Enter `N/A` for Trivial Work or for a cons
 
 ---
 
+## Acceptance Criteria Checklist
+<!-- List all Gherkin acceptance criteria scenarios verified in this PR. -->
+- [ ] **AC-1**: [Scenario: Given ... When ... Then ...]
+- [ ] **AC-2**: [Scenario: Given ... When ... Then ...]
+
+---
+
 ## Database & Data Safety Checklist
 <!-- If this PR touches database schemas, migrations, or data models, complete this section. -->
 - [ ] **No Database Changes**: This PR does not touch schemas, tables, or queries.

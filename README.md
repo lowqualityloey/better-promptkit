@@ -26,9 +26,9 @@ Better-PromptKit equips your coding assistant with disciplined engineering workf
 
 Getting started with Better-PromptKit takes three simple steps:
 
-1. **Install & Initialize**: Run `./.promptkit/init.sh` (or `.\.promptkit\init.ps1`) to scaffold `./docs/`, `./PROMPTKIT.md`, and host directives.
-2. **First Prompt**: Enter your task naturally or route explicitly with `pk:route`. When the workflow is unclear, [`pk:route`](./workflows/route.md) is your canonical entry point.
-3. **Keep It Simple**: Most ordinary engineering tasks (bug fixes, isolated component tweaks, small features) are **Level 1 (Standard)** and do **not** require a formal Task Record file (`docs/tasks/<task-id>.md`).
+1. **Install & Initialize**: Run `./.promptkit/init.sh` (or `.\.promptkit\init.ps1` on Windows) to scaffold `./docs/`, `./PROMPTKIT.md`, and host directives.
+2. **Inspect `PROMPTKIT.md`**: Review or customize project-specific commands, test runners, and architectural invariants in `./PROMPTKIT.md` (or run `pk:onboard` for passive stack discovery).
+3. **Prompt Naturally**: Enter your task naturally or route explicitly with `pk:route`. The assistant announces its ceremony level upfront (e.g. `[Better-PromptKit: Level 1 (Standard) — Localized bug fix. No Task Record required.]`). Most ordinary engineering tasks (bug fixes, isolated component tweaks, small features) are **Level 1 (Standard)** and do **not** require a formal Task Record file (`docs/tasks/<task-id>.md`).
 
 ### First Task Example
 

@@ -38,7 +38,8 @@ Define the non-negotiable definition-of-done (DoD) and engineering quality bar f
 ### 3. Security Hygiene & Defense-in-Depth
 - [ ] **Injection Prevention**: Parameterized queries / ORM bindings used; zero raw SQL or unescaped HTML string interpolation.
 - [ ] **Authentication & Authorization**: Explicit RBAC / ABAC checks on every server endpoint / mutation.
-- [ ] **Secrets & Sensitive Data**: Zero hardcoded API keys, tokens, or PII; environment variables validated at startup.
+- [ ] **Secrets & Sensitive Data**: Zero hardcoded API keys, tokens, or PII; environment variables validated at startup. Never ask the user to paste real secrets into chat.
+- [ ] **Environment Template Hygiene (`.env.example`)**: Any feature requiring new environment variables must update or generate `.env.example` with sanitized placeholder keys, directing the human to populate their local untracked `.env`.
 - [ ] **Input Sanitization & Rate Limiting**: All public endpoints bounded by rate limiters and payload size limits.
 - [ ] **Zero Data Loss & Safe Migrations**: Database schema modifications follow the Expand-Contract pattern (no single-step destructive drops or truncates); all delete queries are strictly bounded.
 
@@ -74,7 +75,9 @@ Define the non-negotiable definition-of-done (DoD) and engineering quality bar f
 Before completing any coding task or finishing a Better-PromptKit session:
 1. Run static analyzers (`tsc --noEmit`, `eslint`, `biome check`, or commands in `./PROMPTKIT.md`).
 2. Run test suites (`npm test`, `pytest`, `cargo test`, or commands in `./PROMPTKIT.md`).
-3. Audit against the checklist above.
-4. If any gate fails, address it before declaring the task done.
-5. When ready to stage and commit, invoke `workflows/commit.md` (`pk:commit`) to ensure atomic staging, Conventional Commit formatting, and secret leak prevention.
+3. Verify all scenario acceptance criteria (`AC-*`) are completely met with concrete test evidence.
+4. Audit against the 6 pillars checklist above.
+5. If any gate fails, address it before declaring the task done.
+6. When ready to stage and commit, invoke `workflows/commit.md` (`pk:commit`) to ensure atomic single-concern staging, Conventional Commit formatting, and secret leak prevention.
+7. Prepare the pull request with `workflows/pr.md` (`pk:pr`), compiling the verified AC checklist for human review and merge.
 
