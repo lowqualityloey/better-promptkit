@@ -37,7 +37,7 @@ Evaluate your upcoming task against this triage before executing:
 | **External Documentation / Web Search** (API docs, GitHub issues) | **Subagent** | Eliminates long HTML/markdown search dumps. |
 | **Parallel Risk Spikes** (evaluating Library A vs Library B) | **Subagent (Parallel)** | Enables concurrent exploration in `pk:spike`. |
 | **Two-Axis PR Audits** (Spec Fidelity vs Fowler Code Smells) | **Subagent (Parallel)** | Enables independent, unbiased reviews in `pk:review`. |
-| **Independent Verification** (Level 2/3 Controlled Work) | **Subagent (Single-Pass)** | Eliminates author confirmation bias; strictly capped at 1 turn, 15 lines max. |
+| **Independent Verification** (Level 2/3 Controlled Work) | **Subagent (Single-Pass)** | Eliminates author confirmation bias; single-pass audit contract; no child-agent delegation; max 15-line synthesis. |
 | **Long-Running Test / Linter Runs** (full CI simulation) | **Subagent / Task** | Prevents terminal scrollback from cluttering context. |
 | **Direct User Interaction & Alignments** | **Main Thread Only** | Subagents must never prompt the human developer directly. |
 | **Small Localized Edits** (<10 lines, single file tweaks) | **Main Thread Only** | Spawning a subagent introduces unnecessary latency overhead. |
@@ -103,9 +103,9 @@ When an agent writes a complex feature (relational schema changes, authenticatio
 1. **Scope Exclusions**: Level 0 and Level 1 tasks bypass this pattern completely (0 token impact; standard single-agent review).
 2. **Execution Contract**: The parent agent spawns a single fresh-context verifier subagent with *only* the Gherkin Acceptance Criteria, the fixed-point git diff, and the runnable test commands.
 3. **Strict Bounded Caps**:
-   - Single pass: exactly 1 subagent turn.
-   - Max 15-line response: concise Pass/Fail matrix with line references.
-   - Zero recursion: subagent cannot spawn further child agents or start unmonitored loops.
+   - **Single-Pass Contract**: Verifier performs a single-pass evaluation; child-agent delegation and recursive loops are strictly forbidden. Hosts with tool/turn budgets may enforce this ceiling.
+   - **Targeted Verifier Scope**: Keep context strictly bounded to Acceptance Criteria, the resolved diff, and test commands to minimize token consumption.
+   - **Concise Output Ceiling**: Max 15-line response with a concise Pass/Fail matrix and exact line references.
 
 ---
 

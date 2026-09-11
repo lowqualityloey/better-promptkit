@@ -267,9 +267,9 @@ For **Level 2 (Controlled)** and **Level 3 (Release-Critical)** Work, the lead a
      - The fixed-point git diff (`git diff <baseline>...HEAD`).
      - The automated test runner commands.
 3. **Strict Bounds & Token Caps**:
-   - **1-Pass Execution**: Strictly 1 subagent turn; zero recursive subagent spawning.
+   - **Single-Pass Contract**: Perform a single-pass audit; child-agent delegation and background iteration loops are strictly forbidden. Hosts capable of enforcing tool/turn budgets should apply them.
    - **15-Line Synthesis**: Output is capped at a 15-line Pass/Fail matrix with file/line references for missing edge cases.
-   - **Budget Cap**: Consumes ~2,000–3,000 isolated tokens, saving 15k–30k tokens of downstream production debugging.
+   - **Targeted Verifier Scope**: Input is strictly bounded to the target Acceptance Criteria, fixed-point diff, and test commands; returns a concise synthesis, preventing expensive multi-turn downstream debugging.
 
 ---
 
