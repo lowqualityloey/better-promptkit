@@ -87,30 +87,59 @@ Figma frames are static desktop or mobile snapshots that frequently omit critica
 
 ## Workflow Steps
 
-### Step 1: Design Tokens & Anti-Slop Visual Foundations
+### Step 1: Tactile Aesthetic Foundations & Anti-Slop Discipline
 
-1. **Derive the Palette from Brand Identity (`antislop-ui`)**:
-   - Ground colors in the product's identity or `DESIGN.md`: **never default to generic AI blue-to-purple gradients, cyan glows, or rainbow borders**.
-   - Cap the active palette at 2–3 core colors + 1 intentional accent.
-   - **Elevation & Glassmorphism Dose Cap**: Treat glassmorphism (`backdrop-blur`) and heavy drop-shadows as accents, not character traits. Dose cap: at most 1–2 elevated surfaces; everything else sits matte.
-   - **Avoid Uniform Pill Syndrome**: Use intentional radii (`rounded-md` or `rounded-lg`). Do not make every button, input, card, and badge pill-shaped (`rounded-full`).
+1. **Tactile Canvas & The "Paper" Rule (`antislop-ui`)**:
+   - **No Pure Extremes**: Never default to raw `#000000` pitch black or sterile `#ffffff` blinding white.
+   - **Engineered Paper Grounds**: Light mode sits on calm, tinted paper (`oklch(96–98.5% 0.005–0.015 <anchor hue>)`). Dark mode sits on deep tinted obsidian or graphite (`oklch(13–16% 0.008–0.015 <anchor hue>)`).
+   - **Tint the Neutrals**: Neutrals must carry a subtle chroma trace of the anchor hue in both themes. If the anchor is warm terracotta, neutrals lean warm espresso; if cobalt, they lean cool graphite.
+   - **Hairlines Over Blur**: Depth comes from 1px ruler-drawn borders (`--color-rule`), not heavy drop shadows (`shadow-2xl`) or washed-out glassmorphism blur (`backdrop-blur`). Everything sits matte.
+   - **Elevation in Dark Mode**: Elevated cards and dialogs sit `+3% to +5%` lighter than the base canvas (`oklch(17%)` over `oklch(13%)`) with a 1px hairline border. Surfaces never sit darker than the canvas.
 
-2. **Define the 3 Tiers of Design Tokens**:
-   - **Primitive Tokens**: Raw values (e.g., `--slate-900: #0f172a`, `--space-4: 1rem`).
-   - **Semantic Tokens**: Contextual aliases (e.g., `--color-brand-primary`, `--color-surface-elevated`, `--color-danger-subtle`).
-   - **Component Tokens**: Specific component bindings (e.g., `--button-primary-bg: var(--color-brand-primary)`).
+2. **The 5% Signal Rule**:
+   - Limit saturated accent color to **less than 5% of any viewport**.
+   - Accents are optical **signals** (active tab tick, focus ring, primary action button, status badge), never decorative background washes or rainbow gradients.
 
-3. **Establish Light/Dark Theme Contrast**:
-   - Verify WCAG 2.2 AA contrast ratios:
-     - Normal text: $\ge 4.5:1$
-     - Large text ($\ge 18\text{pt}$ or $\ge 14\text{pt}$ bold) & UI controls: $\ge 3.0:1$
-   - Chart segments and adjacent categorical colors must maintain at least $3:1$ contrast against their neighbors.
+3. **Macrostructure & Layout Rhythm Variety**:
+   - **Break the Generic Rut**: Refuse the automatic AI template (`Hero + Badge ──> 3 Bento Cards ──> Fake Logos ──> Pill CTA ──> 4-col Footer`).
+   - Diversify section rhythms based on the product's genre:
+     - *Asymmetric Split*: Left-aligned punchy headline + right-aligned interactive artifact (working terminal or API demo).
+     - *Editorial Magazine*: Asymmetric columns, rich pull-quotes, and generous whitespace.
+     - *Dense Workbench*: Sticky side-rail navigation, tabular data strips, and monospace telemetry.
 
-4. **Fluid Typography & Micro-Typography Polish (`web-design-guidelines`)**:
-   - Use fluid type scaling via `clamp()` (e.g., `clamp(1.5rem, 4vw, 2.5rem)`) so headings scale smoothly with the viewport.
-   - Use `text-wrap: balance` or `text-pretty` on headings to prevent single trailing words (widows).
-   - Use real ellipsis (`…`) rather than three periods (`...`), especially in loading indicators (`"Saving…"`).
-   - Use `font-variant-numeric: tabular-nums` for numeric tables, metrics, timers, and counters to eliminate horizontal jitter.
+4. **Honest Copy — Zero Fabricated Social Proof**:
+   - **Never Invent Metrics**: AI claims like *"+47% conversion"*, *"trusted by 50,000+ teams"*, or fake logo bars are slop the moment they are invented.
+   - If the user did not provide real metrics, use authentic qualitative descriptions, placeholders (`"—"`, `[metric to confirm]`), or select a layout that does not rely on metric counters.
+
+5. **Banned Subtle AI Tells**:
+   - **No Italic Titles**: Headings and display titles must stay roman/upright (`font-style: normal`). Italicized buzzwords (`Built to <em>think</em>`) are an unmistakable AI tell. Express emphasis through font weight or color.
+   - **No Hand-Drawn Fake Chrome**: Never draw fake browser address bars (URL pills with red/yellow/green traffic-light dots) or fake phone frames. Real screenshots sit matte in a clean `<figure>` with a 1px hairline border.
+   - **No Uniform Pill Syndrome**: Use intentional geometric radii (`rounded-md` or `rounded-lg`). Reserve `rounded-full` strictly for avatar circles and status dots.
+
+6. **Dual-Mode Theme Presets**:
+   - **Preset A: Cobalt Dev-Tool (Cool Technical Register)**:
+     - *Light*: Canvas `oklch(98.5% 0.004 250)`, Ink `oklch(22% 0.016 258)`, Hairline `oklch(88% 0.008 250)`, Signal Cobalt `oklch(56% 0.22 256)`.
+     - *Dark*: Canvas `oklch(14% 0.010 255)`, Card `oklch(18% 0.012 255)`, Ink `oklch(93% 0.006 255)`, Signal Cobalt `oklch(65% 0.21 256)`.
+   - **Preset B: Hum Warm Editorial (Artisanal Humanist Register)**:
+     - *Light*: Canvas `oklch(97% 0.012 80)`, Ink `oklch(20% 0.015 65)`, Hairline `oklch(86% 0.010 80)`, Signal Terracotta `oklch(58% 0.18 45)`.
+     - *Dark*: Canvas `oklch(15% 0.012 60)`, Card `oklch(19% 0.014 60)`, Ink `oklch(92% 0.008 75)`, Signal Terracotta `oklch(68% 0.17 50)`.
+
+7. **Zero-Byte Native System Font Stacks**:
+   - **No Mandatory Font Bundles**: External web font downloads are never required. Rely on zero-latency native system font stacks:
+     - `--font-sans`: `system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif`
+     - `--font-mono`: `ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace`
+     - `--font-serif`: `ui-serif, Georgia, Cambria, 'Times New Roman', serif`
+   - **Mandatory Typographic Craft**:
+     - `font-variant-numeric: tabular-nums` on all metrics, counters, and tables to prevent horizontal jitter.
+     - `text-wrap: balance` or `text-pretty` on all headings to eliminate single-word widows.
+     - `leading-relaxed` (minimum 1.5 line-height) on body copy.
+     - Real typographic punctuation (`…`, curly quotes `“”`, non-breaking spaces `&nbsp;`).
+
+8. **Universal Icon Directory & Standards via Iconify**:
+   - **Authoritative Catalog**: Designate [Iconify](https://icon-sets.iconify.design/) as the universal directory to verify exact icon names and clean SVG paths without forcing `@iconify/react` as an npm dependency.
+   - **Single-Family Consistency**: Pick exactly one primary icon family per project (e.g. Lucide for modern minimal, Radix for dense tools, Phosphor for warm editorial). Never mix mismatched line weights in the same view.
+   - **Brand & Tech Marks**: Use Iconify's `simple-icons` collection for third-party brand marks (GitHub, Stripe, Docker, Figma, PostgreSQL) rather than hand-drawing distorted paths.
+   - **Sizing & Inheritance**: Standardize sizes (`14px`, `16px`, `20px`), use `currentColor` for automatic theme/hover inheritance, and always maintain $\ge 44 \times 44\text{px}$ touch target padding.
 
 ---
 
@@ -137,6 +166,17 @@ Figma frames are static desktop or mobile snapshots that frequently omit critica
    - **Icon-Only Buttons**: Any button containing only an icon (`<button><TrashIcon /></button>`) **must** include an explicit `aria-label="Delete item"`.
    - **Decorative Icons**: Icons paired with visible text must include `aria-hidden="true"`.
    - **Live Regions**: Dynamic async notifications (toasts, inline form validation) must declare `aria-live="polite"`.
+
+5. **The Mandatory 8-State Interactive Component Contract**:
+   - Every interactive component (buttons, inputs, toggles, select triggers, interactive cards) must explicitly implement and style all **8 fundamental states**:
+     1. **`default`**: Rested baseline presentation on the matte paper or card surface.
+     2. **`hover`**: Perceptible contrast adjustment (`hover:bg-primary/90` or subtle border shift).
+     3. **`:focus-visible`**: Crisp keyboard navigation ring (`focus-visible:ring-2 focus-visible:ring-offset-2`).
+     4. **`:active`**: Physical press compression (`active:scale-[0.98]`).
+     5. **`disabled`**: Reduced opacity and event isolation (`disabled:opacity-50 disabled:pointer-events-none`).
+     6. **`loading`**: Content-shaped skeleton or spinner with text announcement (`aria-busy="true"` and `"Saving…"`).
+     7. **`error`**: Destructive border ring (`border-danger`) with actionable error remediation text.
+     8. **`success`**: Brief affirmative state transition (e.g., checkmark confirmation).
 
 ---
 
@@ -288,3 +328,8 @@ Before marking any UI task complete, verify all criteria pass:
 - [ ] **Compositor Motion**: Only `transform` and `opacity` animate; no `transition: all`; `prefers-reduced-motion` honored.
 - [ ] **React Performance**: Conditionals use ternary (`? : null`); derived state is computed during render; no nested inline components.
 - [ ] **Figma Blindspots Remediated**: Static pixel widths replaced with fluid reflow, touch targets $\ge 44 \times 44\text{px}$ verified, and loading skeletons / empty states implemented.
+- [ ] **8-State Contract**: Interactive components implement default, hover, focus-visible, active, disabled, loading, error, and success.
+- [ ] **Honest Copy**: Copy contains zero fabricated metrics, fake customer counts, or invented social proof.
+- [ ] **5% Signal Accent**: Saturated accent is confined to $<5\%$ of viewport area; no decorative gradient floods.
+- [ ] **Typography & AI Tells**: Headings are upright (no italic titles); `tabular-nums` enabled on data/counters; no hand-drawn browser chrome.
+- [ ] **Single Icon Family**: All UI icons derive from a single cohesive set via Iconify (`simple-icons` for tech marks).
