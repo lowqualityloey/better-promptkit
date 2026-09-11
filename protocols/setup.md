@@ -195,7 +195,12 @@ After updating configuration:
    - `[pk:retro]`: Run a retro on completed work, capture insights, and generate ADRs.
    - `[pk:checkpoint]`: Compress active session context and generate a handover prompt for a fresh chat.
 
+---
 
+### Post-Setup Guidance: The 3-Step Day 1 Experience
+1. **Initialize**: Run `./.promptkit/init.sh` (or `.\.promptkit\init.ps1` on Windows) to scaffold `./docs/`, `./PROMPTKIT.md`, and inject root agent directives.
+2. **Inspect `PROMPTKIT.md`**: Review or customize project-specific commands, test runners, and architectural invariants in `./PROMPTKIT.md` (or run `pk:onboard` for passive stack discovery).
+3. **Prompt Task**: Start pairing by prompting your task naturally or invoking a workflow (`pk:route`, `pk:debug`, `pk:plan`). The assistant declares its ceremony level upfront and proceeds with lightweight or controlled execution.
 
 ---
 

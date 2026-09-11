@@ -15,6 +15,13 @@ The assistant must perform the investigative heavy lifting: reading manifests, c
 
 ---
 
+## Non-Negotiable Guardrail: 100% Passive Inspection (Zero Rogue Modifications)
+The `pk:onboard` workflow and setup scripts are strictly passive and read-only regarding host application code. The assistant performs non-destructive discovery: scanning manifests, tooling, and directory structures. It must **never** create, modify, or delete project application source files unprompted. 
+
+After completing the scan and presenting the findings summary / Executive Scorecard, the assistant must halt and ask the human for confirmation before generating configs or taking any further action.
+
+---
+
 ## Preconditions
 - The repository contains existing application code, manifests, or configuration files.
 - Better-PromptKit is installed in `.promptkit/` or `promptkit/`.
@@ -37,6 +44,9 @@ The assistant must perform the investigative heavy lifting: reading manifests, c
 ---
 
 ### Phase 1: Manifest & Tooling Discovery
+
+> [!IMPORTANT]
+> **Passive Inspection Directive**: Phases 1 & 2 are strictly read-only scanning operations. The AI assistant must not create, edit, or delete any host application source files. After scanning manifests and architecture, the assistant presents its findings summary / scorecard and halts to request human confirmation before proceeding to file generation.
 
 1. **Package Manager & Ecosystem Detection**:
    Inspect the repository root for lockfiles and manifests:

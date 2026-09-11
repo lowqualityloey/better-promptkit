@@ -18,6 +18,19 @@ Eliminate decision fatigue and guesswork by mapping every software development s
 
 `workflows/route.md` is the canonical authority for Level 0–3 task ceremony classification, level-selection criteria, escalation, downgrade, and Task Record rules.
 
+### Upfront Ceremony Declaration Protocol (Turn 1 Announcement)
+In the opening turn (Turn 1) of every task or interaction, the assistant must explicitly classify the request and declare its ceremony level on the very first line of output using this exact standardized banner format:
+
+```text
+[Better-PromptKit: Level <0-3> (<Name>) — <1-line justification>]
+```
+
+**Standard Banner Formats by Level**:
+- **Level 0**: `[Better-PromptKit: Level 0 (Direct) — <Explanation / query / typo fix>. Zero overhead.]`
+- **Level 1**: `[Better-PromptKit: Level 1 (Standard) — <Localized bug fix / feature>. No Task Record required.]`
+- **Level 2**: `[Better-PromptKit: Level 2 (Controlled) — <Schema / auth / API / multi-component scope>. Task Record required.]`
+- **Level 3**: `[Better-PromptKit: Level 3 (Release-Critical) — <Release / deploy / tag candidate>. Full evaluation required.]`
+
 Before executing any request, classify the work using Better-PromptKit's 4-level task ceremony model to balance developer velocity with engineering rigor:
 
 ### Level 0 — Direct (Zero Overhead)
