@@ -108,6 +108,24 @@ if (-not (Test-Path $PrTemplateTarget)) {
     Write-Host "  [✓] .github/pull_request_template.md already present" -ForegroundColor DarkGray
 }
 
+# Scaffold .github/ISSUE_TEMPLATE/task.md if missing
+$IssueTemplateDir = Join-Path $GitHubDir "ISSUE_TEMPLATE"
+$TaskTemplateTarget = Join-Path $IssueTemplateDir "task.md"
+$TemplateTask = Join-Path $ScriptDir "templates/github-issue-template.md"
+
+if (-not (Test-Path $TaskTemplateTarget)) {
+    if (Test-Path $TemplateTask) {
+        if (-not (Test-Path $IssueTemplateDir)) {
+            New-Item -ItemType Directory -Path $IssueTemplateDir -Force | Out-Null
+        }
+        Copy-Item -Path $TemplateTask -Destination $TaskTemplateTarget
+        Write-Host "  [+] Created: .github/ISSUE_TEMPLATE/task.md (standard task specification)" -ForegroundColor Green
+    }
+} else {
+    Write-Host "  [✓] .github/ISSUE_TEMPLATE/task.md already present" -ForegroundColor DarkGray
+}
+
+
 
 # 3. Detect Agent Files or Default to AGENTS.md
 $AgentFiles = @(

@@ -87,6 +87,22 @@ else
     echo -e "  \033[0;90m[✓] .github/pull_request_template.md already present\033[0m"
 fi
 
+# Scaffold .github/ISSUE_TEMPLATE/task.md if missing
+ISSUE_TEMPLATE_DIR="$GITHUB_DIR/ISSUE_TEMPLATE"
+TASK_TEMPLATE_TARGET="$ISSUE_TEMPLATE_DIR/task.md"
+TEMPLATE_TASK="$SCRIPT_DIR/templates/github-issue-template.md"
+
+if [[ ! -f "$TASK_TEMPLATE_TARGET" ]]; then
+    if [[ -f "$TEMPLATE_TASK" ]]; then
+        mkdir -p "$ISSUE_TEMPLATE_DIR"
+        cp "$TEMPLATE_TASK" "$TASK_TEMPLATE_TARGET"
+        echo -e "  \033[0;32m[+]\033[0m Created: .github/ISSUE_TEMPLATE/task.md (standard task specification)"
+    fi
+else
+    echo -e "  \033[0;90m[✓] .github/ISSUE_TEMPLATE/task.md already present\033[0m"
+fi
+
+
 
 # 3. Detect Agent Files or Default to AGENTS.md
 AGENT_FILES=(

@@ -143,16 +143,21 @@ For each decomposed task, fill out `.promptkit/templates/issue-task-template.md`
    - For each Controlled Work unit, create one canonical Task Record at `docs/tasks/<task-id>.md` from `.promptkit/templates/execution-task-record-template.md`.
    - A dated breakdown document may index the per-task records, but it cannot replace them or become a second lifecycle authority.
    - This provides offline resilience and protects against agent context compaction (`pk:checkpoint`).
-2. **Generate GitHub CLI (`gh issue create`) Commands or Invoke MCP Tools**:
+2. **Provision Standard GitHub Labels & Issue Template**:
+   - Repositories can provision the standardized labels (`priority/p0-p3`, `type:*`, `area:*`) with zero token overhead by running the local provisioning script:
+     - PowerShell: `pwsh -NoProfile -File .promptkit/scripts/setup-github-labels.ps1`
+     - Bash: `bash .promptkit/scripts/setup-github-labels.sh`
+   - Better-PromptKit automatically scaffolds `.github/ISSUE_TEMPLATE/task.md` during `init.ps1` / `init.sh` so human contributors and agents have a consistent Gherkin structure when opening issues directly on GitHub.
+3. **Generate GitHub CLI (`gh issue create`) Commands or Invoke MCP Tools**:
    - When `Task Tracking System` in `PROMPTKIT.md` is set to `GitHub Issues` (or if requested by the user), create issues via native MCP (`github-mcp-server`) or append ready-to-run CLI commands at the bottom of an index or issue document. External issues may coordinate work but must link to the canonical Task Record and never replace it:
      ```bash
      gh issue create \
        --title "feat(cart): implement server-side discount validation" \
        --body-file docs/tasks/issue-01-discount-validation.md \
-       --label "area:backend,priority:p1" \
+       --label "type:feature,priority/p1,area:backend" \
        --milestone "M2: Core Domain Logic"
      ```
-3. **GitHub Projects v2 & Kanban Sync (Optional)**:
+4. **GitHub Projects v2 & Kanban Sync (Optional)**:
    - If using GitHub Projects v2, link each created issue to your project board:
      ```bash
      gh project item-add <project-number> --owner <owner> --url <issue-url>
@@ -164,7 +169,7 @@ For each decomposed task, fill out `.promptkit/templates/issue-task-template.md`
      - `## To Do`: `- [ ] <Task description> #priority/pX`
      - `## In Progress`: `- [/] <Task description> #priority/pX`
      - `## Done`: `- [x] <Task description> #priority/pX ✅ YYYY-MM-DD`
-4. **Living State Projection Sync (`docs/STATE.md`)**:
+5. **Living State Projection Sync (`docs/STATE.md`)**:
    - If `./docs/STATE.md` exists, update Section 2 (`Milestone & Task Progress`) with the newly decomposed tasks (`- [ ] TASK-XX: ...`).
    - Update Section 3 (`Active Working Set`) with links to the generated task spec in `docs/tasks/`.
    - `docs/STATE.md` is a synchronized projection owned by `pk:checkpoint`; the canonical `docs/tasks/<task-id>.md` Task Record remains authoritative. If no state file exists, offer to scaffold it from `templates/state-tracker-template.md`.
