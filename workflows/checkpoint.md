@@ -8,9 +8,10 @@ Eliminate AI context window degradation, token lag, and instruction drift during
 
 ---
 
-## Preconditions
-- The active chat session has exceeded 20-30 turns, or the assistant is exhibiting memory drift or lag.
-- The developer is switching tasks, ending work for the day, or handing off to another engineer or agent.
+## Preconditions & When to Checkpoint
+- **Milestone Completion**: A project milestone, epic, or major feature phase has completed; state must be synchronized to `docs/STATE.md` and working changes staged/committed before advancing to the next milestone.
+- **Context Saturation**: The active chat session has exceeded 20-30 turns, or the assistant is exhibiting token lag or memory drift.
+- **Task Switch / Boundary**: The developer is switching tasks, ending work for the day, or handing off to another engineer or agent.
 
 ---
 

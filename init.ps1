@@ -159,6 +159,7 @@ You do not need to memorize triggers. If a prompt lacks an explicit `pk:` trigge
 - **Absolute Secret Hygiene**: Never output, request, or paste raw secrets/keys in chat; mandate `.env.example` templates and local `.env`.
 - **Native MCP Tooling Discovery**: Auto-detect active MCP servers (e.g. GitHub MCP) and prioritize structured MCP tool calls over shell commands. Fall back gracefully to standard CLI (`gh`, `git`) when MCP is absent.
 - **Standardized Human Action Callouts**: Whenever halting a turn for user decision, review, or local actions (e.g. merging PRs, populating `.env`), end the response with a `> [!IMPORTANT]` callout titled `### 🛑 Action Required From You:`. If blocked, use `> [!WARNING]` titled `### ⚠️ Blocked: Waiting on Human Input`.
+- **Strict Milestone Git Boundaries**: Never begin a new milestone or major task phase with uncommitted changes in the working tree. At milestone conclusion, run verification, prompt for atomic staging (`pk:commit`), update `docs/STATE.md`, and request human sign-off with `> [!IMPORTANT]`.
 - **Protocol Auto-Route (Substantive Tasks)**: For multi-file changes, architecture, broken code, or production ops, automatically adopt the matching workflow:
   - Defects, bugs, crashes, or test failures (unknown cause) -> `pk:debug` (reproduce before patching)
   - Known defects, review findings, or security patches -> `pk:fix` (remediate known root cause)

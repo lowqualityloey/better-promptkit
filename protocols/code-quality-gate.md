@@ -80,4 +80,5 @@ Before completing any coding task or finishing a Better-PromptKit session:
 5. If any gate fails, address it before declaring the task done.
 6. When ready to stage and commit, invoke `workflows/commit.md` (`pk:commit`) to ensure atomic single-concern staging, Conventional Commit formatting, and secret leak prevention.
 7. Prepare the pull request with `workflows/pr.md` (`pk:pr`), compiling the verified AC checklist for human review and merge.
+8. **Milestone Git Boundary & Working Tree Verification**: At milestone conclusion, verify working tree status with `git status`. All changes must be cleanly committed via `pk:commit` and synchronized to `docs/STATE.md` before beginning the next milestone. Never transition into a new milestone with a dirty working tree.
 
