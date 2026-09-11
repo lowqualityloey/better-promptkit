@@ -45,6 +45,11 @@ An issue is only ready for implementation when its completion can be objectively
    - **Documentation, Configuration, and Research Work**: Use an exception verification path with explicit acceptance, evidence, review, and verification rather than Code Work TDD milestones.
    - **Ambiguous Work**: Follow the Code Work path until the work type and TDD mode are clarified in the Task Record.
    - **Localized Code Work**: Use an adaptive flat list ordered strictly by dependency (Task 1 -> Task 2 -> Task 3), applying the same enabled or disabled TDD branch.
+3. **Inspect Task Tracking Strategy**:
+   - Check `PROMPTKIT.md` Section 5 (`Task Tracking System`).
+   - If set to `GitHub Issues`: In Phase 4, invoke `github-mcp-server` tool calls or generate `gh issue create` CLI commands, and link assigned issue numbers (`#N`) into `docs/STATE.md`.
+   - If set to `Linear` or `Jira`: In Phase 4, format tasks matching the external tracker's schema.
+   - If set to `Local Markdown` (the default) or unspecified: Maintain task records locally in `docs/tasks/` and `docs/STATE.md` without requiring external credentials or network access.
 
 ### Controlled & Release-Critical Work Execution Overlay
 
@@ -138,8 +143,8 @@ For each decomposed task, fill out `.promptkit/templates/issue-task-template.md`
    - For each Controlled Work unit, create one canonical Task Record at `docs/tasks/<task-id>.md` from `.promptkit/templates/execution-task-record-template.md`.
    - A dated breakdown document may index the per-task records, but it cannot replace them or become a second lifecycle authority.
    - This provides offline resilience and protects against agent context compaction (`pk:checkpoint`).
-2. **Generate GitHub CLI (`gh issue create`) Commands (Optional)**:
-   - Append ready-to-run CLI commands at the bottom of an index or issue document. External issues may coordinate work but must link to the canonical Task Record and never replace it:
+2. **Generate GitHub CLI (`gh issue create`) Commands or Invoke MCP Tools**:
+   - When `Task Tracking System` in `PROMPTKIT.md` is set to `GitHub Issues` (or if requested by the user), create issues via native MCP (`github-mcp-server`) or append ready-to-run CLI commands at the bottom of an index or issue document. External issues may coordinate work but must link to the canonical Task Record and never replace it:
      ```bash
      gh issue create \
        --title "feat(cart): implement server-side discount validation" \

@@ -122,6 +122,7 @@ After completing the scan and presenting the findings summary / Executive Scorec
    - Active commands configured to the exact detected package manager and runner scripts.
    - If monorepo detected, populate Section 4 (`Monorepo & Workspace Topology`) with the mapped workspace manager, package table, filtered command conventions (`pnpm --filter <pkg>`, `turbo run <cmd> --filter=<pkg>`), and boundary guardrails. If single-package repo, set Section 4 to `N/A (Standalone Repository)`.
    - Document paths set to standard defaults (`docs/specs/`, `docs/tasks/`, `docs/data/`, etc.) and link any detected root documentation (`ARCHITECTURE.md`, `ROADMAP.md`, `RUNBOOK.md`, `STYLE.md`).
+   - Task tracking system recorded in Section 5 (`Local Markdown (docs/tasks/)` by default, or `GitHub Issues` / `Linear` / `Jira` if requested).
    - Tailored architectural invariants added (e.g. strict TypeScript, zero loose casting, database check constraints, RLS enforcement).
 
 2. **Auto-Populate `DESIGN.md` (If Frontend Surfaces Exist)**:
@@ -145,6 +146,7 @@ After completing the scan and presenting the findings summary / Executive Scorec
 1. **Emit Executive Architecture Scorecard**:
    Present the developer with a concise summary table in the conversation:
    - **Stack & Tooling**: Confirmed runtime, framework, ORM, and test runners.
+   - **Task Tracking System**: Confirmed task lifecycle backend (`Local Markdown (docs/tasks/)`, `GitHub Issues`, `Linear`, or `Jira`).
    - **Active MCP Capabilities**: Catalog detected Model Context Protocol servers (e.g. GitHub MCP, Postgres MCP, Linear) or record `N/A (Standard CLI Fallback)`.
    - **Existing System Documentation**: Catalog detected standard root documentation (`ARCHITECTURE.md`, `ROADMAP.md`, `RUNBOOK.md`, `STYLE.md`) or record `N/A (None Detected)`.
    - **Architectural Strengths**: High test coverage, strict typing, clean modular boundaries.
