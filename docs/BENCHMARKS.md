@@ -84,17 +84,18 @@ Beyond token counts, PromptKit's structured protocols deliver qualitative engine
 
 ---
 
-## 5. Architectural Comparison: Better-PromptKit vs. Autonomous Swarm Frameworks (e.g., GSD)
+## 5. Architectural Comparison: Better-PromptKit vs. Autonomous Multi-Agent Swarm Architectures
 
-While autonomous loop frameworks (such as GSD / `open-gsd`) attempt to solve software engineering via unmonitored sub-agent swarms and speculative planning directories, they introduce severe token inflation, context exhaustion crashes, and operational instability.
+While autonomous multi-agent looping frameworks attempt to solve software engineering via unmonitored background sub-agent loops and complex runtime daemons, they introduce significant token multipliers, harness complexity, and context exhaustion risks.
 
-| Architectural Dimension | Better-PromptKit (Pair-Programming OS) | Autonomous Swarm Frameworks (e.g., GSD) |
+| Architectural Dimension | Better-PromptKit (Disciplined Pairing OS) | Autonomous Multi-Agent Swarms |
 | :--- | :--- | :--- |
-| **Execution Model** | **Human-in-the-Loop Pairing**: AI proposes, verifies against Gherkin AC, and human commits. | **Autonomous Looping**: Agents iterate in unmonitored background loops until stopped or crashed. |
-| **Token Multiplier** | **1x Baseline**: Lean JIT loading (~650 tokens). Unused skills consume 0 tokens. | **5x–15x Inflation**: Real-world benchmarks show 1.2M+ tokens burned on standard tasks. |
-| **State Persistence** | **Git-Tracked File Storage**: `docs/STATE.md` and `docs/tasks/` survive session resets and IDE restarts. | **Local Hidden Cache (`.planning/`)**: Prone to lock-file race conditions and context-limit crashes. |
-| **Context Limit Defense** | **Proactive Reset Cadence**: `pk:checkpoint` flushes state at ~30 turns before context degrades. | **Exhaustion Vulnerability**: Frequently drives sessions to 100% token limit before checkpointing. |
-| **Quality & Done-Gates** | **Enforced Gates**: Strict Milestone Git Boundaries, automated secret scans, and test verification proof. | **Heuristic Stalls**: Fragile 10-minute timeout heuristics that kill healthy long-running tasks. |
+| **Execution Model** | **Human-in-the-Loop Pairing**: AI proposes, verifies against Gherkin AC, and human reviews/commits. | **Autonomous Looping**: Agents iterate in unmonitored background loops until stopped or timed out. |
+| **Token Footprint** | **Lean 1x Baseline**: Just-In-Time filesystem loading (~650 tokens). Unused workflows consume 0 tokens. | **5x–15x Token Multiplier**: Multi-agent pipelines (research $\rightarrow$ planning $\rightarrow$ execution waves) multiply total token consumption. |
+| **State Persistence** | **Git-Tracked Plain Markdown**: `docs/STATE.md` and `docs/tasks/` survive session resets and IDE restarts. | **Hidden Local Cache Directories**: Prone to lock-file race conditions and uncommitted state drift. |
+| **Context Degradation** | **Proactive Reset Cadence**: `pk:checkpoint` flushes state before context window limits cause attention degradation. | **Exhaustion Vulnerability**: Looping pipelines frequently drive model working memory to limits before persisting state. |
+| **Quality & Done-Gates** | **Enforced Verifiable Gates**: Strict Milestone Git Boundaries, automated secret scans, and test verification proof. | **Timeout Heuristics**: Fragile duration or turn heuristics that can stall or abort long-running tasks. |
+| **Infrastructure & Lock-In** | **Zero Binaries or Daemons**: Pure markdown protocols running in any AI host without background processes. | **High Complexity Tax**: Requires dedicated runtime adapters, orchestrators, and daemon dependencies. |
 | **Secret Hygiene** | **Zero-Secret Guarantee**: Enforces `.env.example` templates and blocks secrets from chat and CLI history. | **Vulnerable**: Unmonitored subagents frequently leak credentials into shell execution history. |
 
 ---

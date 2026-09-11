@@ -278,7 +278,7 @@ Repository CI validates structural integrity and protocol compliance across Linu
 
 ## How PromptKit Differs from Other Tools
 
-| Dimension | `.cursorrules` / `CLAUDE.md` | Prompt Packs (spec-kit, BMad) | Autonomous Swarms (GSD, AutoGen) | **Better-PromptKit** |
+| Dimension | Single-File Directives | Static Prompt Packs | Autonomous Multi-Agent Swarms | **Better-PromptKit** |
 | :--- | :--- | :--- | :--- | :--- |
 | **Scope** | Tool-specific instruction endpoint | Workflow templates for one tool | Multi-agent unmonitored loops | Cross-tool engineering OS with 20 lifecycle workflows |
 | **Token Overhead** | Minimal initial overhead | High monolithic bloat (~18k tokens inlined) | 5x–15x inflation (1.2M+ tokens burned on loops) | **~650 tokens JIT baseline** (unused workflows consume 0 tokens) |
