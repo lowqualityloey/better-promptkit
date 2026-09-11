@@ -75,7 +75,9 @@ Define the non-negotiable definition-of-done (DoD) and engineering quality bar f
 Before completing any coding task or finishing a Better-PromptKit session:
 1. Run static analyzers (`tsc --noEmit`, `eslint`, `biome check`, or commands in `./PROMPTKIT.md`).
 2. Run test suites (`npm test`, `pytest`, `cargo test`, or commands in `./PROMPTKIT.md`).
-3. Audit against the checklist above.
-4. If any gate fails, address it before declaring the task done.
-5. When ready to stage and commit, invoke `workflows/commit.md` (`pk:commit`) to ensure atomic staging, Conventional Commit formatting, and secret leak prevention.
+3. Verify all scenario acceptance criteria (`AC-*`) are completely met with concrete test evidence.
+4. Audit against the 6 pillars checklist above.
+5. If any gate fails, address it before declaring the task done.
+6. When ready to stage and commit, invoke `workflows/commit.md` (`pk:commit`) to ensure atomic single-concern staging, Conventional Commit formatting, and secret leak prevention.
+7. Prepare the pull request with `workflows/pr.md` (`pk:pr`), compiling the verified AC checklist for human review and merge.
 

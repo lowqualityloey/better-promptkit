@@ -197,11 +197,29 @@ Please inspect the files listed above and confirm you are ready to proceed with 
 - Unverified users must receive 403 Forbidden with `ERR_EMAIL_UNVERIFIED`
 - All verification checks happen on the server session, never trusted from client props
 
-## 4. Next Immediate Action
-Update `inviteUser` in `src/server/actions/invite.ts` to enforce the `email_verified_at` check and add an integration test for the rejection path.
 ```
 ````
 
+---
+
+## Post-Merge Synchronization Hook
+
+When the human informs the assistant that a pull request has been merged into `main`, execute the post-merge synchronization procedure:
+
+1. **Switch to Main & Pull Latest**:
+   ```bash
+   git checkout main && git pull origin main
+   ```
+2. **Prune Merged Local Branch**:
+   Safely delete the merged local feature branch:
+   ```bash
+   git branch -d <feature-branch>
+   ```
+3. **Synchronize `docs/STATE.md`**:
+   - Mark the completed task (`- [x] TASK-XX: ...`) in the active milestone.
+   - Reset Section 3 (`Active Working Set`) for the next task.
+   - Append a completion record to Section 8 (`Session Continuity Log`):
+     `| YYYY-MM-DD | Assistant (pk:checkpoint) | Post-Merge Sync | PR merged into main; pulled latest and pruned local branch |`
 
 ---
 
