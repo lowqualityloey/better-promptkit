@@ -2,6 +2,7 @@
 
 - **System Name**: [e.g., Core UI / Nova Design System]
 - **Target CSS Framework**: [Tailwind CSS v4 / CSS Variables / CVA]
+- **Upstream Design Tool**: [Figma Variables / Tokens Studio / Sketch / Penpot / None]
 - **Accessibility Target**: WCAG 2.2 Level AA Compliance
 - **Mobile Target**: Fluid responsive reflow with $\ge 44 \times 44\text{px}$ touch targets
 
@@ -10,6 +11,8 @@
 ## 1. Color System & Semantic Tokens
 
 > 🚫 **Anti-Slop Guardrail**: Ground the palette in your product's distinct identity (`DESIGN.md`). Avoid generic AI blue-to-purple gradients, cyan glows, or rainbow borders. Limit the active palette to 2–3 core colors + 1 intentional accent.
+>
+> 💡 **Design Tool Token Ingestion**: When pulling tokens from Figma Variables or Tokens Studio, export them as semantic aliases into `:root` rather than baking raw hex codes into individual components.
 
 ### Primitive Color Scale
 ```css

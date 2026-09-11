@@ -40,6 +40,51 @@ Guide the developer in designing, engineering, and auditing production-grade, hu
 
 ---
 
+## Visual Mockup & Figma Ingestion Pipeline
+
+When translating visual assets from design tools (Figma, Sketch, Penpot, or screenshot mockups), treat the mockup as an aesthetic specification, not as executable code. Never let an AI agent naively dump pixel-fixed JSX with hardcoded hex codes.
+
+### 1. Supported Input Modalities
+- **Visual Mockup / Screenshot**: Pasting UI screenshots directly into the prompt.
+- **Figma Dev Mode / Layout Inspection**: Auto-layout properties (direction, padding, item gaps, alignment constraints).
+- **Design Tokens / Variables**: Exported Figma Variables, Tokens Studio JSON, or CSS custom properties.
+- **Direct MCP Integration**: Querying nodes and style properties via a Figma MCP server.
+
+### 2. The 4-Stage Ingestion Sequence
+```text
+┌─────────────────────────────────────────────────────────────┐
+│                 FIGMA-TO-CODE INGESTION PIPELINE            │
+├─────────────────────────────────────────────────────────────┤
+│ 1. Token Extraction     ──> Update DESIGN.md & CSS variables│
+│    (Zero hardcoded hex codes; map to semantic token aliases)│
+├─────────────────────────────────────────────────────────────┤
+│ 2. Layout Translation   ──> Auto-Layout to semantic Flex/Grid│
+│    (Direction, gaps, alignments -> responsive Tailwind/CSS) │
+├─────────────────────────────────────────────────────────────┤
+│ 3. Architecture Mapping ──> 5-Layer UI Component Tree       │
+│    (Headless Radix/Aria + CVA variants + Slot composability)│
+├─────────────────────────────────────────────────────────────┤
+│ 4. Blindspot Remediation──> Reflow, Skeletons & Tap Targets │
+│    (Audit mobile stacking, ≥44px targets, loading/empty)    │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### 3. Mockup Blindspot Remediation Checklist
+Figma frames are static desktop or mobile snapshots that frequently omit critical engineering realities. Always remediate these 5 blindspots before writing component code:
+1. **Responsive Reflow over Fixed Widths**:
+   - Replace static pixel widths (e.g., `w-[384px]`, `w-[1200px]`) with fluid containers (`w-full max-w-md mx-auto`) and collapsible flex/grid layouts.
+   - Collapse horizontal navigation or multi-column grids into single-column flows on small viewports.
+2. **Touch Targets ($\ge 44 \times 44\text{px}$)**:
+   - Designers frequently draw compact $16\text{px}$–$24\text{px}$ icons or links. Enforce a minimum interactive hit area of $\ge 44 \times 44\text{px}$ using padding or invisible touch expanders (`min-h-[44px] min-w-[44px]`).
+3. **Async Content Resilience**:
+   - Figma mockups only show the happy data state. Author content-shaped loading skeletons, empty states with clear calls to action, and error recovery banners.
+4. **Accessible Interaction States**:
+   - Add keyboard `:focus-visible:ring-2` focus rings, Escape key dismissal, and explicit `aria-label` attributes on icon-only buttons.
+5. **Text Truncation & Overflow Safeguards**:
+   - Add `min-w-0` to flex/grid containers and use `truncate` or `line-clamp-*` to prevent long dynamic content from blowing out the layout.
+
+---
+
 ## Workflow Steps
 
 ### Step 1: Design Tokens & Anti-Slop Visual Foundations
@@ -242,3 +287,4 @@ Before marking any UI task complete, verify all criteria pass:
 - [ ] **Mobile Reflow**: Zero horizontal scroll leaks (`min-w-0` on flex/grid children), viewport uses `dvh`, and bottom nav respects safe-area insets.
 - [ ] **Compositor Motion**: Only `transform` and `opacity` animate; no `transition: all`; `prefers-reduced-motion` honored.
 - [ ] **React Performance**: Conditionals use ternary (`? : null`); derived state is computed during render; no nested inline components.
+- [ ] **Figma Blindspots Remediated**: Static pixel widths replaced with fluid reflow, touch targets $\ge 44 \times 44\text{px}$ verified, and loading skeletons / empty states implemented.
