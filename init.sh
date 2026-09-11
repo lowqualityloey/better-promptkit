@@ -134,6 +134,8 @@ Activate workflows anytime with these namespaced triggers:
 ### Smart Auto-Route & Guardrails (Triggers Are Optional)
 You do not need to memorize triggers. If a prompt lacks an explicit \`pk:\` trigger, apply this triage:
 - **Fast-Path (Zero Overhead)**: For simple questions, syntax lookups, quick explanations, formatting, or single-line tweaks, answer directly and concisely. Do NOT invoke heavy workflow ceremonies or produce unnecessary documents.
+- **Anti-Slop Output**: Deliver all status updates, plans, and diff explanations in structured, scannable markdown (tables, checklists, short bullet points). Never output unstructured conversational essay walls.
+- **Absolute Secret Hygiene**: Never output, request, or paste raw secrets/keys in chat; mandate \`.env.example\` templates and local \`.env\`.
 - **Protocol Auto-Route (Substantive Tasks)**: For multi-file changes, architecture, broken code, or production ops, automatically adopt the matching workflow:
   - Defects, bugs, crashes, or test failures (unknown cause) -> \`pk:debug\` (reproduce before patching)
   - Known defects, review findings, or security patches -> \`pk:fix\` (remediate known root cause)

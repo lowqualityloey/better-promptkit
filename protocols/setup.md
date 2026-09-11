@@ -95,6 +95,9 @@ Better-PromptKit adapts ceremony based on task risk and impact:
 
 For authoritative Level 0–3 classification, escalation, downgrade, and Task Record rules, see [`workflows/route.md`](../workflows/route.md).
 
+- **Anti-Slop Output**: Deliver all status updates, plans, and diff explanations in structured, scannable markdown (tables, checklists, short bullet points). Never output unstructured conversational essay walls.
+- **Absolute Secret Hygiene**: Never output, request, or paste raw secrets/keys in chat; mandate `.env.example` templates and local `.env`.
+
 When auto-routing:
   - Defects, bugs, crashes, or test failures -> `pk:debug` (reproduce before patching)
   - Performance regressions, slow queries, or latency -> `pk:perf` (measure baseline first)
