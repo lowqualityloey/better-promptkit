@@ -51,6 +51,15 @@ try {
         throw "Failed Test 1 (CRLF): Expected 1 START and 1 END marker, found start=$crlfStartCount, end=$crlfEndCount."
     }
 
+    $crlfPrTemplate = Join-Path $CrlfRoot ".github/pull_request_template.md"
+    if (-not (Test-Path $crlfPrTemplate)) {
+        throw "Failed Test 1 (CRLF): .github/pull_request_template.md was not scaffolded."
+    }
+    $prTemplateContent = [System.IO.File]::ReadAllText($crlfPrTemplate, [System.Text.Encoding]::UTF8)
+    if (-not $prTemplateContent.Contains('## Acceptance Criteria Checklist')) {
+        throw "Failed Test 1 (CRLF): .github/pull_request_template.md does not contain expected template content."
+    }
+
     # Test 10: Idempotency re-run on CRLF file
     & pwsh -NoProfile -File $initScriptPath -ProjectRoot $CrlfRoot | Out-Null
     $reRunContent = [System.IO.File]::ReadAllText($crlfAgentsPath, [System.Text.Encoding]::UTF8)
