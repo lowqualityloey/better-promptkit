@@ -499,6 +499,19 @@ For complete line-by-line token breakdowns and mathematical analysis, see [docs/
 
 ---
 
+## 13. Does Better-PromptKit actually enforce code quality gates, or is it just prompt advice?
+
+**Short Answer**: Better-PromptKit actively enforces strict engineering done-gates and cross-session persistence. It is an engineering operating system, not a passive prompt optimizer.
+
+**How enforcement works**:
+- **Strict Milestone Git Boundaries**: The assistant is strictly prohibited from advancing to a subsequent milestone or major task phase while uncommitted changes exist in the working tree. Tests must pass and atomic staging (`pk:commit`) must occur first.
+- **Pre-Commit Quality Gate**: `pk:commit` runs an automated pre-commit scan for secret leaks (`.env`, private keys) and verifies that test runners pass before staging.
+- **Verifiable Proof Requirement**: Tasks are not marked complete based on conversational claims alone; the automated verification command (e.g. `npm test`) must produce observable pass evidence.
+- **Durable File-Backed State**: State is not lost when chat sessions compact or end. Milestones, tasks in flight, and architectural invariants are committed directly to Git in `docs/STATE.md` and `docs/tasks/`.
+- **Pre-Submission PR Gate**: `pk:pr` requires Gherkin Acceptance Criteria checklists and database Expand-Contract safety evaluations before generating pull requests.
+
+---
+
 ## Still Have Questions?
 
 **More detailed documentation**:
