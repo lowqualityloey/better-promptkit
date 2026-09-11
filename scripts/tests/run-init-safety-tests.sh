@@ -132,4 +132,22 @@ fi
 after_hash="$(sha256sum "$AWK_FAIL_ROOT/AGENTS.md" | cut -d' ' -f1)"
 [[ "$before_hash" == "$after_hash" ]]
 
-echo "init.sh non-destructive update and malformed-marker tests passed."
+# CRLF line ending test
+CRLF_ROOT="$TEST_ROOT/crlf"
+mkdir -p "$CRLF_ROOT"
+printf "Header with \$1 literal dollar reference\r\n\r\nKeep content before.\r\n\r\n<!-- PROMPTKIT_START -->\r\nold directive\r\n<!-- PROMPTKIT_END -->\r\n\r\nKeep content after.\r\n" > "$CRLF_ROOT/AGENTS.md"
+bash "$REPO_ROOT/init.sh" "$CRLF_ROOT" >/dev/null
+grep -q 'Header with $1 literal dollar reference' "$CRLF_ROOT/AGENTS.md"
+grep -q 'Keep content before\.' "$CRLF_ROOT/AGENTS.md"
+grep -q 'Keep content after\.' "$CRLF_ROOT/AGENTS.md"
+grep -q '## Better-PromptKit Engineering Operating System' "$CRLF_ROOT/AGENTS.md"
+
+# UTF-8 Emoji/CJK content test
+UTF8_ROOT="$TEST_ROOT/utf8"
+mkdir -p "$UTF8_ROOT"
+printf "Header 🚀 🧪 漢字 テスト\n\n<!-- PROMPTKIT_START -->\nold directive\n<!-- PROMPTKIT_END -->\n\nFooter ✨ 祝日\n" > "$UTF8_ROOT/AGENTS.md"
+bash "$REPO_ROOT/init.sh" "$UTF8_ROOT" >/dev/null
+grep -q '🚀 🧪 漢字 テスト' "$UTF8_ROOT/AGENTS.md"
+grep -q '✨ 祝日' "$UTF8_ROOT/AGENTS.md"
+
+echo "init.sh non-destructive update, CRLF/LF compatibility, duplicate/malformed/reversed markers, literal $, awk failure, and UTF-8 tests passed."
