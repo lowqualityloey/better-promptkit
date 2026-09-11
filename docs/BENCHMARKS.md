@@ -84,7 +84,23 @@ Beyond token counts, PromptKit's structured protocols deliver qualitative engine
 
 ---
 
+## 5. Architectural Comparison: Better-PromptKit vs. Autonomous Swarm Frameworks (e.g., GSD)
+
+While autonomous loop frameworks (such as GSD / `open-gsd`) attempt to solve software engineering via unmonitored sub-agent swarms and speculative planning directories, they introduce severe token inflation, context exhaustion crashes, and operational instability.
+
+| Architectural Dimension | Better-PromptKit (Pair-Programming OS) | Autonomous Swarm Frameworks (e.g., GSD) |
+| :--- | :--- | :--- |
+| **Execution Model** | **Human-in-the-Loop Pairing**: AI proposes, verifies against Gherkin AC, and human commits. | **Autonomous Looping**: Agents iterate in unmonitored background loops until stopped or crashed. |
+| **Token Multiplier** | **1x Baseline**: Lean JIT loading (~650 tokens). Unused skills consume 0 tokens. | **5x–15x Inflation**: Real-world benchmarks show 1.2M+ tokens burned on standard tasks. |
+| **State Persistence** | **Git-Tracked File Storage**: `docs/STATE.md` and `docs/tasks/` survive session resets and IDE restarts. | **Local Hidden Cache (`.planning/`)**: Prone to lock-file race conditions and context-limit crashes. |
+| **Context Limit Defense** | **Proactive Reset Cadence**: `pk:checkpoint` flushes state at ~30 turns before context degrades. | **Exhaustion Vulnerability**: Frequently drives sessions to 100% token limit before checkpointing. |
+| **Quality & Done-Gates** | **Enforced Gates**: Strict Milestone Git Boundaries, automated secret scans, and test verification proof. | **Heuristic Stalls**: Fragile 10-minute timeout heuristics that kill healthy long-running tasks. |
+| **Secret Hygiene** | **Zero-Secret Guarantee**: Enforces `.env.example` templates and blocks secrets from chat and CLI history. | **Vulnerable**: Unmonitored subagents frequently leak credentials into shell execution history. |
+
+---
+
 ## Related References
 - [`protocols/subagent-delegation.md`](../protocols/subagent-delegation.md) — Subagent delegation & context preservation rules
 - [`protocols/context-sync.md`](../protocols/context-sync.md) — 30-turn reset threshold & MCP discovery
 - [`FAQ.md`](../FAQ.md) — Common adoption questions & setup details
+
