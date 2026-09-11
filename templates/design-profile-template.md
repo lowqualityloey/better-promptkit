@@ -14,6 +14,8 @@
 
 ## 2. Color Palette & Anti-Slop Guardrails
 > 🚫 **Anti-Slop Rule**: Never use generic AI blue-to-purple / cyan gradients, rainbow glow backdrops, or neon pastel palettes. All colors must derive strictly from the tokens below.
+>
+> 💡 **Figma / Design Tool Ingestion**: When extracting colors from Figma Variables, Tokens Studio, or Dev Mode, normalize them into the semantic tokens below. Never permit an AI assistant to paste raw arbitrary hex codes directly into JSX or CSS classes.
 
 ### Core Colors
 - **Neutral Base**: [e.g., Slate / Zinc / Neutral]
@@ -38,6 +40,7 @@
 - **Code & Numeric Font**: [e.g., 'JetBrains Mono', 'Fira Code']
   - Numbers rule: Mandatory `font-variant-numeric: tabular-nums` for timers, financial counters, and data tables.
 - **Punctuation Standard**: Always use real ellipsis (`…`), curly quotes (`“”`), and non-breaking spaces for units (`10&nbsp;MB`, `⌘&nbsp;K`).
+- **Fluid Scaling**: Translate static desktop font sizes from Figma mockups into responsive `clamp()` rules (e.g., `text-[clamp(1.5rem,3vw,2.25rem)]`) rather than fixed pixel dimensions to ensure clean mobile reflow.
 
 ---
 
