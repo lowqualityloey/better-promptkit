@@ -62,7 +62,7 @@ Better-PromptKit enforces strict **Subagent Delegation with Compact Synthesis** 
 ### Mathematical Context Efficiency
 - **Raw File Inspection in Main Context**: 15 source files @ 1,300 tokens/file = **~19,500 tokens** added to permanent conversational history.
 - **Subagent Delegation**: Subagent absorbs the 19,500 token traversal in an isolated thread and emits an indexed, 12-line synthesized finding with line references = **~250 tokens** returned to main thread.
-- **Effective Context Window Preservation**: **~98.7% reduction** in main thread conversational bloat.
+- **Effective Context Window Preservation**: **~98.7% reduction in parent-thread context payload**. *Note: This preserves parent working memory and reasoning attention; it does not imply an equivalent reduction in total model tokens consumed across both threads combined.*
 
 ---
 
@@ -91,7 +91,7 @@ While autonomous multi-agent looping frameworks attempt to solve software engine
 | Architectural Dimension | Better-PromptKit (Disciplined Pairing OS) | Autonomous Multi-Agent Swarms |
 | :--- | :--- | :--- |
 | **Execution Model** | **Human-in-the-Loop Pairing**: AI proposes, verifies against Gherkin AC, and human reviews/commits. | **Autonomous Looping**: Agents iterate in unmonitored background loops until stopped or timed out. |
-| **Token Footprint** | **Lean 1x Baseline**: Just-In-Time filesystem loading (~650 tokens). Unused workflows consume 0 tokens. | **5x–15x Token Multiplier**: Multi-agent pipelines (research $\rightarrow$ planning $\rightarrow$ execution waves) multiply total token consumption. |
+| **Token Footprint** | **Lean 1x Baseline**: Just-In-Time filesystem loading (~650 tokens). Unused workflows consume 0 tokens. | **Additional Model Calls**: Multi-agent pipelines (research $\rightarrow$ planning $\rightarrow$ execution waves) introduce additional model calls and aggregate token overhead proportional to pipeline depth and context size. |
 | **State Persistence** | **Git-Tracked Plain Markdown**: `docs/STATE.md` and `docs/tasks/` survive session resets and IDE restarts. | **Hidden Local Cache Directories**: Prone to lock-file race conditions and uncommitted state drift. |
 | **Context Degradation** | **Proactive Reset Cadence**: `pk:checkpoint` flushes state before context window limits cause attention degradation. | **Exhaustion Vulnerability**: Looping pipelines frequently drive model working memory to limits before persisting state. |
 | **Quality & Done-Gates** | **Enforced Verifiable Gates**: Strict Milestone Git Boundaries, automated secret scans, and test verification proof. | **Timeout Heuristics**: Fragile duration or turn heuristics that can stall or abort long-running tasks. |
