@@ -227,6 +227,16 @@ In multi-agent environments (Antigravity, Claude Code, Cursor background agents)
 - **Retained in Main Thread**: Direct developer conversation, small localized edits (<10 lines), atomic commits (`pk:commit`), and pull request submission (`pk:pr`).
 - **Compact Synthesis**: Subagents return 5-15 line synthesized reports with file paths and line numbers instead of dumping raw tool output into parent context.
 
+### 3. Native MCP Discovery & Graceful Degradation
+
+- **Tooling Precedence**: Native MCP Tools $\rightarrow$ Terminal CLI Commands $\rightarrow$ Manual Human Prompt.
+- **Auto-Discovery**: When running in MCP-capable environments (Antigravity, Cursor, Claude Desktop), the assistant automatically prioritizes structured tool calls (e.g., `github-mcp-server`) over terminal commands (`gh`), preventing terminal pager hangs.
+- **Zero Lock-In Fallback**: If no MCP servers are configured, the assistant seamlessly falls back to standard terminal CLI utilities.
+
+### 4. Standardized Human Action Callouts
+
+- **Zero Action-Blindness**: Whenever the assistant halts a turn requiring human decision, PR review, or local actions, it terminates the message with a high-contrast `> [!IMPORTANT]` callout (`### 🛑 Action Required From You:`). If blocked, it emits `> [!WARNING]` (`### ⚠️ Blocked: Waiting on Human Input`).
+
 ---
 
 ## How Enforcement Actually Works

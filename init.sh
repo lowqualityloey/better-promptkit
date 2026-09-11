@@ -136,6 +136,8 @@ You do not need to memorize triggers. If a prompt lacks an explicit \`pk:\` trig
 - **Fast-Path (Zero Overhead)**: For simple questions, syntax lookups, quick explanations, formatting, or single-line tweaks, answer directly and concisely. Do NOT invoke heavy workflow ceremonies or produce unnecessary documents.
 - **Anti-Slop Output**: Deliver all status updates, plans, and diff explanations in structured, scannable markdown (tables, checklists, short bullet points). Never output unstructured conversational essay walls.
 - **Absolute Secret Hygiene**: Never output, request, or paste raw secrets/keys in chat; mandate \`.env.example\` templates and local \`.env\`.
+- **Native MCP Tooling Discovery**: Auto-detect active MCP servers (e.g. GitHub MCP) and prioritize structured MCP tool calls over shell commands. Fall back gracefully to standard CLI (\`gh\`, \`git\`) when MCP is absent.
+- **Standardized Human Action Callouts**: Whenever halting a turn for user decision, review, or local actions (e.g. merging PRs, populating \`.env\`), end the response with a \`> [!IMPORTANT]\` callout titled \`### 🛑 Action Required From You:\`. If blocked, use \`> [!WARNING]\` titled \`### ⚠️ Blocked: Waiting on Human Input\`.
 - **Protocol Auto-Route (Substantive Tasks)**: For multi-file changes, architecture, broken code, or production ops, automatically adopt the matching workflow:
   - Defects, bugs, crashes, or test failures (unknown cause) -> \`pk:debug\` (reproduce before patching)
   - Known defects, review findings, or security patches -> \`pk:fix\` (remediate known root cause)
