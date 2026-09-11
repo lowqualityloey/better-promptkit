@@ -17,6 +17,19 @@ Check if `./PROMPTKIT.md` exists in the repository root:
   - **Strict Non-Negotiables & Guardrails** (e.g., forbidden packages, mandatory schemas, architectural layers)
 - Prioritize rules in `PROMPTKIT.md` over generic defaults.
 
+### 1.1. Standard Root Documentation Inspection
+Passively scan the repository root for standard system documentation files. These files represent pre-existing developer documentation that must be respected across all workflows.
+
+> [!IMPORTANT]
+> **Strictly Passive / Non-Destructive**: Never create, modify, or delete any of these files unprompted. If present, read and cross-reference them; if absent, silently skip with zero errors or nagging.
+
+| Document | Authority & Scope | Workflow Integration |
+| :--- | :--- | :--- |
+| **`ARCHITECTURE.md`** | **Supreme System Design Authority**: Domain boundaries, C4 models, service topologies, event buses, and data flow constraints. | Consulted during `pk:plan`, `pk:route`, and `pk:review` to ensure changes conform to macro system boundaries. |
+| **`ROADMAP.md`** | **Strategic Milestone Roadmap**: High-level product phases, upcoming releases, and feature sequencing. | Consulted during `pk:tasks` and `pk:plan` to align task breakdowns with planned project milestones. |
+| **`RUNBOOK.md`** / **`OPERATIONS.md`** | **Operational SRE Manual**: Deployment ordering, environment verification, database failover, health check endpoints, and rollback procedures. | Consulted during `pk:ship` to align candidate evaluation, smoke tests, and rollback triggers with operations protocols. |
+| **`STYLE.md`** / **`STYLEGUIDE.md`** | **Code & Style Conventions**: Repository-specific formatting, naming standards, and architectural idioms (complements `DESIGN.md` for UI). | Consulted during `pk:review` and `pk:commit` to enforce repository-wide code conventions. |
+
 ### 2. Brand & Visual Identity Inspection (`DESIGN.md`)
 Check if `./DESIGN.md` exists in the repository root:
 - If present, parse:

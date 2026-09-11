@@ -104,6 +104,14 @@ After completing the scan and presenting the findings summary / Executive Scorec
    Identify communication conventions:
    - tRPC (`server/routers/`), Server Actions (`"use server"`), GraphQL, RESTful endpoints (`app/api/*`).
 
+5. **Standard Root Documentation Scan**:
+   Passively check for pre-existing repository documentation:
+   - `ARCHITECTURE.md`: System design blueprints and domain boundaries.
+   - `ROADMAP.md`: Strategic product milestones and sequencing.
+   - `RUNBOOK.md` / `OPERATIONS.md`: Operational SRE manuals and rollback procedures.
+   - `STYLE.md` / `STYLEGUIDE.md`: Repository-specific code style conventions.
+   - If detected, record these files for linkage in `PROMPTKIT.md`. If absent, silently continue with zero warnings.
+
 ---
 
 ### Phase 3: Profile & Guardrail Generation
@@ -113,7 +121,7 @@ After completing the scan and presenting the findings summary / Executive Scorec
    - Project Name inferred from directory or manifest `name`.
    - Active commands configured to the exact detected package manager and runner scripts.
    - If monorepo detected, populate Section 4 (`Monorepo & Workspace Topology`) with the mapped workspace manager, package table, filtered command conventions (`pnpm --filter <pkg>`, `turbo run <cmd> --filter=<pkg>`), and boundary guardrails. If single-package repo, set Section 4 to `N/A (Standalone Repository)`.
-   - Document paths set to standard defaults (`docs/specs/`, `docs/tasks/`, `docs/data/`, etc.).
+   - Document paths set to standard defaults (`docs/specs/`, `docs/tasks/`, `docs/data/`, etc.) and link any detected root documentation (`ARCHITECTURE.md`, `ROADMAP.md`, `RUNBOOK.md`, `STYLE.md`).
    - Tailored architectural invariants added (e.g. strict TypeScript, zero loose casting, database check constraints, RLS enforcement).
 
 2. **Auto-Populate `DESIGN.md` (If Frontend Surfaces Exist)**:
@@ -138,6 +146,7 @@ After completing the scan and presenting the findings summary / Executive Scorec
    Present the developer with a concise summary table in the conversation:
    - **Stack & Tooling**: Confirmed runtime, framework, ORM, and test runners.
    - **Active MCP Capabilities**: Catalog detected Model Context Protocol servers (e.g. GitHub MCP, Postgres MCP, Linear) or record `N/A (Standard CLI Fallback)`.
+   - **Existing System Documentation**: Catalog detected standard root documentation (`ARCHITECTURE.md`, `ROADMAP.md`, `RUNBOOK.md`, `STYLE.md`) or record `N/A (None Detected)`.
    - **Architectural Strengths**: High test coverage, strict typing, clean modular boundaries.
    - **Vulnerabilities & Missing Seams**: Zero integration tests, unindexed foreign keys, loose `any` types, missing error boundaries.
 
