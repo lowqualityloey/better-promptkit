@@ -19,6 +19,7 @@ Better-PromptKit equips your coding assistant with disciplined engineering workf
 | **Who it is NOT for** | Developers looking for an autocomplete inline plugin, a CLI binary, or an npm dependency. Better-PromptKit is pure markdown protocols and prompts. |
 | **Why it is better** | Replaces unguided "vibe coding" and token-wasting guess-and-patch loops with systematic, hypothesis-driven development workflows. Structured workflows are designed to reduce redundant back-and-forth by enforcing one-pass planning, artifact reuse, and surgical fixes over guess-and-patch loops. |
 | **Key differences** | Namespaced triggers (`pk:` prefix), guardrails against single-step destructive schema drops (phased Expand-Contract policy), Socratic guidance that avoids unsolicited code dumps, and monorepo workspace isolation (scoped `--filter` commands). |
+| **Token Efficiency** | **Zero Static Token Bloat**: Injects only a ~40-line router (~650 tokens) into your agent directives. Full workflows are read Just-In-Time (JIT) from local files only when triggered. See [`docs/BENCHMARKS.md`](./docs/BENCHMARKS.md). |
 
 ---
 
@@ -42,10 +43,11 @@ For authoritative Level 0–3 classification, escalation, downgrade, and Task Re
 
 ## Quick Start (60 Seconds)
 
-**New to PromptKit?** → See **[FAQ.md](./FAQ.md)** for the 11 most common questions  
+**New to PromptKit?** → See **[FAQ.md](./FAQ.md)** for the 12 most common questions  
 **Getting started?** → See **[QUICKSTART.md](./QUICKSTART.md)** for a 5-minute guided tour  
 **Existing project?** → See **[ADOPTION-GUIDE.md](./docs/ADOPTION-GUIDE.md)** for gradual adoption  
 **Visual learner?** → See **[WORKFLOW-MAP.md](./docs/WORKFLOW-MAP.md)** for decision trees and diagrams  
+**Token economics & benchmarks?** → See **[BENCHMARKS.md](./docs/BENCHMARKS.md)** for architecture and context window analysis  
 **Want to know more?** → See **[INTERESTING-FACTS.md](./docs/INTERESTING-FACTS.md)** for unique insights and design principles
 
 > [!TIP]
@@ -82,6 +84,7 @@ The initialization script is transparent and idempotent:
 - **`./PROMPTKIT.md`**: Project architectural profile containing your active commands, stack constraints, and monorepo workspace topology.
 - **`./docs/STATE.md`**: The living project tracker recording active milestones, tasks in flight, and locked architectural invariants.
 - **Agent Directives**: Injects or updates an idempotent directive block in `AGENTS.md` (or `CLAUDE.md`, `GEMINI.md`, `.cursorrules`, `.windsurfrules`, `.github/copilot-instructions.md`).
+- **Just-In-Time (JIT) Workflow Injection**: Zero static token bloat. Workflows are loaded into agent context on-demand from local filesystem files only when triggered (avoiding 18k+ token monolithic prompt injection).
 - **Zero Lock-In**: Installs zero binaries, adds zero npm dependencies, and runs zero background daemons.
 
 ---
