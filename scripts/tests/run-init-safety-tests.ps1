@@ -60,6 +60,15 @@ try {
         throw "Failed Test 1 (CRLF): .github/pull_request_template.md does not contain expected template content."
     }
 
+    $crlfIssueTemplate = Join-Path $CrlfRoot ".github/ISSUE_TEMPLATE/task.md"
+    if (-not (Test-Path $crlfIssueTemplate)) {
+        throw "Failed Test 1 (CRLF): .github/ISSUE_TEMPLATE/task.md was not scaffolded."
+    }
+    $issueTemplateContent = [System.IO.File]::ReadAllText($crlfIssueTemplate, [System.Text.Encoding]::UTF8)
+    if (-not $issueTemplateContent.Contains('name: Task Specification')) {
+        throw "Failed Test 1 (CRLF): .github/ISSUE_TEMPLATE/task.md does not contain expected template frontmatter."
+    }
+
     # Test 10: Idempotency re-run on CRLF file
     & pwsh -NoProfile -File $initScriptPath -ProjectRoot $CrlfRoot | Out-Null
     $reRunContent = [System.IO.File]::ReadAllText($crlfAgentsPath, [System.Text.Encoding]::UTF8)
