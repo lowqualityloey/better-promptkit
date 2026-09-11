@@ -37,6 +37,7 @@ Evaluate your upcoming task against this triage before executing:
 | **External Documentation / Web Search** (API docs, GitHub issues) | **Subagent** | Eliminates long HTML/markdown search dumps. |
 | **Parallel Risk Spikes** (evaluating Library A vs Library B) | **Subagent (Parallel)** | Enables concurrent exploration in `pk:spike`. |
 | **Two-Axis PR Audits** (Spec Fidelity vs Fowler Code Smells) | **Subagent (Parallel)** | Enables independent, unbiased reviews in `pk:review`. |
+| **Independent Verification** (Level 2/3 Controlled Work) | **Subagent (Single-Pass)** | Eliminates author confirmation bias; strictly capped at 1 turn, 15 lines max. |
 | **Long-Running Test / Linter Runs** (full CI simulation) | **Subagent / Task** | Prevents terminal scrollback from cluttering context. |
 | **Direct User Interaction & Alignments** | **Main Thread Only** | Subagents must never prompt the human developer directly. |
 | **Small Localized Edits** (<10 lines, single file tweaks) | **Main Thread Only** | Spawning a subagent introduces unnecessary latency overhead. |
@@ -96,6 +97,15 @@ When running `pk:review` on a substantial pull request:
 1. **Subagent 1 (Spec Fidelity)**: Compares modified files against `docs/specs/` to catch missing requirements or scope creep.
 2. **Subagent 2 (Technical Standards)**: Audits diff against Fowler's 12 code smells, security hygiene, and `DESIGN.md`.
 3. **Parent Agent**: Merges both reports side-by-side into the final PR review.
+
+### Pattern C: Independent Fresh-Context Verification (Level 2/3 Controlled Work)
+When an agent writes a complex feature (relational schema changes, authentication rewiring, breaking public APIs, or release candidates), reviewing its own implementation in the same thread introduces author confirmation bias.
+1. **Scope Exclusions**: Level 0 and Level 1 tasks bypass this pattern completely (0 token impact; standard single-agent review).
+2. **Execution Contract**: The parent agent spawns a single fresh-context verifier subagent with *only* the Gherkin Acceptance Criteria, the fixed-point git diff, and the runnable test commands.
+3. **Strict Bounded Caps**:
+   - Single pass: exactly 1 subagent turn.
+   - Max 15-line response: concise Pass/Fail matrix with line references.
+   - Zero recursion: subagent cannot spawn further child agents or start unmonitored loops.
 
 ---
 

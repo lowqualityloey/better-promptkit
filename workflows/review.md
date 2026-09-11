@@ -252,10 +252,30 @@ Candidate-only fields are `N/A - no defensible candidate` only with that explici
 
 ---
 
+## Independent Fresh-Context Verification (Level 2 & 3 Work)
+
+When an agent reviews code it authored within the same conversation, it faces cognitive confirmation bias (assuming edge cases, null boundaries, and negative flows were naturally satisfied).
+
+For **Level 2 (Controlled)** and **Level 3 (Release-Critical)** Work, the lead agent should delegate the two-axis audit to a dedicated **Fresh-Context Verifier Subagent** ([`protocols/subagent-delegation.md`](../protocols/subagent-delegation.md)):
+
+1. **Scope Exclusions (Zero Overhead)**:
+   - **Level 0 & Level 1**: **Bypassed completely (0 extra tokens)**. Single-agent review remains standard for localized fixes, small components, and everyday tasks.
+   - **Level 2 & Level 3**: Invoked before final PR submission for relational schema changes, auth rewires, breaking public API modifications, or release candidates.
+2. **Verifier Briefing Inputs**:
+   - The verifier subagent receives *only*:
+     - The target Gherkin Acceptance Criteria (`AC-*`) from `docs/tasks/<task-id>.md` or RFC spec.
+     - The fixed-point git diff (`git diff <baseline>...HEAD`).
+     - The automated test runner commands.
+3. **Strict Bounds & Token Caps**:
+   - **1-Pass Execution**: Strictly 1 subagent turn; zero recursive subagent spawning.
+   - **15-Line Synthesis**: Output is capped at a 15-line Pass/Fail matrix with file/line references for missing edge cases.
+   - **Budget Cap**: Consumes ~2,000–3,000 isolated tokens, saving 15k–30k tokens of downstream production debugging.
+
+---
+
 ## Socratic Debrief & Next Steps
 1. Guide the author on resolving `🚨 [BLOCKING]` items first.
 2. Confirm all fixes pass the Quality Gate in `.promptkit/protocols/code-quality-gate.md`.
-```
 
 ---
 
