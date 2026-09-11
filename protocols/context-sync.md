@@ -52,10 +52,15 @@ Scan the workspace root and key subdirectories for project manifests:
 - **Testing Suites**: Vitest, Jest, Playwright, Cypress, Pytest, Go testing
 - **Deployment & Hosting**: Vercel, Cloudflare Pages/Workers, Fly.io, Railway, AWS, GCP, Docker, Kubernetes
 - **CI / CD Pipelines**: GitHub Actions (`.github/workflows`), GitLab CI, CircleCI
+- **MCP & Native Tooling Inspection**: Inspect active assistant system prompts and environment configs (`.cursor/mcp.json`, `.gemini/antigravity/mcp/`, `claude_desktop_config.json`, or host tool declarations) for active Model Context Protocol (MCP) servers (e.g. `github-mcp-server`, `postgres`, `linear`, `sentry`, `fetch`).
 
 ### 5. Architecture & Pattern Recognition
 Identify existing project structural patterns:
 - **Layering**: Feature-sliced (`src/features/*`), Layered (`src/controllers`, `src/services`, `src/repositories`), Clean / Hexagonal (`domain`, `application`, `infrastructure`).
+- **3-Tier Tool Execution Precedence & Graceful Degradation**:
+  - **Tier 1 (Native MCP Tools)**: When an active MCP server provides structured capabilities (e.g. `github-mcp-server` for PRs/issues, PostgreSQL MCP for schema inspection), prioritize native MCP tool calls over shell commands to eliminate pager hangs and token waste.
+  - **Tier 2 (Terminal CLI Commands)**: If no MCP tool is available for the target service, seamlessly fall back to standard terminal CLI utilities (`gh`, `git`, `psql`, `docker`).
+  - **Tier 3 (Manual Human Prompt)**: If neither MCP nor CLI tooling is configured or authenticated, prompt the human developer with clear, high-contrast instructions.
 - **Monorepo Topology & Workspace Scoping**:
   - **Catalog Package Graph**: Map apps (`apps/*`) and shared packages (`packages/*`, `libs/*`). Read each package's `package.json` name (e.g. `@repo/web`, `@repo/db`).
   - **Owning Package Correlation**: Correlate files currently in flight with their owning workspace package.

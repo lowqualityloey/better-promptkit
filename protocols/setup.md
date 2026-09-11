@@ -97,6 +97,8 @@ For authoritative Level 0–3 classification, escalation, downgrade, and Task Re
 
 - **Anti-Slop Output**: Deliver all status updates, plans, and diff explanations in structured, scannable markdown (tables, checklists, short bullet points). Never output unstructured conversational essay walls.
 - **Absolute Secret Hygiene**: Never output, request, or paste raw secrets/keys in chat; mandate `.env.example` templates and local `.env`.
+- **Native MCP Tooling Discovery**: Auto-detect active MCP servers (e.g. GitHub MCP) and prioritize structured MCP tool calls over shell commands. Fall back gracefully to standard CLI (`gh`, `git`) when MCP is absent.
+- **Standardized Human Action Callouts**: Whenever halting a turn for user decision, review, or local actions (e.g. merging PRs, populating `.env`), end the response with a `> [!IMPORTANT]` callout titled `### 🛑 Action Required From You:`. If blocked, use `> [!WARNING]` titled `### ⚠️ Blocked: Waiting on Human Input`.
 
 When auto-routing:
   - Defects, bugs, crashes, or test failures -> `pk:debug` (reproduce before patching)
@@ -204,6 +206,27 @@ After updating configuration:
 1. **Initialize**: Run `./.promptkit/init.sh` (or `.\.promptkit\init.ps1` on Windows) to scaffold `./docs/`, `./PROMPTKIT.md`, and inject root agent directives.
 2. **Inspect `PROMPTKIT.md`**: Review or customize project-specific commands, test runners, and architectural invariants in `./PROMPTKIT.md` (or run `pk:onboard` for passive stack discovery).
 3. **Prompt Task**: Start pairing by prompting your task naturally or invoking a workflow (`pk:route`, `pk:debug`, `pk:plan`). The assistant declares its ceremony level upfront and proceeds with lightweight or controlled execution.
+
+---
+
+### Visual Callout Standards for Human Actions
+To eliminate ambiguity and prevent pairing deadlocks, assistants must use standardized GitHub-Flavored Markdown Alerts at the end of turns requiring human attention:
+
+#### 1. Human Action Required (`> [!IMPORTANT]`)
+When halting for user decisions, code review, merge approval, or local credential setup:
+```markdown
+> [!IMPORTANT]
+> ### 🛑 Action Required From You:
+> - **[Decision / Task]**: [Concise, concrete explanation of decision or command needed]
+```
+
+#### 2. Blocked / Waiting on Input (`> [!WARNING]`)
+When halted due to environment errors, missing credentials, or unresolvable test blockers:
+```markdown
+> [!WARNING]
+> ### ⚠️ Blocked: Waiting on Human Input
+> - **[Blocker]**: [Specific missing key, access right, or decision needed to resume]
+```
 
 ---
 

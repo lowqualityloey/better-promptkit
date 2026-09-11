@@ -137,6 +137,7 @@ After completing the scan and presenting the findings summary / Executive Scorec
 1. **Emit Executive Architecture Scorecard**:
    Present the developer with a concise summary table in the conversation:
    - **Stack & Tooling**: Confirmed runtime, framework, ORM, and test runners.
+   - **Active MCP Capabilities**: Catalog detected Model Context Protocol servers (e.g. GitHub MCP, Postgres MCP, Linear) or record `N/A (Standard CLI Fallback)`.
    - **Architectural Strengths**: High test coverage, strict typing, clean modular boundaries.
    - **Vulnerabilities & Missing Seams**: Zero integration tests, unindexed foreign keys, loose `any` types, missing error boundaries.
 
