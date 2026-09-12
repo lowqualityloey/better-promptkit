@@ -11,6 +11,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.5.0] - 2026-09-12
+
+### Added
+- **Automated Property Test Suites in CI**: Integrated execution-control (`run-execution-control-properties.*`) and release-record (`run-release-record-properties.*`) property harnesses into `.github/workflows/ci.yml`, running 1,700 property iterations across Linux and Windows on every push and pull request.
+- **Guarded Release-Record Self-Validation in CI**: Added automated validation of all files in `docs/releases/` to CI with legacy v1.0.0 grandfathering exemption, permanently preventing invalid release records from merging.
+
+### Changed
+- **Reconciled Directive Token Figures**: Normalized CRLF/LF line endings in `scripts/measure-tokens.ps1` and `scripts/measure-tokens.sh`, permanently locking the canonical measurement metric at 7,672 characters $\rightarrow$ ~1,918 / ~1,920 tokens (~90% static context reduction) across all platforms. Reconciled `README.md` and `docs/BENCHMARKS.md` with explicit methodology notes.
+
+### Fixed
+- **Broadened Reference & Structural Validator Scope**: Extended `scripts/validate-references.*` to scan all Markdown files across `docs/`, `examples/`, `templates/`, and `notes/`, fixing historical drift.
+- **Release-Record Diagnostic Deduplication**: Deduplicated `MISSING_FIELD` error reporting in `scripts/validate-release-records.*` to guarantee exactly one deterministic diagnostic per missing required header.
+- **Locale-Independent CI-Triage Placeholder Detection**: Replaced case-sensitive regex matching in `scripts/validate-ci-triage.*` with culture-agnostic character class checks.
+- **Specification Artifact & Gitignore Reconciliation**: Reconciled `.gitignore` and tracked historical `.kiro` specification artifacts per repository contributing guidelines.
+
+---
+
 ## [1.4.0] - 2026-09-12
 
 ### Added
