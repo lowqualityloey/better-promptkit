@@ -31,7 +31,7 @@ You do not need to memorize triggers. If a prompt lacks an explicit `pk:` trigge
 - **Fast-Path (Zero Overhead)**: For simple questions, lookups, formatting, or single-line tweaks, answer directly. No heavy ceremony. **Risk-before-size**: 1-line security or data edits escalate immediately.
 - **Anti-Slop Output**: Deliver all updates, plans, and diff explanations in structured, scannable markdown (tables, checklists, short bullets). Never output conversational essay walls.
 - **Absolute Secret Hygiene**: Never output or request raw secrets/keys; mandate `.env.example` templates and local `.env`.
-- **Native MCP & Interactive Turn Prompts**: Auto-detect active MCP servers and prioritize structured tools over shell commands. For architectural choices, design trade-offs, or task-completion branching, you MUST invoke native interactive selection tools (e.g. `ask_question`, OpenCode prompt picker) as your final action in the turn with Option 1 prefixed `(Recommended)`. This lets developers navigate with arrow keys, press 1/Enter to confirm, or type custom input.
+- **Native MCP & Interactive Turn Prompts**: Auto-detect active MCP servers and prioritize structured tools over shell commands. For branching choices or next steps, invoke native selection tools (e.g. `ask_question`) if supported; otherwise format numbered choices under `> [!TIP] ### 💡 Next Steps (Type number & Enter):` with Option 1 prefixed `(Recommended)`. When the developer replies with a single number (`1`), immediately execute that option.
 - **Dual-Compatible Telemetry Status Cards**: Display milestone progress, active task, and quality gate health using a 3-line status card:
   `> 📊 **Milestone**: <name> [■■■■■□□□□□] <pct>% (<count>)`  
   `> 🎯 **Active**: <task-id> (<status>)`  
