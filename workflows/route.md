@@ -87,6 +87,19 @@ The 4-level ceremony model refines and clarifies the system's execution boundari
      3. Explicit human Release Coordinator approval if release evaluation or evidence creation (`pk:ship`) has already begun;
      4. Preservation or an explicit closure record for any existing release evidence. A downgrade must never be used to bypass release provenance, QA review, or human authorization boundaries.
 
+### Model-Tiering & Resource Optimization Guidance
+
+To optimize API cost, token consumption, and reasoning depth, match your LLM selection to the active ceremony level:
+
+| Task Ceremony Level | Recommended Model Class | Example Host Models | Primary Architectural Justification |
+| :--- | :--- | :--- | :--- |
+| **Level 0 (Direct)** | **Fast / Economy Tier** | Gemini Flash, Claude Haiku, GPT-4o-mini | Sub-second latency, near-zero token cost; ideal for typos, syntax queries, and non-risky 1-line edits. |
+| **Level 1 (Standard)** | **Balanced Coding Tier** | Gemini Flash-High, Claude Sonnet, GPT-4o | Fast tool dispatch, reliable multi-file reasoning, high precision for ordinary bug fixes and component features. |
+| **Level 2 (Controlled)** | **Frontier Reasoning Tier** | Gemini Pro, Claude Sonnet (Thinking), OpenAI o3-mini/o1 | Deep architectural constraint handling, state invariants, schema migrations, and security boundaries. |
+| **Level 3 (Release-Critical)**| **Maximum Reasoning Tier** | Gemini Pro / Ultra, Claude Opus, OpenAI o1 | Zero-tolerance for hallucinations; release provenance, verification synthesis, and rollback planning. |
+
+*Rule of Thumb*: Never waste expensive frontier reasoning budgets on Level 0 syntax formatting; never under-power Level 2/3 database migrations with economy models.
+
 ### Controlled Work Ownership Handoff
 
 | Handoff | Owner | Output and boundary |

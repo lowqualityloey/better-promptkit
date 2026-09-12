@@ -21,6 +21,7 @@ Better-PromptKit equips your coding assistant with disciplined engineering workf
 | **Key differences** | Namespaced triggers (`pk:` prefix), guardrails against single-step destructive schema drops (phased Expand-Contract policy), Socratic guidance that avoids unsolicited code dumps, and monorepo workspace isolation (scoped `--filter` commands). |
 | **Token Efficiency** | **Zero Static Token Bloat**: Injects only a ~40-line router (~650 tokens) into your agent directives. Full workflows are read Just-In-Time (JIT) from local files only when triggered. See [`docs/BENCHMARKS.md`](./docs/BENCHMARKS.md). |
 | **Durable State Persistence** | **Cross-Session Memory**: State is never lost when chat sessions compact or reset. All active milestones, tasks in flight, and architectural invariants persist directly in Git-tracked markdown (`docs/STATE.md` and `docs/tasks/`). Run `pk:checkpoint` and resume in any fresh session via `pk:route`. |
+| **Adaptive Ceremony & Model Tiering** | **Scales with Risk**: Bypasses heavy templates for daily tweaks (Level 0/1) while reserving deep reasoning, Task Records, and verification gates for schema, auth, and release risks (Level 2/3). Matches LLM model tiers to task risk to prevent token waste. |
 | **Enforced Done-Gates** | **Not Inert Advice**: PromptKit enforces verifiable engineering done-gates: strict milestone git boundaries (blocking dirty working tree transitions), automated pre-commit secret leak scans (`pk:commit`), and required Gherkin Acceptance Criteria verification proof. |
 
 ---

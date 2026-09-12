@@ -100,8 +100,29 @@ While autonomous multi-agent looping frameworks attempt to solve software engine
 
 ---
 
+## 6. Resource Optimization: Matching Model Tier to Ceremony Level
+
+In addition to static prompt JIT loading, Better-PromptKit provides significant token cost savings through **Adaptive Ceremony Model Tiering** ([`workflows/route.md`](../workflows/route.md)):
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│              CEREMONY-TO-MODEL TIER RESOURCE MAPPING                    │
+├─────────────────────────────────────────────────────────────────────────┤
+│ Level 0 (Direct / Typos)    ──► Economy Tier (Gemini Flash, Haiku)      │
+│ Level 1 (Standard Feature)  ──► Balanced Tier (Sonnet, Flash-High)     │
+│ Level 2 (Controlled Schema) ──► Frontier Reasoning Tier (Pro, o3-mini)  │
+│ Level 3 (Release-Critical)  ──► Max Reasoning Tier (Opus, o1)           │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+- **Avoid Flagship Burn on Trivial Tasks**: Standard coding assistants frequently waste expensive flagship reasoning tokens on basic single-line formatting, regex syntax checks, or documentation typo fixes. Routing Level 0 tasks to economy models reduces token spend by **80–90%** on daily ad-hoc queries.
+- **Avoid Reasoning Failures on Hard Tasks**: Conversely, under-powering database migrations (Expand-Contract) or authentication boundary redesigns with lightweight models causes expensive defect repair loops. Deploying deep reasoning models exclusively on Level 2/3 work guarantees zero-downtime safety while keeping total aggregate token budgets lean.
+
+---
+
 ## Related References
 - [`protocols/subagent-delegation.md`](../protocols/subagent-delegation.md) — Subagent delegation & context preservation rules
 - [`protocols/context-sync.md`](../protocols/context-sync.md) — 30-turn reset threshold & MCP discovery
+- [`workflows/route.md`](../workflows/route.md) — Canonical task ceremony levels & model tiering
 - [`FAQ.md`](../FAQ.md) — Common adoption questions & setup details
 
