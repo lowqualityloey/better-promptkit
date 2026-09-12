@@ -98,7 +98,7 @@ The initialization script is transparent and idempotent:
 - **`./docs/STATE.md`**: The living project tracker recording active milestones, tasks in flight, and locked architectural invariants.
 - **`.github/pull_request_template.md`**: Staff-level Pull Request template with Gherkin acceptance criteria checklists, Expand-Contract database safety gates, and automated test evidence tables.
 - **`.github/ISSUE_TEMPLATE/task.md`**: Standardized task specification issue template for opening structured Gherkin work units directly in GitHub web UI or CLI.
-- **Agent Directives**: Injects or updates an idempotent directive block in `AGENTS.md` (or `CLAUDE.md`, `GEMINI.md`, `.cursorrules`, `.windsurfrules`, `.github/copilot-instructions.md`).
+- **Agent Directives**: Injects or updates an idempotent directive block in `AGENTS.md` (or `CLAUDE.md`, `GEMINI.md`, `.cursorrules`, `.cursor/rules/`, `.clinerules`, `.traerules`, `.opencode/rules.md`, `.windsurfrules`, `.github/copilot-instructions.md`).
 - **Just-In-Time (JIT) Workflow Injection**: Zero static token bloat. Workflows are loaded into agent context on-demand from local filesystem files only when triggered (avoiding 18k+ token monolithic prompt injection).
 - **Zero-Token Label Provisioning (Optional)**: Provision standardized repository labels (`priority/p0-p3`, `type:*`, `area:*`) with zero token burn using `pwsh -File .promptkit/scripts/setup-github-labels.ps1` (or `bash .promptkit/scripts/setup-github-labels.sh`).
 - **Zero Lock-In**: Installs zero binaries, adds zero npm dependencies, and runs zero background daemons.
@@ -292,7 +292,7 @@ Repository CI validates structural integrity and protocol compliance across Linu
 | Dimension | Single-File Directives | Static Prompt Packs | Autonomous Multi-Agent Swarms | **Better-PromptKit** |
 | :--- | :--- | :--- | :--- | :--- |
 | **Scope** | Tool-specific instruction endpoint | Workflow templates for one tool | Multi-agent unmonitored loops | Cross-tool engineering OS with 20 lifecycle workflows |
-| **Token Overhead** | Minimal initial overhead | High monolithic bloat (~18k tokens inlined) | Higher aggregate token cost from multi-agent pipeline calls | **~650 tokens JIT baseline** (unused workflows consume 0 tokens) |
+| **Token Overhead** | Minimal initial overhead | High monolithic bloat (~18k tokens inlined) | Higher aggregate token cost from multi-agent pipeline calls | **~1,934 tokens JIT baseline** (~89.5% static context reduction vs 18.5k monolithic packs; unused workflows consume 0 tokens) |
 | **Persistence** | Per-session only | Per-session only | Hidden cache directories prone to context exhaustion | Git-tracked `docs/STATE.md` survives context resets & fresh chats |
 | **Execution Model** | Unstructured chat | Manual template pasting | Background loop until timeout or crash | Disciplined human-in-the-loop pairing (Levels 0–3) |
 | **Database Safety** | No schema guardrails | Varies | Risk of destructive drops in unmonitored edits | Expand-Contract only (phased, non-breaking migrations) |
@@ -309,12 +309,14 @@ better-promptkit/
 ├── .github/
 │   └── workflows/
 │       └── ci.yml               # Maintainer CI (script syntax, initialization dry-run/idempotency, workflow structure, reference validation, fixture harnesses, and behavioral-contract tests)
-├── FAQ.md                       # The 12 questions every developer asks before adopting
-├── QUICKSTART.md                # 5-minute introduction with 4 core workflows
+├── CHANGELOG.md                 # Official release provenance adhering to Keep a Changelog
+├── FAQ.md                       # The 13 questions every developer asks before adopting
+├── QUICKSTART.md                # 5-minute introduction with core workflows & 1-line setup
 ├── init.ps1                     # Setup script for Windows (PowerShell)
 ├── init.sh                      # Setup script for Linux/macOS (Bash)
 ├── LICENSE                      # Open-source MIT License
 ├── docs/
+│   ├── BENCHMARKS.md            # Factual token economics, JIT benchmarks & model tiering
 │   ├── WORKFLOW-MAP.md          # Visual decision trees and Mermaid diagrams
 │   ├── ADOPTION-GUIDE.md        # Incremental adoption for existing projects
 │   ├── INTERESTING-FACTS.md     # Unique insights and design principles
@@ -324,7 +326,7 @@ better-promptkit/
 │   ├── context-sync.md          # Tech stack, monorepos, PROMPTKIT.md, DESIGN.md & git detection
 │   ├── code-quality-gate.md     # Non-negotiable definition-of-done & pre-commit gate
 │   └── subagent-delegation.md   # Subagent delegation, parallel execution & context preservation
-├── workflows/                   # Step-by-step engineering lifecycle procedures
+├── workflows/                   # Step-by-step engineering lifecycle procedures (20 workflows)
 │   ├── route.md                 # Lifecycle decision matrix & workflow triage (pk:route)
 │   ├── tutor.md                 # Socratic mentorship & 3-tier progressive hints (pk:tutor, pk:grill)
 │   ├── plan.md                  # Spec-Driven Development & deep modular design (pk:plan)
@@ -334,6 +336,7 @@ better-promptkit/
 │   ├── commit.md                # Atomic Conventional Commits & staging hygiene (pk:commit)
 │   ├── pr.md                    # High-signal pull request descriptions & evidence audit (pk:pr)
 │   ├── debug.md                 # Empirical feedback-loop debugging & root cause analysis (pk:debug)
+│   ├── fix.md                   # Surgical remediation of known review findings (pk:fix)
 │   ├── perf.md                  # Empirical performance profiling & latency SLAs (pk:perf)
 │   ├── data.md                  # Relational schema design, composite indexes & RLS (pk:data)
 │   ├── auth.md                  # Authentication, cookie security & RBAC/ABAC (pk:auth)
@@ -372,6 +375,8 @@ better-promptkit/
 │   └── spike-template.md           # Technical Spike & Benchmark Evaluation Template
 ├── examples/                    # Real-world production examples
 │   ├── README.md                       # Example catalog and usage guide
+│   ├── fullstack-feature/              # Production full-stack feature (Invitations, DB migration, UI tokens)
+│   ├── production-incident/            # Post-mortem and RCA debugging artifact
 │   ├── saas-dashboard/                 # Complete B2B SaaS example (Next.js + Supabase)
 │   │   ├── PROMPTKIT.md               # Full project profile with monorepo config
 │   │   ├── docs/STATE.md              # Living project tracker across milestones
@@ -386,7 +391,11 @@ better-promptkit/
 │   ├── skill-matrix.md             # Software Engineering Competency Matrix (L1 → L4)
 │   ├── adrs/                       # Local ADR directory (for standalone vault mode)
 │   └── spikes/                     # Local Spikes directory (for standalone vault mode)
-├── scripts/                     # Validation and maintenance utilities
+├── scripts/                     # Validation, isolation, and token measurement utilities
+│   ├── isolate-worktree.sh             # Bash: Git worktree sandbox manager (create, merge, remove)
+│   ├── isolate-worktree.ps1            # PowerShell: Git worktree sandbox manager (create, merge, remove)
+│   ├── measure-tokens.sh               # Bash: Mechanical directive character and token counter
+│   ├── measure-tokens.ps1              # PowerShell: Mechanical directive character and token counter
 │   ├── setup-github-labels.sh          # Bash: Provision standardized GitHub labels (priority, type, area)
 │   ├── setup-github-labels.ps1         # PowerShell: Provision standardized GitHub labels (priority, type, area)
 │   ├── validate-references.sh          # Bash: Check all workflow→template references
@@ -423,7 +432,7 @@ Scaffolded automatically during initialization from `templates/project-profile-t
 * **Artifact Storage**: Destination paths for all generated specs (`docs/specs/`, `docs/tasks/`, `docs/data/`, `docs/auth/`, `docs/perf/`, etc.).
 
 ### 2. `DESIGN.md` (Visual Brand & Anti-Slop Authority)
-Optional brand identity file created from `templates/design-profile-template.md`. Serves as the supreme visual authority for all UI generation (`pk:design`, `pk:review`):
+Optional brand identity file created from `templates/design-profile-template.md` (`cp .promptkit/templates/design-profile-template.md DESIGN.md` or invoked via `pk:design`). Serves as the supreme visual authority for all UI generation (`pk:design`, `pk:review`):
 * **Color Tokens**: Neutral base, primary brand tone, and deliberate focal accents.
 * **Anti-Slop Directives**: Explicit bans on generic AI aesthetics (no purple-to-cyan gradients, no glowing backdrops, no uniform pill badges).
 * **Typography & Numerics**: Heading fonts, widow prevention (`text-wrap: balance`), and mandatory `tabular-nums` for financial tables and timers.
@@ -442,7 +451,7 @@ Scaffolded automatically during initialization from `templates/state-tracker-tem
 
 ## Host & External Tool Composition
 
-Better-PromptKit coexists cleanly with host-specific instruction files (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.cursorrules`, `.windsurfrules`, `.github/copilot-instructions.md`), external skill libraries (such as `skills.sh`), host `/skill` commands, and complementary specification systems (Spec Kit, BMad).
+Better-PromptKit coexists cleanly with host-specific instruction files (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.cursorrules`, `.cursor/rules/promptkit.mdc`, `.windsurfrules`, `.clinerules`, `.traerules`, `.opencode/rules.md`, `.github/copilot-instructions.md`), external skill libraries (such as `skills.sh`), host `/skill` commands, and complementary specification systems (Spec Kit, BMad).
 
 ### Authority & Governance Boundary
 
@@ -457,8 +466,11 @@ Better-PromptKit coexists cleanly with host-specific instruction files (`AGENTS.
 | :--- | :---: | :---: | :---: |
 | **Claude Code** | ✅ `CLAUDE.md` | ✅ CI Syntax & Reference Checks | ⚠️ Dependent on Claude Code runtime |
 | **Antigravity / Gemini CLI** | ✅ `AGENTS.md` / `GEMINI.md` | ✅ CI Behavioral Contract Tests | ⚠️ Dependent on Gemini runtime |
-| **Cursor IDE** | ✅ `.cursorrules` / `.cursor/rules/` | ✅ CI Syntax & Reference Checks | ⚠️ Dependent on Cursor Agent runtime |
+| **Cursor IDE** | ✅ `.cursorrules` / `.cursor/rules/promptkit.mdc` | ✅ CI Syntax & Reference Checks | ⚠️ Dependent on Cursor Agent runtime |
 | **Windsurf IDE** | ✅ `.windsurfrules` | ✅ CI Syntax & Reference Checks | ⚠️ Dependent on Cascade runtime |
+| **Cline / Roo Code** | ✅ `.clinerules` | ✅ CI Syntax & Reference Checks | ⚠️ Dependent on Cline/Roo runtime |
+| **Trae IDE** | ✅ `.traerules` | ✅ CI Syntax & Reference Checks | ⚠️ Dependent on Trae Agent runtime |
+| **OpenCode** | ✅ `.opencode/rules.md` | ✅ CI Syntax & Reference Checks | ⚠️ Dependent on OpenCode runtime |
 | **GitHub Copilot** | ✅ `.github/copilot-instructions.md` | ✅ CI Syntax & Reference Checks | ⚠️ Dependent on Copilot runtime |
 | **Aider** | ✅ `CONVENTIONS.md` | ✅ CI Syntax & Reference Checks | ⚠️ Dependent on Aider runtime |
 | **External Skills (skills.sh / `/skill`)** | ✅ Subordinate helper rules | ✅ Reference Checks | ⚠️ Execution varies by skill implementation |

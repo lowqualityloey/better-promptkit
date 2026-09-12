@@ -1,6 +1,6 @@
 # Better-PromptKit FAQ
 
-**The 12 questions every developer asks before adopting Better-PromptKit.**
+**The 13 questions every developer asks before adopting Better-PromptKit.**
 
 ---
 
@@ -8,7 +8,7 @@
 
 **Short Answer**: PromptKit isn't about better prompts: it's about **structured engineering discipline** that makes AI assistants systematic instead of random.
 
-**The Difference**:
+The Difference:
 
 **Just prompts:**
 ```
@@ -80,8 +80,11 @@ Think of it as: Linux is to commands what PromptKit is to AI prompts.
 | AI Assistant | Compatibility | Configuration File |
 |:-------------|:--------------|:-------------------|
 | **Claude Code** | ✅ Native | `CLAUDE.md` |
-| **Cursor** | ✅ Native | `.cursorrules` |
+| **Cursor** | ✅ Native | `.cursor/rules/promptkit.mdc` or `.cursorrules` |
+| **Cline / Roo Code** | ✅ Native | `.clinerules` |
 | **Windsurf** | ✅ Native | `.windsurfrules` |
+| **Trae IDE** | ✅ Native | `.traerules` |
+| **OpenCode** | ✅ Native | `.opencode/rules.md` |
 | **GitHub Copilot** | ✅ Native | `.github/copilot-instructions.md` |
 | **Gemini CLI / Antigravity** | ✅ Native | `GEMINI.md` or `AGENTS.md` |
 | **Aider** | ✅ Compatible | `CONVENTIONS.md` or manual read |
@@ -91,12 +94,13 @@ Think of it as: Linux is to commands what PromptKit is to AI prompts.
 
 **Setup**: Init script detects your assistant and configures automatically.
 
-**Example**:
+**Example (One-Command Setup)**:
 ```bash
-# Install for Cursor
-git submodule add https://github.com/lowqualityloey/better-promptkit .promptkit
-./.promptkit/init.sh
-# Creates .cursorrules automatically
+# macOS / Linux
+git submodule add https://github.com/lowqualityloey/better-promptkit.git .promptkit && ./.promptkit/init.sh
+
+# Windows (PowerShell)
+git submodule add https://github.com/lowqualityloey/better-promptkit.git .promptkit; .\.promptkit\init.ps1
 ```
 
 **Related**: [QUICKSTART.md](QUICKSTART.md) Section 1 (Installation)
@@ -306,9 +310,8 @@ For 50-person team: $5,040/year saved
 **Absolute Minimum** (Level 1 adoption):
 
 ```bash
-# 1. Install (10 minutes one-time)
-git submodule add https://github.com/lowqualityloey/better-promptkit .promptkit
-./.promptkit/init.sh
+# 1. Install (One-line setup)
+git submodule add https://github.com/lowqualityloey/better-promptkit.git .promptkit && ./.promptkit/init.sh
 
 # 2. Use two workflows:
 
@@ -490,10 +493,11 @@ Remember: **AI assistants aren't perfect**. PromptKit structures their reasoning
 **Short Answer**: No. Better-PromptKit uses a **Just-In-Time (JIT) Filesystem Architecture** with zero static token bloat.
 
 **How it works**:
-- **Baseline footprint**: Initialization scripts inject only a lightweight ~40-line router directive (~650 tokens) into your configuration file (`AGENTS.md`, `CLAUDE.md`, `.cursorrules`, etc.).
+- **Baseline footprint**: Initialization scripts inject only a lightweight ~100-line router directive (~1,934 tokens, mechanically measured) into your configuration file (`AGENTS.md`, `CLAUDE.md`, `.cursorrules`, etc.).
 - **On-demand loading**: The AI only reads specific workflow files (e.g. `workflows/debug.md`) from the local filesystem when that specific workflow is triggered or routed.
-- **Comparison to monolithic prompts**: Traditional prompt packs inline all rules, workflows, and templates directly into the prompt on every turn, consuming 18,000–22,000 tokens statically before work begins. PromptKit preserves >95% of initial context window overhead.
+- **Comparison to monolithic prompts**: Traditional prompt packs inline all rules, workflows, and templates directly into the prompt on every turn, consuming 18,000–22,000 tokens statically before work begins. PromptKit preserves ~89.5% of static context overhead compared to monolithic packs (~18,500 tokens).
 - **Subagent context preservation**: Multi-file exploration is delegated to subagents whose results are synthesized into compact findings, reducing conversational bloat by up to 98%.
+- **Mechanical verification**: Measure your exact active directive token footprint anytime using `pwsh -File .promptkit/scripts/measure-tokens.ps1` (or `bash .promptkit/scripts/measure-tokens.sh`).
 
 For complete line-by-line token breakdowns and mathematical analysis, see [docs/BENCHMARKS.md](docs/BENCHMARKS.md).
 
@@ -528,6 +532,6 @@ For complete line-by-line token breakdowns and mathematical analysis, see [docs/
 
 ---
 
-**Last Updated**: 2026-09-08  
-**Version**: 1.0.0  
+**Last Updated**: 2026-09-12  
+**Version**: 1.3.0  
 **Maintainer**: [@lowqualityloey](https://github.com/lowqualityloey)
