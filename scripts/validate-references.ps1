@@ -24,19 +24,27 @@ $WorkflowsDir = Join-Path $PromptKitRoot "workflows"
 $ProtocolsDir = Join-Path $PromptKitRoot "protocols"
 $TemplatesDir = Join-Path $PromptKitRoot "templates"
 $ActivitiesDir = Join-Path $PromptKitRoot "activities"
+$DocsDir = Join-Path $PromptKitRoot "docs"
+$ExamplesDir = Join-Path $PromptKitRoot "examples"
+$NotesDir = Join-Path $PromptKitRoot "notes"
 
 Write-Host "📂 Scanning directories:" -ForegroundColor Yellow
 Write-Host "   - $WorkflowsDir"
 Write-Host "   - $ProtocolsDir"
 Write-Host "   - $TemplatesDir"
-Write-Host "   - $ActivitiesDir`n"
+Write-Host "   - $ActivitiesDir"
+Write-Host "   - $DocsDir"
+Write-Host "   - $ExamplesDir"
+Write-Host "   - $NotesDir"
+Write-Host "   - $PromptKitRoot (top level)`n"
 
-# Find all markdown files
+# Find all markdown files. The content directories are scanned recursively and
+# the repository root only at its top level.
 $AllMarkdownFiles = @()
-$AllMarkdownFiles += Get-ChildItem -Path $WorkflowsDir -Filter "*.md" -ErrorAction SilentlyContinue
-$AllMarkdownFiles += Get-ChildItem -Path $ProtocolsDir -Filter "*.md" -ErrorAction SilentlyContinue
-$AllMarkdownFiles += Get-ChildItem -Path $ActivitiesDir -Filter "*.md" -ErrorAction SilentlyContinue
-$AllMarkdownFiles += Get-ChildItem -Path (Join-Path $PromptKitRoot "*.md") -ErrorAction SilentlyContinue
+foreach ($dir in @($WorkflowsDir, $ProtocolsDir, $TemplatesDir, $ActivitiesDir, $DocsDir, $ExamplesDir, $NotesDir)) {
+    $AllMarkdownFiles += Get-ChildItem -Path $dir -Filter "*.md" -Recurse -File -ErrorAction SilentlyContinue
+}
+$AllMarkdownFiles += Get-ChildItem -Path (Join-Path $PromptKitRoot "*.md") -File -ErrorAction SilentlyContinue
 
 Write-Host "📄 Found $($AllMarkdownFiles.Count) markdown files to validate`n" -ForegroundColor Cyan
 
@@ -135,8 +143,11 @@ foreach ($file in $AllMarkdownFiles) {
     }
     
     # Warn about workflow trigger references that may be outdated
-    if ($content -match 'pk:(\w+)') {
-        $triggers = [regex]::Matches($content, 'pk:(\w+)') | ForEach-Object { $_.Groups[1].Value } | Select-Object -Unique
+    # Capture the whole trigger token. A pattern that stops at the first hyphen
+    # truncates names such as pk:init-repo to "init", which hides the real token
+    # behind an unrelated alias match.
+    if ($content -match 'pk:([a-z][a-z0-9-]*)') {
+        $triggers = [regex]::Matches($content, 'pk:([a-z][a-z0-9-]*)') | ForEach-Object { $_.Groups[1].Value } | Select-Object -Unique
         foreach ($trigger in $triggers) {
             $expectedWorkflow = Join-Path $WorkflowsDir "$trigger.md"
             if (-not (Test-Path $expectedWorkflow)) {
@@ -150,6 +161,7 @@ foreach ($file in $AllMarkdownFiles) {
                     "issue" = "tasks.md"
                     "kanban" = "tasks.md"
                     "scan" = "onboard.md"
+                    "init-repo" = "onboard.md"
                     "latency" = "perf.md"
                     "grill" = "tutor.md"
                     "spike" = "research.md"
@@ -157,6 +169,11 @@ foreach ($file in $AllMarkdownFiles) {
                     "design" = "design-system.md"
                     "init" = "onboard.md"
                     "task" = "tasks.md"
+                    # A name that is deliberately NOT a trigger. The
+                    # execution-control design records reject a top-level
+                    # pk:execution-control command; existing workflows retain
+                    # ownership.
+                    "execution-control" = "route.md"
                 }
                 
                 if (-not $aliases.ContainsKey($trigger)) {

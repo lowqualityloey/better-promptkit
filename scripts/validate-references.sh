@@ -25,19 +25,31 @@ WORKFLOWS_DIR="$PROMPTKIT_ROOT/workflows"
 PROTOCOLS_DIR="$PROMPTKIT_ROOT/protocols"
 TEMPLATES_DIR="$PROMPTKIT_ROOT/templates"
 ACTIVITIES_DIR="$PROMPTKIT_ROOT/activities"
+DOCS_DIR="$PROMPTKIT_ROOT/docs"
+EXAMPLES_DIR="$PROMPTKIT_ROOT/examples"
+NOTES_DIR="$PROMPTKIT_ROOT/notes"
 
 echo "📂 Scanning directories:"
 echo "   - $WORKFLOWS_DIR"
 echo "   - $PROTOCOLS_DIR"
 echo "   - $TEMPLATES_DIR"
 echo "   - $ACTIVITIES_DIR"
+echo "   - $DOCS_DIR"
+echo "   - $EXAMPLES_DIR"
+echo "   - $NOTES_DIR"
+echo "   - $PROMPTKIT_ROOT (top level)"
 echo ""
 
-# Find all markdown files
+# Find all markdown files. The content directories are scanned recursively and
+# the repository root only at its top level, so -maxdepth cannot be shared
+# between the two searches.
 ALL_MD_FILES=()
 while IFS= read -r -d '' file; do
     ALL_MD_FILES+=("$file")
-done < <(find "$WORKFLOWS_DIR" "$PROTOCOLS_DIR" "$ACTIVITIES_DIR" "$PROMPTKIT_ROOT" -maxdepth 1 -name "*.md" -type f -print0 2>/dev/null)
+done < <(find "$WORKFLOWS_DIR" "$PROTOCOLS_DIR" "$TEMPLATES_DIR" "$ACTIVITIES_DIR" "$DOCS_DIR" "$EXAMPLES_DIR" "$NOTES_DIR" -name "*.md" -type f -print0 2>/dev/null)
+while IFS= read -r -d '' file; do
+    ALL_MD_FILES+=("$file")
+done < <(find "$PROMPTKIT_ROOT" -maxdepth 1 -name "*.md" -type f -print0 2>/dev/null)
 
 echo "📄 Found ${#ALL_MD_FILES[@]} markdown files to validate"
 echo ""
@@ -119,14 +131,24 @@ for file in "${ALL_MD_FILES[@]}"; do
     done < "$file"
 
     # Check for workflow triggers without matching files
-    triggers=$(grep -oE 'pk:[a-z]+' "$file" | sed 's/pk://' | sort -u)
+    # Capture the whole trigger token. A pattern that stops at the first hyphen
+    # truncates names such as pk:init-repo to "init", which hides the real token
+    # behind an unrelated alias match.
+    triggers=$(grep -oE 'pk:[a-z][a-z0-9-]*' "$file" | sed 's/pk://' | sort -u)
     for trigger in $triggers; do
         expected_workflow="$WORKFLOWS_DIR/$trigger.md"
         if [ ! -f "$expected_workflow" ]; then
             # Check if it's a known alias
             case "$trigger" in
-                db|profile|research|reflect|handoff|issue|kanban|scan|latency|grill|spike|retro|design|init|task)
+                # Documented aliases that route to an existing workflow.
+                db|profile|research|reflect|handoff|issue|kanban|scan|latency|grill|spike|retro|design|init|init-repo|task)
                     # Known aliases, skip warning
+                    ;;
+                # A name that is deliberately NOT a trigger. The execution-control
+                # design records reject a top-level pk:execution-control command;
+                # existing workflows retain ownership.
+                execution-control)
+                    # Deliberately negated name, skip warning
                     ;;
                 *)
                     echo "  ⚠️  WARNING: $rel_path"
