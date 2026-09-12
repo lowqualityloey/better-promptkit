@@ -1,15 +1,15 @@
-# Contributing to Better-PromptKit
+# Contributing to PromptKit OS
 
-Thank you for contributing to Better-PromptKit! We welcome contributions that help improve engineering discipline, assistant workflow protocols, platform setup scripts, and quality gates.
+Thank you for contributing to PromptKit OS! We welcome contributions that help improve engineering discipline, assistant workflow protocols, platform setup scripts, and quality gates.
 
 ---
 
 ## Contribution Expectations & Guidelines
 
-When contributing to Better-PromptKit, adhere to the following core principles:
+When contributing to PromptKit OS, adhere to the following core principles:
 
 1. **JIT (Just-In-Time) Specification**: Inspect and classify each issue before editing. Write a concise implementation spec (problem, root cause, affected files, public behavior impact, compatibility, verification, release impact) before implementing logical changes.
-2. **Ceremony Model Alignment**: Follow Better-PromptKit's 4-level task ceremony model defined in [`workflows/route.md`](./workflows/route.md):
+2. **Ceremony Model Alignment**: Follow PromptKit OS's 4-level task ceremony model defined in [`workflows/route.md`](./workflows/route.md):
    - **Level 0 (Direct)**: Trivial questions, doc fixes, formatting.
    - **Level 1 (Standard)**: Localized fixes and small self-contained features modifying source files directly without Task Record overhead.
    - **Level 2 (Controlled)**: Relational schema/data migrations, auth, permissions, breaking API contracts, or multi-component changes requiring a Local Task Record (`docs/tasks/<task-id>.md`).
@@ -94,13 +94,13 @@ pwsh -NoProfile -File .\scripts\validate-release-records.ps1 -Root .\scripts\tes
 | **Atomic Git Staging & Commits** | [`workflows/commit.md`](./workflows/commit.md) | Conventional Commits & secret leak scanning |
 | **Pull Requests & Evidence** | [`workflows/pr.md`](./workflows/pr.md) | PR body compilation & verification evidence audit |
 | **State Compaction & Handoffs** | [`workflows/checkpoint.md`](./workflows/checkpoint.md) | `docs/STATE.md` synchronization & session continuity |
-| **Release Evaluation & Approval** | [`workflows/ship.md`](./workflows/ship.md) | Better-PromptKit release candidate evaluation & evidence review |
+| **Release Evaluation & Approval** | [`workflows/ship.md`](./workflows/ship.md) | PromptKit OS release candidate evaluation & evidence review |
 
 ---
 
 ## Maintainer Guidance: Release-Evidence Lifecycle
 
-The release-evidence policy applies only to maintainers evaluating candidates for the Better-PromptKit repository. It documents how Better-PromptKit evaluates a candidate and records an approval decision; it does not impose Better-PromptKit Conventional Commit, SemVer, release-note, changelog, tag, remote, publication, deployment, or rollback requirements on repositories that consume Better-PromptKit.
+The release-evidence policy applies only to maintainers evaluating candidates for the PromptKit OS repository. It documents how PromptKit OS evaluates a candidate and records an approval decision; it does not impose PromptKit OS Conventional Commit, SemVer, release-note, changelog, tag, remote, publication, deployment, or rollback requirements on repositories that consume PromptKit OS.
 
 ### Accountable lifecycle and handoffs
 
@@ -142,4 +142,4 @@ The Release Coordinator separately and explicitly decides whether to create a ta
 
 ## Release Boundaries & Storage
 
-Release evidence for Better-PromptKit is recorded in `docs/releases/`. Official release notes and tarballs are published via GitHub Releases. The project does not use a separate root `CHANGELOG.md` file to prevent competing release schemas.
+Release evidence for PromptKit OS is recorded in `docs/releases/`. Official release notes and tarballs are published via GitHub Releases. The project does not use a separate root `CHANGELOG.md` file to prevent competing release schemas.

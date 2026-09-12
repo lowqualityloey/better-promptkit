@@ -25,7 +25,7 @@ assert_contains() {
 }
 
 echo ""
-echo "🧪 Running Better-PromptKit Behavioral Prompt-Contract Tests"
+echo "🧪 Running PromptKit OS Behavioral Prompt-Contract Tests"
 echo "==========================================================="
 
 echo ""

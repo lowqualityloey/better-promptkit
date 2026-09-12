@@ -2,7 +2,7 @@
 
 A non-project scenario: a background notification worker begins timing out and processing duplicate jobs after a deployment.
 
-This demonstrates that Better-PromptKit supports operational engineering, not only new application development.
+This demonstrates that PromptKit OS supports operational engineering, not only new application development.
 
 ## Example structure
 

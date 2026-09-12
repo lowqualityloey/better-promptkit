@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Better-PromptKit Git Worktree Isolation Utility
+# PromptKit OS Git Worktree Isolation Utility
 # Creates, lists, merges, and safely removes isolated Git worktrees
 # for risky multi-file tasks, spike explorations, or subagent runs.
 set -euo pipefail
@@ -19,11 +19,11 @@ GITIGNORE="$REPO_ROOT/.gitignore"
 # Ensure .worktrees/ is in .gitignore
 if [[ -f "$GITIGNORE" ]]; then
     if ! grep -q "^\.worktrees/\?$" "$GITIGNORE"; then
-        echo -e "\n# Better-PromptKit isolated worktrees\n.worktrees/" >> "$GITIGNORE"
+        echo -e "\n# PromptKit OS isolated worktrees\n.worktrees/" >> "$GITIGNORE"
         echo "  [+] Added .worktrees/ to .gitignore"
     fi
 else
-    echo -e "# Better-PromptKit isolated worktrees\n.worktrees/" > "$GITIGNORE"
+    echo -e "# PromptKit OS isolated worktrees\n.worktrees/" > "$GITIGNORE"
     echo "  [+] Created .gitignore with .worktrees/"
 fi
 

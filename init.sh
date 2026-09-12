@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Better-PromptKit 1-Click Setup Script for Linux/macOS
+# PromptKit OS 1-Click Setup Script for Linux/macOS
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -13,7 +13,7 @@ else
     PROJECT_ROOT="$(pwd)"
 fi
 
-echo -e "\n\033[0;36m🚀 Initializing Better-PromptKit...\033[0m"
+echo -e "\n\033[0;36m🚀 Initializing PromptKit OS...\033[0m"
 echo -e "   Host Project: $PROJECT_ROOT"
 echo -e "   Engine Path:  $SCRIPT_DIR\n"
 
@@ -131,8 +131,8 @@ fi
 
 DIRECTIVE=$(cat <<EOF
 <!-- PROMPTKIT_START -->
-## Better-PromptKit Engineering Operating System
-Better-PromptKit is active in this workspace (\`./$KIT_DIR_REL\`). Follow these protocols, workflows, and quality gates during pair-programming, design, code generation, and review:
+## PromptKit OS: Engineering Operating System
+PromptKit OS is active in this workspace (\`./$KIT_DIR_REL\`). Follow these protocols, workflows, and quality gates during pair-programming, design, code generation, and review:
 
 ### Fast Shorthand Triggers (Collision-Free)
 Activate workflows anytime with these namespaced triggers:
@@ -182,7 +182,7 @@ You do not need to memorize triggers. If a prompt lacks an explicit \`pk:\` trig
   - Pull requests or PR descriptions -> \`pk:pr\` (verification evidence and PR body)
   - Context bloat, chat lag, session handover, or pausing -> \`pk:checkpoint\` (sync docs/STATE.md & zero-loss handover)
   - Deployments, env validation, or releases -> \`pk:ship\` (pre-flight checks and rollback)
-  When auto-routing a substantive task, announce it briefly in one sentence (e.g., "[Better-PromptKit: Auto-routed to pk:plan]") and enforce its quality gate.
+  When auto-routing a substantive task, announce it briefly in one sentence (e.g., "[PromptKit OS: Auto-routed to pk:plan]") and enforce its quality gate.
 
 ### Workflows & Protocols Reference
 - **Route**: $KIT_DIR_REL/workflows/route.md
@@ -283,12 +283,12 @@ for target in "${TARGETS_FOUND[@]}"; do
         mv "$updated_file" "$target"
         trap - EXIT
         rm -f "$directive_file"
-        echo -e "  \033[0;33m[✓]\033[0m Updated Better-PromptKit directives in: $REL_TARGET"
+        echo -e "  \033[0;33m[✓]\033[0m Updated PromptKit OS directives in: $REL_TARGET"
     else
         printf "\n\n%s\n" "$DIRECTIVE" >> "$target"
-        echo -e "  \033[0;32m[+]\033[0m Injected Better-PromptKit directives into: $REL_TARGET"
+        echo -e "  \033[0;32m[+]\033[0m Injected PromptKit OS directives into: $REL_TARGET"
     fi
 done
 
-echo -e "\n\033[0;36m✨ Better-PromptKit successfully configured for $PROJECT_ROOT!\033[0m"
+echo -e "\n\033[0;36m✨ PromptKit OS successfully configured for $PROJECT_ROOT!\033[0m"
 echo -e "   Start by asking your AI: 'pk:plan', 'pk:tutor', or 'pk:review'\n"

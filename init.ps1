@@ -1,11 +1,11 @@
 <#
 .SYNOPSIS
-    Better-PromptKit 1-Click Setup Script for Windows (PowerShell)
+    PromptKit OS 1-Click Setup Script for Windows (PowerShell)
 .DESCRIPTION
-    Initializes Better-PromptKit in your project:
+    Initializes PromptKit OS in your project:
     - Scaffolds project documentation directories (docs/adrs, docs/specs, docs/rca, docs/spikes, docs/design)
     - Creates PROMPTKIT.md project profile if missing
-    - Injects or updates Better-PromptKit directives in AGENTS.md, CLAUDE.md, GEMINI.md, .cursorrules, .cursor/rules/*.mdc, .windsurfrules, .github/copilot-instructions.md, .clinerules, .traerules, or .opencode/rules.md
+    - Injects or updates PromptKit OS directives in AGENTS.md, CLAUDE.md, GEMINI.md, .cursorrules, .cursor/rules/*.mdc, .windsurfrules, .github/copilot-instructions.md, .clinerules, .traerules, or .opencode/rules.md
 #>
 
 [CmdletBinding()]
@@ -17,7 +17,7 @@ param (
 
 $ErrorActionPreference = "Stop"
 
-# Determine Better-PromptKit directory and Host Project Root
+# Determine PromptKit OS directory and Host Project Root
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 
 if ($TargetDir -ne "") {
@@ -30,7 +30,7 @@ if ($TargetDir -ne "") {
 
 $ProjectRootPath = if ($ProjectRoot.Path) { $ProjectRoot.Path } else { $ProjectRoot.ToString() }
 
-Write-Host "`n🚀 Initializing Better-PromptKit..." -ForegroundColor Cyan
+Write-Host "`n🚀 Initializing PromptKit OS..." -ForegroundColor Cyan
 Write-Host "   Host Project: $ProjectRoot" -ForegroundColor DarkGray
 Write-Host "   Engine Path:  $ScriptDir`n" -ForegroundColor DarkGray
 
@@ -156,8 +156,8 @@ $KitDirRel = if ($ScriptDir.StartsWith($ProjectRootPath)) {
 
 $Directive = @"
 <!-- PROMPTKIT_START -->
-## Better-PromptKit Engineering Operating System
-Better-PromptKit is active in this workspace (`./$KitDirRel`). Follow these protocols, workflows, and quality gates during pair-programming, design, code generation, and review:
+## PromptKit OS: Engineering Operating System
+PromptKit OS is active in this workspace (`./$KitDirRel`). Follow these protocols, workflows, and quality gates during pair-programming, design, code generation, and review:
 
 ### Fast Shorthand Triggers (Collision-Free)
 Activate workflows anytime with these namespaced triggers:
@@ -207,7 +207,7 @@ You do not need to memorize triggers. If a prompt lacks an explicit `pk:` trigge
   - Pull requests or PR descriptions -> `pk:pr` (verification evidence and PR body)
   - Context bloat, chat lag, session handover, or pausing -> `pk:checkpoint` (sync docs/STATE.md & zero-loss handover)
   - Deployments, env validation, or releases -> `pk:ship` (pre-flight checks and rollback)
-  When auto-routing a substantive task, announce it briefly in one sentence (e.g., "[Better-PromptKit: Auto-routed to pk:plan]") and enforce its quality gate.
+  When auto-routing a substantive task, announce it briefly in one sentence (e.g., "[PromptKit OS: Auto-routed to pk:plan]") and enforce its quality gate.
 
 ### Workflows & Protocols Reference
 - **Route**: $KitDirRel/workflows/route.md
@@ -305,14 +305,14 @@ foreach ($targetPath in $TargetsFound) {
         $updated = [regex]::Replace($content, $pattern, $evaluator)
 
         [System.IO.File]::WriteAllText($targetPath, $updated, $utf8NoBom)
-        Write-Host "  [✓] Updated Better-PromptKit directives in: $relTarget" -ForegroundColor Yellow
+        Write-Host "  [✓] Updated PromptKit OS directives in: $relTarget" -ForegroundColor Yellow
     } else {
         $prefix = if ($content.Trim().Length -gt 0) { "`n`n" } else { "" }
         $updated = $content + $prefix + $Directive
         [System.IO.File]::WriteAllText($targetPath, $updated, $utf8NoBom)
-        Write-Host "  [+] Injected Better-PromptKit directives into: $relTarget" -ForegroundColor Green
+        Write-Host "  [+] Injected PromptKit OS directives into: $relTarget" -ForegroundColor Green
     }
 }
 
-Write-Host "`n✨ Better-PromptKit successfully configured for $ProjectRoot!" -ForegroundColor Cyan
+Write-Host "`n✨ PromptKit OS successfully configured for $ProjectRoot!" -ForegroundColor Cyan
 Write-Host "   Start by asking your AI: 'pk:plan', 'pk:tutor', or 'pk:review'`n" -ForegroundColor White

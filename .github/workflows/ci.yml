@@ -1,4 +1,4 @@
-name: Better-PromptKit CI
+name: PromptKit OS CI
 
 on:
   push:
@@ -63,7 +63,7 @@ jobs:
           test -f "$TEST_DIR/PROMPTKIT.md" || (echo "Error: Missing PROMPTKIT.md" && exit 1)
           test -f "$TEST_DIR/docs/STATE.md" || (echo "Error: Missing docs/STATE.md" && exit 1)
           test -f "$TEST_DIR/AGENTS.md" || (echo "Error: Missing AGENTS.md" && exit 1)
-          grep -q "Better-PromptKit Engineering Operating System" "$TEST_DIR/AGENTS.md" || (echo "Error: Directive not found in AGENTS.md" && exit 1)
+          grep -q "PromptKit OS: Engineering Operating System" "$TEST_DIR/AGENTS.md" || (echo "Error: Directive not found in AGENTS.md" && exit 1)
 
           # Idempotency re-run
           ./init.sh "$TEST_DIR"

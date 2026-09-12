@@ -1,12 +1,12 @@
-# Better-PromptKit FAQ
+# PromptKit OS FAQ
 
-**The 13 questions every developer asks before adopting Better-PromptKit.**
+**The 13 questions every developer asks before adopting PromptKit OS.**
 
 ---
 
 ## 1. How is this different from just writing good prompts?
 
-**Short Answer**: PromptKit isn't about better prompts: it's about **structured engineering discipline** that makes AI assistants systematic instead of random.
+**Short Answer**: PromptKit OS isn't about better prompts: it's about **structured engineering discipline** that makes AI assistants systematic instead of random.
 
 The Difference:
 
@@ -36,7 +36,7 @@ AI: [Enforced scientific method]
 - **Token efficiency** through subagent delegation
 - **Persistent memory** across AI context resets
 
-Think of it as: Linux is to commands what PromptKit is to AI prompts.
+Think of it as: Linux is to commands what PromptKit OS is to AI coding assistants.
 
 **Related**: [QUICKSTART.md](QUICKSTART.md) for workflow examples
 
@@ -97,10 +97,10 @@ Think of it as: Linux is to commands what PromptKit is to AI prompts.
 **Example (One-Command Setup)**:
 ```bash
 # macOS / Linux
-git submodule add https://github.com/lowqualityloey/better-promptkit.git .promptkit && ./.promptkit/init.sh
+git submodule add https://github.com/lowqualityloey/promptkit-os.git .promptkit && ./.promptkit/init.sh
 
 # Windows (PowerShell)
-git submodule add https://github.com/lowqualityloey/better-promptkit.git .promptkit; .\.promptkit\init.ps1
+git submodule add https://github.com/lowqualityloey/promptkit-os.git .promptkit; .\.promptkit\init.ps1
 ```
 
 **Related**: [QUICKSTART.md](QUICKSTART.md) Section 1 (Installation)
@@ -153,7 +153,7 @@ git submodule add https://github.com/lowqualityloey/better-promptkit.git .prompt
 **Personal Usage Strategy**:
 ```bash
 # Install locally (not committed to repo)
-git clone https://github.com/lowqualityloey/better-promptkit .promptkit
+git clone https://github.com/lowqualityloey/promptkit-os .promptkit
 echo ".promptkit/" >> .git/info/exclude  # Personal gitignore
 
 # Configure your AI assistant only
@@ -311,7 +311,7 @@ For 50-person team: $5,040/year saved
 
 ```bash
 # 1. Install (One-line setup)
-git submodule add https://github.com/lowqualityloey/better-promptkit.git .promptkit && ./.promptkit/init.sh
+git submodule add https://github.com/lowqualityloey/promptkit-os.git .promptkit && ./.promptkit/init.sh
 
 # 2. Use two workflows:
 
@@ -367,7 +367,7 @@ rm -rf .git/modules/.promptkit
 git rm AGENTS.md  # or CLAUDE.md, .cursorrules, etc.
 
 # Commit removal
-git commit -m "chore: remove better-promptkit"
+git commit -m "chore: remove promptkit-os"
 ```
 
 **What you keep** (valuable, git-tracked):
@@ -440,7 +440,7 @@ You: Use the pk:debug workflow from .promptkit/workflows/debug.md
 
 **Fix**: Try manual installation:
 ```bash
-git clone https://github.com/lowqualityloey/better-promptkit .promptkit
+git clone https://github.com/lowqualityloey/promptkit-os .promptkit
 cp .promptkit/templates/project-profile-template.md ./PROMPTKIT.md
 # Edit PROMPTKIT.md manually
 ```
@@ -461,8 +461,8 @@ Remember: **AI assistants aren't perfect**. PromptKit structures their reasoning
 **PromptKit is a tool, not a boss.** Use your judgment.
 
 **Get help**:
-- **GitHub Issues**: https://github.com/lowqualityloey/better-promptkit/issues
-- **Discussions**: https://github.com/lowqualityloey/better-promptkit/discussions
+- **GitHub Issues**: https://github.com/lowqualityloey/promptkit-os/issues
+- **Discussions**: https://github.com/lowqualityloey/promptkit-os/discussions
 - **This FAQ**: Search for related questions
 
 **Emergency escape hatch**: Just stop using workflows and interact with your AI assistant normally. Nothing breaks.
@@ -475,8 +475,8 @@ Remember: **AI assistants aren't perfect**. PromptKit structures their reasoning
 
 **Comparison**:
 
-| Dimension | `.cursorrules` / `CLAUDE.md` | Prompt Packs (spec-kit, BMad) | **Better-PromptKit** |
-|:----------|:-----------------------------|:------------------------------|:---------------------|
+| Dimension | `.cursorrules` / `CLAUDE.md` | Prompt Packs (spec-kit, BMad) | **PromptKit OS** |
+|:----------|:-----------------------------|:------------------------------|:-----------------|
 | **Scope** | Single instruction file for one tool | Workflow templates for one tool | 20 workflow files plus named aliases across all tools |
 | **Persistence** | Dies with the chat session | Dies with the chat session | `docs/STATE.md` survives context resets |
 | **Database safety** | No schema guardrails | Varies | Expand-Contract only (phased migration) |
@@ -488,9 +488,9 @@ Remember: **AI assistants aren't perfect**. PromptKit structures their reasoning
 
 **Related**: [README.md](README.md) "How PromptKit Differs from Other Tools" section
 
-## 12. Does Better-PromptKit waste tokens by loading all workflows into every prompt?
+## 12. Does PromptKit OS waste tokens by loading all workflows into every prompt?
 
-**Short Answer**: No. Better-PromptKit uses a **Just-In-Time (JIT) Filesystem Architecture** with zero static token bloat.
+**Short Answer**: No. PromptKit OS uses a **Just-In-Time (JIT) Filesystem Architecture** with zero static token bloat.
 
 **How it works**:
 - **Baseline footprint**: Initialization scripts inject only a lightweight ~100-line router directive (~1,934 tokens, mechanically measured) into your configuration file (`AGENTS.md`, `CLAUDE.md`, `.cursorrules`, etc.).
@@ -503,9 +503,9 @@ For complete line-by-line token breakdowns and mathematical analysis, see [docs/
 
 ---
 
-## 13. Does Better-PromptKit actually enforce code quality gates, or is it just prompt advice?
+## 13. Does PromptKit OS actually enforce code quality gates, or is it just prompt advice?
 
-**Short Answer**: Better-PromptKit actively enforces strict engineering done-gates and cross-session persistence. It is an engineering operating system, not a passive prompt optimizer.
+**Short Answer**: PromptKit OS actively enforces strict engineering done-gates and cross-session persistence. It is an engineering operating system, not a passive prompt optimizer.
 
 **How enforcement works**:
 - **Strict Milestone Git Boundaries**: The assistant is strictly prohibited from advancing to a subsequent milestone or major task phase while uncommitted changes exist in the working tree. Tests must pass and atomic staging (`pk:commit`) must occur first.
@@ -527,8 +527,8 @@ For complete line-by-line token breakdowns and mathematical analysis, see [docs/
 - [docs/INTERESTING-FACTS.md](docs/INTERESTING-FACTS.md) - Deep insights
 
 **Community**:
-- GitHub Issues: https://github.com/lowqualityloey/better-promptkit/issues
-- GitHub Discussions: https://github.com/lowqualityloey/better-promptkit/discussions
+- GitHub Issues: https://github.com/lowqualityloey/promptkit-os/issues
+- GitHub Discussions: https://github.com/lowqualityloey/promptkit-os/discussions
 
 ---
 

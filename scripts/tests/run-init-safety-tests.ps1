@@ -40,7 +40,7 @@ try {
     if (-not $crlfUpdated.Contains('Keep content after.')) {
         throw "Failed Test 1 (CRLF): User content after directive was lost."
     }
-    if (-not $crlfUpdated.Contains('## Better-PromptKit Engineering Operating System')) {
+    if (-not $crlfUpdated.Contains('## PromptKit OS: Engineering Operating System')) {
         throw "Failed Test 1 (CRLF): New directive content was not injected."
     }
 
@@ -86,7 +86,7 @@ try {
     & pwsh -NoProfile -File $initScriptPath -ProjectRoot $LfRoot | Out-Null
     $lfUpdated = [System.IO.File]::ReadAllText($lfAgentsPath, [System.Text.Encoding]::UTF8)
 
-    if (-not $lfUpdated.Contains('## Better-PromptKit Engineering Operating System')) {
+    if (-not $lfUpdated.Contains('## PromptKit OS: Engineering Operating System')) {
         throw "Failed Test 2 (LF): New directive content was not injected."
     }
     $lfLines = $lfUpdated -split "\r?\n"

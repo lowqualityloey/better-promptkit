@@ -1,7 +1,7 @@
 # Code Review: Workspace Invitation Flow (pk:review)
 
 **Date**: 2026-09-08  
-**Reviewer**: AI Assistant (Better-PromptKit)  
+**Reviewer**: AI Assistant (PromptKit OS)  
 **Developer**: Bob (Frontend Lead)  
 **Branch**: `feature/workspace-invitations` (22 files changed, +847 / -123)  
 **Baseline**: `main` branch at commit `a3f7d92`

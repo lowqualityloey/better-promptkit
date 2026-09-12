@@ -1,8 +1,8 @@
 <#
 .SYNOPSIS
-    Better-PromptKit Directive Token Measurement Utility
+    PromptKit OS Directive Token Measurement Utility
 .DESCRIPTION
-    Extracts the active Better-PromptKit directive block from your agent
+    Extracts the active PromptKit OS directive block from your agent
     instructions file (AGENTS.md, CLAUDE.md, etc.) and calculates the exact
     character, word, and estimated token counts (using industry standard 4 chars/token).
     Compares against typical monolithic AI prompt packs (~18,500 tokens).
@@ -16,7 +16,7 @@ param (
 
 $ErrorActionPreference = "Stop"
 
-Write-Host "`n📊 Better-PromptKit Static Directive Token Analysis" -ForegroundColor Cyan
+Write-Host "`n📊 PromptKit OS Static Directive Token Analysis" -ForegroundColor Cyan
 Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor DarkGray
 
 # 1. Discover target directive file
@@ -74,21 +74,17 @@ if ([string]::IsNullOrWhiteSpace($DirectiveText)) {
 }
 
 if ([string]::IsNullOrWhiteSpace($DirectiveText)) {
-    Write-Error "No Better-PromptKit directive block found. Run init.ps1 first or pass a file path."
+    Write-Error "No PromptKit OS directive block found. Run init.ps1 first or pass a file path."
     exit 1
 }
 $LineCount = ($DirectiveText -split "`r?`n").Count
 $CharCount = $DirectiveText.Length
-$WordCount = ($DirectiveText -split "\s+" | Where-Object { $_ -ne "" }).Count
-
-# Standard heuristic across OpenAI/Anthropic tokenizers: ~4 chars per token for English markdown
-$EstimatedTokens = [math]::Round($CharCount / 4.0)
-
-# Monolithic baseline (inlining 20 workflows + templates)
+$WordCount = ($DirectiveText -split '\s+' | Where-Object { $_ -ne "" }).Count
+$EstimatedTokens = [Math]::Ceiling(($CharCount + 2) / 4)
 $MonolithicTokens = 18500
-$SavingsPercent = [math]::Round((1.0 - ($EstimatedTokens / $MonolithicTokens)) * 100, 1)
+$SavingsPercent = [Math]::Round((1 - ($EstimatedTokens / $MonolithicTokens)) * 100, 1)
 
-Write-Host "Source: $SourceDescription" -ForegroundColor DarkGray
+Write-Host "Target File: $SourceDescription" -ForegroundColor DarkGray
 Write-Host "`nMeasurement Results:" -ForegroundColor Yellow
 Write-Host "  • Lines:            $LineCount"
 Write-Host "  • Characters:       $CharCount"
@@ -100,7 +96,7 @@ Write-Host "  ┌─────────────────────
 Write-Host "  │ Model Architecture                 Static Overhead          │" -ForegroundColor DarkGray
 Write-Host "  ├─────────────────────────────────────────────────────────────┤" -ForegroundColor DarkGray
 Write-Host "  │ Monolithic Prompt Packs            ~18,500 tokens           │" -ForegroundColor Red
-Write-Host "  │ Better-PromptKit JIT Router        ~$EstimatedTokens tokens (measured)      │" -ForegroundColor Green
+Write-Host "  │ PromptKit OS JIT Router            ~$EstimatedTokens tokens (measured)      │" -ForegroundColor Green
 Write-Host "  ├─────────────────────────────────────────────────────────────┤" -ForegroundColor DarkGray
 Write-Host "  │ Static Context Reduction:          $SavingsPercent% reduction             │" -ForegroundColor Cyan
 Write-Host "  └─────────────────────────────────────────────────────────────┘" -ForegroundColor DarkGray

@@ -1,6 +1,6 @@
 # DESIGN.md FAQ: Using Your Own Design File
 
-Common questions about how DESIGN.md works in Better-PromptKit and what happens if you already have one.
+Common questions about how DESIGN.md works in PromptKit OS and what happens if you already have one.
 
 ---
 
@@ -239,7 +239,7 @@ git submodule add ... .promptkit
 # Add PromptKit-specific sections to your file:
 # (at the bottom of your existing DESIGN.md)
 
-## AI Assistant Rules (Better-PromptKit)
+## AI Assistant Rules (PromptKit OS)
 - Use these tokens in all generated UI code
 - Enforce WCAG 2.2 AA contrast ratios
 - No client-side business logic in components

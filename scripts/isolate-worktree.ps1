@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Better-PromptKit Git Worktree Isolation Utility
+    PromptKit OS Git Worktree Isolation Utility
 .DESCRIPTION
     Creates, lists, merges, and safely removes isolated Git worktrees
     for risky multi-file tasks, spike explorations, or subagent runs.
@@ -43,7 +43,7 @@ if (Test-Path $GitIgnorePath) {
     }
 }
 if ($NeedIgnore) {
-    Add-Content -Path $GitIgnorePath -Value "`n# Better-PromptKit isolated worktrees`n.worktrees/`n"
+    Add-Content -Path $GitIgnorePath -Value "`n# PromptKit OS isolated worktrees`n.worktrees/`n"
     Write-Host "  [+] Added .worktrees/ to .gitignore" -ForegroundColor DarkGray
 }
 

@@ -272,7 +272,7 @@ Write-Host "━━━━━━━━━━━━━━━━━━━━━━�
 
 if ($script:ErrorCount -eq 0 -and $script:WarningCount -eq 0) {
     Write-Host "`n✅ All references valid! No broken links found." -ForegroundColor Green
-    Write-Host "   Better-PromptKit is ready for production use.`n" -ForegroundColor Green
+    Write-Host "   PromptKit OS is ready for production use.`n" -ForegroundColor Green
     exit 0
 } else {
     Write-Host ""

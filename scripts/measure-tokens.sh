@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# Better-PromptKit Directive Token Measurement Utility
+# PromptKit OS Directive Token Measurement Utility
 # Calculates character, word, and estimated token counts for the injected directive.
 set -euo pipefail
 
 TARGET_FILE="${1:-}"
 
-echo -e "\n\033[0;36m📊 Better-PromptKit Static Directive Token Analysis\033[0m"
+echo -e "\n\033[0;36m📊 PromptKit OS Static Directive Token Analysis\033[0m"
 echo -e "\033[0;90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 
 CANDIDATES=(
@@ -51,7 +51,7 @@ if [[ -z "$BLOCK" ]]; then
 fi
 
 if [[ -z "$BLOCK" ]]; then
-    echo "Error: No Better-PromptKit directive block found. Run init.sh first or pass a file path." >&2
+    echo "Error: No PromptKit OS directive block found. Run init.sh first or pass a file path." >&2
     exit 1
 fi
 
@@ -74,7 +74,7 @@ echo -e "  \033[0;90m┌──────────────────�
 echo -e "  \033[0;90m│ Model Architecture                 Static Overhead          │\033[0m"
 echo -e "  \033[0;90m├─────────────────────────────────────────────────────────────┤\033[0m"
 echo -e "  │ Monolithic Prompt Packs            \033[0;31m~18,500 tokens\033[0m           │"
-echo -e "  │ Better-PromptKit JIT Router        \033[0;32m~$ESTIMATED_TOKENS tokens (measured)\033[0m      │"
+echo -e "  │ PromptKit OS JIT Router            \033[0;32m~$ESTIMATED_TOKENS tokens (measured)\033[0m      │"
 echo -e "  \033[0;90m├─────────────────────────────────────────────────────────────┤\033[0m"
 echo -e "  │ Static Context Reduction:          \033[0;36m~$SAVINGS_PERCENT% reduction\033[0m             │"
 echo -e "  \033[0;90m└─────────────────────────────────────────────────────────────┘\033[0m"

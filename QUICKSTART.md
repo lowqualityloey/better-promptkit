@@ -1,6 +1,6 @@
-# Better-PromptKit Quick Start (5 Minutes)
+# PromptKit OS Quickstart (5 Minutes)
 
-Welcome! This guide gets you productive with Better-PromptKit in 5 minutes using the 4 most common workflows.
+Welcome! This guide gets you productive with PromptKit OS in 5 minutes using the 4 most common workflows.
 
 ---
 
@@ -11,10 +11,10 @@ Run from the root of your existing Git repository:
 
 ```bash
 # macOS / Linux (Bash / Zsh)
-git submodule add https://github.com/lowqualityloey/better-promptkit.git .promptkit && ./.promptkit/init.sh
+git submodule add https://github.com/lowqualityloey/promptkit-os.git .promptkit && ./.promptkit/init.sh
 
 # Windows (PowerShell)
-git submodule add https://github.com/lowqualityloey/better-promptkit.git .promptkit; .\.promptkit\init.ps1
+git submodule add https://github.com/lowqualityloey/promptkit-os.git .promptkit; .\.promptkit\init.ps1
 ```
 
 <details>
@@ -22,7 +22,7 @@ git submodule add https://github.com/lowqualityloey/better-promptkit.git .prompt
 
 ```bash
 # 1. Add as a git submodule
-git submodule add https://github.com/lowqualityloey/better-promptkit.git .promptkit
+git submodule add https://github.com/lowqualityloey/promptkit-os.git .promptkit
 
 # 2. Run platform setup
 ./.promptkit/init.sh      # macOS/Linux
@@ -52,7 +52,7 @@ AI: [Shows decision matrix]
     - Code review? → pk:review
 ```
 
-**What it does**: Acts as your workflow GPS, routing you to the right protocol based on your current task. External skills (such as `skills.sh` skills or host `/skill` commands) act as subordinate helpers; Better-PromptKit remains authoritative for task routing, evidence rules, safety boundaries, and human authorization.
+**What it does**: Acts as your workflow GPS, routing you to the right protocol based on your current task. External skills (such as `skills.sh` skills or host `/skill` commands) act as subordinate helpers; PromptKit OS remains authoritative for task routing, evidence rules, safety boundaries, and human authorization.
 
 ---
 
@@ -172,7 +172,7 @@ Severity: 🚨 [BLOCKING] | ⚠️ [IMPORTANT] | 💡 [SUGGEST] | 👏 [PRAISE]
 
 ## Task Ceremony Levels
 
-Better-PromptKit automatically adjusts ceremony to match task risk:
+PromptKit OS automatically adjusts ceremony to match task risk:
 
 | Level | Scope & Examples | Expected Flow | Required Ceremony |
 |:---|:---|:---|:---|
@@ -191,7 +191,7 @@ Just describe what you're doing naturally:
 ```
 You: This checkout endpoint is throwing 500 errors
 
-AI: [Better-PromptKit: Auto-routed to pk:debug]
+AI: [PromptKit OS: Auto-routed to pk:debug]
     Let's build a feedback loop first...
 ```
 
@@ -281,7 +281,7 @@ A: Yes. `PROMPTKIT.md` and `docs/STATE.md` are git-tracked, so whole teams stay 
 
 ## Help & Community
 
-- **Issues**: [GitHub Issues](https://github.com/lowqualityloey/better-promptkit/issues)
+- **Issues**: [GitHub Issues](https://github.com/lowqualityloey/promptkit-os/issues)
 - **Philosophy**: See [README.md](./README.md) for the full mental model
 - **License**: [MIT](./LICENSE)
 

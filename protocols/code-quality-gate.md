@@ -1,7 +1,7 @@
 # Senior Code Quality Gate Protocol
 
 ## Purpose
-Define the non-negotiable definition-of-done (DoD) and engineering quality bar for all code written, reviewed, or mentored within Better-PromptKit. This protocol acts as a pre-flight checklist before any code is committed, submitted for PR, or marked complete.
+Define the non-negotiable definition-of-done (DoD) and engineering quality bar for all code written, reviewed, or mentored within PromptKit OS. This protocol acts as a pre-flight checklist before any code is committed, submitted for PR, or marked complete.
 
 ---
 
@@ -77,7 +77,7 @@ Define the non-negotiable definition-of-done (DoD) and engineering quality bar f
 ---
 
 ## Protocol Execution in Pair-Programming
-Before completing any coding task or finishing a Better-PromptKit session:
+Before completing any coding task or finishing a PromptKit OS session:
 1. Run static analyzers (`tsc --noEmit`, `eslint`, `biome check`, or commands in `./PROMPTKIT.md`).
 2. Run test suites (`npm test`, `pytest`, `cargo test`, or commands in `./PROMPTKIT.md`).
 3. Verify all scenario acceptance criteria (`AC-*`) are completely met with concrete test evidence.

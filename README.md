@@ -1,12 +1,12 @@
-# Better-PromptKit
+# PromptKit OS
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
-[![CI](https://github.com/lowqualityloey/better-promptkit/actions/workflows/ci.yml/badge.svg)](https://github.com/lowqualityloey/better-promptkit/actions)
-[![GitHub](https://img.shields.io/badge/GitHub-lowqualityloey%2Fbetter--promptkit-black.svg)](https://github.com/lowqualityloey/better-promptkit)
+[![CI](https://github.com/lowqualityloey/promptkit-os/actions/workflows/ci.yml/badge.svg)](https://github.com/lowqualityloey/promptkit-os/actions)
+[![GitHub](https://img.shields.io/badge/GitHub-lowqualityloey%2Fpromptkit--os-black.svg)](https://github.com/lowqualityloey/promptkit-os)
 
 The open-source Engineering Operating System for AI coding assistants (Claude Code, Antigravity, Cursor, Windsurf, GitHub Copilot, Cline, Roo Code, Trae, OpenCode, Gemini CLI, and Aider).
 
-Better-PromptKit equips your coding assistant with disciplined engineering workflows: spec-driven architecture, living session state, phased Expand-Contract zero-downtime database migrations, empirical debugging, and atomic Conventional Commits without colliding with IDE slash commands.
+PromptKit OS equips your coding assistant with disciplined engineering workflows: spec-driven architecture, living session state, phased Expand-Contract zero-downtime database migrations, empirical debugging, and atomic Conventional Commits without colliding with IDE slash commands.
 
 ---
 
@@ -16,29 +16,29 @@ Better-PromptKit equips your coding assistant with disciplined engineering workf
 | :--- | :--- |
 | **What is it?** | A modular, instruction-based engineering operating system that lives in your repository as `.promptkit/`. |
 | **Who it is for** | Developers pairing with AI coding agents who want structured specs, living project state, non-breaking schema migrations, and clean git history. |
-| **Who it is NOT for** | Developers looking for an autocomplete inline plugin, a CLI binary, or an npm dependency. Better-PromptKit is pure markdown protocols and prompts. |
+| **Who it is NOT for** | Developers looking for an autocomplete inline plugin, a CLI binary, or an npm dependency. PromptKit OS is pure markdown protocols and prompts. |
 | **Why it is better** | Replaces unguided "vibe coding" and token-wasting guess-and-patch loops with systematic, hypothesis-driven development workflows. Structured workflows are designed to reduce redundant back-and-forth by enforcing one-pass planning, artifact reuse, and surgical fixes over guess-and-patch loops. |
 | **Key differences** | Namespaced triggers (`pk:` prefix), guardrails against single-step destructive schema drops (phased Expand-Contract policy), Socratic guidance that avoids unsolicited code dumps, and monorepo workspace isolation (scoped `--filter` commands). |
-| **Token Efficiency** | **Zero Static Token Bloat**: Injects only a ~40-line router (~650 tokens) into your agent directives. Full workflows are read Just-In-Time (JIT) from local files only when triggered. See [`docs/BENCHMARKS.md`](./docs/BENCHMARKS.md). |
+| **Token Efficiency** | **Zero Static Token Bloat**: Injects only a ~100-line router (~1,934 tokens) into your agent directives. Full workflows are read Just-In-Time (JIT) from local files only when triggered (~89.5% static context reduction vs. 18.5k monolithic packs). See [`docs/BENCHMARKS.md`](./docs/BENCHMARKS.md). |
 | **Durable State Persistence** | **Cross-Session Memory**: State is never lost when chat sessions compact or reset. All active milestones, tasks in flight, and architectural invariants persist directly in Git-tracked markdown (`docs/STATE.md` and `docs/tasks/`). Run `pk:checkpoint` and resume in any fresh session via `pk:route`. |
 | **Adaptive Ceremony & Model Tiering** | **Scales with Risk**: Bypasses heavy templates for daily tweaks (Level 0/1) while reserving deep reasoning, Task Records, and verification gates for schema, auth, and release risks (Level 2/3). Matches LLM model tiers to task risk to prevent token waste. |
-| **Enforced Done-Gates** | **Not Inert Advice**: PromptKit enforces verifiable engineering done-gates: strict milestone git boundaries (blocking dirty working tree transitions), automated pre-commit secret leak scans (`pk:commit`), and required Gherkin Acceptance Criteria verification proof. |
+| **Enforced Done-Gates** | **Not Inert Advice**: PromptKit OS enforces verifiable engineering done-gates: strict milestone git boundaries (blocking dirty working tree transitions), automated pre-commit secret leak scans (`pk:commit`), and required Gherkin Acceptance Criteria verification proof. |
 
 ---
 
 ## Start Here: Most Work Is Level 1
 
-Getting started with Better-PromptKit takes three simple steps:
+Getting started with PromptKit OS takes three simple steps:
 
 1. **Install & Initialize**: Run `./.promptkit/init.sh` (or `.\.promptkit\init.ps1` on Windows) to scaffold `./docs/`, `./PROMPTKIT.md`, and host directives.
 2. **Inspect `PROMPTKIT.md`**: Review or customize project-specific commands, test runners, and architectural invariants in `./PROMPTKIT.md` (or run `pk:onboard` for passive stack discovery).
-3. **Prompt Naturally**: Enter your task naturally or route explicitly with `pk:route`. The assistant announces its ceremony level upfront (e.g. `[Better-PromptKit: Level 1 (Standard) — Localized bug fix. No Task Record required.]`). Most ordinary engineering tasks (bug fixes, isolated component tweaks, small features) are **Level 1 (Standard)** and do **not** require a formal Task Record file (`docs/tasks/<task-id>.md`).
+3. **Prompt Naturally**: Enter your task naturally or route explicitly with `pk:route`. The assistant announces its ceremony level upfront (e.g. `[PromptKit OS: Level 1 (Standard) — Localized bug fix. No Task Record required.]`). Most ordinary engineering tasks (bug fixes, isolated component tweaks, small features) are **Level 1 (Standard)** and do **not** require a formal Task Record file (`docs/tasks/<task-id>.md`).
 
 ### First Task Example
 
 Try pasting this copyable prompt into your AI assistant right after setup:
 
-> "Add an authenticated API endpoint to generate 24-hour expiring invite links in our existing app. Keep this at Better-PromptKit Level 1 unless inspection finds schema, public contract, or multi-component risks. Use only the minimum relevant workflow, observe RED test failure first, and run targeted verification."
+> "Add an authenticated API endpoint to generate 24-hour expiring invite links in our existing app. Keep this at PromptKit OS Level 1 unless inspection finds schema, public contract, or multi-component risks. Use only the minimum relevant workflow, observe RED test failure first, and run targeted verification."
 
 For authoritative Level 0–3 classification, escalation, downgrade, and Task Record rules, see [`workflows/route.md`](./workflows/route.md). To get up and running in 5 minutes, see [Quick Start](#quick-start-60-seconds) or [`QUICKSTART.md`](./QUICKSTART.md).
 
@@ -65,10 +65,10 @@ Run from the root of your existing Git repository:
 
 ```bash
 # macOS / Linux (Bash / Zsh)
-git submodule add https://github.com/lowqualityloey/better-promptkit.git .promptkit && ./.promptkit/init.sh
+git submodule add https://github.com/lowqualityloey/promptkit-os.git .promptkit && ./.promptkit/init.sh
 
 # Windows (PowerShell)
-git submodule add https://github.com/lowqualityloey/better-promptkit.git .promptkit; .\.promptkit\init.ps1
+git submodule add https://github.com/lowqualityloey/promptkit-os.git .promptkit; .\.promptkit\init.ps1
 ```
 
 <details>
@@ -76,10 +76,10 @@ git submodule add https://github.com/lowqualityloey/better-promptkit.git .prompt
 
 ```bash
 # Recommended: Git Submodule (easily upgradeable)
-git submodule add https://github.com/lowqualityloey/better-promptkit.git .promptkit
+git submodule add https://github.com/lowqualityloey/promptkit-os.git .promptkit
 
 # Alternative: Direct Clone
-git clone https://github.com/lowqualityloey/better-promptkit.git .promptkit
+git clone https://github.com/lowqualityloey/promptkit-os.git .promptkit
 
 # Run platform initialization:
 ./.promptkit/init.sh      # macOS / Linux (Bash)
@@ -88,7 +88,7 @@ git clone https://github.com/lowqualityloey/better-promptkit.git .promptkit
 
 </details>
 
-*(Or instruct your assistant: "Read `.promptkit/protocols/setup.md` to initialize Better-PromptKit in this workspace.")*
+*(Or instruct your assistant: "Read `.promptkit/protocols/setup.md` to initialize PromptKit OS in this workspace.")*
 
 ### 2. What Gets Created in Your Project
 
@@ -107,7 +107,7 @@ The initialization script is transparent and idempotent:
 
 ## Maintainer Guidance: Release-Evidence Lifecycle
 
-The release-evidence policy applies only to maintainers evaluating candidates for the Better-PromptKit repository. It documents how Better-PromptKit evaluates a candidate and records an approval decision; it does not impose Better-PromptKit Conventional Commit, SemVer, release-note, changelog, tag, remote, publication, deployment, or rollback requirements on repositories that consume Better-PromptKit.
+The release-evidence policy applies only to maintainers evaluating candidates for the PromptKit OS repository. It documents how PromptKit OS evaluates a candidate and records an approval decision; it does not impose PromptKit OS Conventional Commit, SemVer, release-note, changelog, tag, remote, publication, deployment, or rollback requirements on repositories that consume PromptKit OS.
 
 For detailed maintainer release governance, candidate evaluation rules, workflow ownership, validation commands, and contribution expectations, see [`CONTRIBUTING.md`](./CONTRIBUTING.md).
 
@@ -115,7 +115,7 @@ For detailed maintainer release governance, candidate evaluation rules, workflow
 
 ## The Mental Model
 
-Better-PromptKit structures developer-AI collaboration into four distinct layers:
+PromptKit OS structures developer-AI collaboration into four distinct layers:
 
 | Layer | Plain-English Role | Examples | Location |
 | :--- | :--- | :--- | :--- |
@@ -289,7 +289,7 @@ Repository CI validates structural integrity and protocol compliance across Linu
 
 ## How PromptKit Differs from Other Tools
 
-| Dimension | Single-File Directives | Static Prompt Packs | Autonomous Multi-Agent Swarms | **Better-PromptKit** |
+| Dimension | Single-File Directives | Static Prompt Packs | Autonomous Multi-Agent Swarms | **PromptKit OS** |
 | :--- | :--- | :--- | :--- | :--- |
 | **Scope** | Tool-specific instruction endpoint | Workflow templates for one tool | Multi-agent unmonitored loops | Cross-tool engineering OS with 20 lifecycle workflows |
 | **Token Overhead** | Minimal initial overhead | High monolithic bloat (~18k tokens inlined) | Higher aggregate token cost from multi-agent pipeline calls | **~1,934 tokens JIT baseline** (~89.5% static context reduction vs 18.5k monolithic packs; unused workflows consume 0 tokens) |
@@ -305,7 +305,7 @@ Repository CI validates structural integrity and protocol compliance across Linu
 ## Repository Layout
 
 ```text
-better-promptkit/
+promptkit-os/
 ├── .github/
 │   └── workflows/
 │       └── ci.yml               # Maintainer CI (script syntax, initialization dry-run/idempotency, workflow structure, reference validation, fixture harnesses, and behavioral-contract tests)
@@ -420,7 +420,7 @@ better-promptkit/
 
 ## Customizing Your Project: The 3 Living Files
 
-Better-PromptKit keeps universal workflows separated from your repository's specific rules through three living files:
+PromptKit OS keeps universal workflows separated from your repository's specific rules through three living files:
 
 ### 1. `PROMPTKIT.md` (Engineering Guardrails & Stack Constraints)
 Scaffolded automatically during initialization from `templates/project-profile-template.md`. This file tells the assistant your project's non-negotiable boundaries:
@@ -451,14 +451,14 @@ Scaffolded automatically during initialization from `templates/state-tracker-tem
 
 ## Host & External Tool Composition
 
-Better-PromptKit coexists cleanly with host-specific instruction files (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.cursorrules`, `.cursor/rules/promptkit.mdc`, `.windsurfrules`, `.clinerules`, `.traerules`, `.opencode/rules.md`, `.github/copilot-instructions.md`), external skill libraries (such as `skills.sh`), host `/skill` commands, and complementary specification systems (Spec Kit, BMad).
+PromptKit OS coexists cleanly with host-specific instruction files (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.cursorrules`, `.cursor/rules/promptkit.mdc`, `.windsurfrules`, `.clinerules`, `.traerules`, `.opencode/rules.md`, `.github/copilot-instructions.md`), external skill libraries (such as `skills.sh`), host `/skill` commands, and complementary specification systems (Spec Kit, BMad).
 
 ### Authority & Governance Boundary
 
 - **Specialized Assistance**: External skills and host tools provide domain-specific knowledge, code generation assistance, or specialized refactoring helpers.
-- **PromptKit Authority**: Better-PromptKit remains authoritative for **Level 0–3 task classification**, lifecycle routing, required verification evidence, Task Record requirements, release boundaries, and human authorization.
+- **PromptKit Authority**: PromptKit OS remains authoritative for **Level 0–3 task classification**, lifecycle routing, required verification evidence, Task Record requirements, release boundaries, and human authorization.
 - **Non-Bypass Rule**: External skills must act as subordinate helpers. They must **never** silently commit, push, merge, tag, publish, deploy, or bypass required verification gates.
-- **Behavioral Variation**: Host agents enforce instructions with varying degrees of fidelity. Better-PromptKit provides protocol standards, but host enforcement depends on the AI agent host.
+- **Behavioral Variation**: Host agents enforce instructions with varying degrees of fidelity. PromptKit OS provides protocol standards, but host enforcement depends on the AI agent host.
 
 ### Host Compatibility Matrix
 
@@ -477,7 +477,7 @@ Better-PromptKit coexists cleanly with host-specific instruction files (`AGENTS.
 
 ---
 
-## Updating Better-PromptKit
+## Updating PromptKit OS
 
 When new workflows, quality gates, or presets are released, pull the latest changes and re-run initialization:
 

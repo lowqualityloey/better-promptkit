@@ -1,6 +1,6 @@
 # End-to-End Feature Reference: Organization Invitations
 
-This directory demonstrates a real-world, production-grade feature developed using Better-PromptKit's engineering operating system.
+This directory demonstrates a real-world, production-grade feature developed using PromptKit OS's engineering operating system.
 
 It models an enterprise SaaS feature (**Organization Member Invitations with RBAC & Expiry**) across every lifecycle phase:
 1. **Spec & Acceptance Criteria** (`docs/specs/organization-invitations.md`)
@@ -15,7 +15,7 @@ It models an enterprise SaaS feature (**Organization Member Invitations with RBA
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                      BETTER-PROMPTKIT LIFECYCLE                         │
+│                        PROMPTKIT OS LIFECYCLE                           │
 ├─────────────────────────────────────────────────────────────────────────┤
 │ 1. pk:plan   ──► docs/specs/organization-invitations.md                 │
 │ 2. pk:data   ──► docs/data/organization-invitations-migration.md        │

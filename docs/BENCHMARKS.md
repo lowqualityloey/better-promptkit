@@ -1,6 +1,6 @@
-# Better-PromptKit Architecture & Token Economics Analysis
+# PromptKit OS Architecture & Token Economics Analysis
 
-This document provides a factual, mechanically verifiable analysis of the token economics, context window preservation, and engineering ROI of the Better-PromptKit architecture.
+This document provides a factual, mechanically verifiable analysis of the token economics, context window preservation, and engineering ROI of the PromptKit OS architecture.
 
 ---
 
@@ -8,7 +8,7 @@ This document provides a factual, mechanically verifiable analysis of the token 
 
 Traditional AI coding packs and mega-prompts attempt to inline extensive guidelines, workflow checklists, and multi-file instructions into the root system prompt or configuration file (`.cursorrules`, `CLAUDE.md`, system instruction headers). 
 
-Better-PromptKit uses a **Just-In-Time (JIT) Filesystem Architecture**:
+PromptKit OS uses a **Just-In-Time (JIT) Filesystem Architecture**:
 
 ```text
 ┌─────────────────────────────────────────────────────────────────────────┐
@@ -18,7 +18,7 @@ Better-PromptKit uses a **Just-In-Time (JIT) Filesystem Architecture**:
 └─────────────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                 BETTER-PROMPTKIT JIT FILESYSTEM MODEL                   │
+│                   PROMPTKIT OS JIT FILESYSTEM MODEL                     │
 │ Baseline Static Injection: ~100-line Router Directive (~1,934 tokens)   │
 │ On-Demand Loading: Tool loads only target workflow file (e.g. pk:debug) │
 │ Context Window Preservation: ~89.5% savings on initial static overhead  │
@@ -47,7 +47,7 @@ By contrast, inlining all 20 workflow specifications and schemas consumes **18,0
 
 In complex multi-file tasks (code reviews, multi-package monorepo scans, architecture spikes), dumping raw search results or multi-file contents into the primary conversation window causes severe context window bloat and attention degradation.
 
-Better-PromptKit enforces strict **Subagent Delegation with Compact Synthesis** ([`protocols/subagent-delegation.md`](../protocols/subagent-delegation.md)):
+PromptKit OS enforces strict **Subagent Delegation with Compact Synthesis** ([`protocols/subagent-delegation.md`](../protocols/subagent-delegation.md)):
 
 ```text
 [Main Thread] ──(Delegates Scan)──> [Subagent Context]
@@ -84,11 +84,11 @@ Beyond token counts, PromptKit's structured protocols deliver qualitative engine
 
 ---
 
-## 5. Architectural Comparison: Better-PromptKit vs. Autonomous Multi-Agent Swarm Architectures
+## 5. Architectural Comparison: PromptKit OS vs. Autonomous Multi-Agent Swarms
 
 While autonomous multi-agent looping frameworks attempt to solve software engineering via unmonitored background sub-agent loops and complex runtime daemons, they introduce significant token multipliers, harness complexity, and context exhaustion risks.
 
-| Architectural Dimension | Better-PromptKit (Disciplined Pairing OS) | Autonomous Multi-Agent Swarms |
+| Architectural Dimension | PromptKit OS (Disciplined Pairing OS) | Autonomous Multi-Agent Swarms |
 | :--- | :--- | :--- |
 | **Execution Model** | **Human-in-the-Loop Pairing**: AI proposes, verifies against Gherkin AC, and human reviews/commits. | **Autonomous Looping**: Agents iterate in unmonitored background loops until stopped or timed out. |
 | **Token Footprint** | **Lean 1x Baseline**: Just-In-Time filesystem loading (~1,934 tokens, ~89.5% static context reduction). Unused workflows consume 0 tokens. | **Additional Model Calls**: Multi-agent pipelines (research $\rightarrow$ planning $\rightarrow$ execution waves) introduce additional model calls and aggregate token overhead proportional to pipeline depth and context size. |
@@ -102,7 +102,7 @@ While autonomous multi-agent looping frameworks attempt to solve software engine
 
 ## 6. Resource Optimization: Matching Model Tier to Ceremony Level
 
-In addition to static prompt JIT loading, Better-PromptKit provides significant token cost savings through **Adaptive Ceremony Model Tiering** ([`workflows/route.md`](../workflows/route.md)):
+In addition to static prompt JIT loading, PromptKit OS provides significant token cost savings through **Adaptive Ceremony Model Tiering** ([`workflows/route.md`](../workflows/route.md)):
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
