@@ -38,7 +38,7 @@ Getting started with Better-PromptKit takes three simple steps:
 
 Try pasting this copyable prompt into your AI assistant right after setup:
 
-> "Build a simple React calculator in the existing app. Keep this at Better-PromptKit Level 1 unless inspection finds schema, authentication, public-contract, or multi-component risk. Use only the minimum relevant workflow and run targeted verification."
+> "Add an authenticated API endpoint to generate 24-hour expiring invite links in our existing app. Keep this at Better-PromptKit Level 1 unless inspection finds schema, public contract, or multi-component risks. Use only the minimum relevant workflow, observe RED test failure first, and run targeted verification."
 
 For authoritative Level 0–3 classification, escalation, downgrade, and Task Record rules, see [`workflows/route.md`](./workflows/route.md). To get up and running in 5 minutes, see [Quick Start](#quick-start-60-seconds) or [`QUICKSTART.md`](./QUICKSTART.md).
 

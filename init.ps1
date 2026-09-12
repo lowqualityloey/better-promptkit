@@ -34,22 +34,13 @@ Write-Host "`n🚀 Initializing Better-PromptKit..." -ForegroundColor Cyan
 Write-Host "   Host Project: $ProjectRoot" -ForegroundColor DarkGray
 Write-Host "   Engine Path:  $ScriptDir`n" -ForegroundColor DarkGray
 
-# 1. Ensure Documentation Directories Exist in Host Project
+# 1. Ensure Core Documentation Directories Exist in Host Project
+# (Specialized subdirectories like docs/auth, docs/data are created on-demand by workflows)
 $DocDirs = @(
-    "docs/adrs",
-    "docs/specs",
-    "docs/rca",
-    "docs/spikes",
-    "docs/design",
-    "docs/data",
-    "docs/auth",
-    "docs/api",
-    "docs/tests",
-    "docs/reviews",
-    "docs/perf",
     "docs/tasks",
-    "docs/releases",
-    "docs/releases/ci-triage"
+    "docs/specs",
+    "docs/adrs",
+    "docs/tests"
 )
 
 foreach ($dir in $DocDirs) {
