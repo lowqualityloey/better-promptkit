@@ -72,10 +72,11 @@ if ([string]::IsNullOrWhiteSpace($DirectiveText)) {
     Write-Error "No PromptKit OS directive block found. Run init.ps1 first or pass a file path."
     exit 1
 }
-$LineCount = ($DirectiveText -split "`r?`n").Count
-$CharCount = $DirectiveText.Length
-$WordCount = ($DirectiveText -split '\s+' | Where-Object { $_ -ne "" }).Count
-$EstimatedTokens = [Math]::Ceiling(($CharCount + 2) / 4)
+$NormalizedDirective = ($DirectiveText -replace "\r\n", "`n").TrimEnd("`r", "`n")
+$LineCount = ($NormalizedDirective -split "\n").Count
+$CharCount = $NormalizedDirective.Length
+$WordCount = ($NormalizedDirective -split '\s+' | Where-Object { $_ -ne "" }).Count
+$EstimatedTokens = [Math]::Floor(($CharCount + 2) / 4)
 $MonolithicTokens = 18500
 $SavingsPercent = [Math]::Round((1 - ($EstimatedTokens / $MonolithicTokens)) * 100, 1)
 

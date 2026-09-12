@@ -55,8 +55,9 @@ if [[ -z "$BLOCK" ]]; then
     exit 1
 fi
 
+BLOCK="${BLOCK//$'\r'/}"
 LINE_COUNT=$(echo "$BLOCK" | wc -l | tr -d ' ')
-CHAR_COUNT=$(echo "$BLOCK" | wc -c | tr -d ' ')
+CHAR_COUNT=${#BLOCK}
 WORD_COUNT=$(echo "$BLOCK" | wc -w | tr -d ' ')
 ESTIMATED_TOKENS=$(( (CHAR_COUNT + 2) / 4 ))
 MONOLITHIC_TOKENS=18500
