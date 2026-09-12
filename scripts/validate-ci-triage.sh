@@ -93,9 +93,12 @@ is_placeholder() {
     value="$(unwrap "$1")"
     [ -z "$value" ] && return 0
     local lower="${value,,}"
-    [[ "$lower" =~ ^n/a([[:space:]]*[-—][[:space:]].*)?$ ]] && return 0
+    # The typographic dash is matched through an alternation rather than a bracket
+    # expression on purpose: in a non-UTF-8 locale a multi-byte character inside
+    # [ ... ] degrades to a set of raw bytes, which silently stops matching.
+    [[ "$lower" =~ ^n/a([[:space:]]*(-|—)[[:space:]].*)?$ ]] && return 0
     [[ "$lower" = none || "$lower" = not\ applicable ]] && return 0
-    [[ "$lower" =~ ^pending([[:space:]]*[-—][[:space:]].*)?$ ]] && return 0
+    [[ "$lower" =~ ^pending([[:space:]]*(-|—)[[:space:]].*)?$ ]] && return 0
     [[ "$lower" = not\ approved ]] && return 0
     [[ "$value" == \[*\] ]] && return 0
     return 1
@@ -104,8 +107,9 @@ is_placeholder() {
 is_usable() { ! is_placeholder "$1"; }
 
 is_pending_confirmation_marker() {
-    local value="$(unwrap "$1")"
-    [[ "${value,,}" =~ ^n/a[[:space:]]*[-—][[:space:]]*awaiting[[:space:]]+confirmation$ ]]
+    local value
+    value="$(unwrap "$1")"
+    [[ "${value,,}" =~ ^n/a[[:space:]]*(-|—)[[:space:]]*awaiting[[:space:]]+confirmation$ ]]
 }
 
 require_field() {

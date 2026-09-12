@@ -77,6 +77,39 @@ done < "$FIXTURE_ROOT/expected/cases.tsv"
 
 after_all_status="$TEMP_ROOT/all-after-status"; snapshot_status "$after_all_status"; cmp -s "$all_before_status" "$after_all_status" || fail 'Git status changed during CI triage fixture validation'
 
+# Locale invariance regression guard.
+#
+# Placeholder detection recognises typographic dashes such as "N/A — reason".
+# A multi-byte character inside an ERE bracket expression degrades to a set of
+# raw bytes under a non-UTF-8 locale, which silently changes the diagnostic
+# set. Assert the contract under the C locale, and compare against a UTF-8
+# locale when the host offers one.
+locale_guard_case="unicode-placeholder"
+locale_guard_root="$FIXTURE_ROOT/cases/$locale_guard_case"
+[ -d "$locale_guard_root" ] || fail "Missing locale regression case: $locale_guard_root"
+locale_guard_expected="$(awk -F'\t' -v c="$locale_guard_case" '$1 == c { print $3 }' "$FIXTURE_ROOT/expected/cases.tsv")"
+[ -n "$locale_guard_expected" ] || fail "Missing expected summary for locale regression case $locale_guard_case"
+
+set +e
+LC_ALL=C bash "$VALIDATOR" --root "$locale_guard_root" --strict > "$TEMP_ROOT/locale-c.output" 2>&1
+set -e
+grep -Fqx "$locale_guard_expected" "$TEMP_ROOT/locale-c.output" || { cat "$TEMP_ROOT/locale-c.output" >&2; fail "Locale regression: LC_ALL=C did not reproduce the expected summary $locale_guard_expected"; }
+
+locale_guard_utf8=""
+for locale_guard_candidate in C.UTF-8 C.utf8 en_US.UTF-8; do
+    if [ -z "$(LC_ALL="$locale_guard_candidate" bash -c : 2>&1)" ]; then locale_guard_utf8="$locale_guard_candidate"; break; fi
+done
+
+if [ -n "$locale_guard_utf8" ]; then
+    set +e
+    LC_ALL="$locale_guard_utf8" bash "$VALIDATOR" --root "$locale_guard_root" --strict > "$TEMP_ROOT/locale-utf8.output" 2>&1
+    set -e
+    cmp -s "$TEMP_ROOT/locale-c.output" "$TEMP_ROOT/locale-utf8.output" || { diff -u "$TEMP_ROOT/locale-c.output" "$TEMP_ROOT/locale-utf8.output" >&2 || true; fail "Locale regression: validator output differs between LC_ALL=C and LC_ALL=$locale_guard_utf8"; }
+    echo "Locale invariance verified for $locale_guard_case across LC_ALL=C and LC_ALL=$locale_guard_utf8."
+else
+    echo "Locale invariance verified for $locale_guard_case under LC_ALL=C; no UTF-8 locale is available on this host to compare against."
+fi
+
 echo "CI triage Bash matrix cases passed: $case_count isolated contracts."
 echo "CI triage validation is deterministic, network-free, and read-only; it cannot execute remote actions or approve release resumption."
 echo "CI triage Bash fixture harness passed: complete normalized diagnostic contracts cover state, action, blocked/resume, and release-handoff behavior."
