@@ -19,7 +19,7 @@ PromptKit OS uses a **Just-In-Time (JIT) Filesystem Architecture**:
 
 ┌─────────────────────────────────────────────────────────────────────────┐
 │                   PROMPTKIT OS JIT FILESYSTEM MODEL                     │
-│ Baseline Static Injection: ~100-line Router Directive (~1,934 tokens)   │
+│ Baseline Static Injection: ~100-line Router Directive (~1,944 tokens)   │
 │ On-Demand Loading: Tool loads only target workflow file (e.g. pk:debug) │
 │ Context Window Preservation: ~89.5% savings on initial static overhead  │
 └─────────────────────────────────────────────────────────────────────────┘
@@ -36,8 +36,8 @@ The initialization script (`init.sh` / `init.ps1`) injects a single idempotent d
 | **System Introduction & Scope** | ~10 | ~140 tokens | Identifies PromptKit root in workspace (`./.promptkit`) |
 | **Fast Shorthand Triggers** | ~35 | ~580 tokens | Collision-free index of namespaced workflows (`pk:route`, `pk:debug`, `pk:fix`, etc.) |
 | **Smart Auto-Route & Guardrails** | ~30 | ~620 tokens | Triage rules (Fast-Path zero overhead, Anti-slop, Secrets hygiene, MCP precedence, Visual callouts) |
-| **Artifact Paths & Document Targets** | ~25 | ~594 tokens | Output destinations (`docs/specs/`, `docs/tasks/`, `docs/STATE.md`) |
-| **Total Baseline Static Overhead** | **~100 lines** | **~1,934 tokens** | **Permanent footprint in system prompt (~89.5% savings vs. ~18.5k monolithic packs)** |
+| **Artifact Paths & Document Targets** | ~25 | ~604 tokens | Output destinations (`docs/specs/`, `docs/tasks/`, `docs/STATE.md`) |
+| **Total Baseline Static Overhead** | **~100 lines** | **~1,944 tokens** | **Permanent footprint in system prompt (~89.5% savings vs. ~18.5k monolithic packs)** |
 
 By contrast, inlining all 20 workflow specifications and schemas consumes **18,000 to 22,000 tokens** on turn 1 before any user request is processed.
 

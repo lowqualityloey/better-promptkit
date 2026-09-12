@@ -42,13 +42,26 @@ Reporting them separately ensures neither axis masks the other.
 ## Mandatory Pre-Flight Guardrails
 
 ### 1. Diff Baseline Pinning
-Establish and validate the diff comparison baseline before reviewing:
-```bash
-git rev-parse <fixed-point>                    # Confirm reference exists (e.g. main, origin/main, HEAD~3)
-git diff <fixed-point>...HEAD                  # Extract three-dot comparison against merge-base
-git log <fixed-point>..HEAD --oneline          # Inspect commit history
-```
-If the diff is empty or the reference fails to resolve, halt and resolve the baseline before continuing.
+Establish and validate the appropriate diff comparison baseline before reviewing:
+
+- **Branch / PR Review (Committed feature branch against base)**:
+  ```bash
+  git rev-parse <fixed-point>                    # Confirm reference exists (e.g. main, origin/main, HEAD~3)
+  git diff <fixed-point>...HEAD                  # Extract three-dot comparison against merge-base
+  git log <fixed-point>..HEAD --oneline          # Inspect commit history
+  ```
+- **Staged Changes Review (Index before commit)**:
+  ```bash
+  git diff --cached                              # Extract staged changes ready for commit
+  ```
+- **Working Tree / Uncommitted Review (Working directory edits)**:
+  ```bash
+  git diff HEAD                                  # Extract all uncommitted (staged + unstaged) changes
+  git status -s                                  # Inspect untracked files to avoid missing new files
+  ```
+
+> [!NOTE]
+> When reviewing uncommitted changes directly on `main`, running `git diff main...HEAD` produces an empty diff. Select the matching baseline mode (`git diff HEAD` or `git diff --cached`) rather than stalling. If the selected baseline produces an empty diff and no untracked files exist, halt and clarify the target revision before continuing.
 
 ### 2. Accidental Data Loss Audit (STOP AND VERIFY)
 > [!CAUTION]
