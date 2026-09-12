@@ -126,4 +126,4 @@ Once verified, hand off to downstream workflows:
 - [ ] Minimal surgical fix applied without unrelated scope creep.
 - [ ] Regression test added and full test suite passing.
 - [ ] Changes staged cleanly via `pk:commit` with atomic Conventional Commit message.
-- [ ] **Dual-Compatible Visual Callout**: Conclude with a `> [!TIP]` callout titled `### 💡 Next Recommended Step:` featuring the situational progress bar (`[■■■■□□□□□□]`) recommending `pk:commit` or downstream verification.
+- [ ] **Dual-Compatible 3-Column Telemetry Callout**: Conclude with a `> [!TIP]` callout titled `### 💡 Next Recommended Step` featuring the structured 3-column telemetry matrix (`| Milestone Progress | Active Task | System Health |` with `[■■■■□□□□□□]`) recommending `pk:commit` or downstream verification. When multiple next steps exist, invoke native interactive selection tools with Option 1 `(Recommended)` so the developer can confirm with `Enter`.

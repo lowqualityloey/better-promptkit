@@ -216,4 +216,5 @@ A disagreement between the test plan, Planning Record, and Task Record blocks re
 - Real-database harness configured for integration tests.
 - External mock boundaries and test data factories documented.
 - **Observable Red-to-Green**: Test failure confirmed and documented prior to writing production code for all active code work.
-- **Dual-Compatible Visual Callout**: Conclude with a `> [!TIP]` callout titled `### 💡 Next Recommended Step:` featuring the situational progress bar (`[■■■■□□□□□□]`) recommending implementation of the red-to-green test suite.
+- **Project Database Isolation**: Test harnesses use project-scoped database containers (e.g. `./docker-compose.yml`) and never attach to foreign project instances.
+- **Dual-Compatible 3-Column Telemetry Callout**: Conclude with a `> [!TIP]` callout titled `### 💡 Next Recommended Step` featuring the structured 3-column telemetry matrix (`| Milestone Progress | Active Task | System Health |` with `[■■■■□□□□□□]`) recommending implementation of the red-to-green test suite. When multiple next steps exist, invoke native interactive selection tools with Option 1 `(Recommended)` so the developer can confirm with `Enter`.

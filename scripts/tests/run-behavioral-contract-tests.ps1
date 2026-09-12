@@ -92,18 +92,23 @@ Write-Host "`n📌 Scenario I: Post-Staging Secret Scan Sequencing (Time-of-Chec
 Assert-Contains "workflows/commit.md" "Pre-Commit Secret & Hygiene Scan" "Commit workflow enforces post-staging secret scan"
 Assert-Contains "workflows/commit.md" "Immediately after staging" "Secret scan runs immediately after staging phase"
 
-Write-Host "`n📌 Scenario J: Standardized Visual Callouts & Next Recommended Steps" -ForegroundColor Yellow
-Assert-Contains "templates/agent-directive-template.md" "Native MCP & Interactive Prompts" "Directive includes native MCP and interactive decision prompts guardrail"
-Assert-Contains "templates/agent-directive-template.md" "Dual-Compatible Action & Next-Step Callouts" "Directive includes dual-compatible action and next-step callout guardrail"
-Assert-Contains "templates/agent-directive-template.md" "### 💡 Next Recommended Step:" "Directive specifies next recommended step callout format"
-Assert-Contains "templates/agent-directive-template.md" "\[■■■■□□□□□□\]" "Directive specifies block progress bar format"
-Assert-Contains "workflows/commit.md" "### 💡 Next Recommended Step:" "Commit workflow specifies next recommended step callout format"
-Assert-Contains "workflows/commit.md" "\[■■■■□□□□□□\]" "Commit workflow includes block progress bar in callout"
-Assert-Contains "workflows/plan.md" "### 💡 Next Recommended Step:" "Plan workflow specifies next recommended step callout format"
-Assert-Contains "workflows/tasks.md" "### 💡 Next Recommended Step:" "Tasks workflow specifies next recommended step callout format"
-Assert-Contains "workflows/test.md" "### 💡 Next Recommended Step:" "Test workflow specifies next recommended step callout format"
-Assert-Contains "workflows/fix.md" "### 💡 Next Recommended Step:" "Fix workflow specifies next recommended step callout format"
+Write-Host "`n📌 Scenario J: Standardized Visual Callouts & 3-Column Telemetry Matrix" -ForegroundColor Yellow
+Assert-Contains "templates/agent-directive-template.md" "Native MCP & Interactive Turn Prompts" "Directive includes native MCP and interactive turn prompts guardrail"
+Assert-Contains "templates/agent-directive-template.md" "Dual-Compatible 3-Column Telemetry Callouts" "Directive includes dual-compatible 3-column telemetry matrix callout guardrail"
+Assert-Contains "templates/agent-directive-template.md" "### 💡 Next Recommended Step" "Directive specifies next recommended step callout format"
+Assert-Contains "templates/agent-directive-template.md" "Milestone Progress | Active Task | System Health" "Directive specifies 3-column telemetry matrix layout"
+Assert-Contains "workflows/commit.md" "Milestone Progress | Active Task | System Health" "Commit workflow includes 3-column telemetry matrix in callout"
+Assert-Contains "workflows/pr.md" "Pull Request & Branch | Milestone & Diff | CI & Quality Gates" "PR workflow includes 3-column telemetry matrix in callout"
+Assert-Contains "workflows/plan.md" "Milestone Progress | Active Task | System Health" "Plan workflow includes 3-column telemetry matrix in callout"
+Assert-Contains "workflows/tasks.md" "Milestone Progress | Active Task | System Health" "Tasks workflow includes 3-column telemetry matrix in callout"
+Assert-Contains "workflows/test.md" "Milestone Progress | Active Task | System Health" "Test workflow includes 3-column telemetry matrix in callout"
+Assert-Contains "workflows/fix.md" "Milestone Progress | Active Task | System Health" "Fix workflow includes 3-column telemetry matrix in callout"
 Assert-Contains "workflows/plan.md" "Interactive Decision & Trade-Off Clarification" "Plan workflow includes interactive decision prompt guidelines"
+
+Write-Host "`n📌 Scenario K: Project Database & Harness Isolation" -ForegroundColor Yellow
+Assert-Contains "templates/agent-directive-template.md" "Project Database & Harness Isolation" "Directive enforces project database isolation guardrail"
+Assert-Contains "workflows/data.md" "Database Harness Isolation" "Data workflow mandates project-scoped database isolation"
+Assert-Contains "workflows/test.md" "Project Database Isolation" "Test workflow mandates project-scoped database isolation"
 
 Write-Host "`n===========================================================" -ForegroundColor DarkGray
 Write-Host "📊 Behavioral Contract Verification Summary" -ForegroundColor Cyan
