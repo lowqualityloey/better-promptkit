@@ -21,16 +21,52 @@ Transform uncommitted workspace diffs into clean, atomic, high-signal Convention
 │                   PK:COMMIT LIFECYCLE                       │
 ├──────────────┬──────────────┬──────────────┬────────────────┤
 │ Phase 1:     │ Phase 2:     │ Phase 3:     │ Phase 4:       │
-│ Pre-Flight   │ Atomic Group │ Conventional │ Developer      │
-│ Hygiene Scan │ & Staging    │ Message Spec │ Confirmation   │
+│ Context      │ Atomic Group │ Conventional │ Developer      │
+│ Preparation  │ & Staging    │ Message Spec │ Confirmation   │
 └──────────────┴──────────────┴──────────────┴────────────────┘
 ```
 
 ---
 
-### Phase 1: Pre-Flight Hygiene Scan
+### Phase 1: Context Preparation
 
-Before staging any file, run these 4 safety checks:
+1. **Review Local Modifications**: Use `git diff` to review all current changes.
+2. **Review Untracked Files**: Inspect untracked files (`??` in `git status -s`). Ensure scratch scripts or build output folders are added to `.gitignore` rather than accidentally committed.
+3. **Quality Gate Verification**: Verify that relevant unit tests and typechecks pass (`pnpm tsc --noEmit`, `npm test`, or commands defined in `PROMPTKIT.md`).
+
+### Controlled & Release-Critical Work Commit Gate
+
+After the existing hygiene checks and before staging, Level 2 (Controlled) and Level 3 (Release-Critical) Work must pass this evidence gate linking `docs/tasks/<task-id>.md`. Level 0 (Direct) and Level 1 (Standard) work require clean Conventional Commit syntax and hygiene without mandatory Task Record links:
+
+- Confirm the active `docs/tasks/<task-id>.md` Task Record exists, is in an editable state, and owns the current execution scope. `checkpoint_due`, `blocked`, `paused`, `handoff_ready`, and `aborted` tasks cannot proceed to commit.
+- Confirm changed files remain within the recorded scope and every scope expansion has a linked Scope Change Record and required approval or separate Task Record.
+- Confirm acceptance-criteria results, verification evidence, changed-file summary, blockers/resume condition, and review prerequisites are recorded. A commit link is not required before the first commit exists; it is added after the human-confirmed commit.
+- Confirm the current revision and checkpoint/handoff state are consistent. A hard checkpoint blocks staging and commit actions until explicit resume evidence is recorded.
+- Route commit construction, Conventional Commit formatting, staging, and developer confirmation through the rest of this workflow. A passing record or validator does not authorize `git add`, `git commit`, push, or any remote action.
+- After the human confirms the commit, record the exact revision and commit evidence in the canonical Task Record. Validator success proves evidence consistency only; it does not approve the commit.
+
+---
+
+### Phase 2: Atomic Staging (One Concern Per Commit)
+
+Senior Git history is **atomic**: each commit represents a single, complete, reversible logical change. Never bundle unrelated concerns into a single massive commit.
+
+If a session touched multiple layers, propose splitting into sequential commits:
+
+| Layer / Concern | Included Changes | Example Scope |
+| :--- | :--- | :--- |
+| **Data & Migrations** | Schema files, migrations, RLS policies, seed fixtures | `db`, `schema`, `migration` |
+| **Backend & Contracts**| Server actions, endpoints, API contracts, domain services | `api`, `auth`, `server` |
+| **Frontend & UI** | Components, hooks, design tokens, responsive styles | `ui`, `design`, `client` |
+| **Testing & Fixtures** | Unit tests, Playwright specs, mock factories | `test`, `e2e` |
+| **Infrastructure & CI**| GitHub Actions, Dockerfiles, package dependencies | `ci`, `deps`, `config` |
+| **Documentation** | RFC specs, ADRs, post-mortems, README updates | `docs`, `adr`, `spec` |
+
+**Staging Rule**:
+Explicitly stage only the files relevant to the active atomic concern. Avoid blind `git add .` when multi-concern changes are present.
+
+**Pre-Commit Secret & Hygiene Scan:**
+Immediately after staging and before commit construction, perform a mandatory scan of the staged index for accidental secrets or debug probes (Time-of-Check to Time-of-Use safety):
 
 1. **Staged Content Secret Scan**:
    Verify no embedded private keys, tokens, or credentials are staged for commit:
@@ -52,43 +88,6 @@ Before staging any file, run these 4 safety checks:
    git diff --cached | grep -E '\[DEBUG-|console\.log\("DEBUG|dbg!\(' || true
    ```
    If temporary probes remain in staged content, remove them before committing.
-
-### Controlled & Release-Critical Work Commit Gate
-
-After the existing hygiene checks and before staging, Level 2 (Controlled) and Level 3 (Release-Critical) Work must pass this evidence gate linking `docs/tasks/<task-id>.md`. Level 0 (Direct) and Level 1 (Standard) work require clean Conventional Commit syntax and hygiene without mandatory Task Record links:
-
-- Confirm the active `docs/tasks/<task-id>.md` Task Record exists, is in an editable state, and owns the current execution scope. `checkpoint_due`, `blocked`, `paused`, `handoff_ready`, and `aborted` tasks cannot proceed to commit.
-- Confirm changed files remain within the recorded scope and every scope expansion has a linked Scope Change Record and required approval or separate Task Record.
-- Confirm acceptance-criteria results, verification evidence, changed-file summary, blockers/resume condition, and review prerequisites are recorded. A commit link is not required before the first commit exists; it is added after the human-confirmed commit.
-- Confirm the current revision and checkpoint/handoff state are consistent. A hard checkpoint blocks staging and commit actions until explicit resume evidence is recorded.
-- Route commit construction, Conventional Commit formatting, staging, and developer confirmation through the rest of this workflow. A passing record or validator does not authorize `git add`, `git commit`, push, or any remote action.
-- After the human confirms the commit, record the exact revision and commit evidence in the canonical Task Record. Validator success proves evidence consistency only; it does not approve the commit.
-
-4. **Untracked File Inspection**:
-   Inspect untracked files (`??` in `git status -s`). Ensure scratch scripts or build output folders are added to `.gitignore` rather than accidentally committed.
-
-5. **Quality Gate Verification**:
-   Verify that relevant unit tests and typechecks pass (`pnpm tsc --noEmit`, `npm test`, or commands defined in `PROMPTKIT.md`).
-
----
-
-### Phase 2: Atomic Staging (One Concern Per Commit)
-
-Senior Git history is **atomic**: each commit represents a single, complete, reversible logical change. Never bundle unrelated concerns into a single massive commit.
-
-If a session touched multiple layers, propose splitting into sequential commits:
-
-| Layer / Concern | Included Changes | Example Scope |
-| :--- | :--- | :--- |
-| **Data & Migrations** | Schema files, migrations, RLS policies, seed fixtures | `db`, `schema`, `migration` |
-| **Backend & Contracts**| Server actions, endpoints, API contracts, domain services | `api`, `auth`, `server` |
-| **Frontend & UI** | Components, hooks, design tokens, responsive styles | `ui`, `design`, `client` |
-| **Testing & Fixtures** | Unit tests, Playwright specs, mock factories | `test`, `e2e` |
-| **Infrastructure & CI**| GitHub Actions, Dockerfiles, package dependencies | `ci`, `deps`, `config` |
-| **Documentation** | RFC specs, ADRs, post-mortems, README updates | `docs`, `adr`, `spec` |
-
-**Staging Rule**:
-Explicitly stage only the files relevant to the active atomic concern. Avoid blind `git add .` when multi-concern changes are present.
 
 ---
 

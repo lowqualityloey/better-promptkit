@@ -35,7 +35,7 @@ Write-Host "===========================================================" -Foregr
 Write-Host "`n📌 Scenario A: Trivial Change ('Fix a typo in the README') — Level 0 Direct" -ForegroundColor Yellow
 Assert-Contains "workflows/route.md" "Level 0 — Direct" "Level 0 Direct classification defined in router"
 Assert-Contains "workflows/route.md" "understand → change → verify" "Level 0 expected behavior flow present"
-Assert-Contains "protocols/setup.md" "Level 0 \(Direct / Zero Overhead\)" "Level 0 fast-path rule in agent setup protocol"
+Assert-Contains "templates/agent-directive-template.md" "Fast-Path \(Zero Overhead\)" "Level 0 fast-path rule in agent setup protocol"
 
 Write-Host "`n📌 Scenario B: Localized Bug / Small Feature ('Fix empty password crash') — Level 1 Standard" -ForegroundColor Yellow
 Assert-Contains "workflows/route.md" "Level 1 — Standard" "Level 1 Standard classification defined in router"
@@ -87,6 +87,10 @@ Assert-Contains "workflows/fix.md" "pk:debug" "Remediation workflow distinguishe
 Assert-Contains "workflows/fix.md" "SECURITY & SAFETY ORDERING" "Remediation workflow enforces security-first ordering"
 Assert-Contains "workflows/fix.md" "Reproduction or Baseline Measurement" "Remediation workflow requires reproduction or baseline measurement"
 Assert-Contains "workflows/fix.md" "Level 1 — Standard Fix" "Remediation workflow aligns with Level 0-3 ceremony model"
+
+Write-Host "`n📌 Scenario I: Post-Staging Secret Scan Sequencing (Time-of-Check to Time-of-Use Safety)" -ForegroundColor Yellow
+Assert-Contains "workflows/commit.md" "Pre-Commit Secret & Hygiene Scan" "Commit workflow enforces post-staging secret scan"
+Assert-Contains "workflows/commit.md" "Immediately after staging" "Secret scan runs immediately after staging phase"
 
 Write-Host "`n===========================================================" -ForegroundColor DarkGray
 Write-Host "📊 Behavioral Contract Verification Summary" -ForegroundColor Cyan

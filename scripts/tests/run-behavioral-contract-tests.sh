@@ -32,7 +32,7 @@ echo ""
 echo "📌 Scenario A: Trivial Change ('Fix a typo in the README') — Level 0 Direct"
 assert_contains "workflows/route.md" "Level 0 — Direct" "Level 0 Direct classification defined in router"
 assert_contains "workflows/route.md" "understand → change → verify" "Level 0 expected behavior flow present"
-assert_contains "protocols/setup.md" "Level 0 \(Direct / Zero Overhead\)" "Level 0 fast-path rule in agent setup protocol"
+assert_contains "templates/agent-directive-template.md" "Fast-Path \(Zero Overhead\)" "Level 0 fast-path rule in agent setup protocol"
 
 echo ""
 echo "📌 Scenario B: Localized Bug / Small Feature ('Fix empty password crash') — Level 1 Standard"
@@ -91,6 +91,11 @@ assert_contains "workflows/fix.md" "pk:debug" "Remediation workflow distinguishe
 assert_contains "workflows/fix.md" "SECURITY & SAFETY ORDERING" "Remediation workflow enforces security-first ordering"
 assert_contains "workflows/fix.md" "Reproduction or Baseline Measurement" "Remediation workflow requires reproduction or baseline measurement"
 assert_contains "workflows/fix.md" "Level 1 — Standard Fix" "Remediation workflow aligns with Level 0-3 ceremony model"
+
+echo ""
+echo "📌 Scenario I: Post-Staging Secret Scan Sequencing (Time-of-Check to Time-of-Use Safety)"
+assert_contains "workflows/commit.md" "Pre-Commit Secret & Hygiene Scan" "Commit workflow enforces post-staging secret scan"
+assert_contains "workflows/commit.md" "Immediately after staging" "Secret scan runs immediately after staging phase"
 
 echo ""
 echo "==========================================================="

@@ -6,6 +6,20 @@ set -euo pipefail
 
 ACTION="${1:-list}"
 TASK_ID="${2:-}"
+FORCE=0
+
+if [[ "${3:-}" == "--force" || "${4:-}" == "--force" ]]; then
+    FORCE=1
+fi
+if [[ "$ACTION" == "--force" ]]; then
+    ACTION="${2:-list}"
+    TASK_ID="${3:-}"
+    FORCE=1
+fi
+if [[ "$TASK_ID" == "--force" ]]; then
+    TASK_ID=""
+    FORCE=1
+fi
 
 REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || true)"
 if [[ -z "$REPO_ROOT" ]]; then
@@ -66,7 +80,7 @@ case "$ACTION" in
 
     remove)
         if [[ -z "$TASK_ID" ]]; then
-            echo "Error: TaskId is required for 'remove'. Usage: ./scripts/isolate-worktree.sh remove <task-id>" >&2
+            echo "Error: TaskId is required for 'remove'. Usage: ./scripts/isolate-worktree.sh remove <task-id> [--force]" >&2
             exit 1
         fi
         BRANCH_NAME="worktree/$TASK_ID"
@@ -74,20 +88,37 @@ case "$ACTION" in
 
         echo -e "\033[0;36m🧹 Removing worktree at $TARGET_PATH...\033[0m"
         if [[ -d "$TARGET_PATH" ]]; then
-            git worktree remove "$TARGET_PATH" --force
+            if [[ "$FORCE" -eq 1 ]]; then
+                git worktree remove "$TARGET_PATH" --force
+            else
+                if ! git worktree remove "$TARGET_PATH"; then
+                    echo -e "\033[0;31mError: Worktree has uncommitted changes or unmerged branches.\033[0m" >&2
+                    echo "Use --force to forcefully remove it." >&2
+                    exit 1
+                fi
+            fi
         else
             git worktree prune
         fi
 
         if git show-ref --verify --quiet "refs/heads/$BRANCH_NAME"; then
-            git branch -D "$BRANCH_NAME"
-            echo "  [-] Deleted branch $BRANCH_NAME"
+            if [[ "$FORCE" -eq 1 ]]; then
+                git branch -D "$BRANCH_NAME"
+                echo "  [-] Force deleted branch $BRANCH_NAME"
+            else
+                if ! git branch -d "$BRANCH_NAME"; then
+                    echo -e "\033[0;31mError: Branch $BRANCH_NAME is not fully merged.\033[0m" >&2
+                    echo "Use --force to forcefully delete it." >&2
+                    exit 1
+                fi
+                echo "  [-] Deleted branch $BRANCH_NAME"
+            fi
         fi
         echo -e "\033[0;32m  ✅ Worktree cleaned up successfully.\033[0m"
         ;;
 
     *)
-        echo "Usage: ./scripts/isolate-worktree.sh [create|list|merge|remove|status] [task-id]" >&2
+        echo "Usage: ./scripts/isolate-worktree.sh [create|list|merge|remove|status] [task-id] [--force]" >&2
         exit 1
         ;;
 esac
