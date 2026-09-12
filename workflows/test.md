@@ -170,6 +170,15 @@ A disagreement between the test plan, Planning Record, and Task Record blocks re
    - What belongs in Integration? (database queries, RLS policies, multi-step services)
    - What belongs in E2E? (happy path browser flow)
 
+### Step 2.5: The Ironclad TDD Assertion (Observe RED First)
+> 🛑 **Mandatory TDD Law**: Never write implementation code against a hypothetical test failure.
+1. **Write the Minimal Failing Test**: Construct a concise test asserting the desired public behavior or reproducing the defect.
+2. **Execute and Observe RED**: Run the test suite before touching production source files. Confirm:
+   - The test fails with the expected assertion error (not a compilation error or missing import).
+   - The failure confirms the defect or missing functionality exists.
+3. **Write Minimal Implementation (GREEN)**: Write only enough production code to turn the failing test green.
+4. **Refactor Cleanly (REFACTOR)**: Clean up duplication, enforce design patterns, and ensure all tests stay green.
+
 ### Step 3: Define External Mock Boundaries
 1. Identify all third-party dependencies (Stripe, email, S3).
 2. Specify MSW handlers or typed fake adapters for each external dependency.
@@ -192,6 +201,7 @@ A disagreement between the test plan, Planning Record, and Task Record blocks re
 
 | Anti-Pattern | Consequence | Remedy |
 | :--- | :--- | :--- |
+| **Post-Hoc Tests (Code First)** | Tests mirror the bugs and assumptions of the implementation, producing false-positive passes. | Always write tests first and observe them fail (`RED`) before implementing code. |
 | **Mocking the Database** | Tests pass while queries fail on syntax, nullability, or foreign keys in production. | Run integration tests against real PostgreSQL via Docker or Testcontainers. |
 | **Monolithic Shared Seeds** | Modifying seed data to fix one test breaks dozens of unrelated tests. | Use modular factory functions (`buildUser()`) with per-test overrides. |
 | **E2E Over-Testing** | 45-minute CI runs, frequent flaky timeouts, and developer frustration. | Restrict E2E tests to the top 5-10 golden user flows; test edge cases in integration suites. |
@@ -205,3 +215,4 @@ A disagreement between the test plan, Planning Record, and Task Record blocks re
 - Scenarios allocated across Unit, Integration, and E2E seams.
 - Real-database harness configured for integration tests.
 - External mock boundaries and test data factories documented.
+- **Observable Red-to-Green**: Test failure confirmed and documented prior to writing production code for all active code work.
