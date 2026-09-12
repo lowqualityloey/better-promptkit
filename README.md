@@ -60,32 +60,40 @@ For authoritative Level 0–3 classification, escalation, downgrade, and Task Re
 
 ### 1. Add to Your Project
 
+**One-Command Setup (Recommended)**:
+Run from the root of your existing Git repository:
+
+```bash
+# macOS / Linux (Bash / Zsh)
+git submodule add https://github.com/lowqualityloey/better-promptkit.git .promptkit && ./.promptkit/init.sh
+
+# Windows (PowerShell)
+git submodule add https://github.com/lowqualityloey/better-promptkit.git .promptkit; .\.promptkit\init.ps1
+```
+
+<details>
+<summary>Or step-by-step / direct clone</summary>
+
 ```bash
 # Recommended: Git Submodule (easily upgradeable)
-git submodule add https://github.com/lowqualityloey/better-promptkit .promptkit
+git submodule add https://github.com/lowqualityloey/better-promptkit.git .promptkit
 
 # Alternative: Direct Clone
-git clone https://github.com/lowqualityloey/better-promptkit .promptkit
+git clone https://github.com/lowqualityloey/better-promptkit.git .promptkit
+
+# Run platform initialization:
+./.promptkit/init.sh      # macOS / Linux (Bash)
+.\.promptkit\init.ps1     # Windows (PowerShell)
 ```
 
-### 2. Run Platform Initialization
-
-Execute the setup script for your environment:
-
-```bash
-# macOS / Linux (Bash):
-./.promptkit/init.sh
-
-# Windows (PowerShell):
-.\.promptkit\init.ps1
-```
+</details>
 
 *(Or instruct your assistant: "Read `.promptkit/protocols/setup.md` to initialize Better-PromptKit in this workspace.")*
 
-### 3. What Gets Created in Your Project
+### 2. What Gets Created in Your Project
 
 The initialization script is transparent and idempotent:
-- **`./docs/` directories**: Scaffolds standard artifact folders (`specs/`, `adrs/`, `tasks/`, `data/`, `auth/`, `api/`, `tests/`, `perf/`, `rca/`, `releases/`).
+- **`./docs/` directories**: Scaffolds core documentation directories (`tasks/`, `specs/`, `adrs/`, `tests/`). Specialized directories (`auth/`, `data/`, `releases/`, `perf/`, `rca/`) are generated on demand by workflows to keep new projects clean.
 - **`./PROMPTKIT.md`**: Project architectural profile containing your active commands, stack constraints, task tracker selector, and monorepo workspace topology.
 - **`./docs/STATE.md`**: The living project tracker recording active milestones, tasks in flight, and locked architectural invariants.
 - **`.github/pull_request_template.md`**: Staff-level Pull Request template with Gherkin acceptance criteria checklists, Expand-Contract database safety gates, and automated test evidence tables.

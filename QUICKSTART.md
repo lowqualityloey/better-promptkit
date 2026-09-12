@@ -6,16 +6,32 @@ Welcome! This guide gets you productive with Better-PromptKit in 5 minutes using
 
 ## Step 1: Installation (30 seconds)
 
-```bash
-# Add to your project as a git submodule (recommended)
-git submodule add https://github.com/lowqualityloey/better-promptkit .promptkit
+### One-Command Setup (Recommended)
+Run from the root of your existing Git repository:
 
-# Run setup for your platform
+```bash
+# macOS / Linux (Bash / Zsh)
+git submodule add https://github.com/lowqualityloey/better-promptkit.git .promptkit && ./.promptkit/init.sh
+
+# Windows (PowerShell)
+git submodule add https://github.com/lowqualityloey/better-promptkit.git .promptkit; .\.promptkit\init.ps1
+```
+
+<details>
+<summary>Or install step-by-step</summary>
+
+```bash
+# 1. Add as a git submodule
+git submodule add https://github.com/lowqualityloey/better-promptkit.git .promptkit
+
+# 2. Run platform setup
 ./.promptkit/init.sh      # macOS/Linux
 .\.promptkit\init.ps1     # Windows
 ```
 
-**What this does**: Creates `docs/` directories, scaffolds `PROMPTKIT.md`, and configures your AI assistant.
+</details>
+
+**What this does**: Creates core `docs/` directories (`tasks/`, `specs/`, `adrs/`, `tests/`), scaffolds `PROMPTKIT.md` and `docs/STATE.md`, and injects the lightweight directive router into your AI assistant configuration (`AGENTS.md`, `CLAUDE.md`, `.cursorrules`, etc.).
 
 ---
 
