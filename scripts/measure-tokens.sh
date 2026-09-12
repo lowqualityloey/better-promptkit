@@ -43,10 +43,10 @@ fi
 
 if [[ -z "$BLOCK" ]]; then
     SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-    INIT_SH="$SCRIPT_DIR/../init.sh"
-    if [[ -f "$INIT_SH" ]]; then
-        BLOCK=$(awk '/^<!-- PROMPTKIT_START -->/{flag=1} flag; /^<!-- PROMPTKIT_END -->/{flag=0}' "$INIT_SH")
-        SOURCE_DESC="Canonical template in init.sh"
+    TEMPLATE_MD="$SCRIPT_DIR/../templates/agent-directive-template.md"
+    if [[ -f "$TEMPLATE_MD" ]]; then
+        BLOCK=$(cat "$TEMPLATE_MD")
+        SOURCE_DESC="Canonical template in templates/agent-directive-template.md"
     fi
 fi
 
