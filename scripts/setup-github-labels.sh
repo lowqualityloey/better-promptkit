@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# Better-PromptKit GitHub Label Provisioning (POSIX Bash)
+# PromptKit OS GitHub Label Provisioning (POSIX Bash)
 # Uses GitHub CLI (gh) to idempotently create or update standard labels.
 # ==============================================================================
 
 set -euo pipefail
 
-echo -e "\n\033[0;36m🏷️  Better-PromptKit GitHub Label Provisioning\033[0m"
+echo -e "\n\033[0;36m🏷️  PromptKit OS GitHub Label Provisioning\033[0m"
 
 # 1. Verify GitHub CLI is installed and authenticated
 if ! command -v gh &> /dev/null; then
@@ -50,4 +50,4 @@ for item in "${LABELS[@]}"; do
     fi
 done
 
-echo -e "\n\033[0;36m✅ Better-PromptKit GitHub labels successfully provisioned!\033[0m\n"
+echo -e "\n\033[0;36m✅ PromptKit OS GitHub labels successfully provisioned!\033[0m\n"

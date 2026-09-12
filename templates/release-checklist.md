@@ -5,7 +5,7 @@
 
 > **Developer-friendly fill-in guide:** **Required** means the release record cannot be complete without a concrete value. **Optional** means record it when the condition applies and use the stated `N/A` value otherwise. **Not applicable** means the release or appendix does not use that concern, such as `N/A` for Trivial Work or a consumer repository. Prefer short evidence with a stable link, exact revision, command, result, and owner. For example, `Verification Link: [CHECK-123](../tests/checks.md#CHECK-123)` and `Verified Result: Pass` are stronger than `verified` alone.
 >
-> **Field status summary:** Release identity, version/tag, deploy lead, target environment, date, commit, linkage state, verification result, and resume condition are **Required**. Execution-control evidence is **Required when Controlled Work applies** and **Not applicable** otherwise. Internal release-evaluation fields are **Required when the Better-PromptKit appendix applies**, **Optional** when conditional, and **Not applicable** for consumers. Environment, migration, smoke-test, observation, and rollback entries are **Required when that release concern exists**; record `None` or `N/A` only where the surrounding prompt permits it.
+> **Field status summary:** Release identity, version/tag, deploy lead, target environment, date, commit, linkage state, verification result, and resume condition are **Required**. Execution-control evidence is **Required when Controlled Work applies** and **Not applicable** otherwise. Internal release-evaluation fields are **Required when the PromptKit OS appendix applies**, **Optional** when conditional, and **Not applicable** for consumers. Environment, migration, smoke-test, observation, and rollback entries are **Required when that release concern exists**; record `None` or `N/A` only where the surrounding prompt permits it.
 >
 > **Acronym guide:** `CI` means Continuous Integration; `TDD` means Test-Driven Development; `QA` means Quality Assurance; `SemVer` means Semantic Versioning; `RPO/RTO` mean Recovery Point Objective/Recovery Time Objective; and `PII` means Personally Identifiable Information. The explanations are guidance only and do not change release, deployment, rollback, or approval ownership.
 
@@ -54,12 +54,12 @@ Use this section for Controlled Work. Enter `N/A` for Trivial Work or for a cons
 
 > Execution-control evidence supports durable traceability only. It does not authorize a tag, push, hosted release, publication, deployment, rollback, or any other external action. Release Coordinator approval remains separate and human-only.
 
-## Better-PromptKit Internal Release Evidence (Optional)
+## PromptKit OS Internal Release Evidence (Optional)
 
-Use this appendix only for Better-PromptKit's own release-evidence evaluation. Enter `N/A` for a consumer repository or when no internal release evaluation applies. These fields record analysis and decisions; they do not execute any release action.
+Use this appendix only for PromptKit OS's own release-evidence evaluation. Enter `N/A` for a consumer repository or when no internal release evaluation applies. These fields record analysis and decisions; they do not execute any release action.
 
 - **Evaluation ID / Status / Date**: `[evaluation ID]` / `[preliminary | blocked | deferred | approved]` / `[YYYY-MM-DD HH:MM UTC]`
-- **Applicability**: `Better-PromptKit only`; consumer repositories: `N/A`
+- **Applicability**: `PromptKit OS only`; consumer repositories: `N/A`
 - **Latest Approved Release Record / Version Source of Truth**: `[record path, approved version, and source commit, or N/A for First Release]`
 - **Prior Approved Release Commit**: `[exclusive baseline commit or N/A for First Release]`
 - **First Release**: `[Yes | No]`

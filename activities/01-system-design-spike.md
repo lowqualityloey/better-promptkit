@@ -22,8 +22,8 @@ Design a high-throughput, fault-tolerant payment webhook ingestion and dispatch 
 
 ## Simulation Steps
 
-### Step 1: Spec-Driven Planning (`workflow plan`)
-1. Activate the plan workflow: `activate the plan workflow for high-throughput webhook system`.
+### Step 1: Spec-Driven Planning (`pk:plan` / `pk:spike`)
+1. Activate the plan workflow: `pk:plan for high-throughput webhook system` (or `pk:spike` to benchmark queueing trade-offs).
 2. Define explicit system boundaries, components, and data contracts.
 3. Choose the appropriate persistence and queueing models (e.g., Redis Streams, Apache Kafka, AWS SQS vs. PostgreSQL with partitioned tables).
 
@@ -48,4 +48,4 @@ Design a high-throughput, fault-tolerant payment webhook ingestion and dispatch 
 ## Success Criteria
 - [ ] Technical spec document thoroughly accounts for peak load, network partition, and duplicate deliveries.
 - [ ] Schema design prevents race conditions on duplicate webhook delivery.
-- [ ] ADR is committed in `notes/adrs/` with clear trade-off justification.
+- [ ] ADR is committed in `./docs/adrs/` with clear trade-off justification.

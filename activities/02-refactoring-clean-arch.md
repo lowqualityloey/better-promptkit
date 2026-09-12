@@ -17,8 +17,8 @@ The existing legacy handler suffers from multiple architectural smells:
 
 ## Simulation Steps
 
-### Step 1: Architectural Assessment (`workflow tutor`)
-1. Activate `workflow tutor` to review the legacy code structure.
+### Step 1: Architectural Assessment (`pk:tutor`)
+1. Activate `pk:tutor` to review the legacy code structure.
 2. Identify domain entities, application use cases, and external infrastructure ports.
 3. Map out the Clean Architecture ring:
    ```text
@@ -43,8 +43,8 @@ The existing legacy handler suffers from multiple architectural smells:
 1. Write pure application use cases (e.g., `PlaceOrderUseCase`).
 2. Build concrete adapters (e.g., `PrismaOrderRepository`, `StripePaymentAdapter`).
 
-### Step 5: Senior Code Review (`workflow review`)
-1. Run `workflow review` on the refactored code.
+### Step 5: Senior Code Review (`pk:review`)
+1. Run `pk:review` on the refactored code.
 2. Verify that unit tests for the use case run in milliseconds without spinning up a real database or network server.
 
 ---

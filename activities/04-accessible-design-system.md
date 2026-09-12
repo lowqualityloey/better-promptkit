@@ -25,8 +25,8 @@ Build a core set of compound, polymorphic UI components:
 
 ## Simulation Steps
 
-### Step 1: Define Design Tokens (`workflow design-system`)
-1. Activate `workflow design-system`.
+### Step 1: Define Design Tokens (`pk:design`)
+1. Activate `pk:design`.
 2. Define primitive and semantic CSS variables for Slate Neutral, Brand Accent, Surface Card, and Destructive states.
 3. Verify color contrast ratios meet WCAG 2.2 Level AA ($4.5:1$ text, $3.0:1$ UI controls).
 

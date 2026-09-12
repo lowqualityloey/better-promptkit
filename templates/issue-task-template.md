@@ -24,7 +24,7 @@
 
 ## Public PromptKit Contract Impact (Optional)
 
-> Complete this section when planning a material change to Better-PromptKit's own workflow, template, protocol, trigger, documented output, required artifact, or documented behavior. It is optional for ordinary task records and does not impose Better-PromptKit versioning or release policy on consumer repositories.
+> Complete this section when planning a material change to PromptKit OS's own workflow, template, protocol, trigger, documented output, required artifact, or documented behavior. It is optional for ordinary task records and does not impose PromptKit OS versioning or release policy on consumer repositories.
 
 - **Affected Public PromptKit Contract**: `[workflow, template, protocol, trigger, output schema, required artifact, or documented behavior]`
 - **Contract Impact Evidence ID / Path**: `[evidence ID and record path, or N/A]`

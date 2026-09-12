@@ -237,8 +237,8 @@ function Validate-EvaluationRecord {
     }
 
     $scope = Get-FieldValue $Record 'Repository Scope'
-    if ($scope -ne 'Better-PromptKit only') {
-        Add-Diagnostic 'INVALID_STATE' $Record.EvaluationId $Record.RelativePath "Repository Scope must be Better-PromptKit only: $scope" 'Limit release-record validation to Better-PromptKit records'
+    if ($scope -notin @('Better-PromptKit only', 'PromptKit OS only')) {
+        Add-Diagnostic 'INVALID_STATE' $Record.EvaluationId $Record.RelativePath "Repository Scope must be PromptKit OS only (or Better-PromptKit only for legacy records): $scope" 'Limit release-record validation to PromptKit OS records'
     }
 
     $status = (Get-FieldValue $Record 'Evaluation Status').ToLowerInvariant()
