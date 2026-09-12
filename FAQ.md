@@ -1,6 +1,6 @@
 # PromptKit OS FAQ
 
-**The 13 questions every developer asks before adopting PromptKit OS.**
+**The 15 questions every developer asks before adopting PromptKit OS.**
 
 ---
 
@@ -493,9 +493,9 @@ Remember: **AI assistants aren't perfect**. PromptKit structures their reasoning
 **Short Answer**: No. PromptKit OS uses a **Just-In-Time (JIT) Filesystem Architecture** with zero static token bloat.
 
 **How it works**:
-- **Baseline footprint**: Initialization scripts inject only a lightweight ~100-line router directive (~1,934 tokens, mechanically measured) into your configuration file (`AGENTS.md`, `CLAUDE.md`, `.cursorrules`, etc.).
+- **Baseline footprint**: Initialization scripts inject only a lightweight ~100-line router directive (~1,822 tokens, mechanically measured) into your configuration file (`AGENTS.md`, `CLAUDE.md`, `.cursorrules`, etc.).
 - **On-demand loading**: The AI only reads specific workflow files (e.g. `workflows/debug.md`) from the local filesystem when that specific workflow is triggered or routed.
-- **Comparison to monolithic prompts**: Traditional prompt packs inline all rules, workflows, and templates directly into the prompt on every turn, consuming 18,000–22,000 tokens statically before work begins. PromptKit preserves ~89.5% of static context overhead compared to monolithic packs (~18,500 tokens).
+- **Comparison to monolithic prompts**: Traditional prompt packs inline all rules, workflows, and templates directly into the prompt on every turn, consuming 18,000–22,000 tokens statically before work begins. PromptKit preserves ~90% of static context overhead compared to monolithic packs (~18,500 tokens).
 - **Subagent context preservation**: Multi-file exploration is delegated to subagents whose results are synthesized into compact findings, reducing conversational bloat by up to 98%.
 - **Mechanical verification**: Measure your exact active directive token footprint anytime using `pwsh -File .promptkit/scripts/measure-tokens.ps1` (or `bash .promptkit/scripts/measure-tokens.sh`).
 
@@ -516,6 +516,28 @@ For complete line-by-line token breakdowns and mathematical analysis, see [docs/
 
 ---
 
+## 14. How does PromptKit OS maintain readability across both rich markdown IDEs and raw terminal CLIs?
+
+**Short Answer**: PromptKit OS adheres to a strict **Dual-Compatible Visual Callout Standard** without proprietary markup or raw HTML.
+
+**How it works**:
+- **Structured 3-Column Telemetry**: Status updates and task completions use a 3-column table matrix (`| Milestone Progress | Active Task | System Health / Quality Gate |` with `[■■■■■□□□□□]`) providing instant situational awareness without vertical sprawl.
+- **Dual-Compatibility**: In GUI environments (Cursor, Antigravity, GitHub), callouts render as rich GitHub-style visual alerts (`> [!IMPORTANT]`, `> [!NOTE]`). In headless terminal CLIs (Claude Code, Gemini CLI, Aider), they fall back gracefully to clean RFC-compliant blockquotes without unrendered HTML tags or visual glitches.
+- **Interactive Turn Handoffs**: When concluding multi-step tasks, the AI invokes native selection tools (OpenCode prompt picker, `ask_question`) with Option 1 marked `(Recommended)`, letting you confirm your next step with arrow keys and `Enter`.
+
+---
+
+## 15. How does PromptKit OS prevent tests or migrations from modifying foreign databases on my host?
+
+**Short Answer**: PromptKit OS enforces a strict **Project Database & Harness Isolation** guardrail across all database and testing workflows.
+
+**How isolation is enforced**:
+- **Project-Scoped Containers**: Database operations (`pk:data`), schema migrations, seeders, and integration test runners (`pk:test`) are strictly prohibited from attaching to shared or foreign host containers (e.g. `api-db-1` or sibling project instances like `jobtracker`).
+- **Explicit Harness Targets**: Test and migration commands must target project-scoped instances (such as `./docker-compose.yml` or dedicated `project-db` containers defined in `PROMPTKIT.md` / `.env.test`).
+- **Zero Accidental Contamination**: Prevents test suites or destructive migration scripts from truncating tables, applying schema changes, or dropping databases in neighboring projects.
+
+---
+
 ## Still Have Questions?
 
 **More detailed documentation**:
@@ -532,6 +554,6 @@ For complete line-by-line token breakdowns and mathematical analysis, see [docs/
 
 ---
 
-**Last Updated**: 2026-09-12  
-**Version**: 1.3.0  
+**Last Updated**: 2026-09-13  
+**Version**: 1.5.1  
 **Maintainer**: [@lowqualityloey](https://github.com/lowqualityloey)

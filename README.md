@@ -19,8 +19,8 @@ PromptKit OS equips your coding assistant with disciplined engineering workflows
 | **Who it is for** | Developers pairing with AI coding agents who want structured specs, living project state, non-breaking schema migrations, and clean git history. |
 | **Who it is NOT for** | Developers looking for an autocomplete inline plugin, a CLI binary, or an npm dependency. PromptKit OS is pure markdown protocols and prompts. |
 | **Why it is better** | Replaces unguided "vibe coding" and token-wasting guess-and-patch loops with systematic, hypothesis-driven development workflows. Structured workflows are designed to reduce redundant back-and-forth by enforcing one-pass planning, artifact reuse, and surgical fixes over guess-and-patch loops. |
-| **Key differences** | Namespaced triggers (`pk:` prefix), guardrails against single-step destructive schema drops (phased Expand-Contract policy), Socratic guidance that avoids unsolicited code dumps, and monorepo workspace isolation (scoped `--filter` commands). |
-| **Token Efficiency** | **Zero Static Token Bloat**: Injects only a ~100-line router (~1,920 tokens*) into your agent directives. Full workflows are read Just-In-Time (JIT) from local files only when triggered (~90% static context reduction vs. 18.5k monolithic packs). See [`docs/BENCHMARKS.md`](./docs/BENCHMARKS.md). |
+| **Key differences** | Namespaced triggers (`pk:` prefix), guardrails against single-step destructive schema drops (phased Expand-Contract policy), strict project-scoped database container isolation, Socratic guidance that avoids unsolicited code dumps, and monorepo workspace isolation (scoped `--filter` commands). |
+| **Token Efficiency** | **Zero Static Token Bloat**: Injects only a ~100-line router (~1,822 tokens*) into your agent directives. Full workflows are read Just-In-Time (JIT) from local files only when triggered (~90% static context reduction vs. 18.5k monolithic packs). See [`docs/BENCHMARKS.md`](./docs/BENCHMARKS.md). |
 | **Durable State Persistence** | **Cross-Session Memory**: State is never lost when chat sessions compact or reset. All active milestones, tasks in flight, and architectural invariants persist directly in Git-tracked markdown (`docs/STATE.md` and `docs/tasks/`). Run `pk:checkpoint` and resume in any fresh session via `pk:route`. |
 | **Adaptive Ceremony & Model Tiering** | **Scales with Risk**: Bypasses heavy templates for daily tweaks (Level 0/1) while reserving deep reasoning, Task Records, and verification gates for schema, auth, and release risks (Level 2/3). Matches LLM model tiers to task risk to prevent token waste. |
 | **Enforced Done-Gates** | **Not Inert Advice**: PromptKit OS enforces verifiable engineering done-gates: strict milestone git boundaries (blocking dirty working tree transitions), automated pre-commit secret leak scans (`pk:commit`), and required Gherkin Acceptance Criteria verification proof. |
@@ -254,9 +254,21 @@ In multi-agent environments (Antigravity, Claude Code, Cursor background agents)
 - **Auto-Discovery**: When running in MCP-capable environments (Antigravity, Cursor, Claude Desktop), the assistant automatically prioritizes structured tool calls (e.g., `github-mcp-server`) over terminal commands (`gh`), preventing terminal pager hangs.
 - **Host Capability & Progressive Enhancement**: Structured MCP tool discovery is a progressive enhancement dependent on host MCP runtime support. If no MCP servers are configured or supported by the host, the assistant gracefully falls back to standard terminal CLI utilities.
 
-### 4. Standardized Human Action Callouts
+### 4. Dual-Compatible Situational Awareness & Telemetry Callouts
 
-- **Zero Action-Blindness**: Whenever the assistant halts a turn requiring human decision, PR review, or local actions, it terminates the message with a high-contrast `> [!IMPORTANT]` callout (`### 🛑 Action Required From You:`). If blocked, it emits `> [!WARNING]` (`### ⚠️ Blocked: Waiting on Human Input`).
+- **Structured 3-Column Telemetry**: When completing tasks, checkpoints, or PR workflows, the assistant displays a standardized 3-column status matrix:
+  ```markdown
+  | Milestone Progress | Active Task | System Health / Quality Gate |
+  | :--- | :--- | :--- |
+  | `M1: Setup` [■■■■■□□□□□] 50% | `TASK-002` (In Progress) | 🟢 Quality Gate: Clean (0 warnings, tests passing) |
+  ```
+- **Zero Action-Blindness**: Whenever the assistant halts a turn requiring human decisions, PR review, or local actions, it terminates the message with a high-contrast `> [!IMPORTANT]` callout (`### 🛑 Action Required From You:`). If blocked, it emits `> [!WARNING]` (`### ⚠️ Blocked: Waiting on Human Input`).
+- **Dual-Compatibility**: All callouts render as rich visual alert blocks in Markdown-aware IDEs and clean RFC-style blockquotes in headless terminal CLIs without breaking raw text readability or using raw HTML.
+
+### 5. Interactive Decision Handoffs
+
+- **Native Selection Modals**: Whenever presenting branching choices at turn completion (e.g. Next Steps, PR options, recovery paths), the assistant triggers native interactive selection tools (e.g. OpenCode prompt picker modal, `ask_question`) with `(Recommended)` prefixing Option 1.
+- **Fast Keyboard Navigation**: Enables developers to select their next action using arrow keys and a single `Enter` keypress instead of forcing them back into manual text entry.
 
 ---
 
@@ -294,15 +306,15 @@ Repository CI validates structural integrity and protocol compliance across Linu
 | Dimension | Single-File Directives | Static Prompt Packs | Autonomous Multi-Agent Swarms | **PromptKit OS** |
 | :--- | :--- | :--- | :--- | :--- |
 | **Scope** | Tool-specific instruction endpoint | Workflow templates for one tool | Multi-agent unmonitored loops | Cross-tool engineering OS with 20 lifecycle workflows |
-| **Token Overhead** | Minimal initial overhead | High monolithic bloat (~18k tokens inlined) | Higher aggregate token cost from multi-agent pipeline calls | **~1,920 tokens JIT baseline\*** (~90% static context reduction vs 18.5k monolithic packs; unused workflows consume 0 tokens) |
+| **Token Overhead** | Minimal initial overhead | High monolithic bloat (~18k tokens inlined) | Higher aggregate token cost from multi-agent pipeline calls | **~1,822 tokens JIT baseline\*** (~90% static context reduction vs 18.5k monolithic packs; unused workflows consume 0 tokens) |
 | **Persistence** | Per-session only | Per-session only | Hidden cache directories prone to context exhaustion | Git-tracked `docs/STATE.md` survives context resets & fresh chats |
 | **Execution Model** | Unstructured chat | Manual template pasting | Background loop until timeout or crash | Disciplined human-in-the-loop pairing (Levels 0–3) |
-| **Database Safety** | No schema guardrails | Varies | Risk of destructive drops in unmonitored edits | Expand-Contract only (phased, non-breaking migrations) |
+| **Database Safety** | No schema guardrails | Varies | Risk of destructive drops in unmonitored edits | Expand-Contract only (phased, non-breaking migrations) & strict Project-Scoped DB container isolation |
 | **Multi-Agent** | Single agent | Single agent | Unmonitored recursive agent spawns | Subagent delegation with compact synthesis (~98% parent context payload reduction) |
 | **Done-Gates** | Trust the model | Trust the model | Fragile timeout heuristics | Artifact gates + Gherkin verification + CI + human review |
 | **Lock-in** | Tool-specific format | Tool-specific format | Framework-specific runtime & daemons | Pure markdown, works with any AI coding assistant |
 
-*\* Measured mechanically via `scripts/measure-tokens.sh` / `measure-tokens.ps1` (7,672 characters at ~4 chars/token heuristic, ~90% static context reduction vs 18.5k monolithic packs). See [`docs/BENCHMARKS.md`](./docs/BENCHMARKS.md) for full context window analysis.*
+*\* Measured mechanically via `scripts/measure-tokens.sh` / `measure-tokens.ps1` (7,288 characters at ~4 chars/token heuristic, ~90% static context reduction vs 18.5k monolithic packs). See [`docs/BENCHMARKS.md`](./docs/BENCHMARKS.md) for full context window analysis.*
 
 ---
 
