@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Dual-Compatible 3-Column Telemetry Matrix**: Standardized structured 3-column status matrix callouts (`| Milestone Progress | Active Task | System Health / Quality Gate |` with `[■■■■■□□□□□]`) across `templates/agent-directive-template.md` and all completion workflows (`workflows/commit.md`, `pr.md`, `plan.md`, `tasks.md`, `test.md`, `data.md`, `fix.md`), rendering cleanly in both rich markdown IDEs and raw terminal CLIs without HTML.
+- **Interactive Turn Handoffs**: Added protocol instructions prompting agents to invoke native interactive selection tools (e.g. OpenCode prompt picker modal, `ask_question`) with `(Recommended)` as Option 1 when concluding tasks with branching choices, enabling keyboard arrow navigation and 1-key `Enter` confirmation.
+- **Project Database & Harness Isolation**: Established a strict guardrail preventing test/migration harnesses from attaching to foreign or sibling project database containers (e.g. `api-db-1`/`jobtracker`), mandating project-scoped database containers.
+- **Telemetry & Isolation Behavioral Contract Tests**: Added Scenarios J and K to `scripts/tests/run-behavioral-contract-tests.*` asserting dual-compatible matrix standards and project container isolation.
+
+### Changed
+- **Documentation & Token Figures**: Updated `README.md`, `docs/BENCHMARKS.md`, and `FAQ.md` with the latest mechanically measured **1,822 token** baseline and added FAQ questions 14 and 15 covering dual-compatible callout standards and project DB isolation.
+
 ---
 
 ## [1.5.1] - 2026-09-13
