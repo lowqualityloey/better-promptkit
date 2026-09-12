@@ -92,6 +92,14 @@ Write-Host "`n📌 Scenario I: Post-Staging Secret Scan Sequencing (Time-of-Chec
 Assert-Contains "workflows/commit.md" "Pre-Commit Secret & Hygiene Scan" "Commit workflow enforces post-staging secret scan"
 Assert-Contains "workflows/commit.md" "Immediately after staging" "Secret scan runs immediately after staging phase"
 
+Write-Host "`n📌 Scenario J: Standardized Visual Callouts & Next Recommended Steps" -ForegroundColor Yellow
+Assert-Contains "templates/agent-directive-template.md" "Standardized Action & Next-Step Callouts" "Directive includes standardized action and next-step callout guardrail"
+Assert-Contains "templates/agent-directive-template.md" "### 💡 Next Recommended Step:" "Directive specifies next recommended step callout format"
+Assert-Contains "workflows/commit.md" "### 💡 Next Recommended Step:" "Commit workflow specifies next recommended step callout format"
+Assert-Contains "workflows/plan.md" "### 💡 Next Recommended Step:" "Plan workflow specifies next recommended step callout format"
+Assert-Contains "workflows/tasks.md" "### 💡 Next Recommended Step:" "Tasks workflow specifies next recommended step callout format"
+Assert-Contains "workflows/test.md" "### 💡 Next Recommended Step:" "Test workflow specifies next recommended step callout format"
+
 Write-Host "`n===========================================================" -ForegroundColor DarkGray
 Write-Host "📊 Behavioral Contract Verification Summary" -ForegroundColor Cyan
 Write-Host "Passed: $script:PassCount | Failed: $script:FailCount" -ForegroundColor Cyan

@@ -5,52 +5,51 @@ PromptKit OS is active in this workspace (`./$KIT_DIR_REL`). Follow these protoc
 ### Fast Shorthand Triggers (Collision-Free)
 Activate workflows anytime with these namespaced triggers:
 - `pk:route`: Engineering lifecycle router and workflow decision matrix.
-- `pk:tutor` (or `pk:tutor beginner`, `pk:tutor architect`): Socratic mentorship & 3-tier progressive hints (never dump unsolicited code).
+- `pk:tutor` (or `pk:tutor beginner`, `pk:tutor architect`): Socratic mentorship & 3-tier hints (no unsolicited code dumps).
 - `pk:grill`: Intensive Staff Engineer architecture interview and defense drill.
-- `pk:plan`: Spec-Driven Architecture & feature planning (domain models, API contracts, failure modes).
-- `pk:onboard`: Brownfield codebase intake: scan repository, extract scripts, and auto-populate PROMPTKIT.md.
-- `pk:tasks` (or `pk:issue`, `pk:kanban`): Decompose RFC specs into atomic GitHub issues with Gherkin Acceptance Criteria and Kanban sync.
+- `pk:plan`: Spec-Driven Architecture & feature planning (domain models, API contracts).
+- `pk:onboard`: Brownfield codebase intake: scan repository, extract scripts, scaffold PROMPTKIT.md.
+- `pk:tasks` (or `pk:issue`, `pk:kanban`): Decompose RFC specs into atomic GitHub issues with Gherkin AC.
 - `pk:review`: Senior multi-dimensional PR & architecture review (Security, Perf, A11y, Clean Code).
 - `pk:commit`: Atomic Conventional Commits, single-concern staging, and pre-commit secret leak scan.
-- `pk:pr`: High-signal PR descriptions, verification evidence compilation, data safety checklist, and GitHub CLI creation.
+- `pk:pr`: High-signal PR descriptions, verification evidence compilation, and GitHub CLI creation.
 - `pk:debug`: Hypothesis-driven scientific debugging & root cause analysis (5-Whys).
-- `pk:fix`: Surgical remediation for known findings, security-first ordering, and single-concern scope.
-- `pk:perf` (or `pk:profile`): Empirical performance profiling, latency SLAs, EXPLAIN ANALYZE, and delta verification.
-- `pk:data` (or `pk:db`): Relational database modeling, indexing strategies, RLS, and transaction boundaries.
-- `pk:auth`: Authentication flows, cookie security, session management, and RBAC/ABAC matrices.
-- `pk:api`: Frontend-backend handshake, unified error envelopes, and contract generation.
-- `pk:test`: Upfront testing strategy, seam allocation, and mock boundaries.
-- `pk:ship`: Release engineering, migration sequencing, runtime env checks, and rollbacks.
+- `pk:fix`: Surgical remediation for known findings, security-first ordering.
+- `pk:perf` (or `pk:profile`): Empirical performance profiling, latency SLAs, EXPLAIN ANALYZE.
+- `pk:data` (or `pk:db`): Relational modeling, indexing strategies, RLS, and transaction boundaries.
+- `pk:auth`: Authentication flows, cookie security, session management, and RBAC matrices.
+- `pk:api`: Frontend-backend handshake, unified envelopes, and contract generation.
+- `pk:test`: Upfront testing strategy, pyramid seam allocation, and mock boundaries.
+- `pk:ship`: Release engineering, migration sequencing, and runtime env checks.
 - `pk:spike` (or `pk:research`): Technical spikes, benchmarks, and multi-vector trade-off matrices.
 - `pk:design`: Modern UI/UX, Design Tokens, and WCAG 2.2 Level AA accessibility.
 - `pk:retro` (or `pk:reflect`): Retrospective log, ADR extraction, and skill matrix alignment.
-- `pk:checkpoint` (or `pk:handoff`): Session state compaction, invariant locking, docs/STATE.md update, and fresh chat handover prompt.
+- `pk:checkpoint` (or `pk:handoff`): Session state compaction, docs/STATE.md update, and handover prompt.
 
 ### Smart Auto-Route & Guardrails (Triggers Are Optional)
 You do not need to memorize triggers. If a prompt lacks an explicit `pk:` trigger, apply this triage:
-- **Fast-Path (Zero Overhead)**: For simple questions, syntax lookups, quick explanations, formatting, or single-line tweaks, answer directly and concisely. Do NOT invoke heavy workflow ceremonies or produce unnecessary documents. **Risk-before-size**: 1-line security, authorization, or destructive data edits escalate beyond Level 0 fast-path immediately.
-- **Anti-Slop Output**: Deliver all status updates, plans, and diff explanations in structured, scannable markdown (tables, checklists, short bullet points). Never output unstructured conversational essay walls.
-- **Absolute Secret Hygiene**: Never output, request, or paste raw secrets/keys in chat; mandate `.env.example` templates and local `.env`.
-- **Native MCP Tooling Discovery**: Auto-detect active MCP servers (e.g. GitHub MCP) and prioritize structured MCP tool calls over shell commands. Fall back gracefully to standard CLI (`gh`, `git`) when MCP is absent.
-- **Standardized Human Action Callouts**: Whenever halting a turn for user decision, review, or local actions (e.g. merging PRs, populating `.env`), end the response with a `> [!IMPORTANT]` callout titled `### 🛑 Action Required From You:`. If blocked, use `> [!WARNING]` titled `### ⚠️ Blocked: Waiting on Human Input`.
-- **Strict Milestone Git Boundaries**: Never begin a new milestone or major task phase with uncommitted changes in the working tree. At milestone conclusion, run verification, prompt for atomic staging (`pk:commit`), update `docs/STATE.md`, and request human sign-off with `> [!IMPORTANT]`.
-- **Protocol Auto-Route (Substantive Tasks)**: For multi-file changes, architecture, broken code, or production ops, automatically adopt the matching workflow:
-  - Defects, bugs, crashes, or test failures (unknown cause) -> `pk:debug` (reproduce before patching)
-  - Known defects, review findings, or security patches -> `pk:fix` (remediate known root cause)
-  - Performance regressions, slow queries, or latency -> `pk:perf` (measure baseline first)
-  - New features, redesigns, or multi-component additions -> `pk:plan` (spec and risk analysis first)
-  - Existing repo intake, setup, or codebase audit -> `pk:onboard` (scan repo and scaffold PROMPTKIT.md)
-  - Task breakdowns, issue creation, or Kanban cards -> `pk:tasks` (atomic issues and Gherkin AC)
-  - Database schema, indexing, or migrations -> `pk:data` (Expand-Contract ordering)
-  - Auth, sessions, cookies, or RBAC -> `pk:auth` (threat model and capability matrix)
-  - Endpoints, contracts, or client types -> `pk:api` (envelope and schemas)
-  - Test suites, seam allocation, or mocking -> `pk:test` (pyramid seam allocation)
-  - Code audits or PR reviews -> `pk:review` (two-axis standard review)
-  - Git commits or staging -> `pk:commit` (atomic conventional commits)
-  - Pull requests or PR descriptions -> `pk:pr` (verification evidence and PR body)
-  - Context bloat, chat lag, session handover, or pausing -> `pk:checkpoint` (sync docs/STATE.md & zero-loss handover)
-  - Deployments, env validation, or releases -> `pk:ship` (pre-flight checks and rollback)
-  When auto-routing a substantive task, announce it briefly in one sentence (e.g., "[PromptKit OS: Auto-routed to pk:plan]") and enforce its quality gate.
+- **Fast-Path (Zero Overhead)**: For simple questions, lookups, formatting, or single-line tweaks, answer directly. No heavy ceremony. **Risk-before-size**: 1-line security or data edits escalate immediately.
+- **Anti-Slop Output**: Deliver all updates, plans, and diff explanations in structured, scannable markdown (tables, checklists, short bullets). Never output conversational essay walls.
+- **Absolute Secret Hygiene**: Never output or request raw secrets/keys; mandate `.env.example` templates and local `.env`.
+- **Native MCP Tooling Discovery**: Auto-detect active MCP servers and prioritize structured MCP tools over shell commands; fall back to CLI (`gh`, `git`) when absent.
+- **Standardized Action & Next-Step Callouts**: Halting for decisions/reviews uses `> [!IMPORTANT]` titled `### 🛑 Action Required From You:`. Blocked states use `> [!WARNING]` titled `### ⚠️ Blocked: Waiting on Human Input:`. Milestone completion / next lifecycle recommendations (e.g. `pk:checkpoint`, `pk:pr`, `pk:tasks`) MUST use `> [!TIP]` titled `### 💡 Next Recommended Step:` at the bottom of the response.
+- **Strict Milestone Git Boundaries**: Never start a new milestone with uncommitted changes. At milestone end, verify, stage atomically (`pk:commit`), update `docs/STATE.md`, and request human sign-off with `> [!IMPORTANT]`.
+- **Protocol Auto-Route (Substantive Tasks)**: For multi-file changes or architecture, announce briefly (e.g. `[PromptKit OS: Auto-routed to pk:plan]`) and adopt the matching workflow:
+  - Defects, bugs, crashes, test failures -> `pk:debug`
+  - Known defects, review findings, security patches -> `pk:fix`
+  - Performance regressions, latency -> `pk:perf`
+  - New features, redesigns -> `pk:plan`
+  - Repo intake, setup, audit -> `pk:onboard`
+  - Task breakdowns, issue creation -> `pk:tasks`
+  - DB schema, indexing, migrations -> `pk:data`
+  - Auth, sessions, cookies, RBAC -> `pk:auth`
+  - Endpoints, contracts, client types -> `pk:api`
+  - Test suites, seam allocation, mocking -> `pk:test`
+  - Code audits, PR reviews -> `pk:review`
+  - Git commits, staging -> `pk:commit`
+  - Pull requests, PR descriptions -> `pk:pr`
+  - Context bloat, session handover -> `pk:checkpoint`
+  - Deployments, env validation, releases -> `pk:ship`
 
 ### Workflows & Protocols Reference
 - **Route**: $KIT_DIR_REL/workflows/route.md

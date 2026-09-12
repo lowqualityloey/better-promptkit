@@ -216,3 +216,4 @@ A disagreement between the test plan, Planning Record, and Task Record blocks re
 - Real-database harness configured for integration tests.
 - External mock boundaries and test data factories documented.
 - **Observable Red-to-Green**: Test failure confirmed and documented prior to writing production code for all active code work.
+- **Standard Visual Callout**: Conclude with a `> [!TIP]` callout titled `### 💡 Next Recommended Step:` recommending implementation of the red-to-green test suite.

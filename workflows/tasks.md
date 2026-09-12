@@ -187,3 +187,4 @@ Before implementation, the Engineer validates the Task ID, scope, acceptance cri
 - Automated verification commands provided for every testable task.
 - Tasks document saved to `docs/tasks/` with copy-pasteable `gh issue create` commands.
 - Living tracker in `docs/STATE.md` updated with the active milestone tasks (if present).
+- **Standard Visual Callout**: Conclude with a `> [!TIP]` callout titled `### 💡 Next Recommended Step:` recommending `pk:test` (upfront test strategy) or implementing the first task.
