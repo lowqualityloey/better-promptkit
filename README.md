@@ -48,6 +48,7 @@ For authoritative Level 0–3 classification, escalation, downgrade, and Task Re
 
 **New to PromptKit?** → See **[FAQ.md](./FAQ.md)** for the 12 most common questions  
 **Getting started?** → See **[QUICKSTART.md](./QUICKSTART.md)** for a 5-minute guided tour  
+**Release History?** → See **[CHANGELOG.md](./CHANGELOG.md)** for version notes and release provenance  
 **Full-Stack Example?** → See **[examples/fullstack-feature/](./examples/fullstack-feature/README.md)** for an end-to-end production feature walkthrough  
 **Existing project?** → See **[ADOPTION-GUIDE.md](./docs/ADOPTION-GUIDE.md)** for gradual adoption  
 **Visual learner?** → See **[WORKFLOW-MAP.md](./docs/WORKFLOW-MAP.md)** for decision trees and diagrams  
