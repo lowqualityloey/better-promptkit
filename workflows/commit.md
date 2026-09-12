@@ -32,19 +32,26 @@ Transform uncommitted workspace diffs into clean, atomic, high-signal Convention
 
 Before staging any file, run these 4 safety checks:
 
-1. **Secret & Credential Scan**:
-   Verify no sensitive files or environment variables are staged:
+1. **Staged Content Secret Scan**:
+   Verify no embedded private keys, tokens, or credentials are staged for commit:
    ```bash
-   git status -s | grep -E '\.env|\.pem|\.key|credentials|secret' || true
+   git diff --cached | grep -E 'BEGIN (RSA |EC |OPENSSH |DSA )?PRIVATE KEY|AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9]{36}|github_pat_[A-Za-z0-9_]{82}|sk_live_[0-9a-zA-Z]{24}|eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}|password\s*[:=]\s*["'\''][^"'\'']{8,}["'\'']' || true
    ```
-   If any secret files are modified or untracked, halt immediately and alert the developer.
+   If matching credential patterns are discovered in staged lines (`+`), halt immediately, alert the developer, and do not proceed with staging or committing.
 
-2. **Temporary Probe Purge**:
+2. **Suspicious Credential Filename Scan**:
+   Verify no credential or environment files are staged or untracked (excluding safe templates like `.env.example`, `.env.template`, or `.env.dist`):
+   ```bash
+   git status -s | grep -vE '\.env\.(example|template|sample|dist|test)' | grep -E '\.env|\.pem$|\.key$|id_rsa|credentials\.json' || true
+   ```
+   If any secret files are modified, staged, or untracked, halt immediately and alert the developer to add them to `.gitignore`.
+
+3. **Temporary Probe Purge**:
    Verify that temporary debug logs or probes (`[DEBUG-xxxx]`) from `pk:debug` are removed:
    ```bash
-   git grep -E '\[DEBUG-|console\.log\("DEBUG|dbg!\(' || true
+   git diff --cached | grep -E '\[DEBUG-|console\.log\("DEBUG|dbg!\(' || true
    ```
-   If temporary probes remain, remove them before committing.
+   If temporary probes remain in staged content, remove them before committing.
 
 ### Controlled & Release-Critical Work Commit Gate
 
@@ -57,10 +64,10 @@ After the existing hygiene checks and before staging, Level 2 (Controlled) and L
 - Route commit construction, Conventional Commit formatting, staging, and developer confirmation through the rest of this workflow. A passing record or validator does not authorize `git add`, `git commit`, push, or any remote action.
 - After the human confirms the commit, record the exact revision and commit evidence in the canonical Task Record. Validator success proves evidence consistency only; it does not approve the commit.
 
-3. **Untracked File Inspection**:
+4. **Untracked File Inspection**:
    Inspect untracked files (`??` in `git status -s`). Ensure scratch scripts or build output folders are added to `.gitignore` rather than accidentally committed.
 
-4. **Quality Gate Verification**:
+5. **Quality Gate Verification**:
    Verify that relevant unit tests and typechecks pass (`pnpm tsc --noEmit`, `npm test`, or commands defined in `PROMPTKIT.md`).
 
 ---

@@ -90,10 +90,18 @@ Avoid hardcoding role checks like `if (user.role === 'ADMIN')` throughout the co
    - Apply strict, tiered rate limiting to `/auth/login`, `/auth/register`, `/auth/forgot-password`, and `/auth/verify-otp`.
    - Rate limit by IP address and targeted account identifier to stop credential stuffing and brute-force attacks.
 2. **Timing-Attack Resistance**:
-   - Use constant-time comparisons when checking passwords, tokens, or signatures:
+   - Use constant-time comparisons when checking passwords, tokens, or signatures (always verify buffer length equality first, as `crypto.timingSafeEqual` throws if byte lengths differ):
      ```typescript
      import crypto from 'node:crypto';
-     const isValid = crypto.timingSafeEqual(Buffer.from(providedToken), Buffer.from(storedToken));
+
+     function safeTokenCompare(provided: string, stored: string): boolean {
+       const a = Buffer.from(provided);
+       const b = Buffer.from(stored);
+       if (a.length !== b.length) {
+         return false;
+       }
+       return crypto.timingSafeEqual(a, b);
+     }
      ```
 3. **Session Invalidation on Security Events**:
    - Invalidate all existing active sessions when a user resets their password, changes their email, or updates their 2FA settings.
@@ -129,7 +137,7 @@ Avoid hardcoding role checks like `if (user.role === 'ADMIN')` throughout the co
 
 | Anti-Pattern | Vulnerability | Remedy |
 | :--- | :--- | :--- |
-| **Tokens in LocalStorage** | Silent token theft via cross-site scripting (XSS). | Store tokens in `HttpOnly`, `Secure` cookies. |
+| **Tokens in LocalStorage** | Direct token exfiltration via cross-site scripting (XSS). | Store tokens in `HttpOnly`, `Secure`, `SameSite=Lax/Strict` cookies to block script access (pair with CSRF protection). |
 | **Hardcoded Role Strings** | Brittle access control that breaks when adding new tiers. | Model access as granular capabilities/permissions. |
 | **Missing OAuth State** | CSRF login attacks linking attacker accounts to victim sessions. | Validate cryptographically secure `state` parameter in callback. |
 | **Unbounded Auth Endpoints** | Credential stuffing and distributed brute-force attacks. | Enforce rate limiting by IP and username. |
