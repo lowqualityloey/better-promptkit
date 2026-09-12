@@ -150,8 +150,13 @@ fi
 # 5. Inject or Replace Directives (Idempotent)
 for target in "${TARGETS_FOUND[@]}"; do
     REL_TARGET="${target#$PROJECT_ROOT/}"
-    if grep -q "<!-- PROMPTKIT_START -->" "$target" 2>/dev/null; then
-        CR=$'\r'
+    CR=$'\r'
+    has_start=0
+    has_end=0
+    if grep -qE "^<!-- PROMPTKIT_START -->${CR}?$" "$target" 2>/dev/null; then has_start=1; fi
+    if grep -qE "^<!-- PROMPTKIT_END -->${CR}?$" "$target" 2>/dev/null; then has_end=1; fi
+
+    if [[ "$has_start" -eq 1 || "$has_end" -eq 1 ]]; then
         start_count="$(grep -E -c "^<!-- PROMPTKIT_START -->${CR}?$" "$target" 2>/dev/null || true)"
         end_count="$(grep -E -c "^<!-- PROMPTKIT_END -->${CR}?$" "$target" 2>/dev/null || true)"
         if [[ "$start_count" -ne 1 || "$end_count" -ne 1 ]]; then
@@ -199,6 +204,7 @@ for target in "${TARGETS_FOUND[@]}"; do
             echo "Error: Unable to safely update $REL_TARGET; the original file was preserved. Update it manually." >&2
             exit 1
         fi
+        chmod --reference="$target" "${updated_file}.content" 2>/dev/null || true
         mv "${updated_file}.content" "$updated_file"
         mv "$updated_file" "$target"
         trap - EXIT

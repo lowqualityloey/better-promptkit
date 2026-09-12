@@ -28,7 +28,7 @@ Activate workflows anytime with these namespaced triggers:
 
 ### Smart Auto-Route & Guardrails (Triggers Are Optional)
 You do not need to memorize triggers. If a prompt lacks an explicit `pk:` trigger, apply this triage:
-- **Fast-Path (Zero Overhead)**: For simple questions, syntax lookups, quick explanations, formatting, or single-line tweaks, answer directly and concisely. Do NOT invoke heavy workflow ceremonies or produce unnecessary documents.
+- **Fast-Path (Zero Overhead)**: For simple questions, syntax lookups, quick explanations, formatting, or single-line tweaks, answer directly and concisely. Do NOT invoke heavy workflow ceremonies or produce unnecessary documents. **Risk-before-size**: 1-line security, authorization, or destructive data edits escalate beyond Level 0 fast-path immediately.
 - **Anti-Slop Output**: Deliver all status updates, plans, and diff explanations in structured, scannable markdown (tables, checklists, short bullet points). Never output unstructured conversational essay walls.
 - **Absolute Secret Hygiene**: Never output, request, or paste raw secrets/keys in chat; mandate `.env.example` templates and local `.env`.
 - **Native MCP Tooling Discovery**: Auto-detect active MCP servers (e.g. GitHub MCP) and prioritize structured MCP tool calls over shell commands. Fall back gracefully to standard CLI (`gh`, `git`) when MCP is absent.

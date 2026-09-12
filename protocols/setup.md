@@ -56,66 +56,7 @@ Ensure the host repository contains documentation directories so generated artif
 If `PROMPTKIT.md` does not exist in the project root, copy `.promptkit/templates/project-profile-template.md` to `./PROMPTKIT.md` for project-specific rules and commands. If `DESIGN.md` is desired for custom visual identity, copy `.promptkit/templates/design-profile-template.md` to `./DESIGN.md`. If `docs/STATE.md` does not exist, copy `.promptkit/templates/state-tracker-template.md` to `./docs/STATE.md` for living project state tracking.
 
 ### 4. Inject PromptKit Core Directives
-Append or merge the following directive block into the detected configuration file(s):
-
-```markdown
-<!-- PROMPTKIT_START -->
-## PromptKit OS: Engineering Operating System
-PromptKit OS is active in this workspace (`./.promptkit` or `./promptkit`). Follow these protocols, workflows, and quality gates during pair-programming, design, code generation, and review:
-
-### Fast Shorthand Triggers (Collision-Free)
-Activate workflows anytime with these namespaced triggers:
-- `pk:route`: Engineering lifecycle router and workflow decision matrix.
-- `pk:tutor` (or `pk:tutor beginner`, `pk:tutor architect`): Socratic mentorship & 3-tier progressive hints (avoids unsolicited code dumps).
-- `pk:grill`: Intensive Staff Engineer architecture interview and defense drill.
-- `pk:plan`: Spec-Driven Architecture & feature planning (domain models, API contracts, failure modes).
-- `pk:onboard`: Brownfield codebase intake: scan repository, extract scripts, and auto-populate PROMPTKIT.md.
-- `pk:tasks` (or `pk:issue`, `pk:kanban`): Decompose RFC specs into atomic GitHub issues with Gherkin Acceptance Criteria and Kanban sync.
-- `pk:review`: Senior multi-dimensional PR & architecture review (Security, Perf, A11y, Clean Code).
-- `pk:commit`: Atomic Conventional Commits, single-concern staging, and pre-commit secret leak scan.
-- `pk:pr`: High-signal PR descriptions, verification evidence compilation, data safety checklist, and GitHub CLI creation.
-- `pk:debug`: Hypothesis-driven scientific debugging & root cause analysis (5-Whys).
-- `pk:perf` (or `pk:profile`): Empirical performance profiling, latency SLAs, EXPLAIN ANALYZE, and delta verification.
-- `pk:data` (or `pk:db`): Relational database modeling, indexing strategies, RLS, and transaction boundaries.
-- `pk:auth`: Authentication flows, cookie security, session management, and RBAC/ABAC matrices.
-- `pk:api`: Frontend-backend handshake, unified error envelopes, and contract generation.
-- `pk:test`: Upfront testing strategy, seam allocation, and mock boundaries.
-- `pk:ship`: Release engineering, migration sequencing, runtime env checks, and rollbacks.
-- `pk:spike` (or `pk:research`): Technical spikes, benchmarks, and multi-vector trade-off matrices.
-- `pk:design`: Modern UI/UX, Design Tokens, and WCAG 2.2 Level AA accessibility.
-- `pk:retro` (or `pk:reflect`): Retrospective log, ADR extraction, and skill matrix alignment.
-- `pk:checkpoint` (or `pk:handoff`): Session state compaction, invariant locking, docs/STATE.md update, and fresh chat handover prompt.
-
-### Task Ceremony Levels & Smart Auto-Route
-PromptKit OS adapts ceremony based on task risk and impact:
-- **Level 0 (Direct / Zero Overhead)**: Trivial documentation fixes, syntax lookups, formatting, or single-line tweaks. Direct execution (`understand → change → verify`) with zero ceremony.
-- **Level 1 (Standard)**: Localized bug fixes or small self-contained features. Standard workflow execution (`pk:debug`, `pk:test`) with lightweight inline planning; no formal task record file required.
-- **Level 2 (Controlled)**: Architecture, relational data/schema migrations, auth, permissions, breaking public API contracts, or multi-component changes. Requires formal Task Record (`docs/tasks/<task-id>.md`) and spec (`pk:plan`, `pk:data`, `pk:auth`, `pk:api`).
-- **Level 3 (Release-Critical)**: Production releases, deployments, high-impact contract changes, or tag generation. Requires full candidate evaluation (`pk:ship`), QA review, and explicit human authorization.
-
-For authoritative Level 0–3 classification, escalation, downgrade, and Task Record rules, see [`workflows/route.md`](../workflows/route.md).
-
-- **Anti-Slop Output**: Deliver all status updates, plans, and diff explanations in structured, scannable markdown (tables, checklists, short bullet points). Never output unstructured conversational essay walls.
-- **Absolute Secret Hygiene**: Never output, request, or paste raw secrets/keys in chat; mandate `.env.example` templates and local `.env`.
-- **Native MCP Tooling Discovery**: Auto-detect active MCP servers (e.g. GitHub MCP) and prioritize structured MCP tool calls over shell commands. Fall back gracefully to standard CLI (`gh`, `git`) when MCP is absent.
-- **Standardized Human Action Callouts**: Whenever halting a turn for user decision, review, or local actions (e.g. merging PRs, populating `.env`), end the response with a `> [!IMPORTANT]` callout titled `### 🛑 Action Required From You:`. If blocked, use `> [!WARNING]` titled `### ⚠️ Blocked: Waiting on Human Input`.
-
-When auto-routing:
-  - Defects, bugs, crashes, or test failures -> `pk:debug` (reproduce before patching)
-  - Performance regressions, slow queries, or latency -> `pk:perf` (measure baseline first)
-  - New features, redesigns, or multi-component additions -> `pk:plan` (spec and risk analysis first)
-  - Existing repo intake, setup, or codebase audit -> `pk:onboard` (scan repo and scaffold PROMPTKIT.md)
-  - Task breakdowns, issue creation, or Kanban cards -> `pk:tasks` (atomic issues and Gherkin AC)
-  - Database schema, indexing, or migrations -> `pk:data` (Expand-Contract phased ordering)
-  - Auth, sessions, cookies, or RBAC -> `pk:auth` (threat model and capability matrix)
-  - Endpoints, contracts, or client types -> `pk:api` (envelope and schemas)
-  - Test suites, seam allocation, or mocking -> `pk:test` (pyramid seam allocation)
-  - Code audits or PR reviews -> `pk:review` (two-axis standard review)
-  - Git commits or staging -> `pk:commit` (atomic conventional commits)
-  - Pull requests or PR descriptions -> `pk:pr` (verification evidence and PR body)
-  - Context bloat, chat lag, session handover, or pausing -> `pk:checkpoint` (sync docs/STATE.md & zero-loss handover)
-  - Deployments, env validation, or releases -> `pk:ship` (pre-flight checks and rollback)
-  When auto-routing a substantive task, announce it briefly in one sentence (e.g., "[PromptKit OS: Auto-routed to pk:plan]") and enforce its quality gate.
+Append or merge the exact contents of `templates/agent-directive-template.md` into the detected configuration file(s). Do not hardcode the markdown here. `templates/agent-directive-template.md` is the single source of truth for the injected block. Replace `$KIT_DIR_REL` in the template with the relative path to the `.promptkit` repository (e.g. `.promptkit`).
 
 ### Progressive Loading Policy
 To optimize context window efficiency and minimize token overhead, agents must follow this progressive loading sequence:

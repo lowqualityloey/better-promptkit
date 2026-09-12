@@ -18,7 +18,10 @@ param (
     [string]$Action = "list",
 
     [Parameter(Position = 1, Mandatory = $false)]
-    [string]$TaskId = ""
+    [string]$TaskId = "",
+
+    [Parameter(Mandatory = $false)]
+    [switch]$Force
 )
 
 $ErrorActionPreference = "Stop"
@@ -97,7 +100,21 @@ switch ($Action) {
 
         Write-Host "🧹 Removing worktree at $TargetPath..." -ForegroundColor Cyan
         if (Test-Path $TargetPath) {
-            git worktree remove $TargetPath --force
+            if ($Force) {
+                git worktree remove $TargetPath --force
+            } else {
+                try {
+                    $originalEAP = $ErrorActionPreference
+                    $ErrorActionPreference = "Continue"
+                    $result = git worktree remove $TargetPath 2>&1
+                    if ($LASTEXITCODE -ne 0) {
+                        Write-Error "Worktree has uncommitted changes or unmerged branches.`nUse -Force to forcefully remove it."
+                        exit 1
+                    }
+                } finally {
+                    $ErrorActionPreference = $originalEAP
+                }
+            }
         } else {
             git worktree prune
         }
@@ -105,8 +122,23 @@ switch ($Action) {
         # Optional branch deletion
         $branchExists = git branch --list $BranchName
         if ($branchExists) {
-            git branch -D $BranchName
-            Write-Host "  [-] Deleted branch $BranchName" -ForegroundColor DarkGray
+            if ($Force) {
+                git branch -D $BranchName
+                Write-Host "  [-] Force deleted branch $BranchName" -ForegroundColor DarkGray
+            } else {
+                try {
+                    $originalEAP = $ErrorActionPreference
+                    $ErrorActionPreference = "Continue"
+                    $result = git branch -d $BranchName 2>&1
+                    if ($LASTEXITCODE -ne 0) {
+                        Write-Error "Branch $BranchName is not fully merged.`nUse -Force to forcefully delete it."
+                        exit 1
+                    }
+                    Write-Host "  [-] Deleted branch $BranchName" -ForegroundColor DarkGray
+                } finally {
+                    $ErrorActionPreference = $originalEAP
+                }
+            }
         }
         Write-Host "  ✅ Worktree cleaned up successfully." -ForegroundColor Green
     }

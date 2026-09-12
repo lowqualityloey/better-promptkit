@@ -108,6 +108,22 @@ fi
 after_hash="$(sha256sum "$REVERSED_ROOT/AGENTS.md" | cut -d' ' -f1)"
 [[ "$before_hash" == "$after_hash" ]]
 
+# Test: Orphaned END marker fails loudly and preserves file
+ORPHANED_END_ROOT="$TEST_ROOT/orphaned_end"
+mkdir -p "$ORPHANED_END_ROOT"
+cat > "$ORPHANED_END_ROOT/AGENTS.md" <<'EOF'
+Header
+<!-- PROMPTKIT_END -->
+Footer
+EOF
+before_hash="$(sha256sum "$ORPHANED_END_ROOT/AGENTS.md" | cut -d' ' -f1)"
+if bash "$REPO_ROOT/init.sh" "$ORPHANED_END_ROOT" >/dev/null 2>&1; then
+    echo "Expected orphaned END marker to fail." >&2
+    exit 1
+fi
+after_hash="$(sha256sum "$ORPHANED_END_ROOT/AGENTS.md" | cut -d' ' -f1)"
+[[ "$before_hash" == "$after_hash" ]]
+
 # Test: Directive replacement tool failure (awk failure) fails loudly and preserves file
 AWK_FAIL_ROOT="$TEST_ROOT/awkfail"
 mkdir -p "$AWK_FAIL_ROOT" "$FAKE_BIN"
@@ -157,6 +173,24 @@ bash "$REPO_ROOT/init.sh" "$DIR_ROOT" >/dev/null
 [[ -f "$DIR_ROOT/.clinerules/promptkit.md" ]]
 grep -q '## PromptKit OS: Engineering Operating System' "$DIR_ROOT/.clinerules/promptkit.md"
 
+# Test: File permission parity is preserved on update
+PERMISSIONS_ROOT="$TEST_ROOT/permissions"
+mkdir -p "$PERMISSIONS_ROOT"
+cat > "$PERMISSIONS_ROOT/AGENTS.md" <<'EOF'
+Header
+<!-- PROMPTKIT_START -->
+Block 1
+<!-- PROMPTKIT_END -->
+Footer
+EOF
+chmod 600 "$PERMISSIONS_ROOT/AGENTS.md"
+bash "$REPO_ROOT/init.sh" "$PERMISSIONS_ROOT" >/dev/null
+new_perms="$(stat -c "%a" "$PERMISSIONS_ROOT/AGENTS.md")"
+if [[ "$new_perms" != "600" ]]; then
+    echo "Expected permissions to remain 600, but got $new_perms." >&2
+    exit 1
+fi
+
 # Strict byte-for-byte idempotency on repeated runs
 IDEMPOTENT_ROOT="$TEST_ROOT/idempotent"
 mkdir -p "$IDEMPOTENT_ROOT"
@@ -167,4 +201,4 @@ bash "$REPO_ROOT/init.sh" "$IDEMPOTENT_ROOT" >/dev/null
 second_hash="$(sha256sum "$IDEMPOTENT_ROOT/AGENTS.md" | cut -d' ' -f1)"
 [[ "$first_hash" == "$second_hash" ]]
 
-echo "init.sh non-destructive update, CRLF/LF compatibility, duplicate/malformed/reversed markers, literal $, awk failure, UTF-8, directory targets, and byte-idempotency tests passed."
+echo "init.sh non-destructive update, CRLF/LF compatibility, duplicate/malformed/reversed markers, literal $, awk failure, UTF-8, directory targets, file permissions, and byte-idempotency tests passed."
