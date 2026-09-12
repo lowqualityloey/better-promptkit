@@ -15,8 +15,8 @@ Investigate and resolve a critical, intermittent bug in a real-time collaborativ
 
 ## Simulation Steps
 
-### Step 1: Scientific Hypothesis Formulation (`workflow debug`)
-1. Activate the debug workflow: `activate the debug workflow for async race condition and memory leak`.
+### Step 1: Scientific Hypothesis Formulation (`pk:debug`)
+1. Activate the debug workflow: `pk:debug for async race condition and memory leak`.
 2. Construct a minimal reproduction script simulating rapid tab switches in an automated loop.
 3. Draft 3 falsifiable hypotheses regarding the root cause (e.g., missing `AbortController` signal cancellation, un-unsubscribed WebSocket listener, closure retaining large object references).
 
@@ -36,7 +36,7 @@ Investigate and resolve a critical, intermittent bug in a real-time collaborativ
    - Only the latest promise updates the final state.
    - Event listener count remains exactly zero after teardown.
 
-### Step 5: Post-Mortem Documentation (`templates/rca-postmortem-template.md`)
+### Step 5: Post-Mortem Documentation (`.promptkit/templates/rca-postmortem-template.md`)
 1. Fill out a Root Cause Analysis post-mortem capturing the timeline, 5 Whys, and preventative measures.
 
 ---
@@ -45,4 +45,4 @@ Investigate and resolve a critical, intermittent bug in a real-time collaborativ
 - [ ] Reproducible failing test created before fixing the bug.
 - [ ] Zero race conditions or stale updates under high-concurrency simulation.
 - [ ] Memory leak eliminated and verified via memory profiling or listener counter assertions.
-- [ ] RCA document created in `notes/spikes/` or project docs.
+- [ ] RCA document created in `./docs/rca/` (or project docs).

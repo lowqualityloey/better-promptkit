@@ -9,7 +9,7 @@ $ErrorActionPreference = "Continue"
 $script:ErrorCount = 0
 $script:WarningCount = 0
 
-Write-Host "`n🔍 Better-PromptKit Reference Validation`n" -ForegroundColor Cyan
+Write-Host "`n🔍 PromptKit OS Reference Validation`n" -ForegroundColor Cyan
 
 # Resolve paths
 if (-not (Test-Path $PromptKitDir)) {

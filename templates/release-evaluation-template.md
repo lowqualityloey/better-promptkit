@@ -1,4 +1,4 @@
-# Better-PromptKit Release Evaluation: [Evaluation ID]
+# PromptKit OS Release Evaluation: [Evaluation ID]
 
 <!-- Replace the example anchor ID with the immutable Release ID before saving the record. -->
 <a id="RELEASE-release-slug"></a>
@@ -19,13 +19,13 @@
 - **Release ID [Required]**: `RELEASE-<release-slug>`
 - **Canonical Release Record Path [Required]**: `docs/releases/<release>.md`
 - **Evaluation ID**: `[EVAL-YYYY-MM-DD-slug]`
-- **Repository Scope**: `Better-PromptKit only`
+- **Repository Scope**: `PromptKit OS only`
 - **Evaluation Owner / Role**: `[Release Coordinator, Planner/Architect, or QA/Reviewer]`
 - **QA/Reviewer**: `[name or role]`
 - **Release Coordinator**: `[name or role, or N/A before approval]`
 - **Created**: `[YYYY-MM-DD HH:MM UTC]`
 - **Evaluation Status**: `[preliminary | blocked | deferred | approved]`
-- **Consumer Repository Applicability**: `N/A`; this evaluation does not impose commit, versioning, release-note, tag, remote, or publication policy on repositories that consume Better-PromptKit.
+- **Consumer Repository Applicability**: `N/A`; this evaluation does not impose commit, versioning, release-note, tag, remote, or publication policy on repositories that consume PromptKit OS.
 - **Evaluation Objective**: `[why this release candidate is being evaluated]`
 
 ## 2. Prior Baseline and Bounded Release Range

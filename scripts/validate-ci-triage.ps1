@@ -1,4 +1,4 @@
-# Read-only Better-PromptKit CI triage state, action, and release-handoff validator.
+# Read-only PromptKit OS CI triage state, action, and release-handoff validator.
 # Usage: .\scripts\validate-ci-triage.ps1 [-Root PATH] [-Strict]
 
 [CmdletBinding()]

@@ -9,7 +9,7 @@ ERROR_COUNT=0
 WARNING_COUNT=0
 
 echo ""
-echo "🔍 Better-PromptKit Reference Validation"
+echo "🔍 PromptKit OS Reference Validation"
 echo ""
 
 # Resolve paths

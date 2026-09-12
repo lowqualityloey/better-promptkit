@@ -1,6 +1,6 @@
 ---
 name: Task Specification
-about: Standard Better-PromptKit task with Gherkin AC and technical invariants
+about: Standard PromptKit OS task with Gherkin AC and technical invariants
 title: "<type>(<scope>): <summary>"
 labels: ["type:feature", "priority/p1"]
 ---

@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
-    Provision Better-PromptKit standard labels on GitHub.
+    Provision PromptKit OS standard labels on GitHub.
 .DESCRIPTION
     Uses GitHub CLI (gh) to idempotently create or update the standard
-    Better-PromptKit priority/*, type:*, and area:* labels.
+    PromptKit OS priority/*, type:*, and area:* labels.
 #>
 
 [CmdletBinding()]
@@ -11,7 +11,7 @@ param()
 
 $ErrorActionPreference = "Stop"
 
-Write-Host "`n🏷️  Better-PromptKit GitHub Label Provisioning" -ForegroundColor Cyan
+Write-Host "`n🏷️  PromptKit OS GitHub Label Provisioning" -ForegroundColor Cyan
 
 # 1. Verify GitHub CLI is installed and authenticated
 try {
@@ -61,4 +61,4 @@ foreach ($label in $Labels) {
     }
 }
 
-Write-Host "`n✅ Better-PromptKit GitHub labels successfully provisioned!`n" -ForegroundColor Cyan
+Write-Host "`n✅ PromptKit OS GitHub labels successfully provisioned!`n" -ForegroundColor Cyan

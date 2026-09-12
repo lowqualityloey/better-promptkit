@@ -311,8 +311,8 @@ validate_evaluation() {
     done
 
     scope="$(field_value "$index" 'Repository Scope')"
-    if [ "$scope" != 'Better-PromptKit only' ]; then
-        diagnostic "INVALID_STATE" "${RECORD_ID[$index]}" "${RECORD_RELATIVE[$index]}" "Repository Scope must be Better-PromptKit only: $scope" "Limit release-record validation to Better-PromptKit records"
+    if [ "$scope" != 'Better-PromptKit only' ] && [ "$scope" != 'PromptKit OS only' ]; then
+        diagnostic "INVALID_STATE" "${RECORD_ID[$index]}" "${RECORD_RELATIVE[$index]}" "Repository Scope must be PromptKit OS only (or Better-PromptKit only for legacy records): $scope" "Limit release-record validation to PromptKit OS records"
     fi
 
     status="$(field_value "$index" 'Evaluation Status')"

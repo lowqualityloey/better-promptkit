@@ -1,6 +1,6 @@
 # Contract Impact Evidence: [Evidence ID]
 
-<!-- Use this record for Better-PromptKit planning, commit-linked evidence, or QA/Reviewer review. It records evidence and a proposed impact only. It does not approve a release or perform an external action. -->
+<!-- Use this record for PromptKit OS planning, commit-linked evidence, or QA/Reviewer review. It records evidence and a proposed impact only. It does not approve a release or perform an external action. -->
 
 ## 1. Identity and Scope
 
@@ -12,8 +12,8 @@
 - **Conventional Commit Type and Subject**: `[type(scope): subject or N/A]`
 - **Owner / Role**: `[Planner/Architect | Engineer | QA/Reviewer]`
 - **Created**: `[YYYY-MM-DD HH:MM UTC]`
-- **Applicable Repository**: `Better-PromptKit`
-- **Consumer Repository Applicability**: `N/A`; this evidence records Better-PromptKit's own workflow and template contract and does not impose versioning or release policy on consumer repositories.
+- **Applicable Repository**: `PromptKit OS`
+- **Consumer Repository Applicability**: `N/A`; this evidence records PromptKit OS's own workflow and template contract and does not impose versioning or release policy on consumer repositories.
 
 ## 2. Public PromptKit Contract
 
@@ -21,13 +21,13 @@
 - **Contract Category**: `[Workflow | Template | Protocol | Trigger | Output Schema | Required Artifact | Documented Behavior]`
 - **Affected Path(s) or Trigger(s)**: `[repository-relative paths, command triggers, or N/A]`
 - **Supporting Planning / Review Records**: `[record paths, issue references, or N/A]`
-- **Intended Better-PromptKit User or Maintainer**: `[role or audience]`
+- **Intended PromptKit OS User or Maintainer**: `[role or audience]`
 - **Contract Scope Boundary**: `[what is intentionally included and what remains outside this evidence]`
 
 ## 3. User-Observable Contract Evidence
 
-- **Before Behavior**: `[What a Better-PromptKit user or maintainer observes before the change]`
-- **After Behavior**: `[What a Better-PromptKit user or maintainer observes after the change]`
+- **Before Behavior**: `[What a PromptKit OS user or maintainer observes before the change]`
+- **After Behavior**: `[What a PromptKit OS user or maintainer observes after the change]`
 - **User / Consumer Impact**: `[observable benefit, correction, compatibility consequence, or N/A for maintenance]`
 - **Compatibility and Adoption Consequence**: `[backward-compatible, requires migration, optional adoption, or N/A]`
 - **Evidence Source**: `[diff, workflow comparison, example, review record, or other durable evidence reference]`
@@ -64,4 +64,4 @@
 - **Approved Release Association**: `N/A until a separate Release Coordinator approval record exists.`
 - **External Action Decision**: `N/A; this record never creates or pushes tags, creates hosted releases, publishes changelogs, performs remote operations, deploys, or rolls back.`
 
-A Contract Impact Evidence record supports traceability. It does not calculate an approved version, replace the Local Task Source, authorize a commit or merge, or impose Better-PromptKit policy on consumer repositories.
+A Contract Impact Evidence record supports traceability. It does not calculate an approved version, replace the Local Task Source, authorize a commit or merge, or impose PromptKit OS policy on consumer repositories.

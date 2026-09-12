@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Read-only Better-PromptKit CI triage state, action, and release-handoff validator.
+# Read-only PromptKit OS CI triage state, action, and release-handoff validator.
 # Usage: ./scripts/validate-ci-triage.sh [--root PATH] [--strict]
 
 set -u
