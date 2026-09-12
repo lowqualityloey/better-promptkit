@@ -180,6 +180,7 @@ jobs:
             $nonGrandfathered | ForEach-Object { Write-Error $_ }
             throw "Release record validation errors found in $($nonGrandfathered.Count) non-grandfathered check(s)."
           }
+          $LASTEXITCODE = 0
           Write-Host "All non-grandfathered release records passed validation."
 
       - name: Run Reference and Structural Validator (PowerShell)
