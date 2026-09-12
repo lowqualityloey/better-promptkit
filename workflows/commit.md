@@ -202,19 +202,18 @@ docs(adrs): record decision to adopt UUIDv7 for primary keys
    git commit -m "<subject>" -m "<body-paragraphs>"
    ```
 4. Confirm commit creation with `git log -n 1 --stat`.
-5. **Dual-Compatible 3-Column Telemetry Callout**: Conclude the turn by displaying the next recommended lifecycle step in a dedicated `> [!TIP]` callout box featuring the structured 3-column telemetry matrix:
+5. **Dual-Compatible Telemetry Status Card & Interactive Handoff**: Conclude the turn by displaying the status card and invoking the native interactive selection tool:
+   > 📊 **Milestone**: `M2: Core Features` `[■■■■■□□□□□]` 42% (5/12)  
+   > 🎯 **Active**: `TASK-04: Tenant CRUD` (Committed)  
+   > 🟢 **Quality Gate**: Clean (`5/5 ACs ✓` · `🔒 7 Invariants`)
+
    > [!TIP]
    > ### 💡 Next Recommended Step
-   > 
-   > | Milestone Progress | Active Task | System Health |
-   > | :--- | :--- | :--- |
-   > | `[■■■■□□□□□□] 33%` | `TASK-04: Tenant CRUD` | `5/5 ACs ✓` · `🔒 7 Invariants` |
-   > 
    > - If completing a task or milestone: run **`pk:checkpoint`** (compact session state & sync `docs/STATE.md`)
    > - If ready to open a pull request for review: run **`pk:pr`**
    > - If continuing work on the next issue: run **`pk:tasks`**
-   > 
-   > *(When multiple next-step branches exist, invoke native interactive selection tools with Option 1 `(Recommended)` so the developer can confirm with `Enter`)*
+
+   *(You MUST invoke the host's native interactive selection tool e.g. `ask_question` / prompt picker as your final action with Option 1 marked `(Recommended)` so the developer can navigate with arrow keys and confirm with `Enter`)*
 
 
 ---

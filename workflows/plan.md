@@ -203,7 +203,7 @@ The Planner / Architect hands the objective, bounded files or behaviors, accepta
 - FMEA failure modes and mitigation fallbacks explicitly documented.
 - Implementation milestones follow the Task Record's TDD Enforcement Mode: enabled Code Work has Red -> Green -> Refactor evidence; disabled Code Work has complete dependency-ordered milestones without mandatory TDD.
 - Documentation, Configuration, and Research Work use an explicit exception verification path, and ambiguous work remains on the Code Work path until clarified.
-- **Dual-Compatible 3-Column Telemetry Callout**: Conclude with a `> [!TIP]` callout titled `### 💡 Next Recommended Step` featuring the structured 3-column telemetry matrix (`| Milestone Progress | Active Task | System Health |` with `[■■■■□□□□□□]`) recommending `pk:grill` or `pk:tasks`. When multiple next steps exist, invoke native interactive selection tools with Option 1 `(Recommended)` so the developer can confirm with `Enter`.
+- **Dual-Compatible Telemetry Status Card**: Conclude with a 3-line telemetry status card (`> 📊 **Milestone**: ... \n> 🎯 **Active**: ... \n> 🟢 **Quality Gate**: ...`) and a `> [!TIP]` callout recommending `pk:grill` or `pk:tasks`. When multiple next steps exist, invoke native interactive selection tools (e.g. `ask_question`) as your final tool call with Option 1 `(Recommended)` so the developer can navigate with arrow keys and confirm with `Enter`.
 
 
 ---
