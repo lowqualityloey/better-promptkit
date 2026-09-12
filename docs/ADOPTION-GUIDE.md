@@ -1,12 +1,12 @@
 # Incremental Adoption Guide for Existing Projects
 
-How to adopt Better-PromptKit gradually in legacy codebases, established teams, and production systems **without disrupting active development**.
+How to adopt PromptKit OS gradually in legacy codebases, established teams, and production systems **without disrupting active development**.
 
 ---
 
 ## Philosophy: No Big Bang
 
-Better-PromptKit is designed for **gradual adoption**. You don't need to:
+PromptKit OS is designed for **gradual adoption**. You don't need to:
 - Halt development to "set up PromptKit"
 - Refactor existing code to meet new standards
 - Force the entire team to switch overnight
@@ -26,7 +26,7 @@ Better-PromptKit is designed for **gradual adoption**. You don't need to:
 **Steps**:
 1. In your AI assistant, paste this directive:
    ```
-   I want to try Better-PromptKit workflows. When I ask for help:
+   I want to try PromptKit OS workflows. When I ask for help:
    - Debugging → use hypothesis-driven scientific debugging (pk:debug principles)
    - Code review → use two-axis review (spec fidelity + technical standards)
    - Learning → use 3-tier Socratic hints (no code dumps)
@@ -53,7 +53,7 @@ Better-PromptKit is designed for **gradual adoption**. You don't need to:
 **Steps**:
 1. Add PromptKit to your local repo (don't commit yet):
    ```bash
-   git clone https://github.com/lowqualityloey/better-promptkit .promptkit
+   git clone https://github.com/lowqualityloey/promptkit-os .promptkit
    echo ".promptkit/" >> .git/info/exclude  # Personal gitignore
    ```
 
@@ -87,16 +87,16 @@ Better-PromptKit is designed for **gradual adoption**. You don't need to:
 **Steps**:
 1. Add PromptKit as a tracked submodule and initialize:
    ```bash
-   git submodule add https://github.com/lowqualityloey/better-promptkit .promptkit && ./.promptkit/init.sh
+   git submodule add https://github.com/lowqualityloey/promptkit-os .promptkit && ./.promptkit/init.sh
    # On Windows PowerShell:
-   # git submodule add https://github.com/lowqualityloey/better-promptkit .promptkit; .\.promptkit\init.ps1
+   # git submodule add https://github.com/lowqualityloey/promptkit-os .promptkit; .\.promptkit\init.ps1
 
    git add .promptkit/ PROMPTKIT.md
    # Also stage whichever agent config file init created or updated:
    # AGENTS.md (fallback), CLAUDE.md, GEMINI.md, .cursorrules,
    # .cursor/rules/promptkit.mdc, .windsurfrules, .clinerules,
    # .traerules, .opencode/rules.md, or .github/copilot-instructions.md
-   git commit -m "chore: add better-promptkit for engineering standards"
+   git commit -m "chore: add promptkit-os for engineering standards"
    ```
 
 2. Customize `PROMPTKIT.md` for your project:
@@ -108,7 +108,7 @@ Better-PromptKit is designed for **gradual adoption**. You don't need to:
    ```markdown
    # In your PR introducing PromptKit:
    
-   This PR adds Better-PromptKit to document our existing practices:
+   This PR adds PromptKit OS to document our existing practices:
    - Test commands: `npm test`, `npm run test:e2e`
    - Stack: Next.js 14, PostgreSQL, Drizzle ORM
    - Standards: TypeScript strict mode, HttpOnly cookies, RLS
@@ -170,7 +170,7 @@ Better-PromptKit is designed for **gradual adoption**. You don't need to:
 ### Level 4: Full Process Integration (STATE.md + Milestones)
 **Time**: 2 hours initial + weekly updates  
 **Commitment**: Active `docs/STATE.md` tracking  
-**Goal**: Better-PromptKit becomes your team's operating system
+**Goal**: PromptKit OS becomes your team's operating system
 
 **Steps**:
 1. Initialize `docs/STATE.md`:
@@ -273,7 +273,7 @@ Better-PromptKit is designed for **gradual adoption**. You don't need to:
 
 2. In each service repo:
    ```bash
-   git submodule add https://github.com/lowqualityloey/better-promptkit .promptkit
+   git submodule add https://github.com/lowqualityloey/promptkit-os .promptkit
    cp ../company-eng-standards/promptkit-shared/PROMPTKIT-template.md ./PROMPTKIT.md
    # Customize per-service
    ```
@@ -381,7 +381,7 @@ git rm PROMPTKIT.md AGENTS.md .cursorrules  # or whichever you added
 # Keep docs/ if valuable
 # Or delete: git rm -r docs/specs docs/adrs docs/STATE.md
 
-git commit -m "chore: remove better-promptkit"
+git commit -m "chore: remove promptkit-os"
 ```
 
 **What you keep**:
@@ -425,4 +425,4 @@ git commit -m "chore: remove better-promptkit"
 
 ---
 
-**Remember**: Better-PromptKit is a **framework**, not a mandate. Start with what helps you today, expand when you're ready.
+**Remember**: PromptKit OS is a **framework**, not a mandate. Start with what helps you today, expand when you're ready.

@@ -34,7 +34,7 @@ bash "$REPO_ROOT/init.sh" "$PROJECT_ROOT" >/dev/null
 grep -q '^# User-owned instructions$' "$PROJECT_ROOT/AGENTS.md"
 grep -q '^Keep this content\.$' "$PROJECT_ROOT/AGENTS.md"
 grep -q '^Keep this content too\.$' "$PROJECT_ROOT/AGENTS.md"
-grep -q '^## Better-PromptKit Engineering Operating System$' "$PROJECT_ROOT/AGENTS.md"
+grep -q '^## PromptKit OS: Engineering Operating System$' "$PROJECT_ROOT/AGENTS.md"
 [[ "$(grep -c '^<!-- PROMPTKIT_START -->$' "$PROJECT_ROOT/AGENTS.md")" -eq 1 ]]
 [[ "$(grep -c '^<!-- PROMPTKIT_END -->$' "$PROJECT_ROOT/AGENTS.md")" -eq 1 ]]
 

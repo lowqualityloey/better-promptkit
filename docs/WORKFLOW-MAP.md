@@ -1,4 +1,4 @@
-# Better-PromptKit Workflow Decision Map
+# PromptKit OS Workflow Decision Map
 
 Visual guide to help you quickly find the right workflow for your current task.
 
@@ -97,9 +97,9 @@ Phase 3 does not change `scripts/validate-execution-control.ps1` or `scripts/val
 
 ---
 
-## Better-PromptKit Release-Evidence Lifecycle
+## PromptKit OS Release-Evidence Lifecycle
 
-This lifecycle overlay applies only to the Better-PromptKit repository. It documents evidence and accountable handoffs without adding a new trigger or imposing Better-PromptKit release policy on consumer repositories.
+This lifecycle overlay applies only to the PromptKit OS repository. It documents evidence and accountable handoffs without adding a new trigger or imposing PromptKit OS release policy on consumer repositories.
 
 ### Evaluation path
 

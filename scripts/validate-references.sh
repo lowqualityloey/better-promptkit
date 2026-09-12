@@ -242,8 +242,8 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 
 if [ $ERROR_COUNT -eq 0 ] && [ $WARNING_COUNT -eq 0 ]; then
     echo ""
-    echo "✅ All references valid! No broken links found."
-    echo "   Better-PromptKit is ready for production use."
+    echo -e "\n\033[0;32m✅ All references valid! No broken links found.\033[0m"
+    echo "   PromptKit OS is ready for production use."
     echo ""
     exit 0
 else

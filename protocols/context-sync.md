@@ -1,7 +1,7 @@
 # Context Sync Protocol
 
 ## Purpose
-Rapidly inspect the host repository to extract technology stack details, dependency constraints, project-specific non-negotiable rules, visual brand identity (`DESIGN.md`), active architectural patterns, and recent git activity. This ensures all Better-PromptKit workflows operate with high situational awareness without requiring the developer to re-explain their setup.
+Rapidly inspect the host repository to extract technology stack details, dependency constraints, project-specific non-negotiable rules, visual brand identity (`DESIGN.md`), active architectural patterns, and recent git activity. This ensures all PromptKit OS workflows operate with high situational awareness without requiring the developer to re-explain their setup.
 
 ---
 

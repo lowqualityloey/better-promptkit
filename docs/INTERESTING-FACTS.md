@@ -1,6 +1,6 @@
-# Interesting Facts About Better-PromptKit
+# Interesting Facts About PromptKit OS
 
-Lesser-known insights, unique characteristics, and design decisions that make Better-PromptKit distinctive.
+Lesser-known insights, unique characteristics, and design decisions that make PromptKit OS distinctive.
 
 ---
 
@@ -543,6 +543,9 @@ These are example figures from a fictional project used to show what a PromptKit
 - Cursor ✅
 - Windsurf ✅
 - GitHub Copilot ✅
+- Cline / Roo Code ✅
+- Trae IDE ✅
+- OpenCode ✅
 - Gemini CLI ✅
 - Aider ✅
 
@@ -552,7 +555,7 @@ These are example figures from a fictional project used to show what a PromptKit
 
 ## 🎯 Bottom Line
 
-**Better-PromptKit is**:
+**PromptKit OS is**:
 1. ✅ Senior/Staff engineering discipline (not beginner tips)
 2. ✅ Production-ready patterns (Stripe/Shopify level)
 3. ✅ Evidence-based (metrics, not opinions)

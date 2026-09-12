@@ -1,6 +1,6 @@
 # Real-World Examples
 
-This directory contains production-style reference examples showing Better-PromptKit in action. The examples are illustrative and should be adapted and verified before production use.
+This directory contains production-style reference examples showing PromptKit OS in action. The examples are illustrative and should be adapted and verified before production use.
 
 ---
 
@@ -105,4 +105,4 @@ Have a great PromptKit success story? We'd love to see it!
 
 ## License Note
 
-All examples are provided under the same MIT license as Better-PromptKit. Code snippets are for educational purposes and may require adaptation for production use.
+All examples are provided under the same MIT license as PromptKit OS. Code snippets are for educational purposes and may require adaptation for production use.

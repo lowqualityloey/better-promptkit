@@ -1,7 +1,7 @@
 # Universal Agent Setup Protocol
 
 ## Purpose
-Ensure any modern AI coding assistant or CLI (Antigravity, Claude Code, Gemini CLI, Cursor, Windsurf, GitHub Copilot, Aider, Roo Code) is equipped with Better-PromptKit's workflows, protocols, and senior engineering standards by updating the appropriate root briefing configuration file.
+Ensure any modern AI coding assistant or CLI (Antigravity, Claude Code, Gemini CLI, Cursor, Windsurf, GitHub Copilot, Aider, Roo Code) is equipped with PromptKit OS workflows, protocols, and senior engineering standards by updating the appropriate root briefing configuration file.
 
 ---
 
@@ -19,7 +19,7 @@ Ensure any modern AI coding assistant or CLI (Antigravity, Claude Code, Gemini C
 ---
 
 ## Preconditions
-1. Better-PromptKit is located in `.promptkit/` (recommended) or `promptkit/` relative to the workspace root.
+1. PromptKit OS is located in `.promptkit/` (recommended) or `promptkit/` relative to the workspace root.
 2. Standard shell utilities or file tools are available.
 
 If no known agent configuration file exists in the repository root, create `AGENTS.md` as the universal standard fallback.
@@ -34,7 +34,7 @@ Inspect the repository root for existing agent configuration files:
 - If none exist, default to creating `./AGENTS.md`.
 
 ### 2. Verify Existing Integration
-Check if the target configuration file already contains `PromptKit Engineering Operating System` or `<!-- PROMPTKIT_START -->`:
+Check if the target configuration file already contains `PromptKit OS: Engineering Operating System` or `<!-- PROMPTKIT_START -->`:
 - If the configuration is already present and up to date, report status to the developer and transition immediately to active session mode.
 - If missing or outdated, proceed to Step 3.
 
@@ -60,8 +60,8 @@ Append or merge the following directive block into the detected configuration fi
 
 ```markdown
 <!-- PROMPTKIT_START -->
-## Better-PromptKit Engineering Operating System
-Better-PromptKit is active in this workspace (`./.promptkit` or `./promptkit`). Follow these protocols, workflows, and quality gates during pair-programming, design, code generation, and review:
+## PromptKit OS: Engineering Operating System
+PromptKit OS is active in this workspace (`./.promptkit` or `./promptkit`). Follow these protocols, workflows, and quality gates during pair-programming, design, code generation, and review:
 
 ### Fast Shorthand Triggers (Collision-Free)
 Activate workflows anytime with these namespaced triggers:
@@ -87,7 +87,7 @@ Activate workflows anytime with these namespaced triggers:
 - `pk:checkpoint` (or `pk:handoff`): Session state compaction, invariant locking, docs/STATE.md update, and fresh chat handover prompt.
 
 ### Task Ceremony Levels & Smart Auto-Route
-Better-PromptKit adapts ceremony based on task risk and impact:
+PromptKit OS adapts ceremony based on task risk and impact:
 - **Level 0 (Direct / Zero Overhead)**: Trivial documentation fixes, syntax lookups, formatting, or single-line tweaks. Direct execution (`understand → change → verify`) with zero ceremony.
 - **Level 1 (Standard)**: Localized bug fixes or small self-contained features. Standard workflow execution (`pk:debug`, `pk:test`) with lightweight inline planning; no formal task record file required.
 - **Level 2 (Controlled)**: Architecture, relational data/schema migrations, auth, permissions, breaking public API contracts, or multi-component changes. Requires formal Task Record (`docs/tasks/<task-id>.md`) and spec (`pk:plan`, `pk:data`, `pk:auth`, `pk:api`).
@@ -115,7 +115,7 @@ When auto-routing:
   - Pull requests or PR descriptions -> `pk:pr` (verification evidence and PR body)
   - Context bloat, chat lag, session handover, or pausing -> `pk:checkpoint` (sync docs/STATE.md & zero-loss handover)
   - Deployments, env validation, or releases -> `pk:ship` (pre-flight checks and rollback)
-  When auto-routing a substantive task, announce it briefly in one sentence (e.g., "[Better-PromptKit: Auto-routed to pk:plan]") and enforce its quality gate.
+  When auto-routing a substantive task, announce it briefly in one sentence (e.g., "[PromptKit OS: Auto-routed to pk:plan]") and enforce its quality gate.
 
 ### Progressive Loading Policy
 To optimize context window efficiency and minimize token overhead, agents must follow this progressive loading sequence:
@@ -231,6 +231,6 @@ When halted due to environment errors, missing credentials, or unresolvable test
 ---
 
 ## Completion Criteria
-- Root agent file (`CLAUDE.md`, `GEMINI.md`, `AGENTS.md`, or `.cursorrules`) contains valid Better-PromptKit pointers.
+- Root agent file (`CLAUDE.md`, `GEMINI.md`, `AGENTS.md`, or `.cursorrules`) contains valid PromptKit OS pointers.
 - Project `docs/` directories are initialized.
 - The assistant is oriented to use `pk:` triggers, Socratic rules, and senior engineering workflows.

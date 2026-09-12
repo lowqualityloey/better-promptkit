@@ -1,6 +1,6 @@
 # Architecture Decision Records (ADRs)
 
-This directory stores permanent **Architectural Decision Records** when running Better-PromptKit in standalone study/vault mode. In an active project, ADRs are saved directly to the host project's `./docs/adrs/` folder so they are committed to the project's Git repository.
+This directory stores permanent **Architectural Decision Records** when running PromptKit OS in standalone study/vault mode. In an active project, ADRs are saved directly to the host project's `./docs/adrs/` folder so they are committed to the project's Git repository.
 
 ---
 

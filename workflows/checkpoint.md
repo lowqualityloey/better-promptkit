@@ -79,10 +79,10 @@ Phase 4 may synchronize `docs/STATE.md`, but STATE is a projection owned by `pk:
 
 ### Optional Release-Evaluation Handoff
 
-When a Better-PromptKit release evaluation is being handed from QA/Reviewer to a Release Coordinator, include this optional fragment in the existing Checkpoint Record, Handoff Record, and applicable `docs/STATE.md` projection. The canonical release evaluation and Local Task Record remain authoritative; this fragment is a handoff projection, not a new approval record.
+When a PromptKit OS release evaluation is being handed from QA/Reviewer to a Release Coordinator, include this optional fragment in the existing Checkpoint Record, Handoff Record, and applicable `docs/STATE.md` projection. The canonical release evaluation and Local Task Record remain authoritative; this fragment is a handoff projection, not a new approval record.
 
 - **Evaluation ID**: `[stable release-evaluation identifier or N/A]`
-- **Release Candidate Commit**: `[exact Better-PromptKit candidate revision or N/A]`
+- **Release Candidate Commit**: `[exact PromptKit OS candidate revision or N/A]`
 - **Preliminary SemVer Candidate**: `[candidate version or no candidate]` with status `preliminary`
 - **QA Status**: `[QA/Reviewer result, findings reference, and review state or N/A]`
 - **Unresolved Blockers**: `[named blocker, owner, and resolution condition, or none recorded]`

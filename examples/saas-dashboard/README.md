@@ -1,6 +1,6 @@
 # Example: WorkHub Analytics (B2B SaaS Dashboard)
 
-A complete, production-style composite example showing Better-PromptKit workflows applied to a multi-tenant SaaS application. The artifacts are illustrative and require adaptation and verification before production use.
+A complete, production-style composite example showing PromptKit OS workflows applied to a multi-tenant SaaS application. The artifacts are illustrative and require adaptation and verification before production use.
 
 ---
 

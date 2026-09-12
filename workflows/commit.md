@@ -103,16 +103,16 @@ Format all commit messages strictly according to the Conventional Commits specif
 
 #### Contract Impact Evidence or Maintenance Classification
 
-Before developer confirmation, classify every Better-PromptKit eligible commit using one of the two paths below. The classification may be recorded in the commit body or in a stable linked planning or review record. It provides traceability for later QA and release evaluation; it does not approve a version or release.
+Before developer confirmation, classify every PromptKit OS eligible commit using one of the two paths below. The classification may be recorded in the commit body or in a stable linked planning or review record. It provides traceability for later QA and release evaluation; it does not approve a version or release.
 
 ##### Public PromptKit Contract Impact
 
-Use this path when the commit intentionally changes a user-observable Better-PromptKit workflow, template, protocol, command trigger, documented output schema, required artifact, or documented behavior. Record all of the following in the commit body or linked record:
+Use this path when the commit intentionally changes a user-observable PromptKit OS workflow, template, protocol, command trigger, documented output schema, required artifact, or documented behavior. Record all of the following in the commit body or linked record:
 
 - **Evidence ID**: A stable evidence reference such as `EVIDENCE-YYYY-MM-DD-slug`.
 - **Commit Evidence Location**: The commit-body field or linked planning/review record path and anchor containing this evidence.
 - **Affected Public PromptKit Contract**: The workflow, template, protocol, trigger, output schema, required artifact, or behavior that changes.
-- **User-Observable Before Behavior**: What a Better-PromptKit user or maintainer observes before the change.
+- **User-Observable Before Behavior**: What a PromptKit OS user or maintainer observes before the change.
 - **User-Observable After Behavior**: What the user or maintainer observes after the change.
 - **Impact Classification**: `User-Facing Additive Contract Change`, `User-Facing Corrective Contract Change`, or `Breaking Contract Change`.
 - **Proposed SemVer Candidate Impact**: `minor` for additive, `patch` for corrective, `major` for breaking with complete guidance, or `blocked` when required guidance is missing.

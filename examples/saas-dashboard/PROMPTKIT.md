@@ -205,7 +205,7 @@ pnpm --filter @workhub/web start
 
 ## 6. Project Artifact Output Paths
 
-All Better-PromptKit generated artifacts are saved to:
+All PromptKit OS generated artifacts are saved to:
 
 - **Technical Specs**: `docs/specs/`
 - **ADRs**: `docs/adrs/`
