@@ -352,6 +352,7 @@ promptkit-os/
 │   ├── reflect.md               # Engineering retrospectives & ADR generation (pk:retro)
 │   └── checkpoint.md            # Session state compaction & handover prompt (pk:checkpoint)
 ├── templates/                   # Structured artifact schemas saved to project docs/
+│   ├── agent-directive-template.md # Canonical directive source template rendered during initialization
 │   ├── project-profile-template.md # Scaffolds PROMPTKIT.md for project guardrails & monorepo topology
 │   ├── design-profile-template.md  # Scaffolds DESIGN.md for brand identity & visual tokens
 │   ├── state-tracker-template.md   # Scaffolds docs/STATE.md as a synchronized projection
