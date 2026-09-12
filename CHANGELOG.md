@@ -11,6 +11,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.5.1] - 2026-09-13
+
+### Added
+- **Non-Destructive Worktree Removal**: Updated `scripts/isolate-worktree.sh` and `isolate-worktree.ps1` to use non-forced `git worktree remove` and `git branch -d` by default, requiring an explicit `--force` / `-Force` flag to remove dirty worktrees or unmerged branches.
+- **Post-Staging Secret Scan Behavioral Test**: Added Scenario I to `scripts/tests/run-behavioral-contract-tests.*` asserting post-staging secret scan enforcement.
+- **Installer Orphaned Marker & Permission Tests**: Added test cases in `scripts/tests/run-init-safety-tests.sh` verifying orphaned `<!-- PROMPTKIT_END -->` rejection and `0600` file permission round-trip preservation.
+
+### Changed
+- **Post-Staging Secret & Probe Scan Sequencing**: Hardened `workflows/commit.md` to run `git diff --cached` secret and debug-probe scanning immediately after Phase 2 atomic staging and before Phase 4 developer confirmation, closing the TOCTOU leak gap.
+- **Canonical Setup Protocol Reference**: Refactored `protocols/setup.md` to reference `templates/agent-directive-template.md` as the single canonical source of truth rather than maintaining a separate copy.
+- **Risk-Before-Size Routing Escalation**: Codified explicit risk-before-size guidance in `templates/agent-directive-template.md` ensuring 1-line security or authorization edits escalate beyond Level 0 fast-path immediately.
+- **Empirical Benchmark Terminology**: Replaced absolute guarantee phrasing in `docs/BENCHMARKS.md` with empirical test and safeguard language.
+
+### Fixed
+- **Bash Installer Orphaned Marker Handling**: Updated `init.sh` to check for both `has_start` and `has_end`, preventing orphaned `PROMPTKIT_END` markers from silently appending duplicate blocks.
+- **Bash Installer Permission Preservation**: Added `chmod --reference` in `init.sh` to preserve original target file permissions when overwriting.
+
+---
+
 ## [1.5.0] - 2026-09-12
 
 ### Added
