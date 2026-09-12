@@ -50,7 +50,7 @@ For authoritative Level 0–3 classification, escalation, downgrade, and Task Re
 **New to PromptKit?** → See **[FAQ.md](./FAQ.md)** for the 12 most common questions  
 **Getting started?** → See **[QUICKSTART.md](./QUICKSTART.md)** for a 5-minute guided tour  
 **Release History?** → See **[CHANGELOG.md](./CHANGELOG.md)** for version notes and release provenance  
-**Full-Stack Example?** → See **[examples/fullstack-feature/](./examples/fullstack-feature/README.md)** for an end-to-end production feature walkthrough  
+**Full-Stack Example?** → See **[examples/saas-dashboard/](./examples/saas-dashboard/README.md)** for a populated end-to-end feature walkthrough, or **[examples/fullstack-feature/](./examples/fullstack-feature/README.md)** for a narrative lifecycle reference  
 **Existing project?** → See **[ADOPTION-GUIDE.md](./docs/ADOPTION-GUIDE.md)** for gradual adoption  
 **Visual learner?** → See **[WORKFLOW-MAP.md](./docs/WORKFLOW-MAP.md)** for decision trees and diagrams  
 **Token economics & benchmarks?** → See **[BENCHMARKS.md](./docs/BENCHMARKS.md)** for architecture and context window analysis  
@@ -380,7 +380,7 @@ promptkit-os/
 │   └── spike-template.md           # Technical Spike & Benchmark Evaluation Template
 ├── examples/                    # Real-world production examples
 │   ├── README.md                       # Example catalog and usage guide
-│   ├── fullstack-feature/              # Production full-stack feature (Invitations, DB migration, UI tokens)
+│   ├── fullstack-feature/              # Narrative lifecycle reference (Invitations, DB migration, UI tokens)
 │   ├── production-incident/            # Post-mortem and RCA debugging artifact
 │   ├── saas-dashboard/                 # Complete B2B SaaS example (Next.js + Supabase)
 │   │   ├── PROMPTKIT.md               # Full project profile with monorepo config

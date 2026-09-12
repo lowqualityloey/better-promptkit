@@ -1,5 +1,15 @@
 # End-to-End Feature Reference: Organization Invitations
 
+> [!IMPORTANT]
+> **This is a narrative reference, not a populated example.**
+>
+> The paths below describe the artifact set this feature *would* produce under
+> PromptKit OS. They are not present in this directory. For fully populated
+> walkthroughs with real artifacts, see
+> [`../saas-dashboard/`](../saas-dashboard/README.md),
+> [`../production-incident/`](../production-incident/README.md), and
+> [`../marketing-docs-site/`](../marketing-docs-site/README.md).
+
 This directory demonstrates a real-world, production-grade feature developed using PromptKit OS's engineering operating system.
 
 It models an enterprise SaaS feature (**Organization Member Invitations with RBAC & Expiry**) across every lifecycle phase:
@@ -20,7 +30,7 @@ It models an enterprise SaaS feature (**Organization Member Invitations with RBA
 │ 1. pk:plan   ──► docs/specs/organization-invitations.md                 │
 │ 2. pk:data   ──► docs/data/organization-invitations-migration.md        │
 │ 3. pk:design ──► docs/design/invitation-modal-tokens.md                 │
-│ 4. pk:verify ──► docs/tests/invitation-verification-evidence.md         │
+│ 4. pk:test   ──► docs/tests/invitation-verification-evidence.md         │
 │ 5. pk:pr     ──► pull-request-evidence.md (PR Template)                 │
 └─────────────────────────────────────────────────────────────────────────┘
 ```
