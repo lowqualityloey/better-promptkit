@@ -23,9 +23,15 @@ pnpm-debug.log*
 # Preserved untracked local artifacts (not for publication)
 semantic-review/
 
-# Local/internal Kiro specs (future specs ignored; historical agent-execution-control-handoff preserved for release evidence)
+# Local/internal Kiro specs. Future specs stay ignored; the directories negated
+# below are tracked as historical release-planning evidence and validator
+# compatibility artifacts (see CONTRIBUTING.md, "Internal Specification Hygiene").
+# Every negation here must correspond to a directory that is actually tracked,
+# otherwise new files added there are silently discarded by `git add .`.
 .kiro/specs/*
 !.kiro/specs/agent-execution-control-handoff/
+!.kiro/specs/conventional-commit-versioning/
+!.kiro/specs/promptkit-sdlc-skill-adaptation/
 
 # Better-PromptKit isolated worktrees
 .worktrees/
