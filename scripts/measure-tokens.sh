@@ -36,7 +36,7 @@ SOURCE_DESC=""
 
 if [[ -n "$FOUND_FILE" && -f "$FOUND_FILE" ]]; then
     if grep -q "<!-- PROMPTKIT_START -->" "$FOUND_FILE"; then
-        BLOCK=$(awk '/<!-- PROMPTKIT_START -->/{flag=1} flag; /<!-- PROMPTKIT_END -->/{flag=0}' "$FOUND_FILE")
+        BLOCK=$(awk '/^<!-- PROMPTKIT_START -->/{flag=1} flag; /^<!-- PROMPTKIT_END -->/{flag=0}' "$FOUND_FILE")
         SOURCE_DESC="$FOUND_FILE"
     fi
 fi
@@ -45,7 +45,7 @@ if [[ -z "$BLOCK" ]]; then
     SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
     INIT_SH="$SCRIPT_DIR/../init.sh"
     if [[ -f "$INIT_SH" ]]; then
-        BLOCK=$(awk '/<!-- PROMPTKIT_START -->/{flag=1} flag; /<!-- PROMPTKIT_END -->/{flag=0}' "$INIT_SH")
+        BLOCK=$(awk '/^<!-- PROMPTKIT_START -->/{flag=1} flag; /^<!-- PROMPTKIT_END -->/{flag=0}' "$INIT_SH")
         SOURCE_DESC="Canonical template in init.sh"
     fi
 fi
@@ -78,4 +78,16 @@ echo -e "  │ PromptKit OS JIT Router            \033[0;32m~$ESTIMATED_TOKENS t
 echo -e "  \033[0;90m├─────────────────────────────────────────────────────────────┤\033[0m"
 echo -e "  │ Static Context Reduction:          \033[0;36m~$SAVINGS_PERCENT% reduction\033[0m             │"
 echo -e "  \033[0;90m└─────────────────────────────────────────────────────────────┘\033[0m"
-echo -e "\n\033[0;32m✅ Verification Passed: Directive adheres strictly to the sub-1,000 token baseline.\033[0m\n"
+
+TOKEN_BUDGET=2000
+
+echo -e "\n\033[1;33mBudget Assertion Verification:\033[0m"
+echo "  • Configured Token Budget:  $TOKEN_BUDGET tokens"
+echo "  • Measured Estimate:        $ESTIMATED_TOKENS tokens"
+
+if [ "$ESTIMATED_TOKENS" -le "$TOKEN_BUDGET" ]; then
+    echo -e "\n\033[0;32m✅ Verification Passed: Directive ($ESTIMATED_TOKENS tokens) adheres to the <= $TOKEN_BUDGET token budget.\033[0m\n"
+else
+    echo -e "\n\033[0;31m❌ Verification Failed: Directive ($ESTIMATED_TOKENS tokens) exceeds the $TOKEN_BUDGET token budget by $(( ESTIMATED_TOKENS - TOKEN_BUDGET )) tokens.\033[0m\n" >&2
+    exit 1
+fi

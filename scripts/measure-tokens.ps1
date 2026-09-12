@@ -100,4 +100,15 @@ Write-Host "  │ PromptKit OS JIT Router            ~$EstimatedTokens tokens (m
 Write-Host "  ├─────────────────────────────────────────────────────────────┤" -ForegroundColor DarkGray
 Write-Host "  │ Static Context Reduction:          $SavingsPercent% reduction             │" -ForegroundColor Cyan
 Write-Host "  └─────────────────────────────────────────────────────────────┘" -ForegroundColor DarkGray
-Write-Host "`n✅ Measurement Complete: Validated JIT filesystem router saves $SavingsPercent% static overhead vs monolithic inlining.`n" -ForegroundColor Green
+
+$TokenBudget = 2000
+Write-Host "`nBudget Assertion Verification:" -ForegroundColor Yellow
+Write-Host "  • Configured Token Budget:  $TokenBudget tokens"
+Write-Host "  • Measured Estimate:        $EstimatedTokens tokens"
+
+if ($EstimatedTokens -le $TokenBudget) {
+    Write-Host "`n✅ Verification Passed: Directive ($EstimatedTokens tokens) adheres to the <= $TokenBudget token budget.`n" -ForegroundColor Green
+} else {
+    Write-Error "`n❌ Verification Failed: Directive ($EstimatedTokens tokens) exceeds the $TokenBudget token budget by $($EstimatedTokens - $TokenBudget) tokens.`n"
+    exit 1
+}
