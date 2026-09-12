@@ -140,7 +140,7 @@ bash "$REPO_ROOT/init.sh" "$CRLF_ROOT" >/dev/null
 grep -q 'Header with $1 literal dollar reference' "$CRLF_ROOT/AGENTS.md"
 grep -q 'Keep content before\.' "$CRLF_ROOT/AGENTS.md"
 grep -q 'Keep content after\.' "$CRLF_ROOT/AGENTS.md"
-grep -q '## Better-PromptKit Engineering Operating System' "$CRLF_ROOT/AGENTS.md"
+grep -q '## PromptKit OS: Engineering Operating System' "$CRLF_ROOT/AGENTS.md"
 
 # UTF-8 Emoji/CJK content test
 UTF8_ROOT="$TEST_ROOT/utf8"

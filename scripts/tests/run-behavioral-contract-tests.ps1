@@ -29,7 +29,7 @@ function Assert-Contains {
     $script:FailCount++
 }
 
-Write-Host "`n🧪 Running Better-PromptKit Behavioral Prompt-Contract Tests" -ForegroundColor Cyan
+Write-Host "`n🧪 Running PromptKit OS Behavioral Prompt-Contract Tests" -ForegroundColor Cyan
 Write-Host "===========================================================" -ForegroundColor DarkGray
 
 Write-Host "`n📌 Scenario A: Trivial Change ('Fix a typo in the README') — Level 0 Direct" -ForegroundColor Yellow
