@@ -50,6 +50,9 @@ bash scripts/tests/run-ci-triage-fixtures.sh
 bash scripts/validate-references.sh .
 bash scripts/validate-release-records.sh --root scripts/tests/fixtures/release-records/valid --strict
 bash scripts/validate-execution-control.sh --root .
+
+# Self-application: this repository's own release records (see the exemption note below)
+bash scripts/validate-release-records.sh --root . --strict
 ```
 
 ### PowerShell (Windows / Cross-Platform PowerShell 7)
@@ -81,7 +84,34 @@ pwsh -NoProfile -File .\scripts\tests\run-ci-triage-fixtures.ps1
 # Validate reference links and release records
 pwsh -NoProfile -File .\scripts\validate-references.ps1 -PromptKitDir .
 pwsh -NoProfile -File .\scripts\validate-release-records.ps1 -Root .\scripts\tests\fixtures\release-records\valid -Strict
+
+# Self-application: this repository's own release records (see the exemption note below)
+pwsh -NoProfile -File .\scripts\validate-release-records.ps1 -Root . -Strict
 ```
+
+### Release-Record Self-Application & Historical Exemption
+
+`validate-release-records` validates every `docs/releases/*.md` in the target
+root, which includes this repository's own release evidence. Run it against `.`
+before opening a pull request.
+
+Two records are exempt and are expected to report findings:
+
+| Record | Reason |
+| :--- | :--- |
+| `docs/releases/2026-09-08-v1.0.0-first-release-evaluation.md` | Written against the pre-1.1.0 record schema, before the repository rename. It uses retired field labels (`Approved SemVer`, `Approved Release Commit`) and a retired `Evaluation Status` vocabulary. |
+| `docs/releases/2026-09-08-v1.0.0-release-notes-draft.md` | A v1.0.0 working draft predating the canonical `Release Notes Record` field set. |
+
+These are retained verbatim as immutable historical evidence. Backfilling them
+would mean inventing release evidence that was never recorded, and
+`2026-09-10-v1.1.0-evaluation.md` links the first of them by path as
+`Latest Approved Release Record`, so relocating them would break a live
+cross-record link. Treat findings against these two files as expected; treat
+findings against any other record as a regression.
+
+Every release from v1.1.0 onward must pass cleanly, including the human-readable
+`*-release-notes.md` files, which carry the same canonical field set as their
+companion `*-release-notes-record.md`.
 
 ---
 
