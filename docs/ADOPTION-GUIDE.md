@@ -85,14 +85,17 @@ Better-PromptKit is designed for **gradual adoption**. You don't need to:
 **Goal**: Align team on standards without disrupting existing workflows
 
 **Steps**:
-1. Add PromptKit as a tracked submodule:
+1. Add PromptKit as a tracked submodule and initialize:
    ```bash
-   git submodule add https://github.com/lowqualityloey/better-promptkit .promptkit
-   ./.promptkit/init.sh  # or init.ps1 on Windows
+   git submodule add https://github.com/lowqualityloey/better-promptkit .promptkit && ./.promptkit/init.sh
+   # On Windows PowerShell:
+   # git submodule add https://github.com/lowqualityloey/better-promptkit .promptkit; .\.promptkit\init.ps1
+
    git add .promptkit/ PROMPTKIT.md
    # Also stage whichever agent config file init created or updated:
    # AGENTS.md (fallback), CLAUDE.md, GEMINI.md, .cursorrules,
-   # .windsurfrules, or .github/copilot-instructions.md
+   # .cursor/rules/promptkit.mdc, .windsurfrules, .clinerules,
+   # .traerules, .opencode/rules.md, or .github/copilot-instructions.md
    git commit -m "chore: add better-promptkit for engineering standards"
    ```
 

@@ -209,7 +209,7 @@ Working on something complex? Use `pk:checkpoint` before ending:
 - Locks architectural decisions
 
 ### 4. **Visual Brand Identity** (Optional)
-Create `DESIGN.md` for UI projects:
+Create `DESIGN.md` for UI projects (`cp .promptkit/templates/design-profile-template.md DESIGN.md` or ask your AI: `pk:design`):
 - Color tokens & anti-slop rules
 - Typography standards
 - WCAG accessibility requirements
@@ -248,6 +248,7 @@ pk:data           # Database design & migrations
 pk:auth           # Authentication & RBAC
 pk:api            # API contracts & types
 pk:test           # Testing strategy
+pk:fix            # Surgical remediation of known findings
 pk:ship           # Zero-downtime deployment
 pk:spike          # Technical research
 ```
@@ -268,7 +269,7 @@ A: No. Most developers use 4-5 regularly (`plan`, `debug`, `tutor`, `review`, `c
 A: Yes. Edit `PROMPTKIT.md` for project-specific rules. Workflows adapt automatically.
 
 **Q: Does this work with my IDE's AI?**  
-A: Yes. Compatible with Claude Code, Cursor, Windsurf, GitHub Copilot, Gemini CLI, and Aider.
+A: Yes. Compatible with Claude Code, Cursor, Cline / Roo Code, Trae, OpenCode, Windsurf, GitHub Copilot, Gemini CLI, and Aider.
 
 **Q: What if I don't want all the ceremony?**  
 A: Simple questions get simple answers (zero overhead). Workflows only activate for substantive tasks.

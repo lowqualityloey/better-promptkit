@@ -567,6 +567,9 @@ These are example figures from a fictional project used to show what a PromptKit
 ---
 
 **Want more?** Explore:
-- `workflows/` - 19 workflow files
-- `examples/saas-dashboard/` - Illustrative B2B SaaS example
+- `workflows/` - 20 workflow files
+- `examples/` - Realistic reference implementations:
+  - `examples/saas-dashboard/` - B2B SaaS dashboard example
+  - `examples/fullstack-feature/` - Fullstack feature with tests and task records
+  - `examples/production-incident/` - Production incident mitigation and post-mortem
 - `docs/ADOPTION-GUIDE.md` - How to start using it

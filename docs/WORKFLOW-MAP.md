@@ -180,6 +180,7 @@ graph TD
     Question4 -->|Unsure tech choice| Spike[pk:spike<br/>Technical Research]
     
     Question5 -->|Bug/crash| Debug[pk:debug<br/>Scientific Debugging]
+    Question5 -->|Review finding/remediation| Fix[pk:fix<br/>Surgical Remediation]
     Question5 -->|Slow performance| Perf[pk:perf<br/>Performance Profiling]
     Question5 -->|Code quality| Review[pk:review<br/>Two-Axis Review]
     
@@ -227,6 +228,7 @@ graph TD
 | I Want To... | Use | Output |
 |:---|:---|:---|
 | Fix a bug systematically | `pk:debug` | Root cause + regression test |
+| Surgically remediate review findings | `pk:fix` | Verified remediation + narrow diff |
 | Optimize performance | `pk:perf` | `docs/perf/*.md` + benchmarks |
 | Review code quality | `pk:review` | Two-axis audit report |
 
@@ -273,6 +275,7 @@ graph LR
     
     subgraph "Quality Cluster"
         Debug[pk:debug]
+        Fix[pk:fix]
         Perf[pk:perf]
         Review[pk:review]
         Test[pk:test]
@@ -300,6 +303,8 @@ graph LR
     
     Tasks --> Commit
     Review --> Commit
+    Review -.-> Fix
+    Fix --> Commit
     Debug --> Test
     Perf --> Review
     
@@ -369,6 +374,7 @@ Visual guide to workflow depth and time investment:
 | `pk:route` | 10 sec | ⚪ Low | Every session |
 | `pk:commit` | 2 min | ⚪ Low | Multiple/day |
 | `pk:review` | 5-10 min | 🟡 Medium | Before each PR |
+| `pk:fix` | 3-5 min | ⚪ Low | Surgical fix |
 | `pk:debug` | Varies | 🟡 Medium | As needed |
 | `pk:tutor` | 10-20 min | 🟡 Medium | Daily learning |
 | `pk:checkpoint` | 3 min | ⚪ Low | Session end |
