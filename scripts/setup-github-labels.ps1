@@ -47,7 +47,8 @@ $Labels = @(
     @{ Name = "area:data"; Color = "0052cc"; Description = "Database schemas, migrations, ORM, persistence" },
     @{ Name = "area:ui"; Color = "e99695"; Description = "Design tokens, Tailwind styles, visual aesthetics" },
     @{ Name = "area:auth"; Color = "f9d0c4"; Description = "Authentication, sessions, tokens, RBAC permissions" },
-    @{ Name = "area:perf"; Color = "c2e0c6"; Description = "Performance profiling, query optimization, latency" }
+    @{ Name = "area:perf"; Color = "c2e0c6"; Description = "Performance profiling, query optimization, latency" },
+    @{ Name = "area:tooling"; Color = "5d7fa3"; Description = "Validators, shell/PowerShell scripts, CI workflows, test harnesses" }
 )
 
 Write-Host "Syncing $($Labels.Count) labels to GitHub repository..." -ForegroundColor DarkGray
