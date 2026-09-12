@@ -19,9 +19,9 @@ PromptKit OS uses a **Just-In-Time (JIT) Filesystem Architecture**:
 
 ┌─────────────────────────────────────────────────────────────────────────┐
 │                   PROMPTKIT OS JIT FILESYSTEM MODEL                     │
-│ Baseline Static Injection: ~100-line Router Directive (~1,944 tokens)   │
+│ Baseline Static Injection: ~100-line Router Directive (~1,920 tokens)   │
 │ On-Demand Loading: Tool loads only target workflow file (e.g. pk:debug) │
-│ Context Window Preservation: ~89.5% savings on initial static overhead  │
+│ Context Window Preservation: ~90% savings on initial static overhead    │
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -35,9 +35,9 @@ The initialization script (`init.sh` / `init.ps1`) injects a single idempotent d
 | :--- | :---: | :---: | :--- |
 | **System Introduction & Scope** | ~10 | ~140 tokens | Identifies PromptKit root in workspace (`./.promptkit`) |
 | **Fast Shorthand Triggers** | ~35 | ~580 tokens | Collision-free index of namespaced workflows (`pk:route`, `pk:debug`, `pk:fix`, etc.) |
-| **Smart Auto-Route & Guardrails** | ~30 | ~620 tokens | Triage rules (Fast-Path zero overhead, Anti-slop, Secrets hygiene, MCP precedence, Visual callouts) |
-| **Artifact Paths & Document Targets** | ~25 | ~604 tokens | Output destinations (`docs/specs/`, `docs/tasks/`, `docs/STATE.md`) |
-| **Total Baseline Static Overhead** | **~100 lines** | **~1,944 tokens** | **Permanent footprint in system prompt (~89.5% savings vs. ~18.5k monolithic packs)** |
+| **Smart Auto-Route & Guardrails** | ~30 | ~610 tokens | Triage rules (Fast-Path zero overhead, Anti-slop, Secrets hygiene, MCP precedence, Visual callouts) |
+| **Artifact Paths & Document Targets** | ~25 | ~590 tokens | Output destinations (`docs/specs/`, `docs/tasks/`, `docs/STATE.md`) |
+| **Total Baseline Static Overhead** | **~100 lines** | **~1,920 tokens** | **Permanent footprint in system prompt (~90% savings vs. ~18.5k monolithic packs)** |
 
 By contrast, inlining all 20 workflow specifications and schemas consumes **18,000 to 22,000 tokens** on turn 1 before any user request is processed.
 
@@ -91,7 +91,7 @@ While autonomous multi-agent looping frameworks attempt to solve software engine
 | Architectural Dimension | PromptKit OS (Disciplined Pairing OS) | Autonomous Multi-Agent Swarms |
 | :--- | :--- | :--- |
 | **Execution Model** | **Human-in-the-Loop Pairing**: AI proposes, verifies against Gherkin AC, and human reviews/commits. | **Autonomous Looping**: Agents iterate in unmonitored background loops until stopped or timed out. |
-| **Token Footprint** | **Lean 1x Baseline**: Just-In-Time filesystem loading (~1,934 tokens, ~89.5% static context reduction). Unused workflows consume 0 tokens. | **Additional Model Calls**: Multi-agent pipelines (research $\rightarrow$ planning $\rightarrow$ execution waves) introduce additional model calls and aggregate token overhead proportional to pipeline depth and context size. |
+| **Token Footprint** | **Lean 1x Baseline**: Just-In-Time filesystem loading (~1,920 tokens, ~90% static context reduction). Unused workflows consume 0 tokens. | **Additional Model Calls**: Multi-agent pipelines (research $\rightarrow$ planning $\rightarrow$ execution waves) introduce additional model calls and aggregate token overhead proportional to pipeline depth and context size. |
 | **State Persistence** | **Git-Tracked Plain Markdown**: `docs/STATE.md` and `docs/tasks/` survive session resets and IDE restarts. | **Hidden Local Cache Directories**: Prone to lock-file race conditions and uncommitted state drift. |
 | **Context Degradation** | **Proactive Reset Cadence**: `pk:checkpoint` flushes state before context window limits cause attention degradation. | **Exhaustion Vulnerability**: Looping pipelines frequently drive model working memory to limits before persisting state. |
 | **Quality & Done-Gates** | **Enforced Verifiable Gates**: Strict Milestone Git Boundaries, automated secret scans, and test verification proof. | **Timeout Heuristics**: Fragile duration or turn heuristics that can stall or abort long-running tasks. |

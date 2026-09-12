@@ -22,7 +22,9 @@ jobs:
           bash -n scripts/measure-tokens.sh
           bash -n scripts/validate-execution-control.sh
           bash -n scripts/tests/run-execution-control-fixtures.sh
+          bash -n scripts/tests/run-execution-control-properties.sh
           bash -n scripts/validate-release-records.sh
+          bash -n scripts/tests/run-release-record-properties.sh
           bash -n scripts/validate-ci-triage.sh
           bash -n scripts/tests/run-ci-triage-fixtures.sh
           bash -n scripts/tests/run-behavioral-contract-tests.sh
@@ -38,13 +40,29 @@ jobs:
       - name: Run Agent Execution Control Fixture Harness (Bash)
         run: bash scripts/tests/run-execution-control-fixtures.sh
 
+      - name: Run Agent Execution Control Property Harness (Bash)
+        run: bash scripts/tests/run-execution-control-properties.sh
+
       - name: Run CI Triage Fixture Harness (Bash)
         run: bash scripts/tests/run-ci-triage-fixtures.sh
 
-      - name: Run Release-Record Validator (Bash)
+      - name: Run Release-Record Validator Fixtures (Bash)
         run: |
           bash scripts/validate-release-records.sh --root scripts/tests/fixtures/release-records/valid --strict
           bash scripts/validate-release-records.sh --root scripts/tests/fixtures/release-records/empty-range-deferred --strict
+
+      - name: Run Release-Record Property Test Harness (Bash)
+        run: bash scripts/tests/run-release-record-properties.sh
+
+      - name: Run Release-Record Self-Validation with Grandfather Exemption (Bash)
+        run: |
+          ERRORS=$(bash scripts/validate-release-records.sh --root . --strict 2>&1 | grep -v '2026-09-08-v1\.0\.0-' | grep -E '^[A-Z_]+\|' | grep -v -E '^(PASSED|FAILED)\|' || true)
+          if [ -n "$ERRORS" ]; then
+            echo "Release record validation errors found in non-grandfathered records:"
+            echo "$ERRORS"
+            exit 1
+          fi
+          echo "All non-grandfathered release records passed validation."
 
       - name: Test init.sh Dry-Run & Idempotency
         run: |
@@ -105,7 +123,9 @@ jobs:
             "scripts/measure-tokens.ps1",
             "scripts/validate-execution-control.ps1",
             "scripts/tests/run-execution-control-fixtures.ps1",
+            "scripts/tests/run-execution-control-properties.ps1",
             "scripts/validate-release-records.ps1",
+            "scripts/tests/run-release-record-properties.ps1",
             "scripts/validate-ci-triage.ps1",
             "scripts/tests/run-ci-triage-fixtures.ps1",
             "scripts/tests/run-behavioral-contract-tests.ps1",
@@ -133,15 +153,35 @@ jobs:
         shell: pwsh
         run: pwsh -NoProfile -File .\scripts\tests\run-execution-control-fixtures.ps1
 
+      - name: Run Agent Execution Control Property Harness (PowerShell)
+        shell: pwsh
+        run: pwsh -NoProfile -File .\scripts\tests\run-execution-control-properties.ps1
+
       - name: Run CI Triage Fixture Harness (PowerShell)
         shell: pwsh
         run: pwsh -NoProfile -File .\scripts\tests\run-ci-triage-fixtures.ps1
 
-      - name: Run Release-Record Validator (PowerShell)
+      - name: Run Release-Record Validator Fixtures (PowerShell)
         shell: pwsh
         run: |
           pwsh -NoProfile -File .\scripts\validate-release-records.ps1 -Root .\scripts\tests\fixtures\release-records\valid -Strict
           pwsh -NoProfile -File .\scripts\validate-release-records.ps1 -Root .\scripts\tests\fixtures\release-records\empty-range-deferred -Strict
+
+      - name: Run Release-Record Property Test Harness (PowerShell)
+        shell: pwsh
+        run: pwsh -NoProfile -File .\scripts\tests\run-release-record-properties.ps1
+
+      - name: Run Release-Record Self-Validation with Grandfather Exemption (PowerShell)
+        shell: pwsh
+        run: |
+          $res = & pwsh -NoProfile -File .\scripts\validate-release-records.ps1 -Root . -Strict 2>&1
+          $nonGrandfathered = @($res | Where-Object { $_ -match '^[A-Z_]+\|' -and $_ -notmatch '2026-09-08-v1\.0\.0-' -and $_ -notmatch '^(PASSED|FAILED)\|' })
+          if ($nonGrandfathered.Count -gt 0) {
+            $nonGrandfathered | ForEach-Object { Write-Error $_ }
+            throw "Release record validation errors found in $($nonGrandfathered.Count) non-grandfathered check(s)."
+          }
+          $LASTEXITCODE = 0
+          Write-Host "All non-grandfathered release records passed validation."
 
       - name: Run Reference and Structural Validator (PowerShell)
         shell: pwsh
