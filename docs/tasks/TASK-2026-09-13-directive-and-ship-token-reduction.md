@@ -26,10 +26,11 @@ Full local gate after A, all green: `run-behavioral-contract-tests`, `run-init-s
 self-validation, and the `init.sh` dry-run + idempotency check (with `$KIT_DIR_REL` correctly
 substituted in the generated `AGENTS.md`).
 
-**Not locally verified**: the two new PowerShell CI steps. `pwsh` is unavailable in this sandbox,
-so `release-records.examples.ps1` and `measure-tokens.ps1` are unexercised here. The `.sh` twins
-pass, and `measure-tokens.ps1:109` / `.sh:93` both `exit 1` on budget overrun, so the steps are
-expected to pass — but this is the one gap CI itself must confirm.
+**PowerShell parity — resolved by CI.** `pwsh` is unavailable in this sandbox, so
+`release-records.examples.ps1` and `measure-tokens.ps1` could not be exercised locally. PR #131's
+CI run ([run 34726350139](https://github.com/lowqualityloey/promptkit-os/actions/runs/34726350139))
+closed that gap: `Lint & Validate (Linux)` pass in 2m49s and `Lint & Validate (Windows)` pass in
+1m49s, with all four new steps reporting `success` (executed, not skipped) on both jobs.
 
 ---
 
@@ -284,13 +285,22 @@ scoped) to a throwaway copy at `/tmp/pkA`, and the real harnesses were run again
 host-project install path still works.** The only behavioural change is intentional and is the
 whole point: `route.md` is no longer preloaded for classification.
 
-## 4. Projected result (recomputed with the measured 1,916)
+## 4. Result — as landed (Change A only, directive measured at 1,929)
 
-| Path | Before | After | Saved |
-| :--- | ---: | ---: | ---: |
-| `pk:fix` | 12,861 | **5,933** | 6,928 (54%) |
-| `pk:plan` | 24,666 | **17,738** | 6,928 (28%) |
-| `pk:ship` | 24,761 | **13,839** | 10,922 (44%) |
+| Path | Before | After A (landed) | Saved | After A + B2 (if B lands) |
+| :--- | ---: | ---: | ---: | ---: |
+| `pk:fix` | 12,861 | **5,946** | 6,915 (54%) | 5,946 |
+| `pk:plan` | 24,666 | **17,751** | 6,915 (28%) | 17,751 |
+| `pk:ship` | 24,761 | **17,846** | 6,915 (28%) | ~14,546 |
+
+The saving is a flat **~6,915 tokens on every path**, because it comes entirely from no longer
+loading `route.md` (6,962 tokens) while the directive grows only 47 tokens (1,882 → 1,929).
+
+B is the only remaining lever of similar size and applies to `pk:ship` alone: ~3,300 tokens under
+option B2, ~4,144 under option B1.
+
+> Superseded figures retained for the record: an earlier revision of this table used the prototype
+> directive (1,916 tokens) and showed `pk:ship` at 13,839 by assuming B had landed. Neither held.
 
 ---
 
