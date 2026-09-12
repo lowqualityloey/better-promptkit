@@ -57,7 +57,7 @@
 ---
 
 ## 5. Active MCP Capabilities (Optional)
-> Record detected or configured Model Context Protocol (MCP) servers. The assistant prioritizes native MCP tool calls over terminal CLI commands. Set to `N/A (Standard CLI Fallback)` if running in a standard CLI environment.
+> Record detected or configured Model Context Protocol (MCP) servers. The assistant prioritizes native MCP tool calls over terminal CLI commands. Set to `N/A (Standard CLI Fallback)` if running in a standard CLI environment. Note: Native MCP tool availability is host-dependent; assistants automatically fall back to terminal CLI commands when MCP servers are not supported or configured in the host runtime.
 
 - **Task Tracking System**: [Local Markdown (docs/tasks/ + docs/STATE.md) | GitHub Issues | Linear | Jira]
 - **GitHub MCP**: [e.g. `github-mcp-server` for PR creation, issue reading, commit search]

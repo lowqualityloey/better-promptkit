@@ -20,7 +20,7 @@ PromptKit OS equips your coding assistant with disciplined engineering workflows
 | **Who it is NOT for** | Developers looking for an autocomplete inline plugin, a CLI binary, or an npm dependency. PromptKit OS is pure markdown protocols and prompts. |
 | **Why it is better** | Replaces unguided "vibe coding" and token-wasting guess-and-patch loops with systematic, hypothesis-driven development workflows. Structured workflows are designed to reduce redundant back-and-forth by enforcing one-pass planning, artifact reuse, and surgical fixes over guess-and-patch loops. |
 | **Key differences** | Namespaced triggers (`pk:` prefix), guardrails against single-step destructive schema drops (phased Expand-Contract policy), Socratic guidance that avoids unsolicited code dumps, and monorepo workspace isolation (scoped `--filter` commands). |
-| **Token Efficiency** | **Zero Static Token Bloat**: Injects only a ~100-line router (~1,934 tokens) into your agent directives. Full workflows are read Just-In-Time (JIT) from local files only when triggered (~89.5% static context reduction vs. 18.5k monolithic packs). See [`docs/BENCHMARKS.md`](./docs/BENCHMARKS.md). |
+| **Token Efficiency** | **Zero Static Token Bloat**: Injects only a ~100-line router (~1,944 tokens*) into your agent directives. Full workflows are read Just-In-Time (JIT) from local files only when triggered (~89.5% static context reduction vs. 18.5k monolithic packs). See [`docs/BENCHMARKS.md`](./docs/BENCHMARKS.md). |
 | **Durable State Persistence** | **Cross-Session Memory**: State is never lost when chat sessions compact or reset. All active milestones, tasks in flight, and architectural invariants persist directly in Git-tracked markdown (`docs/STATE.md` and `docs/tasks/`). Run `pk:checkpoint` and resume in any fresh session via `pk:route`. |
 | **Adaptive Ceremony & Model Tiering** | **Scales with Risk**: Bypasses heavy templates for daily tweaks (Level 0/1) while reserving deep reasoning, Task Records, and verification gates for schema, auth, and release risks (Level 2/3). Matches LLM model tiers to task risk to prevent token waste. |
 | **Enforced Done-Gates** | **Not Inert Advice**: PromptKit OS enforces verifiable engineering done-gates: strict milestone git boundaries (blocking dirty working tree transitions), automated pre-commit secret leak scans (`pk:commit`), and required Gherkin Acceptance Criteria verification proof. |
@@ -240,18 +240,19 @@ You do not need to memorize commands. You can prompt naturally (e.g., *"This che
 
 For authoritative Level 0–3 classification, escalation, downgrade, and Task Record rules, see [`workflows/route.md`](./workflows/route.md).
 
-### 2. Subagent Delegation (Parallel Fan-Out)
+### 2. Subagent Delegation & Sandboxed Worktree Isolation
 
 In multi-agent environments (Antigravity, Claude Code, Cursor background agents), the assistant follows [`protocols/subagent-delegation.md`](./protocols/subagent-delegation.md):
 - **Offloaded to Subagents**: Multi-candidate architectural benchmarks (`pk:spike`), dual-axis PR reviews (`pk:review`), brownfield codebase surveys (`pk:onboard`), and codebase scans touching >3 files.
 - **Retained in Main Thread**: Direct developer conversation, small localized edits (<10 lines), atomic commits (`pk:commit`), and pull request submission (`pk:pr`).
 - **Compact Synthesis**: Subagents return 5-15 line synthesized reports with file paths and line numbers instead of dumping raw tool output into parent context.
+- **Sandboxed Worktree Execution**: For concurrent subagents or experimental feature spikes, agents can create disposable, isolated worktrees using `scripts/isolate-worktree.sh` (or `scripts/isolate-worktree.ps1`) to prevent dirtying or conflicting with the primary working tree.
 
 ### 3. Native MCP Discovery & Graceful Degradation
 
 - **Tooling Precedence**: Native MCP Tools $\rightarrow$ Terminal CLI Commands $\rightarrow$ Manual Human Prompt.
 - **Auto-Discovery**: When running in MCP-capable environments (Antigravity, Cursor, Claude Desktop), the assistant automatically prioritizes structured tool calls (e.g., `github-mcp-server`) over terminal commands (`gh`), preventing terminal pager hangs.
-- **Zero Lock-In Fallback**: If no MCP servers are configured, the assistant seamlessly falls back to standard terminal CLI utilities.
+- **Host Capability & Progressive Enhancement**: Structured MCP tool discovery is a progressive enhancement dependent on host MCP runtime support. If no MCP servers are configured or supported by the host, the assistant gracefully falls back to standard terminal CLI utilities.
 
 ### 4. Standardized Human Action Callouts
 
@@ -293,13 +294,15 @@ Repository CI validates structural integrity and protocol compliance across Linu
 | Dimension | Single-File Directives | Static Prompt Packs | Autonomous Multi-Agent Swarms | **PromptKit OS** |
 | :--- | :--- | :--- | :--- | :--- |
 | **Scope** | Tool-specific instruction endpoint | Workflow templates for one tool | Multi-agent unmonitored loops | Cross-tool engineering OS with 20 lifecycle workflows |
-| **Token Overhead** | Minimal initial overhead | High monolithic bloat (~18k tokens inlined) | Higher aggregate token cost from multi-agent pipeline calls | **~1,934 tokens JIT baseline** (~89.5% static context reduction vs 18.5k monolithic packs; unused workflows consume 0 tokens) |
+| **Token Overhead** | Minimal initial overhead | High monolithic bloat (~18k tokens inlined) | Higher aggregate token cost from multi-agent pipeline calls | **~1,944 tokens JIT baseline\*** (~89.5% static context reduction vs 18.5k monolithic packs; unused workflows consume 0 tokens) |
 | **Persistence** | Per-session only | Per-session only | Hidden cache directories prone to context exhaustion | Git-tracked `docs/STATE.md` survives context resets & fresh chats |
 | **Execution Model** | Unstructured chat | Manual template pasting | Background loop until timeout or crash | Disciplined human-in-the-loop pairing (Levels 0–3) |
 | **Database Safety** | No schema guardrails | Varies | Risk of destructive drops in unmonitored edits | Expand-Contract only (phased, non-breaking migrations) |
 | **Multi-Agent** | Single agent | Single agent | Unmonitored recursive agent spawns | Subagent delegation with compact synthesis (~98% parent context payload reduction) |
 | **Done-Gates** | Trust the model | Trust the model | Fragile timeout heuristics | Artifact gates + Gherkin verification + CI + human review |
 | **Lock-in** | Tool-specific format | Tool-specific format | Framework-specific runtime & daemons | Pure markdown, works with any AI coding assistant |
+
+*\* Measured mechanically via `scripts/measure-tokens.sh` / `measure-tokens.ps1` at ~4 chars/token heuristic. See [`docs/BENCHMARKS.md`](./docs/BENCHMARKS.md) for full context window analysis.*
 
 ---
 
@@ -428,7 +431,11 @@ Scaffolded automatically during initialization from `templates/project-profile-t
 * **Project Domain & Users**: Contextual overview so the assistant grasps business context.
 * **Active Commands**: Explicit test runner (`pnpm test:e2e`), typecheck (`pnpm tsc --noEmit`), and linter commands.
 * **Pluggable Task Tracking**: Configurable task tracking system (`Local Markdown`, `GitHub Issues`, `GitHub Projects v2`, `Obsidian Kanban`, `Linear`, or `Jira`) with zero vendor lock-in.
-* **Monorepo & Workspace Topology**: Explicit package graph (`apps/*`, `packages/*`), scoped `--filter` commands, and four non-negotiable import boundaries.
+* **Monorepo & Workspace Topology**: Explicit package graph (`apps/*`, `packages/*`), scoped `--filter` commands, and four non-negotiable architectural import boundaries:
+  1. *Presentation Isolation*: `packages/ui` must never import from application targets (`apps/*`) or server-only packages (`packages/db`).
+  2. *Client / Server Boundary*: Client components (`"use client"`) must never import directly from `@repo/db` or internal server secrets.
+  3. *Public Package Exports Only*: Never reach across workspace boundaries using relative deep paths (`../../packages/db/...`); consume only declared exports (`@repo/db`).
+  4. *Explicit Workspace Protocol*: Inter-package dependencies must declare explicit workspace protocols in `package.json` (`"workspace:*"`).
 * **Non-Negotiable Guardrails**: Hard architectural invariants (e.g., zero `any` in TypeScript, no business logic in React components, mandatory database check constraints).
 * **Artifact Storage**: Destination paths for all generated specs (`docs/specs/`, `docs/tasks/`, `docs/data/`, `docs/auth/`, `docs/perf/`, etc.).
 
