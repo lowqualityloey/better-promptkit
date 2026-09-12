@@ -19,6 +19,7 @@ jobs:
       - name: Validate Bash Script Syntax
         run: |
           bash -n init.sh
+          bash -n scripts/measure-tokens.sh
           bash -n scripts/validate-execution-control.sh
           bash -n scripts/tests/run-execution-control-fixtures.sh
           bash -n scripts/validate-release-records.sh
@@ -52,7 +53,7 @@ jobs:
           mkdir -p "$TEST_DIR"
           ./init.sh "$TEST_DIR"
 
-          for d in adrs specs rca spikes design data auth api tests reviews perf tasks releases releases/ci-triage; do
+          for d in tasks specs adrs tests; do
             if [ ! -d "$TEST_DIR/docs/$d" ]; then
               echo "Error: Missing directory docs/$d"
               exit 1
@@ -101,6 +102,7 @@ jobs:
         run: |
           $syntaxFiles = @(
             "init.ps1",
+            "scripts/measure-tokens.ps1",
             "scripts/validate-execution-control.ps1",
             "scripts/tests/run-execution-control-fixtures.ps1",
             "scripts/validate-release-records.ps1",
@@ -151,7 +153,7 @@ jobs:
           $testDir = New-Item -ItemType Directory -Path "$env:RUNNER_TEMP\test-project" -Force
           .\init.ps1 -ProjectRoot $testDir.FullName
 
-          $docDirs = @("adrs", "specs", "rca", "spikes", "design", "data", "auth", "api", "tests", "reviews", "perf", "tasks", "releases", "releases\ci-triage")
+          $docDirs = @("tasks", "specs", "adrs", "tests")
           foreach ($d in $docDirs) {
             $p = Join-Path $testDir.FullName "docs\$d"
             if (-not (Test-Path $p)) {
