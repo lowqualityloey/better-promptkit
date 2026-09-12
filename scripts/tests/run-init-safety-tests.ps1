@@ -194,7 +194,32 @@ try {
         throw "Failed Test 9: Emoji and CJK characters in footer were corrupted or lost."
     }
 
-    Write-Host "init.ps1 non-destructive update, CRLF/LF compatibility, duplicate/reversed/incomplete markers, literal $, UTF-8 emoji/CJK, and idempotency tests passed." -ForegroundColor Green
+    # Test 11: Directory-based target (.clinerules/ directory layout) creates/updates .clinerules/promptkit.md
+    $DirLayoutRoot = (New-Item -ItemType Directory -Path (Join-Path $TestRoot "dirlayout") -Force).FullName
+    $ClineDir = New-Item -ItemType Directory -Path (Join-Path $DirLayoutRoot ".clinerules") -Force
+    & pwsh -NoProfile -File $initScriptPath -ProjectRoot $DirLayoutRoot | Out-Null
+    $clineTarget = Join-Path $ClineDir.FullName "promptkit.md"
+    if (-not (Test-Path $clineTarget)) {
+        throw "Failed Test 11: .clinerules/promptkit.md was not created when .clinerules is a directory."
+    }
+    $clineContent = [System.IO.File]::ReadAllText($clineTarget, [System.Text.Encoding]::UTF8)
+    if (-not $clineContent.Contains('## PromptKit OS: Engineering Operating System')) {
+        throw "Failed Test 11: .clinerules/promptkit.md does not contain expected directive."
+    }
+
+    # Test 12: Byte-for-byte idempotency on repeated initialization
+    $IdempotentRoot = (New-Item -ItemType Directory -Path (Join-Path $TestRoot "idempotent") -Force).FullName
+    $idempotentAgent = Join-Path $IdempotentRoot "AGENTS.md"
+    [System.IO.File]::WriteAllText($idempotentAgent, "# User instructions`n`nKeep me.`n", $utf8NoBom)
+    & pwsh -NoProfile -File $initScriptPath -ProjectRoot $IdempotentRoot | Out-Null
+    $firstPassHash = (Get-FileHash -Path $idempotentAgent -Algorithm SHA256).Hash
+    & pwsh -NoProfile -File $initScriptPath -ProjectRoot $IdempotentRoot | Out-Null
+    $secondPassHash = (Get-FileHash -Path $idempotentAgent -Algorithm SHA256).Hash
+    if ($firstPassHash -ne $secondPassHash) {
+        throw "Failed Test 12: Repeated initialization was not byte-idempotent (hash mismatch)."
+    }
+
+    Write-Host "init.ps1 non-destructive update, CRLF/LF compatibility, duplicate/reversed/incomplete markers, literal $, UTF-8 emoji/CJK, directory target, and strict byte-idempotency tests passed." -ForegroundColor Green
 } finally {
     Remove-Item -Path $TestRoot -Recurse -Force -ErrorAction SilentlyContinue
 }

@@ -150,4 +150,21 @@ bash "$REPO_ROOT/init.sh" "$UTF8_ROOT" >/dev/null
 grep -q '🚀 🧪 漢字 テスト' "$UTF8_ROOT/AGENTS.md"
 grep -q '✨ 祝日' "$UTF8_ROOT/AGENTS.md"
 
-echo "init.sh non-destructive update, CRLF/LF compatibility, duplicate/malformed/reversed markers, literal $, awk failure, and UTF-8 tests passed."
+# Directory target test (.clinerules/ folder layout)
+DIR_ROOT="$TEST_ROOT/dirlayout"
+mkdir -p "$DIR_ROOT/.clinerules"
+bash "$REPO_ROOT/init.sh" "$DIR_ROOT" >/dev/null
+[[ -f "$DIR_ROOT/.clinerules/promptkit.md" ]]
+grep -q '## PromptKit OS: Engineering Operating System' "$DIR_ROOT/.clinerules/promptkit.md"
+
+# Strict byte-for-byte idempotency on repeated runs
+IDEMPOTENT_ROOT="$TEST_ROOT/idempotent"
+mkdir -p "$IDEMPOTENT_ROOT"
+printf "# Instructions\n\nKeep me.\n" > "$IDEMPOTENT_ROOT/AGENTS.md"
+bash "$REPO_ROOT/init.sh" "$IDEMPOTENT_ROOT" >/dev/null
+first_hash="$(sha256sum "$IDEMPOTENT_ROOT/AGENTS.md" | cut -d' ' -f1)"
+bash "$REPO_ROOT/init.sh" "$IDEMPOTENT_ROOT" >/dev/null
+second_hash="$(sha256sum "$IDEMPOTENT_ROOT/AGENTS.md" | cut -d' ' -f1)"
+[[ "$first_hash" == "$second_hash" ]]
+
+echo "init.sh non-destructive update, CRLF/LF compatibility, duplicate/malformed/reversed markers, literal $, awk failure, UTF-8, directory targets, and byte-idempotency tests passed."

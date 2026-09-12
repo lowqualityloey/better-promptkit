@@ -58,18 +58,13 @@ if ($TargetFile -ne "" -and (Test-Path $TargetFile)) {
     }
 }
 
-# Fallback to measuring the canonical template inside init.ps1 if running standalone inside .promptkit
+# Fallback to measuring the canonical template inside templates/agent-directive-template.md if running standalone
 if ([string]::IsNullOrWhiteSpace($DirectiveText)) {
     $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-    $InitPs1 = Join-Path $ScriptDir "..\init.ps1"
-    if (Test-Path $InitPs1) {
-        $Content = Get-Content $InitPs1 -Raw
-        $Pattern = '(?s)\$Directive\s*=\s*@"\r?\n(<!-- PROMPTKIT_START -->.*?<!-- PROMPTKIT_END -->)'
-        $Match = [regex]::Match($Content, $Pattern)
-        if ($Match.Success) {
-            $DirectiveText = $Match.Groups[1].Value
-            $SourceDescription = "Canonical template in init.ps1"
-        }
+    $TemplatePath = Join-Path $ScriptDir "..\templates\agent-directive-template.md"
+    if (Test-Path $TemplatePath) {
+        $DirectiveText = [System.IO.File]::ReadAllText($TemplatePath, [System.Text.Encoding]::UTF8)
+        $SourceDescription = "Canonical template in templates/agent-directive-template.md"
     }
 }
 
