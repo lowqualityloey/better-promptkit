@@ -26,3 +26,7 @@ semantic-review/
 # Local/internal Kiro specs (future specs ignored; historical agent-execution-control-handoff preserved for release evidence)
 .kiro/specs/*
 !.kiro/specs/agent-execution-control-handoff/
+
+# Better-PromptKit isolated worktrees
+.worktrees/
+

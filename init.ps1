@@ -5,7 +5,7 @@
     Initializes Better-PromptKit in your project:
     - Scaffolds project documentation directories (docs/adrs, docs/specs, docs/rca, docs/spikes, docs/design)
     - Creates PROMPTKIT.md project profile if missing
-    - Injects or updates Better-PromptKit directives in AGENTS.md, CLAUDE.md, GEMINI.md, .cursorrules, .windsurfrules, or .github/copilot-instructions.md
+    - Injects or updates Better-PromptKit directives in AGENTS.md, CLAUDE.md, GEMINI.md, .cursorrules, .cursor/rules/*.mdc, .windsurfrules, .github/copilot-instructions.md, .clinerules, .traerules, or .opencode/rules.md
 #>
 
 [CmdletBinding()]
@@ -133,8 +133,12 @@ $AgentFiles = @(
     "CLAUDE.md",
     "GEMINI.md",
     ".cursorrules",
+    ".cursor/rules/promptkit.mdc",
     ".windsurfrules",
-    ".github/copilot-instructions.md"
+    ".github/copilot-instructions.md",
+    ".clinerules",
+    ".traerules",
+    ".opencode/rules.md"
 )
 
 $TargetsFound = @()

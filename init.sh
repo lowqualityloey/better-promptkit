@@ -110,8 +110,12 @@ AGENT_FILES=(
     "CLAUDE.md"
     "GEMINI.md"
     ".cursorrules"
+    ".cursor/rules/promptkit.mdc"
     ".windsurfrules"
     ".github/copilot-instructions.md"
+    ".clinerules"
+    ".traerules"
+    ".opencode/rules.md"
 )
 
 TARGETS_FOUND=()

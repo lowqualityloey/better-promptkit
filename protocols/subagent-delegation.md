@@ -107,6 +107,19 @@ When an agent writes a complex feature (relational schema changes, authenticatio
    - **Targeted Verifier Scope**: Keep context strictly bounded to Acceptance Criteria, the resolved diff, and test commands to minimize token consumption.
    - **Concise Output Ceiling**: Max 15-line response with a concise Pass/Fail matrix and exact line references.
 
+### Pattern D: Isolated Worktree Execution (Level 2/3 Risky Multi-File Tasks)
+When a task involves high-risk multi-file refactoring, dependency upgrades, or parallel spike implementations, running edits directly in the main working tree risks dirtying the workspace and corrupting local state.
+1. **Sandbox Creation**: Use PromptKit's zero-dependency isolation script:
+   - Windows: `.\scripts\isolate-worktree.ps1 create <task-id>`
+   - Linux/macOS: `./scripts/isolate-worktree.sh create <task-id>`
+2. **Isolated Execution**:
+   - The subagent or developer operates entirely inside `.worktrees/<task-id>`, backed by a dedicated branch (`worktree/<task-id>`).
+   - Run tests, compile artifacts, and verify criteria in isolation.
+3. **Reconciliation & Cleanup**:
+   - Once verification passes: `isolate-worktree.ps1 merge <task-id>`
+   - Clean up the scratch worktree: `isolate-worktree.ps1 remove <task-id>`
+   - The parent project `.gitignore` automatically excludes `.worktrees/` to prevent untracked leakage.
+
 ---
 
 ## 5. Failure Recovery & Timeout Handling
