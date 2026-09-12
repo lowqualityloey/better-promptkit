@@ -303,6 +303,20 @@ PromptKit OS is designed for **gradual adoption**. You don't need to:
 
 ---
 
+### Scenario 6: Supercharging with Model Context Protocol (MCP) Servers
+**Problem**: You want your AI assistants (OpenCode, Antigravity, Claude Code, Cursor) to interact directly with GitHub or databases without manual copy-pasting or CLI fragility.
+
+**Solution**: Configure native MCP servers in your assistant environment and document them in `PROMPTKIT.md`. PromptKit OS will automatically prioritize native MCP tool execution:
+- **GitHub MCP (`github-mcp-server`)**: PR creation, issue triage, review comments, commit history inspection.
+- **Postgres MCP (`@modelcontextprotocol/server-postgres`)**: Live schema introspection, read-only query analysis for `pk:data` and `pk:perf`.
+
+**Precedence Hierarchy**:
+$$\text{Native MCP Tools} \rightarrow \text{Native IDE Tools} \rightarrow \text{Terminal CLI Commands} \rightarrow \text{Manual Human Prompt}$$
+
+If an MCP server is missing or disconnected, PromptKit OS gracefully and silently falls back to standard terminal CLI tools (`gh`, `psql`, `git`).
+
+---
+
 ## Handling Resistance & Common Objections
 
 ### "This Looks Like Bureaucracy"
