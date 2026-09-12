@@ -92,17 +92,17 @@ Write-Host "`n📌 Scenario I: Post-Staging Secret Scan Sequencing (Time-of-Chec
 Assert-Contains "workflows/commit.md" "Pre-Commit Secret & Hygiene Scan" "Commit workflow enforces post-staging secret scan"
 Assert-Contains "workflows/commit.md" "Immediately after staging" "Secret scan runs immediately after staging phase"
 
-Write-Host "`n📌 Scenario J: Standardized Visual Callouts & 3-Column Telemetry Matrix" -ForegroundColor Yellow
+Write-Host "`n📌 Scenario J: Standardized Visual Callouts & Telemetry Status Cards" -ForegroundColor Yellow
 Assert-Contains "templates/agent-directive-template.md" "Native MCP & Interactive Turn Prompts" "Directive includes native MCP and interactive turn prompts guardrail"
-Assert-Contains "templates/agent-directive-template.md" "Dual-Compatible 3-Column Telemetry Callouts" "Directive includes dual-compatible 3-column telemetry matrix callout guardrail"
+Assert-Contains "templates/agent-directive-template.md" "Dual-Compatible Telemetry Status Cards" "Directive includes dual-compatible telemetry status card guardrail"
 Assert-Contains "templates/agent-directive-template.md" "### 💡 Next Recommended Step" "Directive specifies next recommended step callout format"
-Assert-Contains "templates/agent-directive-template.md" "Milestone Progress | Active Task | System Health" "Directive specifies 3-column telemetry matrix layout"
-Assert-Contains "workflows/commit.md" "Milestone Progress | Active Task | System Health" "Commit workflow includes 3-column telemetry matrix in callout"
-Assert-Contains "workflows/pr.md" "Pull Request & Branch | Milestone & Diff | CI & Quality Gates" "PR workflow includes 3-column telemetry matrix in callout"
-Assert-Contains "workflows/plan.md" "Milestone Progress | Active Task | System Health" "Plan workflow includes 3-column telemetry matrix in callout"
-Assert-Contains "workflows/tasks.md" "Milestone Progress | Active Task | System Health" "Tasks workflow includes 3-column telemetry matrix in callout"
-Assert-Contains "workflows/test.md" "Milestone Progress | Active Task | System Health" "Test workflow includes 3-column telemetry matrix in callout"
-Assert-Contains "workflows/fix.md" "Milestone Progress | Active Task | System Health" "Fix workflow includes 3-column telemetry matrix in callout"
+Assert-Contains "templates/agent-directive-template.md" "📊 \*\*Milestone\*\*:" "Directive specifies telemetry status card format"
+Assert-Contains "workflows/commit.md" "Dual-Compatible Telemetry Status Card" "Commit workflow includes telemetry status card"
+Assert-Contains "workflows/pr.md" "Telemetry Status Card" "PR workflow includes telemetry status card"
+Assert-Contains "workflows/plan.md" "Dual-Compatible Telemetry Status Card" "Plan workflow includes telemetry status card"
+Assert-Contains "workflows/tasks.md" "Dual-Compatible Telemetry Status Card" "Tasks workflow includes telemetry status card"
+Assert-Contains "workflows/test.md" "Dual-Compatible Telemetry Status Card" "Test workflow includes telemetry status card"
+Assert-Contains "workflows/fix.md" "Dual-Compatible Telemetry Status Card" "Fix workflow includes telemetry status card"
 Assert-Contains "workflows/plan.md" "Interactive Decision & Trade-Off Clarification" "Plan workflow includes interactive decision prompt guidelines"
 
 Write-Host "`n📌 Scenario K: Project Database & Harness Isolation" -ForegroundColor Yellow

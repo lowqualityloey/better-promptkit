@@ -201,5 +201,4 @@ For applications using PostgreSQL or Supabase, enforce tenancy guarantees at the
 - All foreign keys indexed and cascade rules explicit.
 - Row-Level Security policies documented with verifiable SQL.
 - Migration rollback plan and real PostgreSQL test harness defined.
-- **Project Database Isolation**: Test harnesses use project-scoped database containers and never attach to foreign project instances.
-- **Dual-Compatible Visual Callout**: Conclude with a `> [!TIP]` callout featuring the 3-column telemetry matrix (`| Milestone Progress | Active Task | System Health |`).
+- **Dual-Compatible Telemetry Status Card**: Conclude with a 3-line telemetry status card (`> 📊 **Milestone**: ... \n> 🎯 **Active**: ... \n> 🟢 **Quality Gate**: ...`) and a `> [!TIP]` callout recommending downstream implementation or verification. When multiple next steps exist, invoke native interactive selection tools (e.g. `ask_question`) as your final tool call with Option 1 `(Recommended)` so the developer can navigate with arrow keys and confirm with `Enter`.

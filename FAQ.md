@@ -493,7 +493,7 @@ Remember: **AI assistants aren't perfect**. PromptKit structures their reasoning
 **Short Answer**: No. PromptKit OS uses a **Just-In-Time (JIT) Filesystem Architecture** with zero static token bloat.
 
 **How it works**:
-- **Baseline footprint**: Initialization scripts inject only a lightweight ~100-line router directive (~1,822 tokens, mechanically measured) into your configuration file (`AGENTS.md`, `CLAUDE.md`, `.cursorrules`, etc.).
+- **Baseline footprint**: Initialization scripts inject only a lightweight ~100-line router directive (~1,878 tokens, mechanically measured) into your configuration file (`AGENTS.md`, `CLAUDE.md`, `.cursorrules`, etc.).
 - **On-demand loading**: The AI only reads specific workflow files (e.g. `workflows/debug.md`) from the local filesystem when that specific workflow is triggered or routed.
 - **Comparison to monolithic prompts**: Traditional prompt packs inline all rules, workflows, and templates directly into the prompt on every turn, consuming 18,000–22,000 tokens statically before work begins. PromptKit preserves ~90% of static context overhead compared to monolithic packs (~18,500 tokens).
 - **Subagent context preservation**: Multi-file exploration is delegated to subagents whose results are synthesized into compact findings, reducing conversational bloat by up to 98%.
@@ -521,9 +521,9 @@ For complete line-by-line token breakdowns and mathematical analysis, see [docs/
 **Short Answer**: PromptKit OS adheres to a strict **Dual-Compatible Visual Callout Standard** without proprietary markup or raw HTML.
 
 **How it works**:
-- **Structured 3-Column Telemetry**: Status updates and task completions use a 3-column table matrix (`| Milestone Progress | Active Task | System Health / Quality Gate |` with `[■■■■■□□□□□]`) providing instant situational awareness without vertical sprawl.
-- **Dual-Compatibility**: In GUI environments (Cursor, Antigravity, GitHub), callouts render as rich GitHub-style visual alerts (`> [!IMPORTANT]`, `> [!NOTE]`). In headless terminal CLIs (Claude Code, Gemini CLI, Aider), they fall back gracefully to clean RFC-compliant blockquotes without unrendered HTML tags or visual glitches.
-- **Interactive Turn Handoffs**: When concluding multi-step tasks, the AI invokes native selection tools (OpenCode prompt picker, `ask_question`) with Option 1 marked `(Recommended)`, letting you confirm your next step with arrow keys and `Enter`.
+- **Structured Telemetry Status Cards**: Status updates and task completions use a clean 3-line status card (`> 📊 **Milestone**: ... \n> 🎯 **Active**: ... \n> 🟢 **Quality Gate**: ...`) providing instant situational awareness without vertical sprawl or unrendered table syntax.
+- **Dual-Compatibility**: In GUI environments (Cursor, Antigravity, GitHub), callouts render as rich GitHub-style visual alerts (`> [!IMPORTANT]`, `> [!NOTE]`). In headless terminal CLIs (Claude Code, Gemini CLI, OpenCode), they render cleanly as bordered accent blocks without unrendered HTML tags or broken table formatting.
+- **Interactive Turn Handoffs**: When concluding multi-step tasks, the AI executes native interactive selection tools (OpenCode prompt picker, `ask_question`) as its final action with Option 1 marked `(Recommended)`, letting you confirm your next step with arrow keys, `1`/`Enter`, or custom typing.
 
 ---
 
