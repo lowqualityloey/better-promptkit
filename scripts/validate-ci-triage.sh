@@ -93,9 +93,12 @@ is_placeholder() {
     value="$(unwrap "$1")"
     [ -z "$value" ] && return 0
     local lower="${value,,}"
-    [[ "$lower" =~ ^n/a([[:space:]]*[-—][[:space:]].*)?$ ]] && return 0
+    # The typographic dash is matched through an alternation rather than a bracket
+    # expression on purpose: in a non-UTF-8 locale a multi-byte character inside
+    # [ ... ] degrades to a set of raw bytes, which silently stops matching.
+    [[ "$lower" =~ ^n/a([[:space:]]*(-|—)[[:space:]].*)?$ ]] && return 0
     [[ "$lower" = none || "$lower" = not\ applicable ]] && return 0
-    [[ "$lower" =~ ^pending([[:space:]]*[-—][[:space:]].*)?$ ]] && return 0
+    [[ "$lower" =~ ^pending([[:space:]]*(-|—)[[:space:]].*)?$ ]] && return 0
     [[ "$lower" = not\ approved ]] && return 0
     [[ "$value" == \[*\] ]] && return 0
     return 1
@@ -104,8 +107,9 @@ is_placeholder() {
 is_usable() { ! is_placeholder "$1"; }
 
 is_pending_confirmation_marker() {
-    local value="$(unwrap "$1")"
-    [[ "${value,,}" =~ ^n/a[[:space:]]*[-—][[:space:]]*awaiting[[:space:]]+confirmation$ ]]
+    local value
+    value="$(unwrap "$1")"
+    [[ "${value,,}" =~ ^n/a[[:space:]]*(-|—)[[:space:]]*awaiting[[:space:]]+confirmation$ ]]
 }
 
 require_field() {
@@ -314,7 +318,11 @@ validate_record() {
     [ "${#HISTORY[@]}" -gt 0 ] || add_diagnostic "INVALID_TRANSITION" "$CURRENT_ID" "$CURRENT_RELATIVE" "State History is empty" "Record the complete state path from evidence_requested"
     [ "${HISTORY[0]-}" = evidence_requested ] || add_diagnostic "INVALID_TRANSITION" "$CURRENT_ID" "$CURRENT_RELATIVE" "State History must start at evidence_requested" "Collect evidence before any classification or remediation"
     local last_index=$(( ${#HISTORY[@]} - 1 ))
-    [ "${HISTORY[$last_index]-}" = "$state" ] || add_diagnostic "INVALID_TRANSITION" "$CURRENT_ID" "$CURRENT_RELATIVE" "State History final state differs from State" "Keep State equal to the final recorded transition"
+    # A negative subscript is a hard error under `set -u`, so read the final
+    # element through a guarded variable rather than indexing directly.
+    local last_state=""
+    [ "$last_index" -ge 0 ] && last_state="${HISTORY[$last_index]}"
+    [ "$last_state" = "$state" ] || add_diagnostic "INVALID_TRANSITION" "$CURRENT_ID" "$CURRENT_RELATIVE" "State History final state differs from State" "Keep State equal to the final recorded transition"
     for token in "${HISTORY[@]}"; do valid_state "$token" || add_diagnostic "INVALID_STATE" "$CURRENT_ID" "$CURRENT_RELATIVE" "State History contains unsupported state: $token" "Use only canonical CI triage states"; done
 
     action_count="${#ACTION_ORDER[@]}"
@@ -456,7 +464,11 @@ validate_record() {
     fi
     if [ "$state" = linked_to_pk_ship ]; then
         [ "$release_candidate" = true ] || add_diagnostic "RELEASE_HANDOFF" "$CURRENT_ID" "$CURRENT_RELATIVE" "Only release candidates may reach linked_to_pk_ship" "Keep non-release records at verified"
-        [ "${HISTORY[${#HISTORY[@]}-2]-}" = verified ] || add_diagnostic "RELEASE_HANDOFF" "$CURRENT_ID" "$CURRENT_RELATIVE" "linked_to_pk_ship must follow verified" "Link release evidence only after successful verification"
+        # Guarded for the same reason as the final-state check above: an empty or
+        # single-element history makes this subscript negative.
+        local prior_state_value=""
+        [ "${#HISTORY[@]}" -ge 2 ] && prior_state_value="${HISTORY[${#HISTORY[@]}-2]}"
+        [ "$prior_state_value" = verified ] || add_diagnostic "RELEASE_HANDOFF" "$CURRENT_ID" "$CURRENT_RELATIVE" "linked_to_pk_ship must follow verified" "Link release evidence only after successful verification"
         require_usable 'pk:ship Release Link'; validate_release_link "$(field_value 'pk:ship Release Link')"
     elif is_usable "$(field_value 'pk:ship Release Link')"; then add_diagnostic "RELEASE_HANDOFF" "$CURRENT_ID" "$CURRENT_RELATIVE" "pk:ship Release Link is present before linked_to_pk_ship" "Keep release linkage empty until verified handoff"; fi
 }
@@ -467,6 +479,13 @@ else
     mapfile -t files < <(find "$CI_DIR" -type f -name '*.md' -print | LC_ALL=C sort)
     if [ "${#files[@]}" -eq 0 ]; then add_diagnostic "MISSING_FIELD" "REPOSITORY" "docs/releases/ci-triage" "No CI Triage Records found" "Provide at least one canonical CI record"; fi
     for file in "${files[@]}"; do
+        # An unreadable record yields no fields at all. Reporting it as a single
+        # READ_ERROR keeps parity with validate-ci-triage.ps1 and avoids deriving
+        # roughly twenty field findings from content that was never read.
+        if [ ! -r "$file" ]; then
+            add_diagnostic "READ_ERROR" "UNKNOWN" "$(relative_path "$file")" "Unable to read CI Triage Record" "Provide a readable local Markdown record"
+            continue
+        fi
         validate_record "$file"
         for previous in "${SEEN_IDS[@]}"; do [ "$previous" = "$CURRENT_ID" ] && add_diagnostic "DUPLICATE_ID" "$CURRENT_ID" "$(relative_path "$file")" "Duplicate CI ID across records" "Keep each immutable CI ID unique"; done
         SEEN_IDS+=("$CURRENT_ID")

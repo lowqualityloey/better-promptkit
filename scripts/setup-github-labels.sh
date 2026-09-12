@@ -37,6 +37,7 @@ declare -a LABELS=(
     "area:ui:e99695:Design tokens, Tailwind styles, visual aesthetics"
     "area:auth:f9d0c4:Authentication, sessions, tokens, RBAC permissions"
     "area:perf:c2e0c6:Performance profiling, query optimization, latency"
+    "area:tooling:5d7fa3:Validators, shell/PowerShell scripts, CI workflows, test harnesses"
 )
 
 echo -e "\033[0;90mSyncing ${#LABELS[@]} labels to GitHub repository...\033[0m"

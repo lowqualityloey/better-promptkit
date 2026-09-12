@@ -20,16 +20,24 @@ declare -A FIELDS=()
 declare -A DUPLICATES=()
 
 declare -a EVALUATION_INDICES=()
+declare -A SEEN_DIAGNOSTICS=()
 
 diagnostic() {
-    local category="$1" record_id="$2" path="$3" message="$4" remediation="$5"
+    local category="$1" record_id="$2" path="$3" message="$4" remediation="$5" entry
     message="${message//$'\r'/ }"
     message="${message//$'\n'/ }"
     message="${message//|/ }"
     remediation="${remediation//$'\r'/ }"
     remediation="${remediation//$'\n'/ }"
     remediation="${remediation//|/ }"
-    DIAGNOSTICS+=("${category}|${record_id}|${path}|${message}|${remediation}")
+    entry="${category}|${record_id}|${path}|${message}|${remediation}"
+    # A finding is identified by its complete tuple. require_labels and
+    # require_value both assert the presence of the same label, so an absent
+    # field was previously reported twice and the summary error count was
+    # inflated. Distinct findings still differ in at least one tuple element.
+    [ -n "${SEEN_DIAGNOSTICS[$entry]+present}" ] && return 0
+    SEEN_DIAGNOSTICS["$entry"]=1
+    DIAGNOSTICS+=("$entry")
     ERROR_COUNT=$((ERROR_COUNT + 1))
 }
 
@@ -634,6 +642,14 @@ if [ ! -d "$RELEASE_DIR" ]; then
 else
     index=0
     while IFS= read -r file; do
+        # An unreadable record yields no fields at all. Reporting it as a single
+        # READ_ERROR keeps parity with validate-release-records.ps1 and avoids
+        # deriving field findings from content that was never read.
+        if [ ! -r "$file" ]; then
+            diagnostic "READ_ERROR" "UNKNOWN" "$(relative_path "$file")" 'Unable to read release record' 'Provide a readable local Markdown record'
+            index=$((index + 1))
+            continue
+        fi
         parse_file "$index" "$file"
         type="$(field_value "$index" 'Record Type')"
         id="$(field_value "$index" 'Evaluation ID')"
