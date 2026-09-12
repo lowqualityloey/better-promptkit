@@ -29,6 +29,7 @@ jobs:
           bash -n scripts/tests/run-ci-triage-fixtures.sh
           bash -n scripts/tests/run-behavioral-contract-tests.sh
           bash -n scripts/tests/run-init-safety-tests.sh
+          bash -n scripts/tests/release-records.examples.sh
           echo "Bash scripts parsed with 0 syntax errors."
 
       - name: Run Behavioral Prompt-Contract Tests (Bash)
@@ -53,6 +54,12 @@ jobs:
 
       - name: Run Release-Record Property Test Harness (Bash)
         run: bash scripts/tests/run-release-record-properties.sh
+
+      - name: Run Release-Record Documentation Examples (Bash)
+        run: bash scripts/tests/release-records.examples.sh
+
+      - name: Assert Directive Token Budget (Bash)
+        run: bash scripts/measure-tokens.sh
 
       - name: Run Release-Record Self-Validation with Grandfather Exemption (Bash)
         run: |
@@ -129,7 +136,8 @@ jobs:
             "scripts/validate-ci-triage.ps1",
             "scripts/tests/run-ci-triage-fixtures.ps1",
             "scripts/tests/run-behavioral-contract-tests.ps1",
-            "scripts/tests/run-init-safety-tests.ps1"
+            "scripts/tests/run-init-safety-tests.ps1",
+            "scripts/tests/release-records.examples.ps1"
           )
           foreach ($file in $syntaxFiles) {
             $errors = @()
@@ -170,6 +178,14 @@ jobs:
       - name: Run Release-Record Property Test Harness (PowerShell)
         shell: pwsh
         run: pwsh -NoProfile -File .\scripts\tests\run-release-record-properties.ps1
+
+      - name: Run Release-Record Documentation Examples (PowerShell)
+        shell: pwsh
+        run: pwsh -NoProfile -File .\scripts\tests\release-records.examples.ps1
+
+      - name: Assert Directive Token Budget (PowerShell)
+        shell: pwsh
+        run: pwsh -NoProfile -File .\scripts\measure-tokens.ps1
 
       - name: Run Release-Record Self-Validation with Grandfather Exemption (PowerShell)
         shell: pwsh
