@@ -20,16 +20,24 @@ declare -A FIELDS=()
 declare -A DUPLICATES=()
 
 declare -a EVALUATION_INDICES=()
+declare -A SEEN_DIAGNOSTICS=()
 
 diagnostic() {
-    local category="$1" record_id="$2" path="$3" message="$4" remediation="$5"
+    local category="$1" record_id="$2" path="$3" message="$4" remediation="$5" entry
     message="${message//$'\r'/ }"
     message="${message//$'\n'/ }"
     message="${message//|/ }"
     remediation="${remediation//$'\r'/ }"
     remediation="${remediation//$'\n'/ }"
     remediation="${remediation//|/ }"
-    DIAGNOSTICS+=("${category}|${record_id}|${path}|${message}|${remediation}")
+    entry="${category}|${record_id}|${path}|${message}|${remediation}"
+    # A finding is identified by its complete tuple. require_labels and
+    # require_value both assert the presence of the same label, so an absent
+    # field was previously reported twice and the summary error count was
+    # inflated. Distinct findings still differ in at least one tuple element.
+    [ -n "${SEEN_DIAGNOSTICS[$entry]+present}" ] && return 0
+    SEEN_DIAGNOSTICS["$entry"]=1
+    DIAGNOSTICS+=("$entry")
     ERROR_COUNT=$((ERROR_COUNT + 1))
 }
 

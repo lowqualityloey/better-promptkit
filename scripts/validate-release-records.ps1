@@ -10,6 +10,7 @@ param(
 $ErrorCount = 0
 $RecordCount = 0
 $Diagnostics = [System.Collections.Generic.List[string]]::new()
+$SeenDiagnostics = [System.Collections.Generic.HashSet[string]]::new()
 $Records = [System.Collections.Generic.List[object]]::new()
 
 function Add-Diagnostic {
@@ -23,7 +24,13 @@ function Add-Diagnostic {
 
     $safeMessage = ($Message -replace '[\r\n|]', ' ').Trim()
     $safeRemediation = ($Remediation -replace '[\r\n|]', ' ').Trim()
-    [void]$Diagnostics.Add("$Category|$RecordId|$Path|$safeMessage|$safeRemediation")
+    $entry = "$Category|$RecordId|$Path|$safeMessage|$safeRemediation"
+    # A finding is identified by its complete tuple. Require-Labels and
+    # Require-Value both assert the presence of the same label, so an absent
+    # field was previously reported twice and the summary error count was
+    # inflated. Distinct findings still differ in at least one tuple element.
+    if (-not $script:SeenDiagnostics.Add($entry)) { return }
+    [void]$Diagnostics.Add($entry)
     $script:ErrorCount++
 }
 
