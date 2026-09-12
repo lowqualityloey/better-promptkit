@@ -642,6 +642,14 @@ if [ ! -d "$RELEASE_DIR" ]; then
 else
     index=0
     while IFS= read -r file; do
+        # An unreadable record yields no fields at all. Reporting it as a single
+        # READ_ERROR keeps parity with validate-release-records.ps1 and avoids
+        # deriving field findings from content that was never read.
+        if [ ! -r "$file" ]; then
+            diagnostic "READ_ERROR" "UNKNOWN" "$(relative_path "$file")" 'Unable to read release record' 'Provide a readable local Markdown record'
+            index=$((index + 1))
+            continue
+        fi
         parse_file "$index" "$file"
         type="$(field_value "$index" 'Record Type')"
         id="$(field_value "$index" 'Evaluation ID')"
