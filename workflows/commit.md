@@ -202,6 +202,12 @@ docs(adrs): record decision to adopt UUIDv7 for primary keys
    git commit -m "<subject>" -m "<body-paragraphs>"
    ```
 4. Confirm commit creation with `git log -n 1 --stat`.
+5. **Standard Visual Callout**: Conclude the turn by displaying the next recommended lifecycle step in a dedicated `> [!TIP]` callout box:
+   > [!TIP]
+   > ### 💡 Next Recommended Step:
+   > - If completing a task or milestone: run **`pk:checkpoint`** (compact session state & sync `docs/STATE.md`)
+   > - If ready to open a pull request for review: run **`pk:pr`**
+   > - If continuing work on the next issue: run **`pk:tasks`**
 
 
 ---

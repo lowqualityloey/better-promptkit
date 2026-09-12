@@ -98,6 +98,15 @@ assert_contains "workflows/commit.md" "Pre-Commit Secret & Hygiene Scan" "Commit
 assert_contains "workflows/commit.md" "Immediately after staging" "Secret scan runs immediately after staging phase"
 
 echo ""
+echo "📌 Scenario J: Standardized Visual Callouts & Next Recommended Steps"
+assert_contains "templates/agent-directive-template.md" "Standardized Action & Next-Step Callouts" "Directive includes standardized action and next-step callout guardrail"
+assert_contains "templates/agent-directive-template.md" "### 💡 Next Recommended Step:" "Directive specifies next recommended step callout format"
+assert_contains "workflows/commit.md" "### 💡 Next Recommended Step:" "Commit workflow specifies next recommended step callout format"
+assert_contains "workflows/plan.md" "### 💡 Next Recommended Step:" "Plan workflow specifies next recommended step callout format"
+assert_contains "workflows/tasks.md" "### 💡 Next Recommended Step:" "Tasks workflow specifies next recommended step callout format"
+assert_contains "workflows/test.md" "### 💡 Next Recommended Step:" "Test workflow specifies next recommended step callout format"
+
+echo ""
 echo "==========================================================="
 echo "📊 Behavioral Contract Verification Summary"
 echo "Passed: $PASS_COUNT | Failed: $FAIL_COUNT"
