@@ -112,7 +112,15 @@ Provide the generated PR description to the developer in two formats:
    *(Or interactive `gh pr create --web`)*.
 
 ### Human Authority & Merge Boundary
-The AI assistant drafts the pull request and compiles verification evidence, but the human engineer retains sole authority over code review, approval, and merging to `main`. The AI assistant must **never** execute `git push origin main` or merge pull requests directly. 
+The AI assistant drafts the pull request and compiles verification evidence, but the human engineer retains sole authority over code review, approval, and merging to `main`. The AI assistant must **never** execute `git push origin main` or merge pull requests directly without explicit developer authorization.
 
-Upon presenting the PR draft, the assistant must halt and output:
-> "PR drafted. Awaiting your review and merge."
+Upon presenting or opening the PR, conclude with the standard Dual-Compatible 3-Column Callout:
+> [!TIP]
+> ### 💡 Next Recommended Step
+> 
+> | Pull Request & Branch | Milestone & Diff | CI & Quality Gates |
+> | :--- | :--- | :--- |
+> | [**#<number>: <title>**](<url>)<br>`<head-branch> → main` | `[■■■■□□□□□□] XX%`<br>`+<add> / -<del> lines (<count> files)` | `<passed>/<total> CI Jobs Passing ✓`<br>`🔒 <n> Invariants Intact` |
+> 
+> - **To Merge**: Run **`gh pr merge <number> --squash --delete-branch`** (or review on GitHub)
+> - **Next Task**: Run **`start TASK-XX`** (or `pk:checkpoint`)

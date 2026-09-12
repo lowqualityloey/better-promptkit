@@ -147,9 +147,10 @@ For applications using PostgreSQL or Supabase, enforce tenancy guarantees at the
 ---
 
 ### 6. Real-Engine Testing vs In-Memory Blind Spots
-- **Mandate Real PostgreSQL in CI**:
+- **Mandate Real PostgreSQL in CI & Project-Scoped Isolation**:
   - Never test database logic against in-memory SQLite when deploying to PostgreSQL. In-memory SQLite lacks row-level locking semantics (`FOR UPDATE`), handles JSONB queries differently, ignores composite index behavior, and does not support Row-Level Security.
-  - Run integration tests against a real local PostgreSQL container (via Docker, Testcontainers, or Supabase Local CLI).
+  - Run integration tests against a real local PostgreSQL container (via Docker, Testcontainers, or project-scoped `./docker-compose.yml`).
+  - **Database Harness Isolation**: Database verification harnesses must always use dedicated project-scoped database containers (e.g. `project-db` instances). Agents must never attach to or run destructive queries against foreign project containers or credentials.
 
 ---
 
@@ -191,6 +192,7 @@ For applications using PostgreSQL or Supabase, enforce tenancy guarantees at the
 | **Raw JSONB Dumping** | Bypasses schema constraints, indexability, and relational integrity. | Normalize relational data; reserve JSONB for truly polymorphic attributes. |
 | **In-Memory SQLite Testing** | False confidence in CI; hides concurrency and RLS bugs. | Test against real PostgreSQL instances via Docker or Testcontainers. |
 | **Implicit Read-Modify-Write** | Concurrency race conditions resulting in negative balances or double bookings. | Use atomic SQL updates or explicit `FOR UPDATE` row locks. |
+| **Cross-Project DB Sharing** | Risk of destructive queries against foreign project databases. | Enforce project-scoped database containers (`project-db`). |
 
 ---
 
@@ -199,3 +201,5 @@ For applications using PostgreSQL or Supabase, enforce tenancy guarantees at the
 - All foreign keys indexed and cascade rules explicit.
 - Row-Level Security policies documented with verifiable SQL.
 - Migration rollback plan and real PostgreSQL test harness defined.
+- **Project Database Isolation**: Test harnesses use project-scoped database containers and never attach to foreign project instances.
+- **Dual-Compatible Visual Callout**: Conclude with a `> [!TIP]` callout featuring the 3-column telemetry matrix (`| Milestone Progress | Active Task | System Health |`).

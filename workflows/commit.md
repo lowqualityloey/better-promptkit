@@ -202,13 +202,19 @@ docs(adrs): record decision to adopt UUIDv7 for primary keys
    git commit -m "<subject>" -m "<body-paragraphs>"
    ```
 4. Confirm commit creation with `git log -n 1 --stat`.
-5. **Dual-Compatible Visual Callout**: Conclude the turn by displaying the next recommended lifecycle step in a dedicated `> [!TIP]` callout box featuring the situational awareness progress bar:
+5. **Dual-Compatible 3-Column Telemetry Callout**: Conclude the turn by displaying the next recommended lifecycle step in a dedicated `> [!TIP]` callout box featuring the structured 3-column telemetry matrix:
    > [!TIP]
-   > ### 💡 Next Recommended Step:
-   > 📊 **Milestone Progress**: `[■■■■□□□□□□]` **4/12 Tasks (33%)** • Active: `TASK-04`
+   > ### 💡 Next Recommended Step
+   > 
+   > | Milestone Progress | Active Task | System Health |
+   > | :--- | :--- | :--- |
+   > | `[■■■■□□□□□□] 33%` | `TASK-04: Tenant CRUD` | `5/5 ACs ✓` · `🔒 7 Invariants` |
+   > 
    > - If completing a task or milestone: run **`pk:checkpoint`** (compact session state & sync `docs/STATE.md`)
    > - If ready to open a pull request for review: run **`pk:pr`**
    > - If continuing work on the next issue: run **`pk:tasks`**
+   > 
+   > *(When multiple next-step branches exist, invoke native interactive selection tools with Option 1 `(Recommended)` so the developer can confirm with `Enter`)*
 
 
 ---
