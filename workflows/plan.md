@@ -203,7 +203,7 @@ The Planner / Architect hands the objective, bounded files or behaviors, accepta
 - FMEA failure modes and mitigation fallbacks explicitly documented.
 - Implementation milestones follow the Task Record's TDD Enforcement Mode: enabled Code Work has Red -> Green -> Refactor evidence; disabled Code Work has complete dependency-ordered milestones without mandatory TDD.
 - Documentation, Configuration, and Research Work use an explicit exception verification path, and ambiguous work remains on the Code Work path until clarified.
-- **Standard Visual Callout**: Conclude with a `> [!TIP]` callout titled `### 💡 Next Recommended Step:` recommending `pk:grill` (stress-test architecture) or `pk:tasks` (decompose into issues).
+- **Dual-Compatible Visual Callout**: Conclude with a `> [!TIP]` callout titled `### 💡 Next Recommended Step:` featuring the situational progress bar (`[■■■■□□□□□□]`) recommending `pk:grill` (stress-test architecture) or `pk:tasks` (decompose into issues).
 
 
 ---
