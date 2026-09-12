@@ -11,6 +11,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.4.0] - 2026-09-12
+
+### Added
+- **Canonical Agent Directive Template**: Created `templates/agent-directive-template.md` as the single source of truth for agent directive blocks rendered across all AI coding assistants during initialization.
+- **Directory Target Support**: Updated `init.sh` and `init.ps1` to detect directory configuration targets (e.g. modern `.clinerules/` directory layout) and safely generate `.clinerules/promptkit.md`.
+- **Multi-Mode Review Diff Baselines**: Added explicit branch (`git diff <base>...HEAD`), staged index (`git diff --cached`), and working-tree (`git diff HEAD`) review modes to `workflows/review.md`, eliminating stall conditions on `main`.
+- **Strict Byte-Level Idempotency Tests**: Added test cases in `scripts/tests/run-init-safety-tests.*` verifying zero-diff SHA256 byte-for-byte idempotency upon repeated initialization.
+
+### Changed
+- **Codified Monorepo Import Boundaries**: Formally documented the four non-negotiable architectural import boundaries (Presentation Isolation, Client/Server Boundary, Public Package Exports Only, Explicit Workspace Protocol) in `README.md`.
+- **Token Budget Assertion & Footnote**: Hardened `scripts/measure-tokens.*` with strict `<= 2000` token budget assertions and added mechanical verification footnotes in `README.md` and `docs/BENCHMARKS.md` (~1,944 tokens).
+- **Host MCP Progressive Enhancement Caveats**: Added explicit host-capability caveats in `README.md` and `templates/project-profile-template.md` establishing graceful degradation to CLI tools when MCP servers are absent.
+- **Sandboxed Worktree Feature**: Highlighted `scripts/isolate-worktree.sh` and `isolate-worktree.ps1` in `README.md` under Subagent Delegation.
+
+### Fixed
+- **Pre-Flight Secret Scanning**: Hardened pre-commit secret checks in `workflows/commit.md` to inspect staged diff content (`git diff --cached`) for entropy and credentials alongside allowlisted filename checks.
+- **Timing-Safe Buffer Comparison**: Added buffer length equality precondition before calling `crypto.timingSafeEqual` in `workflows/auth.md`.
+
+---
+
 ## [1.3.0] - 2026-09-12
 
 ### Added
