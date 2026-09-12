@@ -11,6 +11,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.3.0] - 2026-09-12
+
+### Added
+- **Mechanical Directive Token Measurement Utilities**: Added `scripts/measure-tokens.ps1` (PowerShell) and `scripts/measure-tokens.sh` (POSIX Bash) to calculate exact character, word, and estimated token counts (~4 chars/token heuristic) of the injected agent directive block, validating the ~89.5% static context reduction vs monolithic 18.5k-token prompt packs without adding runtime dependencies.
+
+### Changed
+- **Lean Initial Directory Scaffolding**: Refactored `init.ps1` and `init.sh` to scaffold only 4 essential core directories upfront (`docs/tasks`, `docs/specs`, `docs/adrs`, `docs/tests`), deferring specialized workflow folders (`docs/auth`, `docs/data`, `docs/releases`, etc.) to on-demand creation when invoked.
+- **Production-Grade First-Task Demonstration**: Replaced the toy "React calculator" prompt in `README.md` with an authenticated 24-hour expiring invite link API feature demonstrating Level 1 ceremony, RED test failure observation, and minimal workflow routing.
+
+### Fixed
+- **CI Test Harness Alignment**: Updated `.github/workflows/ci.yml` Linux and Windows dry-run initialization assertions to match streamlined core directories and integrated `scripts/measure-tokens.*` into automated script syntax verification suites.
+
+---
+
 ## [1.2.0] - 2026-09-12
 
 ### Added
