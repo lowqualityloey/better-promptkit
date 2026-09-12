@@ -17,22 +17,13 @@ echo -e "\n\033[0;36m🚀 Initializing Better-PromptKit...\033[0m"
 echo -e "   Host Project: $PROJECT_ROOT"
 echo -e "   Engine Path:  $SCRIPT_DIR\n"
 
-# 1. Ensure Documentation Directories Exist in Host Project
+# 1. Ensure Core Documentation Directories Exist in Host Project
+# (Specialized subdirectories like docs/auth, docs/data are created on-demand by workflows)
 DOC_DIRS=(
-    "docs/adrs"
-    "docs/specs"
-    "docs/rca"
-    "docs/spikes"
-    "docs/design"
-    "docs/data"
-    "docs/auth"
-    "docs/api"
-    "docs/tests"
-    "docs/reviews"
-    "docs/perf"
     "docs/tasks"
-    "docs/releases"
-    "docs/releases/ci-triage"
+    "docs/specs"
+    "docs/adrs"
+    "docs/tests"
 )
 for dir in "${DOC_DIRS[@]}"; do
     if [[ ! -d "$PROJECT_ROOT/$dir" ]]; then
