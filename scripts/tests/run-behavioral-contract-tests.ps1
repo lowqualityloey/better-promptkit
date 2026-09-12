@@ -93,12 +93,15 @@ Assert-Contains "workflows/commit.md" "Pre-Commit Secret & Hygiene Scan" "Commit
 Assert-Contains "workflows/commit.md" "Immediately after staging" "Secret scan runs immediately after staging phase"
 
 Write-Host "`n📌 Scenario J: Standardized Visual Callouts & Next Recommended Steps" -ForegroundColor Yellow
+Assert-Contains "templates/agent-directive-template.md" "Native MCP & Interactive Prompts" "Directive includes native MCP and interactive decision prompts guardrail"
 Assert-Contains "templates/agent-directive-template.md" "Standardized Action & Next-Step Callouts" "Directive includes standardized action and next-step callout guardrail"
 Assert-Contains "templates/agent-directive-template.md" "### 💡 Next Recommended Step:" "Directive specifies next recommended step callout format"
 Assert-Contains "workflows/commit.md" "### 💡 Next Recommended Step:" "Commit workflow specifies next recommended step callout format"
 Assert-Contains "workflows/plan.md" "### 💡 Next Recommended Step:" "Plan workflow specifies next recommended step callout format"
 Assert-Contains "workflows/tasks.md" "### 💡 Next Recommended Step:" "Tasks workflow specifies next recommended step callout format"
 Assert-Contains "workflows/test.md" "### 💡 Next Recommended Step:" "Test workflow specifies next recommended step callout format"
+Assert-Contains "workflows/fix.md" "### 💡 Next Recommended Step:" "Fix workflow specifies next recommended step callout format"
+Assert-Contains "workflows/plan.md" "Interactive Decision & Trade-Off Clarification" "Plan workflow includes interactive decision prompt guidelines"
 
 Write-Host "`n===========================================================" -ForegroundColor DarkGray
 Write-Host "📊 Behavioral Contract Verification Summary" -ForegroundColor Cyan

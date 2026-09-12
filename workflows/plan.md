@@ -122,6 +122,9 @@ Dependencies, risk, owner/approval boundary, execution policy, stop conditions, 
    - Prevent scope creep by writing down what we are explicitly *not* building.
 3. **Measurable Success Metrics / SLAs**:
    - Define concrete targets (e.g., p99 latency < 150ms, zero data loss, 99.9% uptime, Lighthouse score > 95, bundle size delta < 5kB).
+4. **Interactive Decision & Trade-Off Clarification**:
+   - When resolving architectural choices or ambiguous requirements, prioritize native interactive selection tools (e.g. OpenCode question prompt, `ask_question`) with option 1 prefixed `(Recommended)`.
+   - This enables the developer to navigate with arrow keys and confirm with `Enter` in one keystroke rather than typing prose.
 
 ### Step 2: System Context & Deep Module Architecture
 1. **Map the System Context**:
