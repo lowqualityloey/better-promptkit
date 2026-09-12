@@ -171,6 +171,24 @@ When halted due to environment errors, missing credentials, or unresolvable test
 
 ---
 
+### MCP Progressive Enhancement & Tool Precedence Matrix
+When operating in AI development environments with Model Context Protocol (MCP) server support, assistants prioritize structured, tool-native interactions over terminal CLI execution or text approximations:
+
+| Capability Domain | 1. Native MCP Tool (Highest Priority) | 2. Native IDE Tool (Second Priority) | 3. Terminal CLI (Fallback) | 4. Manual Human Prompt |
+| :--- | :--- | :--- | :--- | :--- |
+| **Source Control & PRs** | `github-mcp` (`create_pull_request`, `issue_read`, `issue_write`, `list_commits`) | N/A | `gh pr create`, `gh issue view`, `git` | Asking developer to open PR manually |
+| **Database Discovery** | `postgres-mcp` / DB MCP (`query`, `list_tables`, `describe_table`) | N/A | `psql`, `sqlite3`, ORM migration CLI | Asking developer for table schemas |
+| **Interactive Selection** | Modal Prompt / `ask_question` / prompt picker modal | Native IDE UI Pickers | Terminal CLI input / raw prompt | Free-form conversational text |
+| **Codebase Search** | N/A | `grep_search`, `find_by_name`, `file_search` | `rg`, `grep`, `find`, `fd` | Asking developer for file paths |
+| **File Manipulation** | N/A | `view_file`, `replace_file_content`, `write_to_file` | `cat`, `sed`, `awk`, shell redirection | Asking developer to edit code |
+
+#### Degradation & Progressive Enhancement Rules
+1. **Detect MCP Capabilities**: Assistants inspect available MCP tools at session start.
+2. **Graceful Degradation**: If an MCP tool is not configured in the host environment or fails due to missing daemon/connectivity, immediately and silently fall back to Native IDE tools or Terminal CLI commands.
+3. **Never Block on Missing MCP**: MCP tooling is a progressive enhancement, never a hard barrier to workflow execution.
+
+---
+
 ## Completion Criteria
 - Root agent file (`CLAUDE.md`, `GEMINI.md`, `AGENTS.md`, or `.cursorrules`) contains valid PromptKit OS pointers.
 - Project `docs/` directories are initialized.

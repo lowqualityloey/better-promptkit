@@ -63,7 +63,7 @@
 - **GitHub MCP**: [e.g. `github-mcp-server` for PR creation, issue reading, commit search]
 - **Database MCP**: [e.g. `postgres-mcp` for read-only schema discovery]
 - **Issue Tracker MCP**: [e.g. `linear-mcp` or N/A]
-- **Execution Precedence**: Native MCP Tools $\rightarrow$ Terminal CLI Commands $\rightarrow$ Manual Human Prompt
+- **Execution Precedence**: Native MCP Tools $\rightarrow$ Native IDE Search/Edit Tools $\rightarrow$ Terminal CLI Commands $\rightarrow$ Manual Human Prompt
 
 ---
 
