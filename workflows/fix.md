@@ -126,4 +126,4 @@ Once verified, hand off to downstream workflows:
 - [ ] Minimal surgical fix applied without unrelated scope creep.
 - [ ] Regression test added and full test suite passing.
 - [ ] Changes staged cleanly via `pk:commit` with atomic Conventional Commit message.
-- [ ] **Standard Visual Callout**: Conclude with a `> [!TIP]` callout titled `### 💡 Next Recommended Step:` recommending `pk:commit` or downstream verification.
+- [ ] **Dual-Compatible Visual Callout**: Conclude with a `> [!TIP]` callout titled `### 💡 Next Recommended Step:` featuring the situational progress bar (`[■■■■□□□□□□]`) recommending `pk:commit` or downstream verification.
