@@ -19,7 +19,7 @@ PromptKit OS uses a **Just-In-Time (JIT) Filesystem Architecture**:
 
 ┌─────────────────────────────────────────────────────────────────────────┐
 │                   PROMPTKIT OS JIT FILESYSTEM MODEL                     │
-│ Baseline Static Injection: ~100-line Router Directive (~1,878 tokens)   │
+│ Baseline Static Injection: 91-line Router Directive (~1,928 tokens)     │
 │ On-Demand Loading: Tool loads only target workflow file (e.g. pk:debug) │
 │ Context Window Preservation: ~90% savings on initial static overhead    │
 └─────────────────────────────────────────────────────────────────────────┘
@@ -33,11 +33,12 @@ The initialization script (`init.sh` / `init.ps1`) injects a single idempotent d
 
 | Component | Lines | Approx. Token Weight | Purpose |
 | :--- | :---: | :---: | :--- |
-| **System Introduction & Scope** | ~10 | ~140 tokens | Identifies PromptKit root in workspace (`./.promptkit`) |
-| **Fast Shorthand Triggers** | ~35 | ~580 tokens | Collision-free index of namespaced workflows (`pk:route`, `pk:debug`, `pk:fix`, etc.) |
-| **Smart Auto-Route & Guardrails** | ~30 | ~590 tokens | Triage rules (Fast-Path zero overhead, Anti-slop, Secrets hygiene, MCP precedence, Telemetry cards) |
-| **Artifact Paths & Document Targets** | ~25 | ~568 tokens | Output destinations (`docs/specs/`, `docs/tasks/`, `docs/STATE.md`) |
-| **Total Baseline Static Overhead** | **~100 lines** | **~1,878 tokens** | **Permanent footprint in system prompt (~90% savings vs. ~18.5k monolithic packs)** |
+| **System Introduction & Scope** | ~13 | ~193 tokens | Identifies PromptKit root in workspace (`./.promptkit`) |
+| **Fast Shorthand Triggers** | ~28 | ~495 tokens | Collision-free index of namespaced workflows (`pk:route`, `pk:debug`, `pk:fix`, etc.) |
+| **Smart Auto-Route & Guardrails** | ~22 | ~465 tokens | Triage rules (Fast-Path zero overhead, Anti-slop, Secrets hygiene, MCP precedence, Telemetry cards) |
+| **Workflows, Protocols & Task Ceremony Levels** | ~20 | ~530 tokens | Lazy convention routing & inline Level 0–3 ceremony classification |
+| **Artifact Paths & Document Targets** | ~8 | ~245 tokens | Output destinations (`docs/specs/`, `docs/tasks/`, `docs/STATE.md`) |
+| **Total Baseline Static Overhead** | **91 lines** | **~1,928 tokens** | **Permanent footprint in system prompt (~90% savings vs. ~18.5k monolithic packs)** |
 
 By contrast, inlining all 20 workflow specifications and schemas consumes **18,000 to 22,000 tokens** on turn 1 before any user request is processed.
 
