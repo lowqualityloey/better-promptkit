@@ -11,10 +11,11 @@
 
 | Item | State |
 | :--- | :--- |
-| **Change A** (A1 directive, A2 setup.md, A3 route.md) | ✅ **Implemented** — `refactor(directive): classify ceremony levels inline…` |
-| **A4** + orphaned-harness CI wiring | ✅ **Implemented** — `test(ci): enforce release-record documentation examples…` |
-| **Change B** (extract from `ship.md`) | ⏸️ **Deferred** — blocked per §3.0; needs an owner decision between B1 (repoint 6 assertions in 2 test files) and B2 (leave a concept stub in `ship.md`, zero test edits) |
-| **Changes C & D** | ⏸️ Out of scope, separate commits |
+| **Change A** (A1 directive, A2 setup.md, A3 route.md) | ✅ **Implemented** — `refactor(directive): classify ceremony levels inline…` (PR #131) |
+| **A4** + orphaned-harness CI wiring | ✅ **Implemented** — `test(ci): enforce release-record documentation examples…` (PR #131) |
+| **Change B2** (extract from `ship.md` + concept stub) | ✅ **Implemented** — `refactor(workflows): extract internal release evaluation…` |
+| **Change D** (brand normalization) | ✅ **Implemented** — `refactor(brand): standardize PromptKit OS naming across workflows…` |
+| **Change C** (cross-reference tails) | ⏸️ Out of scope, separate follow-up |
 
 Directive measured after A: **1,929 tokens** (`measure-tokens.sh`, budget passes; **71 tokens**
 headroom — hence the new CI budget assertion).

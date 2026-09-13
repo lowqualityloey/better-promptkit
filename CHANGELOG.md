@@ -15,9 +15,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Project Database & Harness Isolation**: Established a strict guardrail preventing test/migration harnesses from attaching to foreign or sibling project database containers (e.g. `api-db-1`/`jobtracker`), mandating project-scoped database containers.
 - **MCP Tool Precedence & Capability Protocols**: Added MCP Progressive Enhancement & Tool Precedence Matrix to `protocols/setup.md`, updated `templates/project-profile-template.md` with active MCP server tracking, and added adoption guidance in `docs/ADOPTION-GUIDE.md` defining hierarchy: Native MCP Tools $\rightarrow$ Native IDE Search/Edit Tools $\rightarrow$ Terminal CLI Commands $\rightarrow$ Manual Human Prompt.
 - **Telemetry & Isolation Behavioral Contract Tests**: Added Scenarios J and K to `scripts/tests/run-behavioral-contract-tests.*` asserting dual-compatible telemetry status cards and project container isolation.
+- **Release-Record Examples & Directive Budget CI Gates**: Wired `scripts/tests/release-records.examples.*` and `scripts/measure-tokens.*` budget assertions into Linux and Windows CI workflows.
 
 ### Changed
-- **Documentation & Token Figures**: Updated `README.md`, `docs/BENCHMARKS.md`, and `FAQ.md` with the latest mechanically measured **1,878 token** baseline and added FAQ questions 14 and 15 covering dual-compatible status cards and project DB isolation.
+- **Inline Task Ceremony Classification**: Replaced the 26-line hardcoded workflow path list in `templates/agent-directive-template.md` with convention-based routing and a compact Level 0–3 ceremony summary, eliminating mandatory preloading of `workflows/route.md` (-28% to -54% dynamic per-task context reduction).
+- **Extracted Internal Release Evaluation**: Relocated the ~4,144-token repository-internal release evaluation block from `workflows/ship.md` to `docs/internal/release-evaluation.md`, retaining a concise concept stub in `ship.md` (-44% token reduction on `ship.md`).
+- **Brand Normalization**: Standardized legacy `Better-PromptKit` naming to `PromptKit OS` across all shipped workflows and template assets.
+- **Token Calibration & Benchmarks**: Aligned directive budget assertion to 2,500 tokens in `scripts/measure-tokens.*` (providing 572 tokens of headroom) and updated `README.md`, `docs/BENCHMARKS.md`, and `FAQ.md` with verified 91-line / ~1,928-token baseline measurements.
 
 ---
 
