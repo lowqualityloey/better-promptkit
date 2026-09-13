@@ -24,16 +24,16 @@ Eliminate decision fatigue and guesswork by mapping every software development s
 In the opening turn (Turn 1) of every task or interaction, the assistant must explicitly classify the request and declare its ceremony level on the very first line of output using this exact standardized banner format:
 
 ```text
-[Better-PromptKit: Level <0-3> (<Name>) — <1-line justification>]
+[PromptKit OS: Level <0-3> (<Name>) — <1-line justification>]
 ```
 
 **Standard Banner Formats by Level**:
-- **Level 0**: `[Better-PromptKit: Level 0 (Direct) — <Explanation / query / typo fix>. Zero overhead.]`
-- **Level 1**: `[Better-PromptKit: Level 1 (Standard) — <Localized bug fix / feature>. No Task Record required.]`
-- **Level 2**: `[Better-PromptKit: Level 2 (Controlled) — <Schema / auth / API / multi-component scope>. Task Record required.]`
-- **Level 3**: `[Better-PromptKit: Level 3 (Release-Critical) — <Release / deploy / tag candidate>. Full evaluation required.]`
+- **Level 0**: `[PromptKit OS: Level 0 (Direct) — <Explanation / query / typo fix>. Zero overhead.]`
+- **Level 1**: `[PromptKit OS: Level 1 (Standard) — <Localized bug fix / feature>. No Task Record required.]`
+- **Level 2**: `[PromptKit OS: Level 2 (Controlled) — <Schema / auth / API / multi-component scope>. Task Record required.]`
+- **Level 3**: `[PromptKit OS: Level 3 (Release-Critical) — <Release / deploy / tag candidate>. Full evaluation required.]`
 
-Before executing any request, classify the work using Better-PromptKit's 4-level task ceremony model to balance developer velocity with engineering rigor:
+Before executing any request, classify the work using the PromptKit OS 4-level task ceremony model to balance developer velocity with engineering rigor:
 
 ### Level 0 — Direct (Zero Overhead)
 - **Applicability**: Conceptual questions, explanations, documentation typos, formatting, syntax lookups, and tiny non-risky single-line tweaks.
@@ -79,7 +79,7 @@ The 4-level ceremony model refines and clarifies the system's execution boundari
 
 2. **Task Escalation / Upgrade**:
    - If work initiated at Level 0 or Level 1 expands to affect persistent data, authorization, public contracts, or multiple components, the agent **must escalate** the task to Level 2 (Controlled) or Level 3 (Release-Critical) before writing further code.
-   - Announce the escalation briefly: `[Better-PromptKit: Escalating to Level 2 (Controlled) due to schema/auth impact]`.
+   - Announce the escalation briefly: `[PromptKit OS: Escalating to Level 2 (Controlled) due to schema/auth impact]`.
 
 3. **Task Downgrade & Safety Boundaries**:
    - **Level 2 Downgrade**: If analysis reveals a proposed Level 2 task can be simplified into a localized, non-breaking single-file fix without schema/auth/breaking contract impact, it may be downgraded to Level 1 or Level 0.
@@ -158,7 +158,7 @@ Find your current engineering context below and activate the corresponding workf
 
 ---
 
-### Better-PromptKit Release-Evidence Routing Overlay
+### PromptKit OS Release-Evidence Routing Overlay
 
 This overlay extends the existing lifecycle router without adding a new trigger. Classify requests using the Level 0–3 ceremony model, treat release and evidence work as Level 3 (retaining Task Record, pk:ship, QA review, and human-approval boundaries), and use the existing workflows:
 
@@ -166,7 +166,7 @@ This overlay extends the existing lifecycle router without adding a new trigger.
 | :--- | :--- | :--- |
 | **Commit-level release evidence**, Public PromptKit Contract impact, or Maintenance Commit classification | `pk:commit` | Capture or link Contract Impact Evidence, or record an explicit Maintenance Commit declaration stating no intentional public-contract change. Preserve Conventional Commit syntax, one complete reversible concern, scoped staging, and developer confirmation. |
 | **Release-evaluation handoff**, QA-to-coordinator handoff, or preliminary candidate checkpoint | `pk:checkpoint` | Record the Evaluation ID, Release Candidate Commit, preliminary candidate, QA status, blockers, source records, handoff status, and one requested next human decision. The handoff is never approval. |
-| **Version-candidate** calculation, normalized-history review, filtered **release-note** derivation, draft changelog entries, consistency review, or final internal release decision | `pk:ship` | Evaluate the Better-PromptKit-only Release Range, Effective Change Set, preliminary candidate, Public and Maintenance Release Notes, and Approved Release Record. Keep deployment-specific guidance and external actions separate. |
+| **Version-candidate** calculation, normalized-history review, filtered **release-note** derivation, draft changelog entries, consistency review, or final internal release decision | `pk:ship` | Evaluate the repository-only Release Range, Effective Change Set, preliminary candidate, Public and Maintenance Release Notes, and Approved Release Record. Keep deployment-specific guidance and external actions separate. |
 
 #### Release-evidence routing rules
 
@@ -174,7 +174,7 @@ This overlay extends the existing lifecycle router without adding a new trigger.
 2. Route a request to preserve an evaluation across a session or role boundary, or to hand a preliminary candidate and blockers to the next owner, to `pk:checkpoint`. `pk:checkpoint` projects handoff state and never approves, tags, publishes, pushes, deploys, or rolls back.
 3. Route a request to calculate or review a version candidate, normalize merge/squash/duplicate/revert history, derive Public or Maintenance Release Notes, prepare explicitly unpublished draft Changelog Entries, check cross-record consistency, or record an approval/defer decision to `pk:ship`.
 4. Keep the existing `pk:commit → pk:pr → pk:ship` path for ordinary reviewed changes. The optional `pk:checkpoint` release-evaluation handoff supplies evidence to `pk:ship`; it does not replace review, commit, PR, or production-safety gates.
-5. Apply this release-evidence policy only to Better-PromptKit. Consumer repositories remain outside its Conventional Commit, SemVer, release-note, changelog, tag, remote, publication, deployment, and rollback requirements.
+5. Apply this release-evidence policy only to PromptKit OS internal releases. Consumer repositories remain outside its Conventional Commit, SemVer, release-note, changelog, tag, remote, publication, deployment, and rollback requirements.
 
 #### Candidate and external-action boundary
 
@@ -264,7 +264,7 @@ When a developer asks for help without specifying a command, the assistant shoul
 
 ## Smart Auto-Route Protocol & Guardrails
 
-When working in an environment with Better-PromptKit, the developer may prompt using natural language without specifying a `pk:` shorthand. The assistant must evaluate incoming requests according to this two-tier routing policy:
+When working in an environment with PromptKit OS, the developer may prompt using natural language without specifying a `pk:` shorthand. The assistant must evaluate incoming requests according to this two-tier routing policy:
 
 ### Tier 1: Fast-Path (Zero Overhead Guardrail)
 If the request is:
@@ -279,7 +279,7 @@ If the request involves non-trivial engineering changes (new features, crashes, 
 
 **Action**:
 1. Announce the active workflow in a single brief line:
-   `[Better-PromptKit: Auto-routed to pk:<workflow>]`
+   `[PromptKit OS: Auto-routed to pk:<workflow>]`
 2. Automatically adhere to that workflow's quality gates, pre-conditions, and artifact outputs:
    - **Bugs, errors, broken tests, unexpected behavior (unknown cause)**: Auto-route to `pk:debug`. Establish the reproduction loop before proposing any fix.
    - **Known defects, review findings, security patches, code smells**: Auto-route to `pk:fix`. Enforce security-first ordering, reproduction/measurement, and single-concern scope.

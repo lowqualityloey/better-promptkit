@@ -4,7 +4,7 @@
 Trigger anytime with: `pk:onboard` (or `/pk-onboard`, `pk:scan`, `pk:init-repo`)
 
 ## Mission
-Ingest any existing repository into the Better-PromptKit engineering operating system in under 60 seconds. Inspect package manifests, active developer scripts, database schemas, and architectural boundaries. Auto-populate `./PROMPTKIT.md` (and `./DESIGN.md` if frontend surfaces exist), establish a concrete baseline for code quality gates, and index existing technical debt into `docs/tasks/`.
+Ingest any existing repository into the PromptKit OS engineering operating system in under 60 seconds. Inspect package manifests, active developer scripts, database schemas, and architectural boundaries. Auto-populate `./PROMPTKIT.md` (and `./DESIGN.md` if frontend surfaces exist), establish a concrete baseline for code quality gates, and index existing technical debt into `docs/tasks/`.
 
 Eliminate day-one setup friction. Replace manual configuration chores with automated, deterministic architectural discovery.
 
@@ -24,7 +24,7 @@ After completing the scan and presenting the findings summary / Executive Scorec
 
 ## Preconditions
 - The repository contains existing application code, manifests, or configuration files.
-- Better-PromptKit is installed in `.promptkit/` or `promptkit/`.
+- PromptKit OS is installed in `.promptkit/` or `promptkit/`.
 - Access to `.promptkit/templates/project-profile-template.md` and `.promptkit/templates/design-profile-template.md`.
 
 ---
@@ -129,7 +129,7 @@ After completing the scan and presenting the findings summary / Executive Scorec
    If UI components are detected (`.tsx`, `.jsx`, `.vue`, `.svelte`):
    - Inspect styling configurations: `tailwind.config.*`, `globals.css`, `components.json` (Shadcn UI).
    - Extract primary brand colors, font families, base radius (`rounded-md`), and typography tokens.
-   - Scaffold `./DESIGN.md` incorporating Better-PromptKit anti-slop directives and detected tokens.
+   - Scaffold `./DESIGN.md` incorporating PromptKit OS anti-slop directives and detected tokens.
 
 3. **Auto-Populate `docs/STATE.md` (Living Project Tracker)**:
    Copy `.promptkit/templates/state-tracker-template.md` to `./docs/STATE.md`:

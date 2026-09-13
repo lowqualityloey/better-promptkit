@@ -22,7 +22,7 @@ Bridge the gap between diagnosis (`pk:review`, static analysis, security audit, 
 
 ## Level 0–3 Task Ceremony Alignment
 
-Before applying any fix, classify the task using Better-PromptKit's ceremony model:
+Before applying any fix, classify the task using the PromptKit OS ceremony model:
 
 - **Level 1 — Standard Fix (Low-Risk)**: Localized bug fix, code smell cleanup, or single-component repair without schema, auth, authorization, public contract, or multi-component risks. Modifies source files using natural workflow routing (`pk:fix` $\rightarrow$ `pk:test` $\rightarrow$ `pk:commit`) with lightweight inline tracking. Does **not** require a Task Record file (`docs/tasks/<task-id>.md`).
 - **Level 2 — Controlled Fix (High-Risk)**: Fix involving relational schema/data migrations, auth/permissions, breaking public API contracts, or multi-component architectural changes. Requires a canonical Local Task Record at `docs/tasks/<task-id>.md` and formal specification before implementation.

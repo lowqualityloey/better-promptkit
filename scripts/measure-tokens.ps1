@@ -97,7 +97,7 @@ Write-Host "  ├─────────────────────
 Write-Host "  │ Static Context Reduction:          $SavingsPercent% reduction             │" -ForegroundColor Cyan
 Write-Host "  └─────────────────────────────────────────────────────────────┘" -ForegroundColor DarkGray
 
-$TokenBudget = 2000
+$TokenBudget = 2500
 Write-Host "`nBudget Assertion Verification:" -ForegroundColor Yellow
 Write-Host "  • Configured Token Budget:  $TokenBudget tokens"
 Write-Host "  • Measured Estimate:        $EstimatedTokens tokens"

@@ -147,7 +147,7 @@ For each decomposed task, fill out `.promptkit/templates/issue-task-template.md`
    - Repositories can provision the standardized labels (`priority/p0-p3`, `type:*`, `area:*`) with zero token overhead by running the local provisioning script:
      - PowerShell: `pwsh -NoProfile -File .promptkit/scripts/setup-github-labels.ps1`
      - Bash: `bash .promptkit/scripts/setup-github-labels.sh`
-   - Better-PromptKit automatically scaffolds `.github/ISSUE_TEMPLATE/task.md` during `init.ps1` / `init.sh` so human contributors and agents have a consistent Gherkin structure when opening issues directly on GitHub.
+   - PromptKit OS automatically scaffolds `.github/ISSUE_TEMPLATE/task.md` during `init.ps1` / `init.sh` so human contributors and agents have a consistent Gherkin structure when opening issues directly on GitHub.
 3. **Generate GitHub CLI (`gh issue create`) Commands or Invoke MCP Tools**:
    - When `Task Tracking System` in `PROMPTKIT.md` is set to `GitHub Issues` (or if requested by the user), create issues via native MCP (`github-mcp-server`) or append ready-to-run CLI commands at the bottom of an index or issue document. External issues may coordinate work but must link to the canonical Task Record and never replace it:
      ```bash
