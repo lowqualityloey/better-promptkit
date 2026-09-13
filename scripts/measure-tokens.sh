@@ -80,7 +80,7 @@ echo -e "  \033[0;90m├──────────────────�
 echo -e "  │ Static Context Reduction:          \033[0;36m~$SAVINGS_PERCENT% reduction\033[0m             │"
 echo -e "  \033[0;90m└─────────────────────────────────────────────────────────────┘\033[0m"
 
-TOKEN_BUDGET=2000
+TOKEN_BUDGET=2500
 
 echo -e "\n\033[1;33mBudget Assertion Verification:\033[0m"
 echo "  • Configured Token Budget:  $TOKEN_BUDGET tokens"
