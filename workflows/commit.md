@@ -218,25 +218,6 @@ docs(adrs): record decision to adopt UUIDv7 for primary keys
 
 ---
 
-## Related Workflows
-
-### Before Committing
-- **`pk:review`** - Self-review changes before committing
-- **`pk:test`** - Verify all tests pass
-- **Code Quality Gate**: Verify against `.promptkit/protocols/code-quality-gate.md`
-
-### After Committing
-- **`pk:pr`** - Create pull request with high-signal description
-- **`pk:checkpoint`** - Update STATE.md if completing a milestone
-
-### For Context
-- **`pk:debug`** - Reference RCA findings in commit message
-- **`pk:plan`** - Reference spec/RFC in commit body
-- **`pk:retro`** - Extract ADR from significant commits
-
-### Workflow Integration
-- **`pk:ship`** - Commits are deployed following release checklist
-
-### See Also
-- **Conventional Commits Spec**: https://www.conventionalcommits.org/
-- **Git Safety**: See README.md for git guardrails
+## Related References
+- [`docs/WORKFLOW-MAP.md`](../docs/WORKFLOW-MAP.md) — Complete workflow navigation & lifecycle mapping
+- [`protocols/code-quality-gate.md`](../protocols/code-quality-gate.md) — Pre-commit quality & done-gates

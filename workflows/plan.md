@@ -208,23 +208,7 @@ The Planner / Architect hands the objective, bounded files or behaviors, accepta
 
 ---
 
-## Related Workflows
-
-### Before Planning
-- **`pk:onboard`** - If working with an existing codebase, run this first to understand the current architecture
-- **`pk:spike`** - For unproven technology choices, run technical spikes before committing to a design
-
-### During Planning
-- **`pk:data`** - Deep dive into database schema design and migration strategy
-- **`pk:auth`** - Detail authentication flows and RBAC matrices
-- **`pk:api`** - Specify API contracts and error envelopes
-- **`pk:test`** - Define testing strategy and pyramid seam allocation
-- **`pk:grill`** - Stress-test your architecture before implementation
-
-### After Planning
-- **`pk:tasks`** - Decompose the spec into atomic, estimable issues with Gherkin acceptance criteria
-- **`pk:checkpoint`** - Save architectural decisions to STATE.md before starting implementation
-
-### See Also
-- **`pk:tutor`** - Learn architectural patterns while planning
-- **`pk:route`** - Return to lifecycle decision matrix
+## Related References
+- [`docs/WORKFLOW-MAP.md`](../docs/WORKFLOW-MAP.md) — Complete workflow navigation & lifecycle mapping
+- [`templates/tech-spec-template.md`](../templates/tech-spec-template.md) — Technical specification template
+- [`workflows/tasks.md`](./tasks.md) — Task decomposition & acceptance criteria
