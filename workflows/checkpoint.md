@@ -168,8 +168,8 @@ Please inspect the files listed above and confirm you are ready to proceed with 
 ### Example: Handing off mid-way through an auth migration
 
 ````markdown
-[Better-PromptKit: Session Checkpoint Generated]
-[Better-PromptKit: Synced session updates to docs/STATE.md]
+[PromptKit OS: Session Checkpoint Generated]
+[PromptKit OS: Synced session updates to docs/STATE.md]
 
 ### Session Summary
 * **Objective**: Add email verification invariant to team invite flow.

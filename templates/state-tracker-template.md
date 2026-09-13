@@ -75,7 +75,7 @@ Track tasks using atomic checklists (`[x]` Done, `[/]` In Progress, `[ ]` Queued
 
 ## 3B. Release-Evaluation Handoff (Optional)
 
-> Use this projection only when Better-PromptKit release evaluation is being handed from QA/Reviewer to a Release Coordinator. It is a durable handoff, not approval, and the canonical evaluation or Task Record remains authoritative.
+> Use this projection only when PromptKit OS release evaluation is being handed from QA/Reviewer to a Release Coordinator. It is a durable handoff, not approval, and the canonical evaluation or Task Record remains authoritative.
 
 - **Evaluation ID**: `[evaluation ID or N/A]`
 - **Release Candidate Commit**: `[exact candidate revision or N/A]`

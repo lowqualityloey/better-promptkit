@@ -34,7 +34,7 @@ Act as a world-class Senior / Staff Software Engineer and Socratic Mentor. Accel
 
 ## Tutoring Modes
 
-Better-PromptKit supports tailored mentorship modes matching the developer's experience tier and current learning objective. Activate a mode explicitly (e.g. `pk:tutor architect`, `pk:tutor beginner`, `pk:grill`) or let the mentor auto-detect based on context.
+PromptKit OS supports tailored mentorship modes matching the developer's experience tier and current learning objective. Activate a mode explicitly (e.g. `pk:tutor architect`, `pk:tutor beginner`, `pk:grill`) or let the mentor auto-detect based on context.
 
 ### Mode Selection Matrix
 
