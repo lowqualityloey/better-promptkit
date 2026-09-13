@@ -284,26 +284,7 @@ Tailor follow-up material based on the developer's confidence:
 
 ---
 
-## Related Workflows
-
-### Learning Through Doing
-- **`pk:debug`** - Scientific debugging tutorial (hypothesis-driven RCA)
-- **`pk:plan`** - Learn architecture patterns while planning features
-- **`pk:spike`** - Compare technologies hands-on with benchmarks
-- **`pk:grill`** - Test your understanding through architecture defense
-
-### Getting Guidance
-- **`pk:route`** - Find the right workflow when you're stuck
-- **`pk:review`** - Learn from code review feedback
-- **`pk:onboard`** - Understand an unfamiliar codebase systematically
-
-### Building Skills
-- **`pk:retro`** - Reflect on what you learned and update skill matrix
-- **Activities**: See `.promptkit/activities/` for interactive learning simulations
-
-### Documentation
-- **Notes**: Use `.promptkit/notes/learning-plan.md` to track skill development
-- **Journal**: Log breakthroughs in `.promptkit/notes/progress-journal.md`
-
-### See Also
-- **Skill Matrix**: `.promptkit/notes/skill-matrix.md` for competency self-assessment
+## Related References
+- [`docs/WORKFLOW-MAP.md`](../docs/WORKFLOW-MAP.md) — Complete workflow navigation & lifecycle mapping
+- [`notes/skill-matrix.md`](../notes/skill-matrix.md) — Competency self-assessment matrix
+- [`activities/README.md`](../activities/README.md) — Interactive learning simulations
