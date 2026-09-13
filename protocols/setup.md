@@ -60,7 +60,7 @@ Append or merge the exact contents of `templates/agent-directive-template.md` in
 
 ### Progressive Loading Policy
 To optimize context window efficiency and minimize token overhead, agents must follow this progressive loading sequence:
-1. **Initial context**: Load setup/entry guidance and `.promptkit/workflows/route.md`.
+1. **Initial context**: Load setup/entry guidance. Classify the task using the Task Ceremony Levels table in the injected directive — do not load `.promptkit/workflows/route.md` for classification. Load `route.md` only when routing is genuinely ambiguous, or when Level 3 escalation / downgrade guardrails are needed.
 2. **After routing**: Load only the workflow or workflows relevant to the routed task.
 3. **Artifact-on-demand**: Load templates only when required by the routed level or workflow.
 4. **Level-specific behavior**:

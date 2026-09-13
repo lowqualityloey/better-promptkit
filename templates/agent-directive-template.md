@@ -57,32 +57,19 @@ You do not need to memorize triggers. If a prompt lacks an explicit `pk:` trigge
   - Deployments, env validation, releases -> `pk:ship`
 
 ### Workflows & Protocols Reference
-- **Route**: $KIT_DIR_REL/workflows/route.md
-- **Tutor**: $KIT_DIR_REL/workflows/tutor.md
-- **Plan**: $KIT_DIR_REL/workflows/plan.md
-- **Onboard**: $KIT_DIR_REL/workflows/onboard.md
-- **Tasks**: $KIT_DIR_REL/workflows/tasks.md
-- **Review**: $KIT_DIR_REL/workflows/review.md
-- **Commit**: $KIT_DIR_REL/workflows/commit.md
-- **Pull Request**: $KIT_DIR_REL/workflows/pr.md
-- **Debug**: $KIT_DIR_REL/workflows/debug.md
-- **Fix**: $KIT_DIR_REL/workflows/fix.md
-- **Performance**: $KIT_DIR_REL/workflows/perf.md
-- **Data**: $KIT_DIR_REL/workflows/data.md
-- **Auth**: $KIT_DIR_REL/workflows/auth.md
-- **API**: $KIT_DIR_REL/workflows/api.md
-- **Test**: $KIT_DIR_REL/workflows/test.md
-- **Ship**: $KIT_DIR_REL/workflows/ship.md
-- **Research**: $KIT_DIR_REL/workflows/research.md
-- **Design System**: $KIT_DIR_REL/workflows/design-system.md
-- **Reflect**: $KIT_DIR_REL/workflows/reflect.md
-- **Checkpoint**: $KIT_DIR_REL/workflows/checkpoint.md
-- **Quality Gate (DoD)**: $KIT_DIR_REL/protocols/code-quality-gate.md
-- **Context Sync**: $KIT_DIR_REL/protocols/context-sync.md
-- **Subagent Delegation**: $KIT_DIR_REL/protocols/subagent-delegation.md
-- **Project Profile & Rules**: ./PROMPTKIT.md (if present)
-- **Visual Identity & Brand**: ./DESIGN.md (if present)
-- **Living State & Tracker**: ./docs/STATE.md (if present)
+Load lazily by convention — never preload:
+- Workflow: `$KIT_DIR_REL/workflows/<trigger>.md` (e.g. `pk:plan` -> `workflows/plan.md`, `pk:design` -> `workflows/design-system.md`)
+- Protocols: `$KIT_DIR_REL/protocols/{setup,context-sync,code-quality-gate,subagent-delegation}.md`
+- Router: load `$KIT_DIR_REL/workflows/route.md` only when routing is ambiguous or Level 3 escalation/downgrade rules are needed
+- Project files: `./PROMPTKIT.md`, `./DESIGN.md`, `./docs/STATE.md` (if present)
+
+### Task Ceremony Levels (classify here — do not load route.md to decide)
+Declare on line 1 of Turn 1: `[Better-PromptKit: Level <0-3> (<Name>) — <1-line reason>]`
+- **L0 Direct**: questions, lookups, doc typos, formatting, non-risky 1-line edits. `understand -> change -> verify`. No task record. Risk-before-size: 1-line security/data edits escalate.
+- **L1 Standard**: localized bug fix, small self-contained feature, no schema/auth/breaking contract. Inline planning; no Task Record file.
+- **L2 Controlled**: schema/migrations, auth, permissions, public contracts, multi-component. Requires `docs/tasks/<task-id>.md` + spec before implementation.
+- **L3 Release-Critical**: release, tag, deploy, high-impact contract change. Requires L2 evidence + `pk:ship` + explicit human approval.
+- **Escalate** immediately if scope grows into persistent data, auth, public contracts, or multiple components. `workflows/route.md` remains the canonical authority for these rules and for downgrade guardrails.
 
 ### Project Artifact Output Paths
 All generated project documentation must be saved to the host project:
